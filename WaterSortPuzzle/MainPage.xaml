@@ -30,6 +30,17 @@
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Fill" />
+
+            <Entry
+                x:Name="sejvEntry"
+                Text="qwer" />
+
+            <Button
+                x:Name="EditBtn"
+                Text="Edit" 
+                Clicked="EditBtn_Clicked"
+                HorizontalOptions="Fill" />
+
         </VerticalStackLayout>
     </ScrollView>
 
