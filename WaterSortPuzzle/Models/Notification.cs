@@ -12,6 +12,12 @@
     }
     internal class Notification
     {
+        const int closeDelayDefault = 2000; // in ms
+        public void Show(string text) => Show(text, MessageType.Information);
+        public void Show(string text, int closeDelay = closeDelayDefault) => Show(text, MessageType.Information, closeDelay);
+        public void Show(string text, MessageType messageType, int closeDelay = closeDelayDefault)
+        { }
+
         //MainWindowVM MainPageVM;
         //const int closeDelayDefault = 2000; // in ms
         //private bool DisplayDebugMessages { get; } = true;
