@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WaterSortPuzzle.Views.Controls.QuickNotificationOverlay">
+    <Grid>
+        <Label x:Name="Titlelabel"/>
+        <!--<Button Style="{StaticResource ClickBackgroundButtonQuickNotification}" Command="{Binding CloseQuickNotificationCommandInternal}" CommandParameter="{Binding NotificationDetails}">
+            <Grid Style="{StaticResource QuickNotificationPopupScreen}">
+                <TextBlock Text="{Binding Path=NotificationText, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" d:Text="Notification text" Margin="3"/>
+                <TextBlock Text="×" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" FontSize="16" />
+            </Grid>
+        </Button>-->
+    </Grid>
+</ContentView>

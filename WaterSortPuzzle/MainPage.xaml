@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:WaterSortPuzzle.ViewModels"
+             xmlns:controls="clr-namespace:WaterSortPuzzle.Views.Controls"
              x:Class="WaterSortPuzzle.MainPage"
              x:DataType="viewModel:MainWindowVM">
 
@@ -24,11 +25,12 @@
         </StackLayout>
 
         <!-- // Mid section // -->
-        
-        <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,40,10,10" VerticalAlignment="Top" MaxHeight="62">
-            <StackPanel VerticalAlignment="Top"  x:Name="NotificationBox">
-            </StackPanel>
-        </ScrollViewer>-->
+        <!-- // Notification Overlay // -->
+        <ScrollView VerticalOptions="Start" HeightRequest="62" Grid.Row="1">
+            <!--<StackLayout VerticalOptions="Start" x:Name="NotificationBox"/>-->
+            
+            <!--<controls:QuickNotificationOverlay Title="Testovaci notifikace"/>-->
+        </ScrollView>
 
         <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Margin="0,5,0,0">
             <Grid>

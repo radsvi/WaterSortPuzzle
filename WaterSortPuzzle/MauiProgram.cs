@@ -22,6 +22,8 @@ namespace WaterSortPuzzle
             builder.Services.AddSingleton<MainPage>();
             //builder.Services.AddTransient<DetailPage>();
             builder.Services.AddSingleton<DetailPage>();
+            builder.Services.AddSingleton<Notification>();
+
 
 #if DEBUG
     		builder.Logging.AddDebug();
