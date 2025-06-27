@@ -15,8 +15,12 @@ namespace WaterSortPuzzle
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<AppSettings>();
+            builder.Services.AddSingleton<MainWindowVM>();
+            //builder.Services.AddSingleton<AppSettings>();
+            builder.Services.AddSingleton<DetailPageVM>();
 
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddTransient<DetailPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

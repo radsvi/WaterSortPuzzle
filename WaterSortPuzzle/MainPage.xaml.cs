@@ -4,13 +4,14 @@
     {
         //internal AppSettings AppSettings { get; }
 
+        //public MainPage(MainWindowVM viewModel)
         public MainPage()
         {
             InitializeComponent();
 
-            //AppSettings = new AppSettings();
-            //BindingContext = ServiceHelper.GetService<MainWindowVM>();
-            BindingContext = new MainWindowVM();
+            //BindingContext = new MainWindowVM();
+            BindingContext = ServiceHelper.GetService<MainWindowVM>();
+            //BindingContext = viewModel;
         }
     }
 }

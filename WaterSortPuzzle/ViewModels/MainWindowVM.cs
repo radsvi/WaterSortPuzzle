@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.ViewModels
 {
-    partial class MainWindowVM : ViewModelBase
+    public partial class MainWindowVM : ViewModelBase
     {
         [RelayCommand]
         async Task Navigate() =>
