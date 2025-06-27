@@ -24,7 +24,7 @@
 
             //CounterBtn.Text = $"qwerqwer {AppSettings.ZkouskaAAA}";
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            //SemanticScreenReader.Announce(CounterBtn.Text);
         }
 
         private void EditBtn_Clicked(object sender, EventArgs e)
