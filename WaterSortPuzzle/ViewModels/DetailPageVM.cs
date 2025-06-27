@@ -8,6 +8,9 @@ namespace WaterSortPuzzle.ViewModels
 {
     public class DetailPageVM
     {
-
+        public DetailPageVM()
+        {
+            
+        }
     }
 }
