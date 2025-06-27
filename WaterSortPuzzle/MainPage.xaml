@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="WaterSortPuzzle.MainPage">
+             xmlns:viewModel="clr-namespace:WaterSortPuzzle.ViewModels"
+             x:Class="WaterSortPuzzle.MainPage"
+             x:DataType="viewModel:MainWindowVM">
 
     <Grid RowDefinitions="auto,*,auto" VerticalOptions="Fill">
 
@@ -16,7 +18,7 @@
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                 <Button Text="New Level" Style="{StaticResource NavigationButtonPrimary}"/>
                 <Button Text="Restart level" Style="{StaticResource NavigationButtonPrimary}"/>
-                <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}"/>
+                <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateCommand}"/>
             </StackLayout>
             <BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>
         </StackLayout>
