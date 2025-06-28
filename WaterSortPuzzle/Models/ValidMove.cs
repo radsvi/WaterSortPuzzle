@@ -1,6 +1,6 @@
 ﻿namespace WaterSortPuzzle.Models
 {
-    internal class ValidMove // prejmenovat na SolvingStep
+    public class ValidMove // prejmenovat na SolvingStep
     {
         public ValidMove(PositionPointer source, PositionPointer target, LiquidColor[,] gameState, bool isTargetSingleColor = false, MoveType moveType = MoveType.Standard)
         {

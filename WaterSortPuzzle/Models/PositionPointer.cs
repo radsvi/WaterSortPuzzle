@@ -1,6 +1,6 @@
 ﻿namespace WaterSortPuzzle.Models
 {
-    internal class PositionPointer
+    public class PositionPointer
     {
         private protected PositionPointer() {}
         public PositionPointer(LiquidColor[,] gameState, int x, int y)

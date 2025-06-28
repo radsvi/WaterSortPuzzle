@@ -1,6 +1,6 @@
 ﻿namespace WaterSortPuzzle.Models
 {
-    public class AutoSolve : ViewModelBase
+    public partial class AutoSolve : ViewModelBase
     {
         MainWindowVM mainWindowVM;
         Notification notification;
@@ -390,18 +390,18 @@
             }
             return singleColorTubes;
         }
-        private bool AskUserToContinue(TreeNode<ValidMove> treeNode, int iterations)
-        {
-            if (iterations % 1000 == 0)
-            {
-                var msgResult = MessageBox.Show($"Already went through {iterations} iterations. Do you wish to continue?", "Do you wish to continue?", MessageBoxButton.YesNo);
-                if (msgResult == MessageBoxResult.No)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+        //private bool AskUserToContinue(TreeNode<ValidMove> treeNode, int iterations)
+        //{
+        //    if (iterations % 1000 == 0)
+        //    {
+        //        var msgResult = MessageBox.Show($"Already went through {iterations} iterations. Do you wish to continue?", "Do you wish to continue?", MessageBoxButton.YesNo);
+        //        if (msgResult == MessageBoxResult.No)
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
         private void CreateListOfSteps(TreeNode<ValidMove> treeNode)
         {
             while (treeNode.Parent is not null)
@@ -540,7 +540,7 @@
             );
             mainWindowVM.DrawTubes();
 
-            mainWindowVM.RippleSurfaceAnimation(currentTubeReference);
+            //mainWindowVM.RippleSurfaceAnimation(currentTubeReference);
             mainWindowVM.OnChangingGameState();
         }
         /// <summary>

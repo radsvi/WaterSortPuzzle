@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.Enums
 {
-    internal enum MoveType
+    public enum MoveType
     {
         Standard,
         NeverWrong
