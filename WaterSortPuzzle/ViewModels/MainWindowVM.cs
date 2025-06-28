@@ -5,7 +5,7 @@ namespace WaterSortPuzzle.ViewModels
 {
     public partial class MainWindowVM : ViewModelBase
     {
-        public MainPage MainPage { get; }
+        
         //public MainWindowVM(MainPage mainPage)
         //{
         //    MainPage = mainPage;
@@ -145,10 +145,10 @@ namespace WaterSortPuzzle.ViewModels
         internal readonly string logFolderName = "log";
         #endregion
         #region Constructor
-        public MainWindowVM(MainPage mainPage, Grid containerForTubes)
+        public MainWindowVM(MainPage mainPage)
         {
             //this.WindowService = new WindowService();
-            MainPage = mainPage;
+            
             AppSettings = new AppSettings();
             Notification = new Notification(this);
 
@@ -179,7 +179,9 @@ namespace WaterSortPuzzle.ViewModels
                 new PopupScreenActions(PopupParams.SaveLevel, new SaveLevelVM(this), null, () => SaveLevel()),
             };
 
-            ContainerForTubes = containerForTubes;
+            
+            //ContainerForTubes = mainPage.FindByName("NotificationBox") as Grid;
+            ContainerForTubes = mainPage.FindByName("GridForTubes") as Grid;
 
 
             if (System.IO.Directory.Exists(logFolderName) == false) System.IO.Directory.CreateDirectory(logFolderName);

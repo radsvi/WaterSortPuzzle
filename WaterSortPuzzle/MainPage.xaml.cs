@@ -11,7 +11,7 @@
 
             //BindingContext = new MainWindowVM();
             //BindingContext = ServiceHelper.GetService<MainWindowVM>();
-            var viewModel = new MainWindowVM(this, NotificationBox);
+            var viewModel = new MainWindowVM(this);
             BindingContext = viewModel;
         }
     }
