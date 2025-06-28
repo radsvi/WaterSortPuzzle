@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.ViewModels
 {
-    public class DetailPageVM
+    public partial class DetailPageVM
     {
-        public DetailPageVM()
-        {
-            
-        }
+        [RelayCommand]
+        public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
     }
 }
