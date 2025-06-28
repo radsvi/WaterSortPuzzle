@@ -189,7 +189,6 @@
         //    }
         //    return newTubes;
         //}
-        [RelayCommand]
         bool CanDelete()
         {
             foreach (var savedLevel in LoadLevelList)

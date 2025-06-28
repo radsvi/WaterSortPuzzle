@@ -3,7 +3,7 @@ using ColN = WaterSortPuzzle.Enums.LiquidColorName; // creating alias so that I 
 
 namespace WaterSortPuzzle.Models
 {
-    public class GameState : ViewModelBase
+    public partial class GameState : ViewModelBase
     {
         MainWindowVM mainWindowVM;
         AppSettings appSettings;

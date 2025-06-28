@@ -19,7 +19,7 @@
         {
             MainPageVM = mainPageVM;
             //NotificationList = new NotificationsList(MainWindowVM.MainWindow.NotificationBox);
-            NotificationBox = mainPageVM.MainPage.NotificationBox;
+            //NotificationBox = mainPageVM.MainPage.NotificationBox;
         }
         public void Show(string text) => Show(text, MessageType.Information);
         public void Show(string text, int closeDelay = closeDelayDefault) => Show(text, MessageType.Information, closeDelay);
