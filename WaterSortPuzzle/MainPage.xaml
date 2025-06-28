@@ -27,7 +27,7 @@
         <!-- // Mid section // -->
         <!-- // Notification Overlay // -->
         <ScrollView VerticalOptions="Start" HeightRequest="62" Grid.Row="1">
-            <StackLayout VerticalOptions="Start" x:Name="NotificationBox"/>
+            <Grid VerticalOptions="Start" x:Name="NotificationBox"/>
             
             <!--<controls:QuickNotificationOverlay Title="Testovaci notifikace"/>-->
         </ScrollView>

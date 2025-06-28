@@ -5,12 +5,13 @@
         //internal AppSettings AppSettings { get; }
 
         //public MainPage()
-        public MainPage(MainWindowVM viewModel)
+        public MainPage()
         {
             InitializeComponent();
 
             //BindingContext = new MainWindowVM();
             //BindingContext = ServiceHelper.GetService<MainWindowVM>();
+            var viewModel = new MainWindowVM(this, NotificationBox);
             BindingContext = viewModel;
         }
     }
