@@ -1,12 +1,5 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using WaterSortGame.Models;
-using WaterSortPuzzle.MVVM;
 
 namespace WaterSortPuzzle.ViewModels
 {
@@ -19,10 +12,11 @@ namespace WaterSortPuzzle.ViewModels
         //}
 
         [RelayCommand]
-        async Task Navigate()
-        {
-            await AppShell.Current.GoToAsync(nameof(DetailPage));
-        }
+        async Task Navigate() => await AppShell.Current.GoToAsync(nameof(DetailPage));
+        [RelayCommand]
+        public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
+
+
 
 
 
@@ -67,7 +61,7 @@ namespace WaterSortPuzzle.ViewModels
                 }
             }
         }
-        private UniformGrid ContainerForTubes;
+        private Grid ContainerForTubes;
 
         private ViewModelBase _selectedViewModel;
         public ViewModelBase SelectedViewModel
@@ -152,10 +146,10 @@ namespace WaterSortPuzzle.ViewModels
         internal readonly string logFolderName = "log";
         #endregion
         #region Constructor
-        public MainWindowVM(MainWindow mainWindow, UniformGrid containerForTubes)
+        public MainWindowVM(MainPage mainPage, Grid containerForTubes)
         {
-            this.WindowService = new WindowService();
-            MainWindow = mainWindow;
+            //this.WindowService = new WindowService();
+            MainWindow = mainPage;
             AppSettings = new AppSettings();
             Notification = new Notification(this);
 
@@ -197,20 +191,20 @@ namespace WaterSortPuzzle.ViewModels
         }
         #endregion
         #region Navigation
-        public RelayCommand CloseWindowCommand => new RelayCommand(execute => CloseWindow());
-        private void CloseWindow()
+        [RelayCommand]
+        private async void CloseWindow()
         {
             if (SelectedViewModel == null)
             {
-                WindowService?.CloseWindow();
+                //WindowService?.CloseWindow();
+                await NavigateBack();
             }
             else
             {
                 ClosePopupWindow();
             }
         }
-        public RelayCommand CancelScreenCommand => new RelayCommand(execute => ClosePopupWindow());
-        public RelayCommand ConfirmCommand => new RelayCommand(execute => ConfirmPopup());
+        [RelayCommand]
         private void ConfirmPopup()
         {
             if (SelectedViewModel == null)
@@ -221,11 +215,12 @@ namespace WaterSortPuzzle.ViewModels
             var action = PopupActions.Where(x => x.SelectedViewModel.GetType() == SelectedViewModel.GetType());
             action.ElementAt(0)?.ConfirmationAction.Invoke();
         }
+        [RelayCommand]
         internal void ClosePopupWindow()
         {
             PopupWindow.Execute(null);
         }
-        public RelayCommand AddExtraTubeCommand => new RelayCommand(execute => AddExtraTube(), canExecute => GameState.CanAddExtraTube());
+        [RelayCommand]
         private void AddExtraTube()
         {
             GameState.AddExtraTube();
@@ -237,7 +232,7 @@ namespace WaterSortPuzzle.ViewModels
             GameState.GenerateNewLevel();
             OnStartingLevel();
         }
-        public RelayCommand RestartLevel_Command => new RelayCommand(execute => RestartLevel());
+        [RelayCommand]
         public void RestartLevel()
         {
             ClosePopupWindow();
@@ -275,18 +270,16 @@ namespace WaterSortPuzzle.ViewModels
 
             savedLevelList.Add(new StoredLevel(GameState.StartingPosition, NoteForSavedLevel));
 
-            Settings.Default.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
+            AppSettings.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
             //Settings.Default.SavedLevels = JsonConvert.SerializeObject(new ObservableCollection<StoredLevel>() { new StoredLevel(TubesManager.SavedStartingTubes) });
-            Settings.Default.Save();
             NoteForSavedLevel = null;
 
             TokenSource = new CancellationTokenSource();
             var token = TokenSource.Token;
             PopupWindowNotification(token);
         }
-        public RelayCommand CopyExportStringCommand => new RelayCommand(execute => GameState.CopyExportString());
-        public RelayCommand AddPresetLevels_Command => new RelayCommand(execute => LoadLevelVM.AddPresetLevels());
-        public RelayCommand ExportStepBack_Command => new RelayCommand(execute => GameState.WriteToFileStepBack());
+        //public RelayCommand AddPresetLevels_Command => new RelayCommand(execute => LoadLevelVM.AddPresetLevels());
+        //public RelayCommand ExportStepBack_Command => new RelayCommand(execute => GameState.WriteToFileStepBack());
         public CancellationTokenSource TokenSource { get; set; } = null;
         public async void PopupWindowNotification(CancellationToken token)
         {
@@ -309,20 +302,19 @@ namespace WaterSortPuzzle.ViewModels
         {
             TokenSource?.Cancel();
         }
-        public RelayCommand StepBackCommand => new RelayCommand(execute => GameState.StepBack(), canExecute => GameState.SavedGameStates.Count > 0 && AutoSolve.LimitToOneStep is false);
-        public RelayCommand OpenOptionsWindowCommand => new RelayCommand(execute => WindowService?.OpenOptionsWindow(this));
+        //public RelayCommand OpenOptionsWindowCommand => new RelayCommand(execute => WindowService?.OpenOptionsWindow(this));
         //public RelayCommand LevelCompleteWindowCommand => new RelayCommand(execute => windowService?.OpenLevelCompleteWindow(this));
-        public RelayCommand OpenHelpFromOptionsCommand => new RelayCommand(execute =>
-        {
-            WindowService?.CloseWindow();
-            SelectedViewModel = new HelpVM(this);
-        });
+        //public RelayCommand OpenHelpFromOptionsCommand => new RelayCommand(execute =>
+        //{
+        //    WindowService?.CloseWindow();
+        //    SelectedViewModel = new HelpVM(this);
+        //});
         //public RelayCommand DisplayQuickNotificationCommand => new RelayCommand(execute => DisplayQuickNotification("asdf"));
         //private void DisplayQuickNotification(string displayText)
         //{
         //    Notification.Show(displayText);
         //}
-        public RelayCommand TestMethodCommand => new RelayCommand(execute => TestMethod());
+        [RelayCommand]
         private void TestMethod()
         {
 #if DEBUG
@@ -372,7 +364,7 @@ namespace WaterSortPuzzle.ViewModels
 
         #endregion
         #region Moving Liquids
-        public RelayCommand SelectTubeCommand => new RelayCommand(obj => OnTubeButtonClick(obj));
+        [RelayCommand]
         internal void OnTubeButtonClick(object obj)
         {
             if (UIEnabled == false)
@@ -505,7 +497,7 @@ namespace WaterSortPuzzle.ViewModels
 
         #endregion
         #region Draw tubes from code
-        [Obsolete] public RelayCommand TestDraw_Command => new RelayCommand(execute => DrawTubes());
+        //[Obsolete] public RelayCommand TestDraw_Command => new RelayCommand(execute => DrawTubes());
         public void DrawTubes()
         {
             TubeCount = (int)Math.Ceiling((decimal)GameState.GetLength(0) / 2);
@@ -533,40 +525,40 @@ namespace WaterSortPuzzle.ViewModels
         /// </summary>
         /// <param name="container"></param>
         /// <returns></returns>
-        public static Visual GetDescendantByTypeAndName(Visual element, Type type, string layerName)
-        {
-            if (element == null)
-            {
-                return null;
-            }
-            if (element.GetType() == type)
-            {
-                Panel foundElementPanel = element as Panel;
-                if (foundElementPanel.Name == layerName)
-                {
-                    return element;
-                }
-            }
-            Visual foundElement = null;
-            if (element is FrameworkElement)
-            {
-                (element as FrameworkElement).ApplyTemplate();
-            }
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
-            {
-                Visual visual = VisualTreeHelper.GetChild(element, i) as Visual;
-                foundElement = GetDescendantByTypeAndName(visual, type, layerName);
-                if (foundElement != null)
-                {
-                    Panel foundElementPanel = foundElement as Panel;
-                    if (foundElementPanel.Name == layerName)
-                    {
-                        break;
-                    }
-                }
-            }
-            return foundElement;
-        }
+        //public static VisualElement GetDescendantByTypeAndName(VisualElement element, Type type, string layerName)
+        //{
+        //    if (element == null)
+        //    {
+        //        return null;
+        //    }
+        //    if (element.GetType() == type)
+        //    {
+        //        Grid foundElementPanel = element as Grid;
+        //        if (foundElementPanel.Name == layerName)
+        //        {
+        //            return element;
+        //        }
+        //    }
+        //    VisualElement foundElement = null;
+        //    if (element is FrameworkElement)
+        //    {
+        //        (element as FrameworkElement).ApplyTemplate();
+        //    }
+        //    for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
+        //    {
+        //        VisualElement visual = VisualTreeHelper.GetChild(element, i) as VisualElement;
+        //        foundElement = GetDescendantByTypeAndName(visual, type, layerName);
+        //        if (foundElement != null)
+        //        {
+        //            Panel foundElementPanel = foundElement as Panel;
+        //            if (foundElementPanel.Name == layerName)
+        //            {
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    return foundElement;
+        //}
         //public static Visual GetDescendantByType(Visual element, Type type)
         //{
         //    if (element == null)
@@ -670,108 +662,109 @@ namespace WaterSortPuzzle.ViewModels
 
             return (brush, gridElement);
         }
-        internal void RippleSurfaceAnimation(TubeReference currentTubeReference)
-        {
-            TubeControl tubeControl = ContainerForTubes.Children[currentTubeReference.TubeId] as TubeControl;
+        //internal void RippleSurfaceAnimation(TubeReference currentTubeReference)
+        //{
+        //    TubeControl tubeControl = (ContainerForTubes.Children[currentTubeReference.TubeId] as TubeControl)!;
 
-            // Getting reference to the main grid that contains individual liquids in a tube.
-            Grid container = (GetDescendantByTypeAndName(tubeControl, typeof(Grid), "TubeGrid")) as Grid;
+        //    // Getting reference to the main grid that contains individual liquids in a tube.
+        //    //Grid container = (GetDescendantByTypeAndName(tubeControl, typeof(Grid), "TubeGrid")) as Grid;
+        //    Grid container = (tubeControl.FindByName("TubeGrid") as Grid)!;
 
-            (var brush, var gridElement) = CreateVerticalTubeAnimationBackground(currentTubeReference);
-            container.Children.Add(gridElement);
+        //    (var brush, var gridElement) = CreateVerticalTubeAnimationBackground(currentTubeReference);
+        //    container.Children.Add(gridElement);
 
-            Grid.SetRow(gridElement, GameState.Layers - 1 - currentTubeReference.TargetEmptyRow - currentTubeReference.NumberOfRepeatingLiquids + 1);
-            Grid.SetRowSpan(gridElement, currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
+        //    Grid.SetRow(gridElement, GameState.Layers - 1 - currentTubeReference.TargetEmptyRow - currentTubeReference.NumberOfRepeatingLiquids + 1);
+        //    Grid.SetRowSpan(gridElement, currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
 
-            //Canvas.SetZIndex(borderElement, 3);
-            //Grid.SetZIndex(borderElement, 4);
+        //    //Canvas.SetZIndex(borderElement, 3);
+        //    //Grid.SetZIndex(borderElement, 4);
 
-            StartAnimatingSurface(brush, container, gridElement, currentTubeReference.NumberOfRepeatingLiquids);
-        }
-        private void StartAnimatingSurface(ImageBrush brush, Grid container, Grid gridElement, int numberOfLiquids)
-        {
-            if (brush is null)
-            {
-                return;
-            }
+        //    StartAnimatingSurface(brush, container, gridElement, currentTubeReference.NumberOfRepeatingLiquids);
+        //}
+        //private void StartAnimatingSurface(ImageBrush brush, Grid container, Grid gridElement, int numberOfLiquids)
+        //{
+        //    if (brush is null)
+        //    {
+        //        return;
+        //    }
 
-            int yPosFrom = 390;
-            int xSize = 129;
-            int ySize = 800;
+        //    int yPosFrom = 390;
+        //    int xSize = 129;
+        //    int ySize = 800;
 
-            var viewportAnimation = new RectAnimation()
-            {
-                From = new Rect(0, yPosFrom + 52 * numberOfLiquids, xSize, ySize),
-                To = new Rect(180 * numberOfLiquids, yPosFrom, xSize, ySize),
-                Duration = TimeSpan.FromSeconds(0.8 * numberOfLiquids)
-            };
-            viewportAnimation.Completed += new EventHandler((sender, e) => ViewportAnimation_Completed(sender, e, container, gridElement));
-            brush.BeginAnimation(ImageBrush.ViewportProperty, viewportAnimation);
-        }
+        //    var viewportAnimation = new RectAnimation()
+        //    {
+        //        From = new Rect(0, yPosFrom + 52 * numberOfLiquids, xSize, ySize),
+        //        To = new Rect(180 * numberOfLiquids, yPosFrom, xSize, ySize),
+        //        Duration = TimeSpan.FromSeconds(0.8 * numberOfLiquids)
+        //    };
+        //    viewportAnimation.Completed += new EventHandler((sender, e) => ViewportAnimation_Completed(sender, e, container, gridElement));
+        //    brush.BeginAnimation(ImageBrush.ViewportProperty, viewportAnimation);
+        //}
         private void ViewportAnimation_Completed(object? sender, EventArgs e, Grid container, Grid gridElement)
         {
             container.Children.Remove(gridElement);
         }
-        private void MoveAndTiltTube(TubeReference tubeReference)
-        {
-            if (tubeReference.ButtonElement is null)
-            {
-                return;
-            }
+        //private void MoveAndTiltTube(TubeReference tubeReference)
+        //{
+        //    if (tubeReference.ButtonElement is null)
+        //    {
+        //        return;
+        //    }
 
-            //tubeReference.ButtonElement.RenderTransform = new RotateTransform();
+        //    //tubeReference.ButtonElement.RenderTransform = new RotateTransform();
 
-            //Storyboard storyboard = new Storyboard();
-            //storyboard.Duration = new Duration(TimeSpan.FromSeconds(10.0));
+        //    //Storyboard storyboard = new Storyboard();
+        //    //storyboard.Duration = new Duration(TimeSpan.FromSeconds(10.0));
 
-            //DoubleAnimation rotateAnimation = new DoubleAnimation()
-            //{
-            //    From = 0,
-            //    To = 60,
-            //    Duration = TimeSpan.FromSeconds(2)
-            //};
-            //Storyboard.SetTarget(rotateAnimation, tubeReference.ButtonElement);
-            //Storyboard.SetTargetProperty(rotateAnimation, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
+        //    //DoubleAnimation rotateAnimation = new DoubleAnimation()
+        //    //{
+        //    //    From = 0,
+        //    //    To = 60,
+        //    //    Duration = TimeSpan.FromSeconds(2)
+        //    //};
+        //    //Storyboard.SetTarget(rotateAnimation, tubeReference.ButtonElement);
+        //    //Storyboard.SetTargetProperty(rotateAnimation, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
 
-            //storyboard.Children.Add(rotateAnimation);
-            //MainWindow.Resources.Add("Storyboard", storyboard);
+        //    //storyboard.Children.Add(rotateAnimation);
+        //    //MainWindow.Resources.Add("Storyboard", storyboard);
 
-            //storyboard.Begin();
-
-
-
-            //var HeightAnimation = new ThicknessAnimation() { To = new Thickness(0, 0, 0, 15), Duration = TimeSpan.FromSeconds(0.1) };
-            //tubeReference.ButtonElement.BeginAnimation(Button.MarginProperty, HeightAnimation);
-
-            //tubeReference.ButtonElement.RenderTransform = new RotateTransform();
-            //var bodymove = new TranslateTransform();
-
-
-            //DoubleAnimation rotateAnimation = new DoubleAnimation()
-            //{
-            //    From = 0,
-            //    To = 60,
-            //    Duration = TimeSpan.FromSeconds(2)
-            //};
-            ////var propertypath = new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)");
-
-            //tubeReference.ButtonElement.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
+        //    //storyboard.Begin();
 
 
 
-            RotateTransform rotateTransform = new RotateTransform();
-            DoubleAnimation doubleAnimation = new DoubleAnimation()
-            {
-                From = 0,
-                To = 60,
-                Duration = TimeSpan.FromSeconds(1)
-            };
-            //doubleAnimation.RepeatBehavior = RepeatBehavior.Forever;
-            //tubeReference.ButtonElement.RenderTransformOrigin = new Point(x, y);
-            tubeReference.ButtonElement.RenderTransform = rotateTransform;
-            rotateTransform.BeginAnimation(RotateTransform.AngleProperty, doubleAnimation);
+        //    //var HeightAnimation = new ThicknessAnimation() { To = new Thickness(0, 0, 0, 15), Duration = TimeSpan.FromSeconds(0.1) };
+        //    //tubeReference.ButtonElement.BeginAnimation(Button.MarginProperty, HeightAnimation);
 
-        }
+        //    //tubeReference.ButtonElement.RenderTransform = new RotateTransform();
+        //    //var bodymove = new TranslateTransform();
+
+
+        //    //DoubleAnimation rotateAnimation = new DoubleAnimation()
+        //    //{
+        //    //    From = 0,
+        //    //    To = 60,
+        //    //    Duration = TimeSpan.FromSeconds(2)
+        //    //};
+        //    ////var propertypath = new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)");
+
+        //    //tubeReference.ButtonElement.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
+
+
+
+        //    RotateTransform rotateTransform = new RotateTransform();
+        //    DoubleAnimation doubleAnimation = new DoubleAnimation()
+        //    {
+        //        From = 0,
+        //        To = 60,
+        //        Duration = TimeSpan.FromSeconds(1)
+        //    };
+        //    //doubleAnimation.RepeatBehavior = RepeatBehavior.Forever;
+        //    //tubeReference.ButtonElement.RenderTransformOrigin = new Point(x, y);
+        //    tubeReference.ButtonElement.RenderTransform = rotateTransform;
+        //    rotateTransform.BeginAnimation(RotateTransform.AngleProperty, doubleAnimation);
+
+        //}
         #endregion
         #region Other Methods
         //private void Tubes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -790,8 +783,7 @@ namespace WaterSortPuzzle.ViewModels
         //    //TubeCount = (int)Math.Ceiling((decimal)Tubes.Count / 2);
         //    TubeCount = Tubes.Count;
         //}
-        public RelayCommand AutoSolveCommand => new RelayCommand(execute => AutoSolve.CalculateNextStep(GameState.gameGrid), canExecute => AutoSolve.CompleteSolution.Count == 0);
-        public RelayCommand StepThroughCommand => new RelayCommand(execute => AutoSolve.StepThrough(), canExecute => AutoSolve.CompleteSolution.Count > 0 && AutoSolve.CurrentSolutionStep > 0);
+        //public RelayCommand StepThroughCommand => new RelayCommand(execute => AutoSolve.StepThrough(), canExecute => AutoSolve.CompleteSolution.Count > 0 && AutoSolve.CurrentSolutionStep > 0);
         #endregion
     }
 }

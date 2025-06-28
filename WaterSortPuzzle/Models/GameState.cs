@@ -1,7 +1,7 @@
 ﻿
 using ColN = WaterSortPuzzle.Enums.LiquidColorName; // creating alias so that I dont have to have long names in GenerateDebugLevel();
 
-namespace WaterSortGame.Models
+namespace WaterSortPuzzle.Models
 {
     public class GameState : ViewModelBase
     {
@@ -13,7 +13,6 @@ namespace WaterSortGame.Models
         public string ReadableGameState
         {
             get { 
-                
                 return GameStateToString(gameGrid, StringFormat.Numbers); 
             }
             set
@@ -528,6 +527,7 @@ namespace WaterSortGame.Models
             }
             return true;
         }
+        [RelayCommand]
         public void StepBack()
         {
             if (SavedGameStates.Count == 0)
@@ -550,7 +550,8 @@ namespace WaterSortGame.Models
 
             mainWindowVM.DrawTubes();
         }
-        public void WriteToFileStepBack()
+        [RelayCommand]
+        public async void WriteToFileStepBack()
         {
             string exportString = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + "\n";
             foreach (var savedState in SavedGameStates)
@@ -562,7 +563,9 @@ namespace WaterSortGame.Models
 
             //System.IO.File.WriteAllText("ExportStepBack.log", exportString);
             System.IO.File.AppendAllText("Export-StepBack.log", exportString);
-            mainWindowVM.WindowService?.CloseWindow(); // close options menu
+
+            //mainWindowVM.WindowService?.CloseWindow(); // close options menu
+            await mainWindowVM.NavigateBack();
         }
 
         private int CountColors()
@@ -586,10 +589,13 @@ namespace WaterSortGame.Models
             }
             return numberOfColors;
         }
-        public void CopyExportString()
+        [RelayCommand]
+        public async Task CopyExportString()
         {
-            Clipboard.SetText(ReadableGameState);
-            mainWindowVM.ClosePopupWindow();
+            //Clipboard.SetText(ReadableGameState);
+            await Clipboard.Default.SetTextAsync(ReadableGameState);
+            //mainWindowVM.ClosePopupWindow();
+            await mainWindowVM.NavigateBack();
         }
         //public static string GameStateToString(LiquidColorNew[,] gameState, bool enableSort = false)
         //{

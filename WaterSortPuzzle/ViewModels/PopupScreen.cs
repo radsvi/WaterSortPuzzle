@@ -1,6 +1,6 @@
 ﻿namespace WaterSortPuzzle.ViewModels
 {
-    internal class PopupScreenBase : ViewModelBase
+    public class PopupScreenBase : ViewModelBase
     {
         public MainWindowVM MainWindowVM { get; set; }
         public PopupScreenBase(object viewModel)

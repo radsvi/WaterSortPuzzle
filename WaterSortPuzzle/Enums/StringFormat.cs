@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.Enums
 {
-    internal enum StringFormat
+    public enum StringFormat
     {
         Names,
         Numbers

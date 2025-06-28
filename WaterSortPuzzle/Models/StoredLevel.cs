@@ -1,7 +1,7 @@
 ﻿
 namespace WaterSortPuzzle.Models
 {
-    class StoredLevel : ViewModelBase
+    public class StoredLevel : ViewModelBase
     {
         [JsonProperty] public int NumberOfColors { get; private set; }
         [JsonProperty] public DateTime Date { get; private set; }

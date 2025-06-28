@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.Enums
 {
-    internal enum PopupParams
+    public enum PopupParams
     {
         NewLevel,
         RestartLevel,

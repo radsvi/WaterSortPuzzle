@@ -1,6 +1,6 @@
 ﻿namespace WaterSortPuzzle.Models
 {
-    class TubeReference
+    public class TubeReference
     {
         private int targetEmptyRow;
         public TubeReference(TubeControl tubeControl, Button buttonElement, int tubeId, Grid gridElement)

@@ -1,7 +1,7 @@
 ﻿
 namespace WaterSortPuzzle.Models
 {
-    internal class LiquidColor
+    public class LiquidColor
     {
         [JsonProperty] public LiquidColorName Name { get; private set; }
         [JsonProperty] public SolidColorBrush Brush { get; private set; }

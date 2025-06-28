@@ -1,6 +1,6 @@
 ﻿namespace WaterSortPuzzle.ViewModels
 {
-    partial class LoadLevelVM : PopupScreenBase
+    public partial class LoadLevelVM : PopupScreenBase
     {
         private AppSettings appSettings;
         public LoadLevelVM(object viewModel) : base(viewModel)
@@ -190,7 +190,7 @@
         //    return newTubes;
         //}
         [RelayCommand]
-        private bool CanDelete()
+        bool CanDelete()
         {
             foreach (var savedLevel in LoadLevelList)
             {
@@ -274,6 +274,7 @@
             }
             return returnArray;
         }
+        [RelayCommand]
         public void AddPresetLevels()
         {
             // ## MAUI

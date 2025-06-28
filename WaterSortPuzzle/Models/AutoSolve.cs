@@ -817,7 +817,7 @@
         }
 
         #region Controls
-
+        [RelayCommand]
         public void CalculateNextStep(LiquidColor[,] gameState)
         {
             //Notification.Show("Game grid locked while automatic solution is engaged",MessageType.Information, 10000);

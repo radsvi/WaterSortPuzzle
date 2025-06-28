@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.Enums
 {
-    internal enum LiquidColorName
+    public enum LiquidColorName
     {
         Blank = -1,
         Blue = 0,

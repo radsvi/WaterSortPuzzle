@@ -88,7 +88,7 @@
     //    //}
     //}
 
-    internal class Tube : ViewModelBase
+    public class Tube : ViewModelBase
     {
         public int Id { get; set; }
         private static int tubeIdCounter = 0;
