@@ -10,7 +10,7 @@
         public CancellationTokenSource TokenSource { get; private set; }
         public QuickNotificationOverlay RefVisualElement { get; private set; }
     }
-    internal class Notification
+    public class Notification
     {
         const int closeDelayDefault = 2000; // in ms
         public void Show(string text) => Show(text, MessageType.Information);

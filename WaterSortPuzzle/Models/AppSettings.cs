@@ -2,7 +2,7 @@
 
 namespace WaterSortPuzzle.Models
 {
-    internal partial class AppSettings : ObservableObject
+    public partial class AppSettings : ObservableObject
     {
         const int maximumExtraTubesUpperLimit = 20;
         public bool LoadDebugLevel
@@ -108,6 +108,11 @@ namespace WaterSortPuzzle.Models
         {
             get => Preferences.Default.Get(nameof(OptionsWindowWidth), 800);
             set => Preferences.Set(nameof(OptionsWindowWidth), value);
+        }
+        public string SavedLevels
+        {
+            get => Preferences.Default.Get(nameof(SavedLevels), string.Empty);
+            set => Preferences.Set(nameof(SavedLevels), value);
         }
     }
 }

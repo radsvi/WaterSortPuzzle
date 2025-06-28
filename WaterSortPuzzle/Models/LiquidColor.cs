@@ -1,25 +1,6 @@
 ﻿
 namespace WaterSortPuzzle.Models
 {
-    internal enum LiquidColorName
-    {
-        Blank = -1,
-        Blue = 0,
-        Indigo, // GrayBlue
-        Turquoise,
-        Orange,
-        Gray,
-        Purple,
-        Yellow,
-        Pink,
-        Green,
-        LightGreen,
-        Olive,
-        Red,
-        Brown,
-        Lime,
-        Scarlet,
-    }
     internal class LiquidColor
     {
         [JsonProperty] public LiquidColorName Name { get; private set; }
