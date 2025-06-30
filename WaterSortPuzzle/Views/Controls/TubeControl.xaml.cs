@@ -8,18 +8,18 @@ public partial class TubeControl : ContentView
     //{
     //	InitializeComponent();
     //}
-    internal TubeControl(MainVM mainPageVM, int tubeId, LiquidColor[] liquidColors)
+    internal TubeControl(int tubeId, LiquidColor[] liquidColors)
     {
         InitializeComponent();
         //(this.Content as FrameworkElement).BindingContext = this;
         BindingContext = this;
 
-        MainPageVM = mainPageVM;
         TubeId = tubeId;
         LiquidColors = liquidColors;
     }
-    private MainVM MainPageVM { get; }
-    public int TubeId { get; }
+    public TubeControl(){}
+
+    public int TubeId { get; set; }
 
 
 

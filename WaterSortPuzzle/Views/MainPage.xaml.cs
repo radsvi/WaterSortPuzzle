@@ -1,4 +1,4 @@
-﻿namespace WaterSortPuzzle
+﻿namespace WaterSortPuzzle.Views
 {
     public partial class MainPage : ContentPage
     {

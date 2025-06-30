@@ -2,18 +2,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:WaterSortPuzzle.ViewModels"
+             xmlns:models="clr-namespace:WaterSortPuzzle.Models"
              xmlns:controls="clr-namespace:WaterSortPuzzle.Views.Controls"
-             x:Class="WaterSortPuzzle.MainPage"
+             x:Class="WaterSortPuzzle.Views.MainPage"
              x:DataType="viewModel:MainVM">
 
     <Grid RowDefinitions="auto,*,auto" VerticalOptions="Fill">
-
+        <!--#region Top section -->
 
         <!-- // AutoSolve box // -->
         <!--<Border BorderBrush="AliceBlue" BorderThickness="1" HorizontalAlignment="Left" Background="White" Visibility="{Binding AutoSolve.DisplayIterations}" d:Visibility="Visible">
             <TextBlock Text="{Binding AutoSolve.Iterations}" d:Text="1" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
         </Border>-->
-        
+
         <!-- // Top Bar // -->
         <StackLayout Orientation="Vertical" Margin="5">
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
@@ -23,26 +24,44 @@
             </StackLayout>
             <BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>
         </StackLayout>
+        <!--#endregion-->
 
         <!-- // Mid section // -->
         <!-- // Notification Overlay // -->
         <ScrollView VerticalOptions="Start" HeightRequest="62" Grid.Row="1">
-            <StackLayout VerticalOptions="Start" x:Name="NotificationBox"/>
+            <StackLayout VerticalOptions="Start" x:Name="NotificationBox" />
             
             <!--<controls:QuickNotificationOverlay Title="Testovaci notifikace"/>-->
         </ScrollView>
         <!-- // Grid for Tubes // -->
         <ScrollView Grid.Row="1" Margin="0,5,0,0">
             <Grid>
-                <Grid VerticalOptions="Start" HorizontalOptions="Center" x:Name="GridForTubes">
-                    <!--<usercontrols:TubeControl TubeItem="{Binding Tubes[0]}"/>-->
-                </Grid>
+                <CollectionView SelectionMode="None" ItemsSource="{Binding TubesProp}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Tube">
+                            <StackLayout Orientation="Vertical">
+                                <!--<Label Text="{Binding Path=LiquidColors, Source={RelativeSource AncestorType={x:Type ContentView}}}" x:Name="Titlelabel" />-->
+                                <Label Text="{Binding Layers[3].Name}"/>
+                                <BoxView BackgroundColor="{Binding Layers[3].Brush}" WidthRequest="20" HeightRequest="20"/>
+                                <BoxView BackgroundColor="{Binding Layers[2].Brush}" WidthRequest="20" HeightRequest="20"/>
+                                <BoxView BackgroundColor="{Binding Layers[1].Brush}" WidthRequest="20" HeightRequest="20"/>
+                                <BoxView BackgroundColor="{Binding Layers[0].Brush}" WidthRequest="20" HeightRequest="20"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <!--<Grid VerticalOptions="Start" HorizontalOptions="Center" x:Name="GridForTubes">
+                    <usercontrols:TubeControl TubeItem="{Binding Tubes[0]}"/>
+                </Grid>-->
                 <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding UIEnabled}">
                     <Label Text="Game grid locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
                 </Border>
             </Grid>
         </ScrollView>
-
+        <!--#region Bottom section -->
         <!-- // Bottom Bar // -->
         <StackLayout Orientation="Vertical" Grid.Row="2" Margin="5">
             <BoxView Style="{StaticResource Separator}" Margin="0,0,0,4"/>
@@ -68,6 +87,7 @@
             </Grid>
 
         </StackLayout>
+        <!--#endregion-->
 
     </Grid>
 </ContentPage>

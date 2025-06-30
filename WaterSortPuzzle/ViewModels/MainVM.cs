@@ -11,6 +11,20 @@ namespace WaterSortPuzzle.ViewModels
         [RelayCommand]
         public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
         
+        private ObservableCollection<Tube> tubesProp = new ObservableCollection<Tube>();
+        public ObservableCollection<Tube> TubesProp
+        {
+            get { return tubesProp; }
+            private set
+            {
+                if (value != tubesProp)
+                {
+                    tubesProp = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         //public IWindowService WindowService { get; }
         public AppSettings AppSettings { get; }
         public Notification Notification { get; }
@@ -169,6 +183,18 @@ namespace WaterSortPuzzle.ViewModels
             if (System.IO.Directory.Exists(logFolderName) == false) System.IO.Directory.CreateDirectory(logFolderName);
 
             AutoSolve = new AutoSolve(this);
+
+
+            //TubeControl(MainVM mainPageVM, int tubeId, LiquidColor[] liquidColors)
+            //TestovaciProperty.Add(new TubeControl(tubeId++, new LiquidColor[] { new LiquidColor(1),new LiquidColor(2),new LiquidColor(3),new LiquidColor(4), }));
+            //TestovaciProperty.Add(new TubeControl(tubeId++, new LiquidColor[] { new LiquidColor(1),new LiquidColor(2),new LiquidColor(3),new LiquidColor(4), }));
+            //TestovaciProperty.Add(new TubeControl(tubeId++, new LiquidColor[] { new LiquidColor(1),new LiquidColor(2),new LiquidColor(3),new LiquidColor(4), }));
+            //TestovaciProperty.Add(new TubeControl(tubeId++, new LiquidColor[] { new LiquidColor(1),new LiquidColor(2),new LiquidColor(3),new LiquidColor(4), }));
+            TubesProp.Add(new Tube(1,1,2,3));
+            TubesProp.Add(new Tube(2,2,3,4));
+            TubesProp.Add(new Tube(3,3,4,5));
+            TubesProp.Add(new Tube(4,4,5,6));
+
 
             OnStartingLevel();
         }
@@ -483,24 +509,24 @@ namespace WaterSortPuzzle.ViewModels
         //[Obsolete] public RelayCommand TestDraw_Command => new RelayCommand(execute => DrawTubes());
         public void DrawTubes()
         {
-            TubeCount = (int)Math.Ceiling((decimal)GameState.GetLength(0) / 2);
+            //TubeCount = (int)Math.Ceiling((decimal)GameState.GetLength(0) / 2);
 
-            ContainerForTubes.Children.Clear(); // deletes classes of type Visual
+            //ContainerForTubes.Children.Clear(); // deletes classes of type Visual
 
-            //for (int x = 0; x < GameState.NumberOfTubes; x++)
-            for (int x = 0; x < GameState.GetLength(0); x++)
-            {
-                LiquidColor[] liquidColorsArray = new LiquidColor[GameState.Layers];
-                for (int y = 0; y < GameState.Layers; y++)
-                {
-                    liquidColorsArray[y] = GameState[x, y];
-                }
-                var tubeControl = new TubeControl(this, x, liquidColorsArray);
+            ////for (int x = 0; x < GameState.NumberOfTubes; x++)
+            //for (int x = 0; x < GameState.GetLength(0); x++)
+            //{
+            //    LiquidColor[] liquidColorsArray = new LiquidColor[GameState.Layers];
+            //    for (int y = 0; y < GameState.Layers; y++)
+            //    {
+            //        liquidColorsArray[y] = GameState[x, y];
+            //    }
+            //    var tubeControl = new TubeControl(this, x, liquidColorsArray);
 
-                // mozna to tu udelat pres ten <ContentControl> nejak
+            //    // mozna to tu udelat pres ten <ContentControl> nejak
 
-                ContainerForTubes.Children.Add(tubeControl);
-            }
+            //    ContainerForTubes.Children.Add(tubeControl);
+            //}
         }
         /// <summary>
         /// Draws border that is filled with an image that will later be animated.
