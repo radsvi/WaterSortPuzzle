@@ -5,7 +5,7 @@ namespace WaterSortPuzzle.Models
 {
     public partial class GameState : ViewModelBase
     {
-        MainWindowVM mainWindowVM;
+        MainVM mainVM;
         AppSettings appSettings;
         Notification notification;
 
@@ -89,11 +89,11 @@ namespace WaterSortPuzzle.Models
         }
         public LiquidColor[,] LastGameState { get; set; }
         public GameState() { }
-        public GameState(MainWindowVM mainWindowVM)
+        public GameState(MainVM mainVM)
         {
-            this.mainWindowVM = mainWindowVM;
-            appSettings = this.mainWindowVM.AppSettings;
-            notification = mainWindowVM.Notification;
+            this.mainVM = mainVM;
+            appSettings = this.mainVM.AppSettings;
+            notification = mainVM.Notification;
 
             //if (Tubes.Count == 0)
             //{
@@ -111,7 +111,7 @@ namespace WaterSortPuzzle.Models
         //}
         //private void OnLiquidMoving()
         //{
-        //    MainWindow.DrawTubes();
+        //    MainPage.DrawTubes();
         //}
         public void GenerateNewLevel()
         {
@@ -537,18 +537,18 @@ namespace WaterSortPuzzle.Models
 
             LiquidColor[,] lastGameStatus = SavedGameStates[SavedGameStates.Count - 1];
 
-            mainWindowVM.PropertyChangedEventPaused = true;
+            mainVM.PropertyChangedEventPaused = true;
             gameGrid = lastGameStatus;
-            mainWindowVM.PropertyChangedEventPaused = false;
+            mainVM.PropertyChangedEventPaused = false;
 
             LastGameState = CloneGrid(lastGameStatus);
 
             SavedGameStates.Remove(lastGameStatus);
 
-            if (mainWindowVM.AutoSolve.CompleteSolution.Count > 0)
-                mainWindowVM.AutoSolve.CurrentSolutionStep++;
+            if (mainVM.AutoSolve.CompleteSolution.Count > 0)
+                mainVM.AutoSolve.CurrentSolutionStep++;
 
-            mainWindowVM.DrawTubes();
+            mainVM.DrawTubes();
         }
         [RelayCommand]
         public async void WriteToFileStepBack()
@@ -564,8 +564,8 @@ namespace WaterSortPuzzle.Models
             //System.IO.File.WriteAllText("ExportStepBack.log", exportString);
             System.IO.File.AppendAllText("Export-StepBack.log", exportString);
 
-            //mainWindowVM.WindowService?.CloseWindow(); // close options menu
-            await mainWindowVM.NavigateBack();
+            //mainVM.WindowService?.CloseWindow(); // close options menu
+            await mainVM.NavigateBack();
         }
 
         private int CountColors()
@@ -594,8 +594,8 @@ namespace WaterSortPuzzle.Models
         {
             //Clipboard.SetText(ReadableGameState);
             await Clipboard.Default.SetTextAsync(ReadableGameState);
-            //mainWindowVM.ClosePopupWindow();
-            await mainWindowVM.NavigateBack();
+            //mainVM.ClosePopupWindow();
+            await mainVM.NavigateBack();
         }
         //public static string GameStateToString(LiquidColorNew[,] gameState, bool enableSort = false)
         //{

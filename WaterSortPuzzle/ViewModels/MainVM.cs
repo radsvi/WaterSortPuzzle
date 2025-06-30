@@ -3,32 +3,14 @@ using System.Windows.Input;
 
 namespace WaterSortPuzzle.ViewModels
 {
-    public partial class MainWindowVM : ViewModelBase
+    public partial class MainVM : ViewModelBase
     {
-        
-        //public MainWindowVM(MainPage mainPage)
-        //{
-        //    MainPage = mainPage;
-        //}
-
+        #region Properties
         [RelayCommand]
         async Task Navigate() => await AppShell.Current.GoToAsync(nameof(DetailPage));
         [RelayCommand]
         public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #region Properties
+        
         //public IWindowService WindowService { get; }
         public AppSettings AppSettings { get; }
         public Notification Notification { get; }
@@ -145,7 +127,7 @@ namespace WaterSortPuzzle.ViewModels
         internal readonly string logFolderName = "log";
         #endregion
         #region Constructor
-        public MainWindowVM(MainPage mainPage)
+        public MainVM(MainPage mainPage)
         {
             //this.WindowService = new WindowService();
             
@@ -728,7 +710,7 @@ namespace WaterSortPuzzle.ViewModels
         //    //Storyboard.SetTargetProperty(rotateAnimation, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
 
         //    //storyboard.Children.Add(rotateAnimation);
-        //    //MainWindow.Resources.Add("Storyboard", storyboard);
+        //    //MainPage.Resources.Add("Storyboard", storyboard);
 
         //    //storyboard.Begin();
 

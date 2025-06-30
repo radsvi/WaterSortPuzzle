@@ -13,12 +13,12 @@
     public class Notification
     {
         const int closeDelayDefault = 2000; // in ms
-        MainWindowVM MainPageVM;
+        MainVM MainPageVM;
         public StackLayout NotificationBox { get; private set; }
-        public Notification(MainWindowVM mainPageVM)
+        public Notification(MainVM mainPageVM)
         {
             MainPageVM = mainPageVM;
-            //NotificationList = new NotificationsList(MainWindowVM.MainWindow.NotificationBox);
+            //NotificationList = new NotificationsList(MainVM.MainPage.NotificationBox);
             //NotificationBox = mainPageVM.MainPage.NotificationBox;
         }
         public void Show(string text) => Show(text, MessageType.Information);
@@ -29,16 +29,16 @@
 
 
 
-        //MainWindowVM MainPageVM;
+        //MainVM MainPageVM;
         //const int closeDelayDefault = 2000; // in ms
         //private bool DisplayDebugMessages { get; } = true;
         ////public CancellationTokenSource TokenSource { get; set; } = null;
         //public StackLayout NotificationBox { get; private set; }
         ////public NotificationsList NotificationList { get; private set; }
-        //public Notification(MainWindowVM mainPageVM)
+        //public Notification(MainVM mainPageVM)
         //{
         //    MainPageVM = mainPageVM;
-        //    //NotificationList = new NotificationsList(MainWindowVM.MainWindow.NotificationBox);
+        //    //NotificationList = new NotificationsList(MainVM.Main.NotificationBox);
         //    NotificationBox = mainPageVM.MainPage.NotificationBox;
         //}
         //public void Show(string text) => Show(text, MessageType.Information);

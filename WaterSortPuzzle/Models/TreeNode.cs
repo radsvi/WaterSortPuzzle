@@ -56,7 +56,7 @@
 
         //private void GenerateNextGameState(LiquidColorNew[,] gameState, SolutionStep move, SolutionStepsOld previousStepReferer = null)
         //{
-        //    var currentState = MainWindowVM.GameState.CloneGrid(gameState);
+        //    var currentState = MainVM.GameState.CloneGrid(gameState);
 
         //    gameState[move.Target.X, move.Target.Y] = gameState[move.Source.X, move.Source.Y];
         //    gameState[move.Source.X, move.Source.Y] = null;
@@ -65,10 +65,10 @@
         //    SolvingStepsOLD.Add(upcomingStep);
 
 
-        //    MainWindowVM.GameState.SetGameState(gameState);
+        //    MainVM.GameState.SetGameState(gameState);
 
-        //    MainWindowVM.DrawTubes();
-        //    MainWindowVM.OnChangingGameState();
+        //    MainVM.DrawTubes();
+        //    MainVM.OnChangingGameState();
         //}
     }
     internal class NullTreeNode : TreeNode<ValidMove>

@@ -4,7 +4,7 @@
              xmlns:viewModel="clr-namespace:WaterSortPuzzle.ViewModels"
              xmlns:controls="clr-namespace:WaterSortPuzzle.Views.Controls"
              x:Class="WaterSortPuzzle.MainPage"
-             x:DataType="viewModel:MainWindowVM">
+             x:DataType="viewModel:MainVM">
 
     <Grid RowDefinitions="auto,*,auto" VerticalOptions="Fill">
 

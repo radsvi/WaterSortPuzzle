@@ -2,7 +2,7 @@
 {
     public partial class AutoSolve : ViewModelBase
     {
-        MainWindowVM mainWindowVM;
+        MainVM mainVM;
         Notification notification;
         readonly string exportLogFilename;
         //TreeNode<ValidMove> SolvingSteps;
@@ -56,12 +56,12 @@
         private int currentSolutionStep = 0;
         public int CurrentSolutionStep { get => currentSolutionStep; set { currentSolutionStep = value; OnPropertyChanged(); } }
         public bool LimitToOneStep { get; set; } = false; // When true - makes the AutoSolve generate only one step for each press of the button and visualises the changes. When false - generates whole solution
-        public AutoSolve(MainWindowVM mainWindowVM)
+        public AutoSolve(MainVM mainVM)
         {
-            this.mainWindowVM = mainWindowVM;
-            notification = mainWindowVM.Notification;
+            this.mainVM = mainVM;
+            notification = mainVM.Notification;
             StepThrough += StepThroughMethod;
-            exportLogFilename = this.mainWindowVM.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
+            exportLogFilename = this.mainVM.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
         }
         private async void Start(LiquidColor[,] startingPosition)
         {
@@ -175,7 +175,7 @@
 
                     if (UnvisitedChildrenExist(treeNode) == false)
                     {
-                        if (mainWindowVM.GameState.IsLevelCompleted(treeNode.Data.GameState) is false)
+                        if (mainVM.GameState.IsLevelCompleted(treeNode.Data.GameState) is false)
                         {
                             treeNode.Data.FullyVisited = true;
                             //if (treeNode.Parent is not null)
@@ -245,7 +245,7 @@
                 return new NullTreeNode(parentNode);
             }
 
-            var newGameState = mainWindowVM.GameState.CloneGrid(parentNode.Data.GameState);
+            var newGameState = mainVM.GameState.CloneGrid(parentNode.Data.GameState);
             var validMove = new ValidMove(dualColorTube, singleColorTube, newGameState, MoveType.NeverWrong);
 
             return GeneratePriorityFutureState(parentNode, validMove, hashedSteps);
@@ -531,17 +531,17 @@
             //SolvingStepsOLD.Add(upcomingStep);
 
             //previousGameState = node.Data.GameState; // tohle je gamestate kterej uchovavam jen uvnitr autosolvu
-            mainWindowVM.GameState.SetGameState(move.GameState);
+            mainVM.GameState.SetGameState(move.GameState);
             var currentTubeReference = new TubeReference(
                 move.Target.X,
                 move.GameState[move.Target.X, move.Target.Y],
                 move.Target.Y,
                 move.Source.NumberOfRepeatingLiquids
             );
-            mainWindowVM.DrawTubes();
+            mainVM.DrawTubes();
 
-            //mainWindowVM.RippleSurfaceAnimation(currentTubeReference);
-            mainWindowVM.OnChangingGameState();
+            //mainVM.RippleSurfaceAnimation(currentTubeReference);
+            mainVM.OnChangingGameState();
         }
         /// <summary>
         /// Determines how close we are to a solution. Higher value means closer to a solution
@@ -683,7 +683,7 @@
         }
         //private LiquidColorNew[,] CloneGrid(LiquidColorNew[,] gameState)
         //{
-        //    return MainWindowVM.GameState.CloneGrid(gameState);
+        //    return MainVM.GameState.CloneGrid(gameState);
         //}
         private (bool, int) AreAllLayersIdentical(LiquidColor[,] gameState, int x, int y)
         {
@@ -823,9 +823,9 @@
             //Notification.Show("Game grid locked while automatic solution is engaged",MessageType.Information, 10000);
             ResumeRequest = true; // provede se i pri prvnim spusteni, protoze je pauza na zacatku
             //ResumeRequestCounterDebug++;
-            if (mainWindowVM.UIEnabled == true) // disable UI once starting the Auto Solve process
+            if (mainVM.UIEnabled == true) // disable UI once starting the Auto Solve process
             {
-                mainWindowVM.UIEnabled = false;
+                mainVM.UIEnabled = false;
                 Start(gameState);
                 return;
             }

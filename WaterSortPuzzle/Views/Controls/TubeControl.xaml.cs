@@ -8,7 +8,7 @@ public partial class TubeControl : ContentView
     //{
     //	InitializeComponent();
     //}
-    internal TubeControl(MainWindowVM mainPageVM, int tubeId, LiquidColor[] liquidColors)
+    internal TubeControl(MainVM mainPageVM, int tubeId, LiquidColor[] liquidColors)
     {
         InitializeComponent();
         //(this.Content as FrameworkElement).BindingContext = this;
@@ -18,7 +18,7 @@ public partial class TubeControl : ContentView
         TubeId = tubeId;
         LiquidColors = liquidColors;
     }
-    private MainWindowVM MainPageVM { get; }
+    private MainVM MainPageVM { get; }
     public int TubeId { get; }
 
 

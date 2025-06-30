@@ -5,13 +5,13 @@
         private AppSettings appSettings;
         public LoadLevelVM(object viewModel) : base(viewModel)
         {
-            MainWindowVM = (MainWindowVM)viewModel;
-            appSettings = MainWindowVM.AppSettings;
+            mainVM = (MainVM)viewModel;
+            appSettings = mainVM.AppSettings;
             LoadLevelList.CollectionChanged += LoadLevelList_CollectionChanged;
-            //MainWindowVM.LoadLevelScreen();
+            //MainVM.LoadLevelScreen();
 
-            //MainWindowVM.LoadLevelList = LoadLevelList;
-            //MainWindowVM.LoadLevelVM = this;
+            //MainVM.LoadLevelList = LoadLevelList;
+            //MainVM.LoadLevelVM = this;
         }
         private StoredLevel selectedLevelForLoading;
         public StoredLevel SelectedLevelForLoading
@@ -147,10 +147,10 @@
             {
                 return;
             }
-            MainWindowVM.ClosePopupWindow();
-            MainWindowVM.PropertyChangedEventPaused = true;
-            //MainWindowVM.GameState.StartingPosition = MainWindowVM.GameState.CloneGrid(SelectedLevelForLoading.GameGrid);
-            MainWindowVM.GameState.StartingPosition = CloneGrid(SelectedLevelForLoading.GameGrid);
+            mainVM.ClosePopupWindow();
+            mainVM.PropertyChangedEventPaused = true;
+            //MainVM.GameState.StartingPosition = MainVM.GameState.CloneGrid(SelectedLevelForLoading.GameGrid);
+            mainVM.GameState.StartingPosition = CloneGrid(SelectedLevelForLoading.GameGrid);
 
 
             //TubesManager.Tubes = DeepCopyTubesCollection(TubesManager.SavedStartingTubes);
@@ -162,8 +162,8 @@
             //}
             //OnStartingLevel();
 
-            MainWindowVM.RestartLevel();
-            MainWindowVM.PropertyChangedEventPaused = false;
+            mainVM.RestartLevel();
+            mainVM.PropertyChangedEventPaused = false;
         }
         private LiquidColor[,] CloneGrid(LiquidColor[,] gameGrid)
         {
@@ -277,7 +277,7 @@
         public void AddPresetLevels()
         {
             // ## MAUI
-            //MainWindowVM.WindowService?.CloseWindow(); // close options menu
+            //MainVM.WindowService?.CloseWindow(); // close options menu
 
             ObservableCollection<StoredLevel> savedLevelList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(appSettings.SavedLevels)!;
 
@@ -365,11 +365,11 @@
 
 
             appSettings.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
-            MainWindowVM.NoteForSavedLevel = null!;
+            mainVM.NoteForSavedLevel = null!;
 
-            //MainWindowVM.TokenSource = new CancellationTokenSource();
-            //var token = MainWindowVM.TokenSource.Token;
-            //MainWindowVM.PopupWindowNotification(token);
+            //MainVM.TokenSource = new CancellationTokenSource();
+            //var token = MainVM.TokenSource.Token;
+            //MainVM.PopupWindowNotification(token);
 
             appSettings.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
         }
@@ -386,19 +386,19 @@
         [RelayCommand]
         private void ImportExactGameState()
         {
-            MainWindowVM.ClosePopupWindow();
+            mainVM.ClosePopupWindow();
 
             if (ImportGameStateString.Substring(0, 2) != "\"[" && ImportGameStateString.Substring(0, 1) != "[")
             {
-                MainWindowVM.Notification.Show($"Wrong format of the import string. Canceling import.", 10000);
+                mainVM.Notification.Show($"Wrong format of the import string. Canceling import.", 10000);
                 return;
             }
 
             var importedGameState = DecodeImportedString(ImportGameStateString);
             if (importedGameState is null) return;
 
-            MainWindowVM.GameState.SetGameState(importedGameState);
-            MainWindowVM.OnStartingLevel();
+            mainVM.GameState.SetGameState(importedGameState);
+            mainVM.OnStartingLevel();
             ImportGameStateString = string.Empty;
         }
         private LiquidColor[,] DecodeImportedString(string importString)
@@ -408,7 +408,7 @@
 
             var importStringTrimmed = importString.Trim(new char[] { '[', ']', '"' });
             var splitToTubes = importStringTrimmed.Split("][");
-            LiquidColor[,] importedGameState = new LiquidColor[splitToTubes.Count(), MainWindowVM.GameState.gameGrid.GetLength(1)];
+            LiquidColor[,] importedGameState = new LiquidColor[splitToTubes.Count(), mainVM.GameState.gameGrid.GetLength(1)];
 
             for (int x = 0; x < splitToTubes.Length; x++)
             {
@@ -424,7 +424,7 @@
                         int liquid = Int32.Parse(layer[y]);
                         if (liquid > LiquidColor.ColorKeys.Count - 2)
                         {
-                            MainWindowVM.Notification.Show($"Wrong number ({liquid}) in the import string. Canceling import.", 10000);
+                            mainVM.Notification.Show($"Wrong number ({liquid}) in the import string. Canceling import.", 10000);
                             return null;
                         }
                         importedGameState[x, y] = new LiquidColor(liquid);

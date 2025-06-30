@@ -9,9 +9,9 @@
         {
             InitializeComponent();
 
-            //BindingContext = new MainWindowVM();
-            //BindingContext = ServiceHelper.GetService<MainWindowVM>();
-            var viewModel = new MainWindowVM(this);
+            //BindingContext = new MainVM();
+            //BindingContext = ServiceHelper.GetService<MainVM>();
+            var viewModel = new MainVM(this);
             BindingContext = viewModel;
         }
     }

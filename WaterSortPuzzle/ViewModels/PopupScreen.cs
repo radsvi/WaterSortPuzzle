@@ -2,10 +2,10 @@
 {
     public class PopupScreenBase : ViewModelBase
     {
-        public MainWindowVM MainWindowVM { get; set; }
+        public MainVM mainVM { get; set; }
         public PopupScreenBase(object viewModel)
         {
-            MainWindowVM = (MainWindowVM)viewModel;
+            mainVM = (MainVM)viewModel;
         }
     }
 
