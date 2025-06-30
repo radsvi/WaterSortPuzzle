@@ -45,7 +45,17 @@
                             <Grid WidthRequest="80">
                                 <Grid.GestureRecognizers>
                                     <!--<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=OnTubeButtonClickCommand}"/>-->
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=OnTubeButtonClickCommand}" CommandParameter="1">
+                                        <!--<TapGestureRecognizer.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiValueConv}">
+                                                <MultiBinding.Bindings>
+                                                    <Binding/>
+                                                    <Binding Source="{RelativeSource Mode=Self}"/>
+                                                    <Binding Source="{RelativeSource Mode=FindAncestor,AncestorType=Grid}"/>
+                                                </MultiBinding.Bindings>
+                                            </MultiBinding>
+                                        </TapGestureRecognizer.CommandParameter>-->
+                                    </TapGestureRecognizer>
                                 </Grid.GestureRecognizers>
                                 <!--<BoxView Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
                                     CornerRadius="0,0,5,5" Background="LightBlue"/>-->
