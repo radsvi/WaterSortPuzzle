@@ -43,27 +43,27 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Tube">
                             <Grid WidthRequest="80">
-                                <BoxView Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
-                                    CornerRadius="0,0,5,5" Background="LightBlue"/>
-                                <BoxView Margin="10" HeightRequest="245" CornerRadius="0,0,29,29" Background="LightBlue" VerticalOptions="Start"/>
-                                <Grid Margin="0,25,0,0" HeightRequest="208" x:Name="TubeGrid" RowDefinitions="52,52,52,52">
-                                    <Grid x:Name="Layer3" Margin="5,0" Grid.Row="0">
-                                        <Border Background="{Binding Layers[3].Brush}" />
-                                    </Grid>
-                                    <Grid x:Name="Layer2" Margin="5,-1" Grid.Row="1">
-                                        <Border Background="{Binding Layers[2].Brush}" />
-                                    </Grid>
-                                    <Grid x:Name="Layer1"  Margin="5,-1" Grid.Row="2">
-                                        <Border Background="{Binding Layers[1].Brush}" />
-                                    </Grid>
+                                <!--<BoxView Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
+                                    CornerRadius="0,0,5,5" Background="LightBlue"/>-->
+                                <Border Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
+                                     Background="LightBlue">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="0,0,5,5" />
+                                    </Border.StrokeShape>
+                                </Border>
+                                <Border Margin="10" HeightRequest="245" Background="LightBlue" VerticalOptions="Start">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="0,0,29,29" />
+                                    </Border.StrokeShape>
 
-                                    <Grid x:Name="Layer0" Margin="5,-1"  Grid.Row="3">
-                                        <!--<Grid.OpacityMask>
-                                            <VisualBrush Visual="{Binding ElementName=InnerBorder}" />
-                                        </Grid.OpacityMask>-->
-                                        <BoxView x:Name="InnerBorder" CornerRadius="0,0,24,24" Background="{Binding Layers[0].Brush}" />
+                                    <Grid Margin="0,25,0,0" HeightRequest="208" x:Name="TubeGrid" RowDefinitions="52,52,52,52">
+                                        <BoxView x:Name="Layer3" Margin="5,0" Grid.Row="0" Background="{Binding Layers[3].Brush}" />
+                                        <BoxView x:Name="Layer2" Margin="5,0" Grid.Row="1" Background="{Binding Layers[2].Brush}" />
+                                        <BoxView x:Name="Layer1" Margin="5,0" Grid.Row="2" Background="{Binding Layers[1].Brush}" />
+                                        <BoxView x:Name="Layer0" Margin="5,0" Grid.Row="3" Background="{Binding Layers[0].Brush}" CornerRadius="0,0,24,24" />
                                     </Grid>
-                                </Grid>
+                                </Border>
+
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
