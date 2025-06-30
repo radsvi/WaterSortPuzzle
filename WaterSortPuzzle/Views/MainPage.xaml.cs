@@ -14,5 +14,11 @@
             var viewModel = new MainVM(this);
             BindingContext = viewModel;
         }
+
+        private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+        {
+            // otevrit notification okno
+            await DisplayAlert("Alert", "You have been alerted", "OK");
+        }
     }
 }

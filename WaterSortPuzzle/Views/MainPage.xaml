@@ -43,6 +43,10 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Tube">
                             <Grid WidthRequest="80">
+                                <Grid.GestureRecognizers>
+                                    <!--<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=OnTubeButtonClickCommand}"/>-->
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                                </Grid.GestureRecognizers>
                                 <!--<BoxView Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
                                     CornerRadius="0,0,5,5" Background="LightBlue"/>-->
                                 <Border Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
@@ -63,7 +67,6 @@
                                         <BoxView x:Name="Layer0" Margin="5,0" Grid.Row="3" Background="{Binding Layers[0].Brush}" CornerRadius="0,0,24,24" />
                                     </Grid>
                                 </Border>
-
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
