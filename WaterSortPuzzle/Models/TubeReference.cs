@@ -3,9 +3,9 @@
     public class TubeReference
     {
         private int targetEmptyRow;
-        public TubeReference(TubeControl tubeControl, Button visualElement, int tubeId, Grid gridElement)
+        public TubeReference(TubeData tube, TapGestureRecognizer visualElement, int tubeId, Grid gridElement)
         {
-            TubeControl = tubeControl;
+            TubeType = tube;
             VisualElement = visualElement;
             TubeId = tubeId;
             GridElement = gridElement;
@@ -20,9 +20,9 @@
 
         //public List<object> Contents { get; set; } = new List<object>();
         //public Tube Tube { get; set; }
-        public Button VisualElement { get; private set; }
+        public TapGestureRecognizer VisualElement { get; private set; }
         public int TubeId { get; private set; }
-        public TubeControl TubeControl { get; private set; }
+        public TubeData TubeType { get; private set; }
         public Grid GridElement { get; private set; }
         public LiquidColor TopMostLiquid {  get; set; }
         public LiquidColor LastColorMoved { get; set; }

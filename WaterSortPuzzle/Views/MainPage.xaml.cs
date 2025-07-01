@@ -14,10 +14,5 @@
             var viewModel = new MainVM(this);
             BindingContext = viewModel;
         }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-
-        }
     }
 }

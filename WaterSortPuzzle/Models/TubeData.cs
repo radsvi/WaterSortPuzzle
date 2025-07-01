@@ -88,9 +88,9 @@
     //    //}
     //}
 
-    public class Tube : ViewModelBase
+    public class TubeData : ViewModelBase
     {
-        public int Id { get; set; }
+        public int TubeId { get; set; }
         private static int tubeIdCounter = 0;
 
         private List<LiquidColor> layers = new List<LiquidColor>();
@@ -117,22 +117,22 @@
         //    }
         //    return clone;
         //}
-        public Tube()
+        public TubeData()
         {
-            Id = tubeIdCounter++;
+            TubeId = tubeIdCounter++;
         }
-        public Tube(int? firstLayer = null, int? secondLayer = null, int? thirdLayer = null, int? fourthLayer = null)
+        public TubeData(int? firstLayer = null, int? secondLayer = null, int? thirdLayer = null, int? fourthLayer = null)
         {
-            Id = tubeIdCounter++;
+            TubeId = tubeIdCounter++;
 
             if (firstLayer is not null) Layers.Add(new LiquidColor((int)firstLayer));
             if (secondLayer is not null) Layers.Add(new LiquidColor((int)secondLayer));
             if (thirdLayer is not null) Layers.Add(new LiquidColor((int)thirdLayer));
             if (fourthLayer is not null) Layers.Add(new LiquidColor((int)fourthLayer));
         }
-        public Tube(LiquidColor? firstLayer = null, LiquidColor? secondLayer = null, LiquidColor? thirdLayer = null, LiquidColor? fourthLayer = null)
+        public TubeData(LiquidColor? firstLayer = null, LiquidColor? secondLayer = null, LiquidColor? thirdLayer = null, LiquidColor? fourthLayer = null)
         {
-            Id = tubeIdCounter++;
+            TubeId = tubeIdCounter++;
 
             if (firstLayer is not null) Layers.Add(firstLayer);
             if (secondLayer is not null) Layers.Add(secondLayer);

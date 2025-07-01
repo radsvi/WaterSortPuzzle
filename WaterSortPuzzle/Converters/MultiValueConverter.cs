@@ -23,25 +23,25 @@ namespace WaterSortPuzzle.Converters
 
             //    return obj;
             //}
-            if (values.Length > 0)
-            {
-                TubeReference obj = new TubeReference
-                (
-                    (TubeControl)values[0],
-                    (Button)values[1],
-                    ((TubeControl)values[0]).TubeId,
-                    (Grid)values[2]
-                );
+            if (values[0] is null)
+                return null;
+
+            
+            TubeReference obj = new TubeReference
+            (
+                (TubeData)values[0],
+                (TapGestureRecognizer)values[1],
+                ((TubeData)values[0]).TubeId,
+                (Grid)values[2]
+            );
 
 
-                return obj;
-            }
+            return obj;
 
             //if (values.Length > 1)
             //{
             //    return new TubeButton { Tube = (Tube)values[0], ButtonElement = (Button)values[1] };
             //}
-            return null;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

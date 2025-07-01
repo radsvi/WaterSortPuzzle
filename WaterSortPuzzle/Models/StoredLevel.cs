@@ -7,7 +7,7 @@ namespace WaterSortPuzzle.Models
         [JsonProperty] public DateTime Date { get; private set; }
         [JsonProperty] public string Note { get; private set; }
         [JsonProperty] public LiquidColor[,] GameGrid { get; private set; }
-        public List<Tube> GameGridDisplayList { get; private set; } = new List<Tube>();
+        public List<TubeData> GameGridDisplayList { get; private set; } = new List<TubeData>();
         private bool markedForDeletion;
         public bool MarkedForDeletion
         {
@@ -55,7 +55,7 @@ namespace WaterSortPuzzle.Models
             GameGridDisplayList?.Clear();
             for (int x = 0; x < GameGrid.GetLength(0); x++)
             {
-                var row = new Tube(GameGrid[x, 0], GameGrid[x, 1], GameGrid[x, 2], GameGrid[x, 3]);
+                var row = new TubeData(GameGrid[x, 0], GameGrid[x, 1], GameGrid[x, 2], GameGrid[x, 3]);
 
                 GameGridDisplayList!.Add(row);
             }

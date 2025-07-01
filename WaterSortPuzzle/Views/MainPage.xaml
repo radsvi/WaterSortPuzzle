@@ -4,8 +4,12 @@
              xmlns:viewModels="clr-namespace:WaterSortPuzzle.ViewModels"
              xmlns:models="clr-namespace:WaterSortPuzzle.Models"
              xmlns:controls="clr-namespace:WaterSortPuzzle.Views.Controls"
+             xmlns:converters="clr-namespace:WaterSortPuzzle.Converters"
              x:Class="WaterSortPuzzle.Views.MainPage"
              x:DataType="viewModels:MainVM">
+    <ContentPage.Resources>
+        <converters:MultiValueConverter x:Key="MultiValueConv"/>
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="auto,*,auto" VerticalOptions="Fill">
         <!--#region Top section -->
@@ -42,21 +46,21 @@
                         <LinearItemsLayout Orientation="Horizontal" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:Tube">
+                        <DataTemplate x:DataType="models:TubeData">
                             <Grid WidthRequest="80">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}"
-                                                          CommandParameter="{Binding Id}">
-                                        <!--<TapGestureRecognizer.CommandParameter>
+                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}">
+                                        <TapGestureRecognizer.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiValueConv}">
                                                 <MultiBinding.Bindings>
                                                     <Binding/>
                                                     <Binding Source="{RelativeSource Mode=Self}"/>
-                                                    <Binding Source="{RelativeSource Mode=FindAncestor,AncestorType=Grid}"/>
+                                                    <!--<Binding Source="{RelativeSource Mode=FindAncestor,AncestorType=Grid}"/>-->
+                                                    <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" />
                                                 </MultiBinding.Bindings>
                                             </MultiBinding>
-                                        </TapGestureRecognizer.CommandParameter>-->
+                                        </TapGestureRecognizer.CommandParameter>
                                     </TapGestureRecognizer>
                                 </Grid.GestureRecognizers>
                                 <!--<BoxView Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
@@ -90,7 +94,7 @@
                     <usercontrols:TubeControl TubeItem="{Binding Tubes[0]}"/>
                 </Grid>-->
                 <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding UIEnabled}">
-                    <Label Text="Game grid locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
+                    <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
                 </Border>
             </Grid>
         </ScrollView>

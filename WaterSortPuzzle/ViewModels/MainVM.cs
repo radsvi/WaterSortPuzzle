@@ -12,8 +12,8 @@ namespace WaterSortPuzzle.ViewModels
         public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
 
         #region Properties
-        private ObservableCollection<Tube> tubesProp = new ObservableCollection<Tube>();
-        public ObservableCollection<Tube> TubesProp
+        private ObservableCollection<TubeData> tubesProp = new ObservableCollection<TubeData>();
+        public ObservableCollection<TubeData> TubesProp
         {
             get { return tubesProp; }
             private set
@@ -192,10 +192,10 @@ namespace WaterSortPuzzle.ViewModels
             //TestovaciProperty.Add(new TubeControl(tubeId++, new LiquidColor[] { new LiquidColor(1),new LiquidColor(2),new LiquidColor(3),new LiquidColor(4), }));
             //TestovaciProperty.Add(new TubeControl(tubeId++, new LiquidColor[] { new LiquidColor(1),new LiquidColor(2),new LiquidColor(3),new LiquidColor(4), }));
             //TestovaciProperty.Add(new TubeControl(tubeId++, new LiquidColor[] { new LiquidColor(1),new LiquidColor(2),new LiquidColor(3),new LiquidColor(4), }));
-            TubesProp.Add(new Tube(1,1,2,3));
-            TubesProp.Add(new Tube(2,2,3,4));
-            TubesProp.Add(new Tube(3,3,4,5));
-            TubesProp.Add(new Tube(4,4,5,6));
+            TubesProp.Add(new TubeData(1,1,2,3));
+            TubesProp.Add(new TubeData(2,2,3,4));
+            TubesProp.Add(new TubeData(3,3,4,5));
+            TubesProp.Add(new TubeData(4,4,5,6));
 
 
             OnStartingLevel();
@@ -377,9 +377,8 @@ namespace WaterSortPuzzle.ViewModels
         #region Moving Liquids
         //internal void OnTubeButtonClick(object obj)
         [RelayCommand]
-        public async void TubeButtonClick(object obj)
+        public void TubeButtonClick(object obj)
         {
-            int tubeId = (int)obj;
             //await MainPage.DisplayAlert("Alert", $"Tube number [{tubeId}] was clicked", "OK");
 
             if (UIEnabled == false)
@@ -387,7 +386,12 @@ namespace WaterSortPuzzle.ViewModels
                 return;
             }
 
-            TubeReference currentTubeReference = obj as TubeReference;
+            //TubeReference currentTubeReference = obj as TubeReference;
+            //if (currentTubeReference is null)
+            //    return;
+
+            if (obj is not TubeReference currentTubeReference)
+                return;
 
             if (LastClickedTube == null)
             {
