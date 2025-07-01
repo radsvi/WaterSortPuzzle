@@ -39,6 +39,21 @@
                         <!--<Entry Text="{Binding NumberOfColorsToGenerate}" />-->
                         <Entry Text="{Binding AppSettings.NumberOfColorsToGenerate}" />
                     </StackLayout>
+
+                    <StackLayout>
+                        <Slider
+                            Minimum="{Binding GameState.MinTubes}" Maximum="{Binding GameState.MaxTubes}"
+                            Value="{Binding AppSettings.NumberOfColorsToGenerate}"
+                            VerticalOptions="Center"
+                            />
+                        <Label
+                            Text="{Binding AppSettings.NumberOfColorsToGenerate, StringFormat='Colors: {0}'}"
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    
                 </StackLayout>
             </controls:GroupBoxControl>
             <!--<GroupBox Header="Moves">

@@ -40,7 +40,7 @@ namespace WaterSortPuzzle.Models
 
                     Preferences.Set(nameof(NumberOfColorsToGenerate), value);
 
-                    //OnPropertyChanged();
+                    OnPropertyChanged();
                     //OnGlobalPropertyChanged("NumberOfColorsToGenerate");
                 }
             }
