@@ -122,8 +122,8 @@
                 <!-- // Bottom Bar - Right side // -->
                 <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                        <Button Text="« Back ()" Style="{StaticResource NavigationButtonBottomLeft}"/>
-                        <Button Text="Add extra flask" Style="{StaticResource NavigationButtonBottomLeft}"/>
+                        <Button Text="« Back ()" Style="{StaticResource NavigationButtonBottomLeft}" Command="{Binding GameState.StepBackCommand}"/>
+                        <Button Text="Add extra flask" Style="{StaticResource NavigationButtonBottomLeft}" Command="{Binding AddExtraTubeCommand}"/>
                     </StackLayout>
                 </StackLayout>
             </Grid>
