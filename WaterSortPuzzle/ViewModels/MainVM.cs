@@ -112,17 +112,17 @@ namespace WaterSortPuzzle.ViewModels
         public TubeReference? LastClickedTube { get; set; }
         public TubeReference? SourceTube { get; set; }
 
-        private int tubeCount;
-        public int TubeCount
+        private int tubesPerLine = 4;
+        public int TubesPerLine
         {
             get
             {
-                return tubeCount;
+                return tubesPerLine;
                 //return (int)Math.Ceiling((decimal)TubesManager.NumberOfColorsToGenerate / 2);
             }
             set
             {
-                tubeCount = value;
+                tubesPerLine = value;
                 OnPropertyChanged();
             }
         }
@@ -553,7 +553,7 @@ namespace WaterSortPuzzle.ViewModels
         //[Obsolete] public RelayCommand TestDraw_Command => new RelayCommand(execute => DrawTubes());
         public void DrawTubes()
         {
-            TubeCount = (int)Math.Ceiling((decimal)GameState.GetLength(0) / 2);
+            TubesPerLine = (int)Math.Ceiling((decimal)GameState.GetLength(0) / 2);
 
             TubesItemsSource.Clear();
             TubeData.ResetCounter();
