@@ -33,10 +33,10 @@
             {
                 if (value != targetEmptyRow)
                 {
-                    if (targetEmptyRow <= GameState.Layers)
+                    if (targetEmptyRow <= Constants.Layers)
                         targetEmptyRow = value;
                     else
-                        targetEmptyRow = GameState.Layers;
+                        targetEmptyRow = Constants.Layers;
                 }
             }
         }
@@ -48,10 +48,10 @@
             {
                 if (value != numberOfRepeatingLiquids)
                 {
-                    if (TargetEmptyRow + value <= GameState.Layers)
+                    if (TargetEmptyRow + value <= Constants.Layers)
                         numberOfRepeatingLiquids = value;
                     else
-                        numberOfRepeatingLiquids = GameState.Layers - TargetEmptyRow;
+                        numberOfRepeatingLiquids = Constants.Layers - TargetEmptyRow;
                 }
             }
         }

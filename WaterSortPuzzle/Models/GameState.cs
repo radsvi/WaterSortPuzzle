@@ -26,10 +26,10 @@ namespace WaterSortPuzzle.Models
         }
         //public int NumberOfTubes { get; private set; }
         //public const int Layers = 4;
-        public static int Layers { get; } = 4;
+        //public static int Layers { get; } = 4;
         //public readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
-        public static int MinTubes { get; } = 3;
-        public int MaxTubes { get; } = LiquidColor.ColorKeys.Count - 1;
+        //public static int MinTubes { get; } = 3;
+        //public int MaxTubes { get; } = LiquidColor.ColorKeys.Count - 1;
         public LiquidColor[,] gameGrid;
         public LiquidColor this[int tubes, int layers]
         {
@@ -131,7 +131,7 @@ namespace WaterSortPuzzle.Models
             //Tubes?.Clear();
             
             int i = 0;
-            gameGrid = new LiquidColor[20, Layers];
+            gameGrid = new LiquidColor[20, Constants.Layers];
 
             // Almost solved:
             //AddTube(i++, new int[] { });
@@ -394,10 +394,10 @@ namespace WaterSortPuzzle.Models
             List<LiquidColor> colorsList = new List<LiquidColor>();
             if (appSettings.RandomNumberOfTubes)
             {
-                appSettings.NumberOfColorsToGenerate = rnd.Next(3, LiquidColor.ColorKeys.Count - 1);
+                appSettings.NumberOfColorsToGenerate = rnd.Next(Constants.MinTubes, LiquidColor.ColorKeys.Count - 1);
             }
 
-            gameGrid = new LiquidColor[appSettings.NumberOfColorsToGenerate + 2, Layers];
+            gameGrid = new LiquidColor[appSettings.NumberOfColorsToGenerate + 2, Constants.Layers];
             //Tube.ResetCounter();
             SetFreshGameState();
 
@@ -423,7 +423,7 @@ namespace WaterSortPuzzle.Models
             // add colors randomly to the grid
             for (int x = 0; x < appSettings.NumberOfColorsToGenerate; x++)
             {
-                for (int y = 0; y < Layers; y++)
+                for (int y = 0; y < Constants.Layers; y++)
                 {
                     //var maxNumber = colorsList.Count > 0 ? colorsList.Count - 1 : 0;
                     //int colorNumber = rnd.Next(0, maxNumber);

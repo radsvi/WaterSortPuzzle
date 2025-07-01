@@ -9,6 +9,7 @@ namespace WaterSortPuzzle.Models
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public static class Constants
     {
+        public const int MaximumExtraTubesUpperLimit = 20;
         public static readonly int Layers = 4;
         //public readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
         public static readonly int MinTubes = 3;

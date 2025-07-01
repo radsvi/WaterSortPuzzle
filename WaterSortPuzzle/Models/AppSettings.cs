@@ -4,7 +4,7 @@ namespace WaterSortPuzzle.Models
 {
     public partial class AppSettings : ObservableObject
     {
-        const int maximumExtraTubesUpperLimit = 20;
+        
         public bool LoadDebugLevel
         {
             get => Preferences.Default.Get(nameof(LoadDebugLevel), false);
@@ -31,7 +31,7 @@ namespace WaterSortPuzzle.Models
                 {
                     if (value < 3)
                     {
-                        Preferences.Set(nameof(NumberOfColorsToGenerate), 3);
+                        Preferences.Set(nameof(NumberOfColorsToGenerate), Constants.MinTubes);
                     }
                     else if (value > LiquidColor.ColorKeys.Count)
                     {
@@ -57,7 +57,7 @@ namespace WaterSortPuzzle.Models
             {
                 if (Preferences.Default.Get(nameof(MaximumExtraTubes), 2) != value)
                 {
-                    if (value >= 0 && value <= maximumExtraTubesUpperLimit)
+                    if (value >= 0 && value <= Constants.MaximumExtraTubesUpperLimit)
                     {
                         Preferences.Set(nameof(RandomNumberOfTubes), value);
                     }
@@ -65,9 +65,9 @@ namespace WaterSortPuzzle.Models
                     {
                         Preferences.Set(nameof(RandomNumberOfTubes), 0);
                     }
-                    else if (value > maximumExtraTubesUpperLimit)
+                    else if (value > Constants.MaximumExtraTubesUpperLimit)
                     {
-                        Preferences.Set(nameof(RandomNumberOfTubes), maximumExtraTubesUpperLimit);
+                        Preferences.Set(nameof(RandomNumberOfTubes), Constants.MaximumExtraTubesUpperLimit);
                     }
                 }
             }

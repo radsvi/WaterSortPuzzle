@@ -473,7 +473,7 @@ namespace WaterSortPuzzle.ViewModels
         }
         private void GetTopmostLiquid(TubeReference sourceTube) // selects topmost liquid in a sourceTube
         {
-            for (int i = GameState.Layers - 1; i >= 0; i--)
+            for (int i = Constants.Layers - 1; i >= 0; i--)
             {
                 if (GameState[sourceTube.TubeId, i] is not null)
                 {
@@ -490,7 +490,7 @@ namespace WaterSortPuzzle.ViewModels
         private bool AddLiquidToTargetTube(TubeReference currentTubeReference)
         {
             int firstEmptyLayer = -1;
-            for (int y = 0; y < GameState.Layers; y++)
+            for (int y = 0; y < Constants.Layers; y++)
             {
                 if (GameState[currentTubeReference.TubeId, y] == null)
                 {
@@ -518,7 +518,7 @@ namespace WaterSortPuzzle.ViewModels
         }
         private void RemoveColorFromSourceTube()
         {
-            for (int y = GameState.Layers - 1; y >= 0; y--)
+            for (int y = Constants.Layers - 1; y >= 0; y--)
             {
                 if (GameState[SourceTube.TubeId, y] is not null)
                 {
