@@ -19,10 +19,12 @@ namespace WaterSortPuzzle
             //builder.Services.AddSingleton(new MainVM(new MainPage()));
             //builder.Services.AddSingleton<AppSettings>();
             builder.Services.AddSingleton<DetailPageVM>();
+            builder.Services.AddSingleton<OptionsPageVM>();
 
             builder.Services.AddSingleton<MainPage>();
             //builder.Services.AddTransient<DetailPage>();
             builder.Services.AddSingleton<DetailPage>();
+            builder.Services.AddSingleton<OptionsPage>();
             builder.Services.AddSingleton<Notification>();
 
 

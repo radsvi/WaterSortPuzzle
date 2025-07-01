@@ -7,8 +7,9 @@ namespace WaterSortPuzzle.ViewModels
     public partial class MainVM : ViewModelBase
     {
         
+        //async Task Navigate() => await AppShell.Current.GoToAsync(nameof(DetailPage));
         [RelayCommand]
-        async Task Navigate() => await AppShell.Current.GoToAsync(nameof(DetailPage));
+        async Task NavigateToOptions() => await AppShell.Current.GoToAsync(nameof(OptionsPage));
         [RelayCommand]
         public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
 
@@ -195,15 +196,6 @@ namespace WaterSortPuzzle.ViewModels
         }
         #endregion
         #region Navigation
-        [RelayCommand]
-        private async Task TestRestartLevel()
-        {
-            bool answer = await MainPage.DisplayAlert("Restart level", "Do you want to restart current level?", "Yes", "No");
-            if (answer)
-            {
-                RestartLevel();
-            }
-        }
         [RelayCommand]
         private async Task NavigationMenuPopup(PopupParams menuItem)
         {
