@@ -14,5 +14,7 @@ namespace WaterSortPuzzle.Models
         //public readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
         public static readonly int MinTubes = 3;
         public static readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
+        public static readonly int MinimumNumberOfExtraTubesAllowedToBeAdded = 0;
+        public static readonly int MaximumNumberOfExtraTubesAllowedToBeAdded = 4;
     }
 }

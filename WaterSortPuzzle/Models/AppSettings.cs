@@ -33,12 +33,14 @@ namespace WaterSortPuzzle.Models
                     {
                         Preferences.Set(nameof(NumberOfColorsToGenerate), Constants.MinTubes);
                     }
-                    else if (value > LiquidColor.ColorKeys.Count)
+                    else if (value > Constants.MaxTubes)
                     {
-                        Preferences.Set(nameof(NumberOfColorsToGenerate), LiquidColor.ColorKeys.Count);
+                        Preferences.Set(nameof(NumberOfColorsToGenerate), Constants.MaxTubes);
                     }
-
-                    Preferences.Set(nameof(NumberOfColorsToGenerate), value);
+                    else
+                    {
+                        Preferences.Set(nameof(NumberOfColorsToGenerate), value);
+                    }
 
                     OnPropertyChanged();
                     //OnGlobalPropertyChanged("NumberOfColorsToGenerate");
@@ -48,27 +50,37 @@ namespace WaterSortPuzzle.Models
         public bool RandomNumberOfTubes
         {
             get => Preferences.Default.Get(nameof(RandomNumberOfTubes), true);
-            set => Preferences.Set(nameof(RandomNumberOfTubes), value);
+            set
+            {
+                Preferences.Set(nameof(RandomNumberOfTubes), value);
+                OnPropertyChanged(nameof(SetSpecificNumberOfTubes));
+            }
+        }
+        public bool SetSpecificNumberOfTubes
+        {
+            get => !RandomNumberOfTubes;
         }
         public int MaximumExtraTubes
         {
-            get => Preferences.Default.Get(nameof(MaximumExtraTubes), 2);
+            get => Preferences.Default.Get(nameof(MaximumExtraTubes), 1);
             set
             {
-                if (Preferences.Default.Get(nameof(MaximumExtraTubes), 2) != value)
+                if (Preferences.Default.Get(nameof(MaximumExtraTubes), 1) != value)
                 {
-                    if (value >= 0 && value <= Constants.MaximumExtraTubesUpperLimit)
+                    if (value < Constants.MinimumNumberOfExtraTubesAllowedToBeAdded)
                     {
-                        Preferences.Set(nameof(RandomNumberOfTubes), value);
-                    }
-                    else if (value < 0)
-                    {
-                        Preferences.Set(nameof(RandomNumberOfTubes), 0);
+                        Preferences.Set(nameof(MaximumExtraTubes), Constants.MinimumNumberOfExtraTubesAllowedToBeAdded);
                     }
                     else if (value > Constants.MaximumExtraTubesUpperLimit)
                     {
-                        Preferences.Set(nameof(RandomNumberOfTubes), Constants.MaximumExtraTubesUpperLimit);
+                        Preferences.Set(nameof(MaximumExtraTubes), Constants.MaximumExtraTubesUpperLimit);
                     }
+                    else
+                    {
+                        Preferences.Set(nameof(MaximumExtraTubes), value);
+                    }
+
+                    OnPropertyChanged();
                 }
             }
         }

@@ -555,7 +555,7 @@ namespace WaterSortPuzzle.Models
             mainVM.DrawTubes();
         }
         [RelayCommand]
-        public async void WriteToFileStepBack()
+        public async Task WriteToFileStepBack()
         {
             string exportString = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + "\n";
             foreach (var savedState in SavedGameStates)

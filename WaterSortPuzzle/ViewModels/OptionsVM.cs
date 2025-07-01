@@ -14,5 +14,6 @@
         //[RelayCommand]
         //public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
 
+
     }
 }

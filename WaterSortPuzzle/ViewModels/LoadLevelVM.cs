@@ -279,7 +279,8 @@
             // ## MAUI
             //MainVM.WindowService?.CloseWindow(); // close options menu
 
-            ObservableCollection<StoredLevel> savedLevelList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(appSettings.SavedLevels)!;
+            ObservableCollection<StoredLevel> savedLevelList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(appSettings.SavedLevels) ?? [];
+
 
             //var additionalLevels = new List<StoredLevel>();
             var firstLevel = new int?[,]
