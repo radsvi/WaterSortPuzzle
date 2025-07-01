@@ -13,7 +13,6 @@ namespace WaterSortPuzzle.Enums
         LevelComplete,
         Help,
         LoadLevel,
-        GameSaved,
         SaveLevel,
         CloseNotification
     }

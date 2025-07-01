@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:WaterSortPuzzle.ViewModels"
+             xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
              xmlns:models="clr-namespace:WaterSortPuzzle.Models"
              xmlns:controls="clr-namespace:WaterSortPuzzle.Views.Controls"
              xmlns:converters="clr-namespace:WaterSortPuzzle.Converters"
@@ -22,8 +23,9 @@
         <!-- // Top Bar // -->
         <StackLayout Orientation="Vertical" Margin="5">
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button Text="New Level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding TubeButtonClickCommand}"/>
-                <Button Text="Restart level" Style="{StaticResource NavigationButtonPrimary}"/>
+                <Button Text="New Level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.NewLevel}"/>
+                <Button Text="Restart level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}"/>
+                <Button Text="RestartOLD" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding TestRestartLevelCommand}"/>
                 <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateCommand}"/>
             </StackLayout>
             <BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>

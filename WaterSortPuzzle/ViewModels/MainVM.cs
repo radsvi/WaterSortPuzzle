@@ -174,7 +174,7 @@ namespace WaterSortPuzzle.ViewModels
                 new PopupScreenActions(PopupParams.Help, new HelpVM(this), null, () => ClosePopupWindow()),
                 new PopupScreenActions(PopupParams.LoadLevel, LoadLevelVM, () => LoadLevelVM.LoadLevelScreen(), () => LoadLevelVM.LoadLevel()),
                 //new PopupScreenActions(PopupParams.LoadLevel, loadLevelVM, () => loadLevelVM.LoadLevelScreen(), () => loadLevelVM.LoadLevel()),
-                new PopupScreenActions(PopupParams.GameSaved, new GameSavedNotificationVM(this), null, () => CloseNotification()),
+                //new PopupScreenActions(PopupParams.GameSaved, new GameSavedNotificationVM(this), null, () => CloseNotification()),
                 new PopupScreenActions(PopupParams.SaveLevel, new SaveLevelVM(this), null, () => SaveLevel()),
             };
 
@@ -195,6 +195,66 @@ namespace WaterSortPuzzle.ViewModels
         }
         #endregion
         #region Navigation
+        [RelayCommand]
+        private async Task TestRestartLevel()
+        {
+            bool answer = await MainPage.DisplayAlert("Restart level", "Do you want to restart current level?", "Yes", "No");
+            if (answer)
+            {
+                RestartLevel();
+            }
+        }
+        [RelayCommand]
+        private async Task NavigationMenuPopup(PopupParams menuItem)
+        {
+            switch (menuItem)
+            {
+                case PopupParams.NewLevel:
+                    bool answer = await MainPage.DisplayAlert("New level", "Do you want to start a new level?", "OK", "Cancel");
+                    if (answer)
+                    {
+                        GenerateNewLevel();
+                    }
+                    break;
+                case PopupParams.RestartLevel:
+                    bool answer1 = await MainPage.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
+                    if (answer1)
+                    {
+                        RestartLevel();
+                    }
+                    break;
+                case PopupParams.LevelComplete:
+                    bool answer2 = await MainPage.DisplayAlert("Level complete", "Congratulation! You won!", "Next level", "Restart level");
+                    if (answer2)
+                    {
+                        GenerateNewLevel();
+                    }
+                    else
+                    {
+                        RestartLevel();
+                    }
+                    break;
+                case PopupParams.Help:
+                    await MainPage.DisplayAlert("Help", "## Dodelat text ##", "OK");
+                    break;
+                case PopupParams.LoadLevel:
+                    await MainPage.DisplayAlert("Load Level", "## Dodelat text ##", "OK");
+                    break;
+                case PopupParams.SaveLevel:
+                    await MainPage.DisplayAlert("Save Level", "## Dodelat text ##", "OK");
+                    break;
+            }
+            
+            
+        }
+
+
+
+
+
+
+
+
         [RelayCommand]
         private async void CloseWindow()
         {
@@ -287,7 +347,7 @@ namespace WaterSortPuzzle.ViewModels
         public CancellationTokenSource TokenSource { get; set; } = null;
         public async void PopupWindowNotification(CancellationToken token)
         {
-            PopupWindow.Execute(PopupParams.GameSaved);
+            //PopupWindow.Execute(PopupParams.GameSaved);
             //Thread.Sleep(500);
             //await Task.Delay(2000);
             //Task.Delay(2000);
