@@ -21,7 +21,8 @@ namespace WaterSortPuzzle.Models
         //    new LiquidColorNew(LiquidColorName.Red, new SolidColorBrush(Color.FromRgb(188,36,94))),
         //};
         public static Dictionary<LiquidColorName, LiquidColor> ColorKeys { get; } = new Dictionary<LiquidColorName, LiquidColor>() {
-            { LiquidColorName.Blank, new LiquidColor(LiquidColorName.Blank, Color.FromRgb(0,0,0)) }, // blank mam to tu kvuli typu NullLiquidColorNew
+            //{ LiquidColorName.Blank, new LiquidColor(LiquidColorName.Blank, Color.FromArgb("0xFFFFFFFF")) }, // blank mam to tu kvuli typu NullLiquidColorNew. a ted uz i kvuli DrawTubes()
+            { LiquidColorName.Blank, new LiquidColor(LiquidColorName.Blank, Color.FromRgb(173,216,230)) }, // blank mam to tu kvuli typu NullLiquidColorNew. a ted uz i kvuli DrawTubes()
             { LiquidColorName.Blue, new LiquidColor(LiquidColorName.Blue, Color.FromRgb(20,93,239)) },
             { LiquidColorName.Indigo, new LiquidColor(LiquidColorName.Indigo, Color.FromRgb(63,68,130)) },
             { LiquidColorName.Turquoise, new LiquidColor(LiquidColorName.Turquoise, Color.FromRgb(136,170,255)) },

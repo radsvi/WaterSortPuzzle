@@ -13,15 +13,15 @@ namespace WaterSortPuzzle.ViewModels
         public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
 
         #region Properties
-        private ObservableCollection<TubeData> tubesProp = new ObservableCollection<TubeData>();
-        public ObservableCollection<TubeData> TubesProp
+        private ObservableCollection<TubeData> tubesItemsSource = new ObservableCollection<TubeData>();
+        public ObservableCollection<TubeData> TubesItemsSource
         {
-            get { return tubesProp; }
+            get { return tubesItemsSource; }
             private set
             {
-                if (value != tubesProp)
+                if (value != tubesItemsSource)
                 {
-                    tubesProp = value;
+                    tubesItemsSource = value;
                     OnPropertyChanged();
                 }
             }
@@ -59,7 +59,7 @@ namespace WaterSortPuzzle.ViewModels
                 }
             }
         }
-        private Grid ContainerForTubes;
+        //private Grid ContainerForTubes;
 
         private ViewModelBase _selectedViewModel;
         public ViewModelBase SelectedViewModel
@@ -180,7 +180,7 @@ namespace WaterSortPuzzle.ViewModels
 
             
             //ContainerForTubes = mainPage.FindByName("NotificationBox") as Grid;
-            ContainerForTubes = mainPage.FindByName("GridForTubes") as Grid;
+            //ContainerForTubes = mainPage.FindByName("GridForTubes") as Grid;
 
 
             //if (System.IO.Directory.Exists(logFolderName) == false) System.IO.Directory.CreateDirectory(logFolderName);
@@ -189,14 +189,6 @@ namespace WaterSortPuzzle.ViewModels
 
 
             //TubeControl(MainVM mainPageVM, int tubeId, LiquidColor[] liquidColors)
-            //TestovaciProperty.Add(new TubeControl(tubeId++, new LiquidColor[] { new LiquidColor(1),new LiquidColor(2),new LiquidColor(3),new LiquidColor(4), }));
-            //TestovaciProperty.Add(new TubeControl(tubeId++, new LiquidColor[] { new LiquidColor(1),new LiquidColor(2),new LiquidColor(3),new LiquidColor(4), }));
-            //TestovaciProperty.Add(new TubeControl(tubeId++, new LiquidColor[] { new LiquidColor(1),new LiquidColor(2),new LiquidColor(3),new LiquidColor(4), }));
-            //TestovaciProperty.Add(new TubeControl(tubeId++, new LiquidColor[] { new LiquidColor(1),new LiquidColor(2),new LiquidColor(3),new LiquidColor(4), }));
-            TubesProp.Add(new TubeData(1,1,2,3));
-            TubesProp.Add(new TubeData(2,2,3,4));
-            TubesProp.Add(new TubeData(3,3,4,5));
-            TubesProp.Add(new TubeData(4,4,5,6));
 
 
             OnStartingLevel();
@@ -516,24 +508,16 @@ namespace WaterSortPuzzle.ViewModels
         //[Obsolete] public RelayCommand TestDraw_Command => new RelayCommand(execute => DrawTubes());
         public void DrawTubes()
         {
-            //TubeCount = (int)Math.Ceiling((decimal)GameState.GetLength(0) / 2);
+            TubeCount = (int)Math.Ceiling((decimal)GameState.GetLength(0) / 2);
 
-            //ContainerForTubes.Children.Clear(); // deletes classes of type Visual
+            TubesItemsSource.Clear();
+            TubeData.ResetCounter();
 
-            ////for (int x = 0; x < GameState.NumberOfTubes; x++)
-            //for (int x = 0; x < GameState.GetLength(0); x++)
-            //{
-            //    LiquidColor[] liquidColorsArray = new LiquidColor[GameState.Layers];
-            //    for (int y = 0; y < GameState.Layers; y++)
-            //    {
-            //        liquidColorsArray[y] = GameState[x, y];
-            //    }
-            //    var tubeControl = new TubeControl(this, x, liquidColorsArray);
-
-            //    // mozna to tu udelat pres ten <ContentControl> nejak
-
-            //    ContainerForTubes.Children.Add(tubeControl);
-            //}
+            for (int x = 0; x < GameState.GetLength(0); x++)
+            {
+                TubesItemsSource.Add(new TubeData(GameState[x, 0], GameState[x, 1], GameState[x, 2], GameState[x, 3]));
+            }
+            OnPropertyChanged(nameof(TubesItemsSource));
         }
         /// <summary>
         /// Draws border that is filled with an image that will later be animated.

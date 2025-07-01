@@ -41,7 +41,7 @@
         
         <ScrollView Grid.Row="1" Margin="0,5,0,0">
             <Grid>
-                <CollectionView SelectionMode="None" ItemsSource="{Binding TubesProp}">
+                <CollectionView SelectionMode="None" ItemsSource="{Binding TubesItemsSource}">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Horizontal" />
                     </CollectionView.ItemsLayout>

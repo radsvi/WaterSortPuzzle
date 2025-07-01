@@ -88,7 +88,7 @@
     //    //}
     //}
 
-    public class TubeData : ViewModelBase
+    public class TubeData
     {
         public int TubeId { get; set; }
         private static int tubeIdCounter = 0;
@@ -134,14 +134,25 @@
         {
             TubeId = tubeIdCounter++;
 
-            if (firstLayer is not null) Layers.Add(firstLayer);
-            if (secondLayer is not null) Layers.Add(secondLayer);
-            if (thirdLayer is not null) Layers.Add(thirdLayer);
-            if (fourthLayer is not null) Layers.Add(fourthLayer);
+            Layers.Add(CheckColor(firstLayer));
+            Layers.Add(CheckColor(secondLayer));
+            Layers.Add(CheckColor(thirdLayer));
+            Layers.Add(CheckColor(fourthLayer));
         }
-        //private void Tube_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        //{
-        //    Debug.WriteLine("asdf");
-        //}
+        public static void ResetCounter()
+        {
+            tubeIdCounter = 0;
+        }
+        private LiquidColor CheckColor(LiquidColor? color = null)
+        {
+            if (color is not null)
+            {
+                return color;
+            }
+            else
+            {
+                return LiquidColor.ColorKeys[LiquidColorName.Blank];
+            }
+        }
     }
 }
