@@ -29,11 +29,7 @@ namespace WaterSortPuzzle.Models
             {
                 if (Preferences.Default.Get(nameof(NumberOfColorsToGenerate), 10) != value)
                 {
-                    if (value >= 3 && value <= LiquidColor.ColorKeys.Count)
-                    {
-                        Preferences.Set(nameof(NumberOfColorsToGenerate), value);
-                    }
-                    else if (value < 3)
+                    if (value < 3)
                     {
                         Preferences.Set(nameof(NumberOfColorsToGenerate), 3);
                     }
@@ -41,6 +37,9 @@ namespace WaterSortPuzzle.Models
                     {
                         Preferences.Set(nameof(NumberOfColorsToGenerate), LiquidColor.ColorKeys.Count);
                     }
+
+                    Preferences.Set(nameof(NumberOfColorsToGenerate), value);
+
                     //OnPropertyChanged();
                     //OnGlobalPropertyChanged("NumberOfColorsToGenerate");
                 }
@@ -114,7 +113,5 @@ namespace WaterSortPuzzle.Models
             get => Preferences.Default.Get(nameof(SavedLevels), string.Empty);
             set => Preferences.Set(nameof(SavedLevels), value);
         }
-
-        public int TestValue { get; set; } = 5;
     }
 }

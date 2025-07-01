@@ -25,8 +25,10 @@ namespace WaterSortPuzzle.Models
             }
         }
         //public int NumberOfTubes { get; private set; }
-        public const int Layers = 4;
-        public readonly int MaxTubes = LiquidColor.ColorKeys.Count;
+        //public const int Layers = 4;
+        public static int Layers { get; } = 4;
+        //public readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
+        public static int MaxTubes { get; } = LiquidColor.ColorKeys.Count - 1;
         public LiquidColor[,] gameGrid;
         public LiquidColor this[int tubes, int layers]
         {
