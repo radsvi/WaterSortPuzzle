@@ -45,10 +45,9 @@
                         <DataTemplate x:DataType="models:Tube">
                             <Grid WidthRequest="80">
                                 <Grid.GestureRecognizers>
-                                    <!--<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=OnTubeButtonClickCommand}"/>-->
-                                    <!--<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=TubeButtonClickCommand}" CommandParameter="{Binding Id}">-->
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" x:DataType="viewModels:MainVM"
-                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}">
+                                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}"
+                                                          CommandParameter="{Binding Id}">
                                         <!--<TapGestureRecognizer.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiValueConv}">
                                                 <MultiBinding.Bindings>
