@@ -114,5 +114,7 @@ namespace WaterSortPuzzle.Models
             get => Preferences.Default.Get(nameof(SavedLevels), string.Empty);
             set => Preferences.Set(nameof(SavedLevels), value);
         }
+
+        public int TestValue { get; set; } = 5;
     }
 }
