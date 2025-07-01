@@ -5,12 +5,68 @@ namespace WaterSortPuzzle.ViewModels
 {
     public partial class MainVM : ViewModelBase
     {
-        #region Properties
+        
         [RelayCommand]
         async Task Navigate() => await AppShell.Current.GoToAsync(nameof(DetailPage));
         [RelayCommand]
         public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
-        
+        [RelayCommand]
+        public void TestClikanec()
+        {
+
+        }
+        //internal void OnTubeButtonClick(object obj)
+        [RelayCommand]
+        public void TubeButtonClick()
+        {
+
+
+            //if (UIEnabled == false)
+            //{
+            //    return;
+            //}
+
+            //TubeReference currentTubeReference = obj as TubeReference;
+
+            //if (LastClickedTube == null)
+            //{
+            //    SourceTube = currentTubeReference;
+            //    GetTopmostLiquid(SourceTube);
+            //    return;
+            //}
+            //if (LastClickedTube == currentTubeReference)
+            //{
+            //    DeselectTube();
+            //    return;
+            //}
+
+            //// if selecting different tube:
+            //bool success = false;
+            //int successAtLeastOnce = 0;
+
+            //do
+            //{
+            //    success = AddLiquidToTargetTube(currentTubeReference);
+            //    if (success == true)
+            //    {
+            //        successAtLeastOnce++;
+            //        RemoveColorFromSourceTube();
+            //        GetTopmostLiquid(SourceTube); // picks another liquid from the same tube
+            //    }
+            //} while (success == true && SourceTube.TopMostLiquid is not null);
+            //if (successAtLeastOnce > 0)
+            //{
+            //    DrawTubes();
+            //    currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
+            //    //RippleSurfaceAnimation(currentTubeReference);
+            //    OnChangingGameState();
+            //}
+            //if (successAtLeastOnce == 0 && AppSettings.UnselectTubeEvenOnIllegalMove == true)
+            //{
+            //    DeselectTube();
+            //}
+        }
+        #region Properties
         private ObservableCollection<Tube> tubesProp = new ObservableCollection<Tube>();
         public ObservableCollection<Tube> TubesProp
         {
@@ -373,54 +429,7 @@ namespace WaterSortPuzzle.ViewModels
 
         #endregion
         #region Moving Liquids
-        [RelayCommand]
-        internal void OnTubeButtonClick(object obj)
-        {
-            if (UIEnabled == false)
-            {
-                return;
-            }
-
-            TubeReference currentTubeReference = obj as TubeReference;
-
-            if (LastClickedTube == null)
-            {
-                SourceTube = currentTubeReference;
-                GetTopmostLiquid(SourceTube);
-                return;
-            }
-            if (LastClickedTube == currentTubeReference)
-            {
-                DeselectTube();
-                return;
-            }
-
-            // if selecting different tube:
-            bool success = false;
-            int successAtLeastOnce = 0;
-
-            do
-            {
-                success = AddLiquidToTargetTube(currentTubeReference);
-                if (success == true)
-                {
-                    successAtLeastOnce++;
-                    RemoveColorFromSourceTube();
-                    GetTopmostLiquid(SourceTube); // picks another liquid from the same tube
-                }
-            } while (success == true && SourceTube.TopMostLiquid is not null);
-            if (successAtLeastOnce > 0)
-            {
-                DrawTubes();
-                currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
-                //RippleSurfaceAnimation(currentTubeReference);
-                OnChangingGameState();
-            }
-            if (successAtLeastOnce == 0 && AppSettings.UnselectTubeEvenOnIllegalMove == true)
-            {
-                DeselectTube();
-            }
-        }
+        // ## OnTubeButtonClick jsem mel tady
         public void OnChangingGameState()
         {
             DeselectTube();

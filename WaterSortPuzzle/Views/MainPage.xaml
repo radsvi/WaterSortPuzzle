@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModel="clr-namespace:WaterSortPuzzle.ViewModels"
+             xmlns:viewModels="clr-namespace:WaterSortPuzzle.ViewModels"
              xmlns:models="clr-namespace:WaterSortPuzzle.Models"
              xmlns:controls="clr-namespace:WaterSortPuzzle.Views.Controls"
              x:Class="WaterSortPuzzle.Views.MainPage"
-             x:DataType="viewModel:MainVM">
+             x:DataType="viewModels:MainVM">
 
     <Grid RowDefinitions="auto,*,auto" VerticalOptions="Fill">
         <!--#region Top section -->
@@ -18,7 +18,7 @@
         <!-- // Top Bar // -->
         <StackLayout Orientation="Vertical" Margin="5">
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button Text="New Level" Style="{StaticResource NavigationButtonPrimary}"/>
+                <Button Text="New Level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding TubeButtonClickCommand}"/>
                 <Button Text="Restart level" Style="{StaticResource NavigationButtonPrimary}"/>
                 <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateCommand}"/>
             </StackLayout>
@@ -34,6 +34,7 @@
             <!--<controls:QuickNotificationOverlay Title="Testovaci notifikace"/>-->
         </ScrollView>
         <!-- // Grid for Tubes // -->
+        
         <ScrollView Grid.Row="1" Margin="0,5,0,0">
             <Grid>
                 <CollectionView SelectionMode="None" ItemsSource="{Binding TubesProp}">
@@ -45,7 +46,9 @@
                             <Grid WidthRequest="80">
                                 <Grid.GestureRecognizers>
                                     <!--<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=OnTubeButtonClickCommand}"/>-->
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=OnTubeButtonClickCommand}" CommandParameter="1">
+                                    <!--<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=TubeButtonClickCommand}" CommandParameter="{Binding Id}">-->
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" x:DataType="viewModels:MainVM"
+                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}">
                                         <!--<TapGestureRecognizer.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiValueConv}">
                                                 <MultiBinding.Bindings>
@@ -77,7 +80,10 @@
                                         <BoxView x:Name="Layer0" Margin="5,0" Grid.Row="3" Background="{Binding Layers[0].Brush}" CornerRadius="0,0,24,24" />
                                     </Grid>
                                 </Border>
+                                <!--<Button Text="Test" x:DataType="viewModel:MainVM" Command="{Binding Path=TubeButtonClickCommand}" />-->
                             </Grid>
+                            <!--<Button Text="Test" x:DataType="viewModels:MainVM"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}"/>-->
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
