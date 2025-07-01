@@ -212,27 +212,19 @@ namespace WaterSortPuzzle.ViewModels
                 case PopupParams.NewLevel:
                     bool answer = await MainPage.DisplayAlert("New level", "Do you want to start a new level?", "OK", "Cancel");
                     if (answer)
-                    {
                         GenerateNewLevel();
-                    }
                     break;
                 case PopupParams.RestartLevel:
                     bool answer1 = await MainPage.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
                     if (answer1)
-                    {
                         RestartLevel();
-                    }
                     break;
                 case PopupParams.LevelComplete:
                     bool answer2 = await MainPage.DisplayAlert("Level complete", "Congratulation! You won!", "Next level", "Restart level");
                     if (answer2)
-                    {
                         GenerateNewLevel();
-                    }
                     else
-                    {
                         RestartLevel();
-                    }
                     break;
                 case PopupParams.Help:
                     await MainPage.DisplayAlert("Help", "## Dodelat text ##", "OK");
@@ -559,7 +551,8 @@ namespace WaterSortPuzzle.ViewModels
             {
                 if (AppSettings.AdvancedOptionsVisible == false)
                     UIEnabled = false;
-                PopupWindow.Execute(PopupParams.LevelComplete);
+                //PopupWindow.Execute(PopupParams.LevelComplete);
+                NavigationMenuPopup(PopupParams.LevelComplete);
             }
         }
 
