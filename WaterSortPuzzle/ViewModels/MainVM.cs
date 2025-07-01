@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
 using System.Windows.Input;
+using Microsoft.Maui.Controls;
 
 namespace WaterSortPuzzle.ViewModels
 {
@@ -182,7 +183,7 @@ namespace WaterSortPuzzle.ViewModels
             ContainerForTubes = mainPage.FindByName("GridForTubes") as Grid;
 
 
-            if (System.IO.Directory.Exists(logFolderName) == false) System.IO.Directory.CreateDirectory(logFolderName);
+            //if (System.IO.Directory.Exists(logFolderName) == false) System.IO.Directory.CreateDirectory(logFolderName);
 
             AutoSolve = new AutoSolve(this);
 
@@ -386,10 +387,6 @@ namespace WaterSortPuzzle.ViewModels
                 return;
             }
 
-            //TubeReference currentTubeReference = obj as TubeReference;
-            //if (currentTubeReference is null)
-            //    return;
-
             if (obj is not TubeReference currentTubeReference)
                 return;
 
@@ -447,7 +444,7 @@ namespace WaterSortPuzzle.ViewModels
                     if (LastClickedTube != sourceTube)
                         LastClickedTube = sourceTube;
                     sourceTube.TopMostLiquid = GameState[sourceTube.TubeId, i];
-                    //VerticallyMoveTube(sourceTube, VerticalAnimation.Raise);
+                    VerticallyMoveTube(sourceTube, VerticalAnimation.Raise);
                     //MoveAndTiltTube(sourceTube);
                     return;
                 }
@@ -500,7 +497,7 @@ namespace WaterSortPuzzle.ViewModels
             if (LastClickedTube is not null)
             {
                 //LowerTubeAnimation(GetTubeReference(SourceTube.TubeId));
-                //VerticallyMoveTube(SourceTube, VerticalAnimation.Lower);
+                VerticallyMoveTube(SourceTube, VerticalAnimation.Lower);
                 LastClickedTube = null;
             }
         }
@@ -606,24 +603,20 @@ namespace WaterSortPuzzle.ViewModels
         //}
         #endregion
         #region Animation
-        //private void VerticallyMoveTube(TubeReference tubeReference, VerticalAnimation tubeAnimation)
-        //{
-        //    if (tubeReference.ButtonElement is null)
-        //    {
-        //        return;
-        //    }
-        //    var HeightAnimation = new ThicknessAnimation() { Duration = TimeSpan.FromSeconds(0.1) };
-        //    if (tubeAnimation == VerticalAnimation.Raise)
-        //    {
-        //        HeightAnimation.To = new Thickness(0, 0, 0, 15);
-        //    }
-        //    else
-        //    {
-        //        HeightAnimation.From = new Thickness(0, 0, 0, 15);
-        //        HeightAnimation.To = new Thickness(0, 15, 0, 0);
-        //    }
-        //    tubeReference.ButtonElement.BeginAnimation(Button.MarginProperty, HeightAnimation);
-        //}
+        private async void VerticallyMoveTube(TubeReference tubeReference, VerticalAnimation tubeAnimation)
+        {
+            if (tubeReference.VisualElement is null)
+                return;
+
+            if (tubeAnimation == VerticalAnimation.Raise)
+            {
+                await tubeReference.GridElement.TranslateTo(0, -30, 150);
+            }
+            else
+            {
+                await tubeReference.GridElement.TranslateTo(0, 0, 150);
+            }
+        }
         //private int GetFirstEmptyLayer(TubeReference lastClickedTube)
         //{
         //    for (int y = 0; y < GameState.Layers; y++)
