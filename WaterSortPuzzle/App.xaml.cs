@@ -15,7 +15,7 @@
         {
             const int newHeight = 900;
             //const int newWidth = 450;
-            const int newWidth = 900;
+            const int newWidth = 1200;
 
             var newWindow = new Window(new AppShell())
             {

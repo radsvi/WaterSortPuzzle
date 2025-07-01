@@ -108,8 +108,8 @@ namespace WaterSortPuzzle.ViewModels
 
         //    }
         //}
-        public TubeReference LastClickedTube { get; set; }
-        public TubeReference SourceTube { get; set; }
+        public TubeReference? LastClickedTube { get; set; }
+        public TubeReference? SourceTube { get; set; }
 
         private int tubeCount;
         public int TubeCount
@@ -306,7 +306,7 @@ namespace WaterSortPuzzle.ViewModels
         public void OnStartingLevel()
         {
             UIEnabled = true;
-            DeselectTube();
+            DeselectTube(AnimationSpeed.Animation);
             GameState.SavedGameStates.Clear();
             GameState.LastGameState = null;
             GameState.SaveGameState();
@@ -450,7 +450,7 @@ namespace WaterSortPuzzle.ViewModels
             }
             if (LastClickedTube == currentTubeReference)
             {
-                DeselectTube();
+                DeselectTube(AnimationSpeed.Animation);
                 return;
             }
 
@@ -477,12 +477,12 @@ namespace WaterSortPuzzle.ViewModels
             }
             if (successAtLeastOnce == 0 && AppSettings.UnselectTubeEvenOnIllegalMove == true)
             {
-                DeselectTube();
+                DeselectTube(AnimationSpeed.Animation);
             }
         }
         public void OnChangingGameState()
         {
-            DeselectTube();
+            DeselectTube(AnimationSpeed.Instant);
 
             IsLevelCompleted();
             GameState.SaveGameState();
@@ -496,7 +496,7 @@ namespace WaterSortPuzzle.ViewModels
                     if (LastClickedTube != sourceTube)
                         LastClickedTube = sourceTube;
                     sourceTube.TopMostLiquid = GameState[sourceTube.TubeId, i];
-                    VerticallyMoveTube(sourceTube, VerticalAnimation.Raise);
+                    MoveTubeVertically(sourceTube, VerticalAnimation.Raise);
                     //MoveAndTiltTube(sourceTube);
                     return;
                 }
@@ -544,12 +544,12 @@ namespace WaterSortPuzzle.ViewModels
                 }
             }
         }
-        private void DeselectTube()
+        private void DeselectTube(AnimationSpeed type = AnimationSpeed.Animation)
         {
             if (LastClickedTube is not null)
             {
-                //LowerTubeAnimation(GetTubeReference(SourceTube.TubeId));
-                VerticallyMoveTube(SourceTube, VerticalAnimation.Lower);
+                if (SourceTube is not null)
+                    MoveTubeVertically(SourceTube, VerticalAnimation.Lower, type);
                 LastClickedTube = null;
             }
         }
@@ -647,18 +647,24 @@ namespace WaterSortPuzzle.ViewModels
         //}
         #endregion
         #region Animation
-        private async void VerticallyMoveTube(TubeReference tubeReference, VerticalAnimation tubeAnimation)
+        private static async void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
         {
             if (tubeReference.VisualElement is null)
                 return;
 
-            if (tubeAnimation == VerticalAnimation.Raise)
+            uint speedMS;
+            if (speed == AnimationSpeed.Animation)
+                speedMS = 150;
+            else
+                speedMS = 0;
+
+            if (verticalAnimation == VerticalAnimation.Raise)
             {
-                await tubeReference.GridElement.TranslateTo(0, -30, 150);
+                await tubeReference.GridElement.TranslateTo(0, -30, speedMS);
             }
             else
             {
-                await tubeReference.GridElement.TranslateTo(0, 0, 150);
+                await tubeReference.GridElement.TranslateTo(0, 0, speedMS);
             }
         }
         //private int GetFirstEmptyLayer(TubeReference lastClickedTube)
