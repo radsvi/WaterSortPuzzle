@@ -33,27 +33,27 @@
                             <Label Text="{Binding GameState.MaxTubes, StringFormat='Random number of colors. This number (3~{0}) coresponds to the latest number of colors generated.'}"/>
                         </StackLayout>-->
                     </StackLayout>
-
-                    <StackLayout Orientation="Vertical" IsEnabled="True">
-                        <Label Text="{Binding GameState.MaxTubes, StringFormat='Number of colors to generate (3~{0}).'}"/>
-                        <!--<Entry Text="{Binding NumberOfColorsToGenerate}" />-->
-                        <Entry Text="{Binding AppSettings.NumberOfColorsToGenerate}" />
-                    </StackLayout>
-
-                    <StackLayout>
+                    <Grid ColumnDefinitions="auto,*">
+                        <Label
+                            Text="{Binding AppSettings.NumberOfColorsToGenerate, StringFormat='[{0}]'}"
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            Margin="0,0,10,0"/>
                         <Slider
-                            Minimum="{Binding GameState.MinTubes}" Maximum="{Binding GameState.MaxTubes}"
+                            Grid.Column="1"
+                            
+                            Minimum="{Binding Source={x:Static models:Constants.MinTubes}}" Maximum="{Binding Source={x:Static models:Constants.MaxTubes}}"
                             Value="{Binding AppSettings.NumberOfColorsToGenerate}"
                             VerticalOptions="Center"
                             />
-                        <Label
-                            Text="{Binding AppSettings.NumberOfColorsToGenerate, StringFormat='Colors: {0}'}"
-                            FontAttributes="Bold"
-                            FontSize="18"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center" />
-                    </StackLayout>
-                    
+                        <!-- // Bug: Binding Minimum or Maximum resets Value - https://github.com/dotnet/maui/issues/12285 // -->
+                        <!--Minimum="{Binding GameState.MinTubes}" Maximum="{Binding GameState.MaxTubes}"-->
+                        <!--<Label Text="{x:Static Member=models:StaticValues.MinTubes}"/>-->
+                        <!--<Label Text="{Binding Source={x:Static models:Constants.MinTubes}}"/>-->
+                    </Grid>
+
                 </StackLayout>
             </controls:GroupBoxControl>
             <!--<GroupBox Header="Moves">
