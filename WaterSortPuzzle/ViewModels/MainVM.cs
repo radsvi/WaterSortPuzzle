@@ -6,13 +6,6 @@ namespace WaterSortPuzzle.ViewModels
 {
     public partial class MainVM : ViewModelBase
     {
-        
-        //async Task Navigate() => await AppShell.Current.GoToAsync(nameof(DetailPage));
-        [RelayCommand]
-        async Task NavigateToOptions() => await AppShell.Current.GoToAsync(nameof(OptionsPage));
-        [RelayCommand]
-        public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
-
         #region Properties
         private ObservableCollection<TubeData> tubesItemsSource = new ObservableCollection<TubeData>();
         public ObservableCollection<TubeData> TubesItemsSource
@@ -196,6 +189,10 @@ namespace WaterSortPuzzle.ViewModels
         }
         #endregion
         #region Navigation
+        [RelayCommand]
+        async Task NavigateToOptions() => await AppShell.Current.GoToAsync(nameof(OptionsPage));
+        [RelayCommand]
+        public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
         [RelayCommand]
         private async Task NavigationMenuPopup(PopupParams menuItem)
         {
