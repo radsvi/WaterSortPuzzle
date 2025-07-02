@@ -16,8 +16,11 @@
         <!--#region Top section -->
 
         <!-- // AutoSolve box // -->
-        <!--<Border BorderBrush="AliceBlue" BorderThickness="1" HorizontalAlignment="Left" Background="White" Visibility="{Binding AutoSolve.DisplayIterations}" d:Visibility="Visible">
-            <TextBlock Text="{Binding AutoSolve.Iterations}" d:Text="1" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
+        <!--<Border HorizontalOptions="Start" Background="White" IsVisible="{Binding AutoSolve.DisplayIterations}" HeightRequest="40">
+            <Label Text="{Binding AutoSolve.Iterations}" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+        </Border>-->
+        <!--<Border HorizontalOptions="Start" Background="White" HeightRequest="40">
+            <Label Text="{Binding DrawTubesCounter}" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
         </Border>-->
 
         <!-- // Top Bar // -->
@@ -38,9 +41,8 @@
             
             <!--<controls:QuickNotificationOverlay Title="Testovaci notifikace"/>-->
         </ScrollView>
+
         <!-- // Grid for Tubes // -->
-        
-        
         <Grid Grid.Row="1" Margin="0,5,0,0">
             <CollectionView SelectionMode="None" ItemsSource="{Binding TubesItemsSource}">
                 <CollectionView.ItemsLayout>
