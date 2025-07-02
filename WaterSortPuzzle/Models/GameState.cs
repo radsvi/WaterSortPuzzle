@@ -24,11 +24,12 @@ namespace WaterSortPuzzle.Models
                 }
             }
         }
+        public int TubeCount { get => gameGrid.GetLength(0); }
         //public int NumberOfTubes { get; private set; }
         //public const int Layers = 4;
         //public static int Layers { get; } = 4;
         //public readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
-        //public static int MinTubes { get; } = 3;
+        //public static int MinColors { get; } = 3;
         //public int MaxTubes { get; } = LiquidColor.ColorKeys.Count - 1;
         public LiquidColor[,] gameGrid;
         public LiquidColor this[int tubes, int layers]
@@ -394,7 +395,7 @@ namespace WaterSortPuzzle.Models
             List<LiquidColor> colorsList = new List<LiquidColor>();
             if (appSettings.RandomNumberOfTubes)
             {
-                appSettings.NumberOfColorsToGenerate = rnd.Next(Constants.MinTubes, LiquidColor.ColorKeys.Count - 1);
+                appSettings.NumberOfColorsToGenerate = rnd.Next(Constants.MinColors, LiquidColor.ColorKeys.Count - 1);
             }
 
             gameGrid = new LiquidColor[appSettings.NumberOfColorsToGenerate + 2, Constants.Layers];

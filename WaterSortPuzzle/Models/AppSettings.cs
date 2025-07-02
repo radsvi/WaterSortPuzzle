@@ -31,11 +31,11 @@ namespace WaterSortPuzzle.Models
                 {
                     if (value < 3)
                     {
-                        Preferences.Set(nameof(NumberOfColorsToGenerate), Constants.MinTubes);
+                        Preferences.Set(nameof(NumberOfColorsToGenerate), Constants.MinColors);
                     }
-                    else if (value > Constants.MaxTubes)
+                    else if (value > Constants.MaxColors)
                     {
-                        Preferences.Set(nameof(NumberOfColorsToGenerate), Constants.MaxTubes);
+                        Preferences.Set(nameof(NumberOfColorsToGenerate), Constants.MaxColors);
                     }
                     else
                     {

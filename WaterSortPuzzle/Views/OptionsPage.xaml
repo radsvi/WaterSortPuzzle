@@ -48,7 +48,7 @@
                             Margin="0,0,10,0"/>
                         <Slider
                             Grid.Column="1"
-                            Minimum="{Binding Source={x:Static models:Constants.MinTubes}}" Maximum="{Binding Source={x:Static models:Constants.MaxTubes}}"
+                            Minimum="{Binding Source={x:Static models:Constants.MinColors}}" Maximum="{Binding Source={x:Static models:Constants.MaxColors}}"
                             Value="{Binding AppSettings.NumberOfColorsToGenerate}"
                             VerticalOptions="Center"
                             />

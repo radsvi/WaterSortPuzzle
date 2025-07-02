@@ -112,7 +112,7 @@ namespace WaterSortPuzzle.ViewModels
         public TubeReference? LastClickedTube { get; set; }
         public TubeReference? SourceTube { get; set; }
 
-        private int tubesPerLine = 4;
+        private int tubesPerLine = 8;
         public int TubesPerLine
         {
             get
@@ -272,6 +272,7 @@ namespace WaterSortPuzzle.ViewModels
         private void AddExtraTube()
         {
             GameState.AddExtraTube();
+            RecalculateTubesPerLine();
             DrawTubes();
         }
         private void GenerateNewLevel()
@@ -295,6 +296,7 @@ namespace WaterSortPuzzle.ViewModels
             GameState.LastGameState = null;
             GameState.SaveGameState();
             AutoSolve = new AutoSolve(this); // guarantees that we remove stuff like previous moves in autosolving
+            RecalculateTubesPerLine();
             DrawTubes();
         }
         public string NoteForSavedLevel { get; set; }
@@ -553,8 +555,6 @@ namespace WaterSortPuzzle.ViewModels
         //[Obsolete] public RelayCommand TestDraw_Command => new RelayCommand(execute => DrawTubes());
         public void DrawTubes()
         {
-            TubesPerLine = (int)Math.Ceiling((decimal)GameState.GetLength(0) / 2);
-
             TubesItemsSource.Clear();
             TubeData.ResetCounter();
 
@@ -563,6 +563,17 @@ namespace WaterSortPuzzle.ViewModels
                 TubesItemsSource.Add(new TubeData(GameState[x, 0], GameState[x, 1], GameState[x, 2], GameState[x, 3]));
             }
             OnPropertyChanged(nameof(TubesItemsSource));
+        }
+        private void RecalculateTubesPerLine()
+        {
+            if (GameState.TubeCount > Constants.MaxTubesPerLine * 2)
+            {
+                TubesPerLine = (int)Math.Ceiling((decimal)GameState.TubeCount / 3);
+            }
+            else
+            {
+                TubesPerLine = (int)Math.Ceiling((decimal)GameState.TubeCount / 2);
+            }
         }
         /// <summary>
         /// Draws border that is filled with an image that will later be animated.

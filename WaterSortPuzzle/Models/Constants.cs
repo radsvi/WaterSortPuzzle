@@ -10,11 +10,15 @@ namespace WaterSortPuzzle.Models
     public static class Constants
     {
         public const int MaximumExtraTubesUpperLimit = 20;
-        public static readonly int Layers = 4;
+        public const int Layers = 4;
+        public const int MinColors = 2;
+        public const int MinimumNumberOfExtraTubesAllowedToBeAdded = 0;
+        public const int MaximumNumberOfExtraTubesAllowedToBeAdded = 4;
+        public const int MaxTubesPerLine = 7;
+
         //public readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
-        public static readonly int MinTubes = 3;
-        public static readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
-        public static readonly int MinimumNumberOfExtraTubesAllowedToBeAdded = 0;
-        public static readonly int MaximumNumberOfExtraTubesAllowedToBeAdded = 4;
+        //public static readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
+        public static readonly int MaxColors = LiquidColor.ColorKeys.Count - 1;
+
     }
 }
