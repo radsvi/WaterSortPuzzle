@@ -680,7 +680,7 @@ namespace WaterSortPuzzle.ViewModels
 
             if (verticalAnimation == VerticalAnimation.Raise)
             {
-                await tubeReference.GridElement.TranslateTo(0, -30, speedMS);
+                await tubeReference.GridElement.TranslateTo(0, -20, speedMS);
             }
             else
             {

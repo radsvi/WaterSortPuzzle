@@ -54,7 +54,7 @@
                 </CollectionView.ItemsLayout>-->
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:TubeData">
-                        <Grid WidthRequest="54" Padding="0,30,0,0">
+                        <Grid WidthRequest="54" Padding="0,20,0,0">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1"
                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}">
@@ -78,12 +78,12 @@
                                     <RoundRectangle CornerRadius="0,0,5,5" />
                                 </Border.StrokeShape>
                             </Border>
-                            <Border Margin="10" HeightRequest="134" Background="LightBlue" VerticalOptions="Start" Stroke="LightBlue" StrokeThickness="1">
+                            <Border Margin="10,10,10,0" HeightRequest="129" Background="LightBlue" VerticalOptions="Start" Stroke="LightBlue" StrokeThickness="1">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="0,0,16,16" />
                                 </Border.StrokeShape>
 
-                                <Grid Margin="0,26,0,0" x:Name="TubeGrid" RowDefinitions="*,*,*,*">
+                                <Grid Margin="0,21,0,0" x:Name="TubeGrid" RowDefinitions="*,*,*,*">
                                     <BoxView x:Name="Layer3" Grid.Row="0" Background="{Binding Layers[3].Brush}" />
                                     <BoxView x:Name="Layer2" Grid.Row="1" Background="{Binding Layers[2].Brush}" />
                                     <BoxView x:Name="Layer1" Grid.Row="2" Background="{Binding Layers[1].Brush}" />
