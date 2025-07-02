@@ -120,8 +120,8 @@ namespace WaterSortPuzzle.ViewModels
             }
         }
 
-        private bool uiEnabled;
-        public bool UIEnabled // also used to mean that level is completed
+        private bool uiEnabled = false; // also used to mean that level is completed
+        public bool UIEnabled
         {
             get { return uiEnabled; }
             set
@@ -130,9 +130,11 @@ namespace WaterSortPuzzle.ViewModels
                 {
                     uiEnabled = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(UIDisabled));
                 }
             }
         }
+        public bool UIDisabled { get => !UIEnabled; }
         public bool PropertyChangedEventPaused { get; set; } = false;
         public ObservableCollection<PopupScreenActions> PopupActions { get; set; }
         internal readonly string logFolderName = "log";
