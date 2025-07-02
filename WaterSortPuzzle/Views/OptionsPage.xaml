@@ -9,10 +9,10 @@
              x:DataType="viewmodel:OptionsVM"
              
              Title="Options">
-    <ContentPage.BindingContext>
-        <!--<viewmodel:OptionsVM />-->
+    <!--<ContentPage.BindingContext>
+        <viewmodel:OptionsVM />
         <models:AppSettings />
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
     <ScrollView Background="AliceBlue">
         <StackLayout Orientation="Vertical" Margin="10">
             <controls:GroupBoxControl Header="Flasks">

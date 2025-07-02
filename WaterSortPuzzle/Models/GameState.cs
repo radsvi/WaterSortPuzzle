@@ -26,6 +26,24 @@ namespace WaterSortPuzzle.Models
             }
         }
         public int TubeCount { get => gameGrid.GetLength(0); }
+        //[ObservableProperty]
+        //[NotifyCanExecuteChangedFor(nameof(mainVM.AddExtraTubeCommand))]
+        //private int colorCount = 0;
+        private int colorCount;
+        public int ColorCount
+        {
+            get { return colorCount; }
+            private set
+            {
+                if (value != colorCount)
+                {
+                    colorCount = value;
+                    OnPropertyChanged();
+                    //OnPropertyChanged(nameof(mainVM.AddExtraTubeCommand));
+                    mainVM.AddExtraTubeCommand.NotifyCanExecuteChanged();
+                }
+            }
+        }
 
         public LiquidColor[,] gameGrid;
         public LiquidColor this[int tubes, int layers]
@@ -316,6 +334,7 @@ namespace WaterSortPuzzle.Models
         }
         private void CheckCorrectColorNumber(LiquidColor[,] gameGrid)
         {
+            int colorCount = 0;
             ColorCount colorList = new ColorCount();
             foreach (LiquidColor color in gameGrid)
             {
@@ -324,9 +343,11 @@ namespace WaterSortPuzzle.Models
             }
             foreach (var color in colorList)
             {
+                colorCount++;
                 if (color.Value != gameGrid.GetLength(1))
                 notification.Show($"{color.Key}: {color.Value}", 60000);
             }
+            ColorCount = colorCount;
         }
         private void AddTube(int tubeNumber, int[] layers)
         {
@@ -345,17 +366,14 @@ namespace WaterSortPuzzle.Models
         /// <summary>
         /// Adding extra (empty) tube during gameplay
         /// </summary>
-        public bool CanAddExtraTube()
-        {
-            return CountColors() + appSettings.MaximumExtraTubes + 2 - gameGrid.GetLength(0) > 0;
-        }
         public void AddExtraTube()
         {
-            if (CanAddExtraTube())
-            {
-                gameGrid = CloneGrid(gameGrid, gameGrid.GetLength(0) + 1);
-            }
+            gameGrid = CloneGrid(gameGrid, gameGrid.GetLength(0) + 1);
         }
+        //public bool CanAddExtraTube()
+        //{
+        //    return CountColors() + appSettings.MaximumExtraTubes + 2 - gameGrid.GetLength(0) > 0;
+        //}
         public static LiquidColor[,] CloneGridStatic(LiquidColor[,] grid)
         {
             return new GameState().CloneGrid(grid, grid.GetLength(0));
@@ -413,6 +431,7 @@ namespace WaterSortPuzzle.Models
                 //selectedColors.Remove(selectedColors[NumberOfColorsToGenerate]); // this always keeps the same colors
                 selectedColors.Remove(selectedColors[rnd.Next(0, selectedColors.Count)]);
             }
+            
             foreach (var color in selectedColors)
             {
                 colorsList.Add(new LiquidColor(color));
@@ -436,6 +455,7 @@ namespace WaterSortPuzzle.Models
                 }
             }
 
+            ColorCount = selectedColors.Count();
             StoreStartingGrid();
         }
         private void SetFreshGameState()
@@ -586,7 +606,7 @@ namespace WaterSortPuzzle.Models
             await mainVM.NavigateBack();
         }
 
-        private int CountColors()
+        public int CountColors()
         {
             int numberOfColors = 0;
             List<LiquidColorName?> liquidColors = new List<LiquidColorName?>();

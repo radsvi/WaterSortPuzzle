@@ -144,7 +144,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             //this.WindowService = new WindowService();
             
-            AppSettings = new AppSettings();
+            AppSettings = new AppSettings(this);
             Notification = new Notification(this);
             MainPage = mainPage;
             GameState = new GameState(this);
@@ -267,12 +267,20 @@ namespace WaterSortPuzzle.ViewModels
         {
             PopupWindow.Execute(null);
         }
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanAddExtraTube))]
         private void AddExtraTube()
         {
+            if (!CanAddExtraTube())
+                return;
+            
             GameState.AddExtraTube();
+            AddExtraTubeCommand.NotifyCanExecuteChanged();
             RecalculateTubesPerLine();
             DrawTubes();
+        }
+        public bool CanAddExtraTube()
+        {
+            return GameState.ColorCount + AppSettings.MaximumExtraTubes + 2 - GameState.TubeCount > 0;
         }
         private void GenerateNewLevel()
         {

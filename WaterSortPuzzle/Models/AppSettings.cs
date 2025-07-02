@@ -4,7 +4,12 @@ namespace WaterSortPuzzle.Models
 {
     public partial class AppSettings : ObservableObject
     {
-        
+        private MainVM mainVM;
+        public AppSettings(MainVM mainVM)
+        {
+            this.mainVM = mainVM;
+        }
+
         public bool LoadDebugLevel
         {
             get => Preferences.Default.Get(nameof(LoadDebugLevel), false);
@@ -60,6 +65,7 @@ namespace WaterSortPuzzle.Models
         {
             get => !RandomNumberOfTubes;
         }
+        
         public int MaximumExtraTubes
         {
             get => Preferences.Default.Get(nameof(MaximumExtraTubes), 1);
@@ -81,6 +87,7 @@ namespace WaterSortPuzzle.Models
                     }
 
                     OnPropertyChanged();
+                    mainVM.AddExtraTubeCommand.NotifyCanExecuteChanged();
                 }
             }
         }
