@@ -57,7 +57,7 @@
                         <Grid WidthRequest="54" Padding="0,30,0,0">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}">
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}">
                                     <TapGestureRecognizer.CommandParameter>
                                         <MultiBinding Converter="{StaticResource MultiValueConv}">
                                             <MultiBinding.Bindings>
@@ -78,16 +78,16 @@
                                     <RoundRectangle CornerRadius="0,0,5,5" />
                                 </Border.StrokeShape>
                             </Border>
-                            <Border Margin="10" HeightRequest="141" Background="LightBlue" VerticalOptions="Start">
+                            <Border Margin="10" HeightRequest="134" Background="LightBlue" VerticalOptions="Start" Stroke="LightBlue" StrokeThickness="1">
                                 <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="0,0,29,29" />
+                                    <RoundRectangle CornerRadius="0,0,16,16" />
                                 </Border.StrokeShape>
 
-                                <Grid Margin="0,25,0,0" HeightRequest="104" x:Name="TubeGrid" RowDefinitions="26,26,26,26">
-                                    <BoxView x:Name="Layer3" Margin="5,0" Grid.Row="0" Background="{Binding Layers[3].Brush}" />
-                                    <BoxView x:Name="Layer2" Margin="5,0" Grid.Row="1" Background="{Binding Layers[2].Brush}" />
-                                    <BoxView x:Name="Layer1" Margin="5,0" Grid.Row="2" Background="{Binding Layers[1].Brush}" />
-                                    <BoxView x:Name="Layer0" Margin="5,0" Grid.Row="3" Background="{Binding Layers[0].Brush}" CornerRadius="0,0,24,24" />
+                                <Grid Margin="0,26,0,0" x:Name="TubeGrid" RowDefinitions="*,*,*,*">
+                                    <BoxView x:Name="Layer3" Grid.Row="0" Background="{Binding Layers[3].Brush}" />
+                                    <BoxView x:Name="Layer2" Grid.Row="1" Background="{Binding Layers[2].Brush}" />
+                                    <BoxView x:Name="Layer1" Grid.Row="2" Background="{Binding Layers[1].Brush}" />
+                                    <BoxView x:Name="Layer0" Grid.Row="3" Background="{Binding Layers[0].Brush}" />
                                 </Grid>
                             </Border>
                             <!--<Button Text="Test" x:DataType="viewModel:MainVM" Command="{Binding Path=TubeButtonClickCommand}" />-->

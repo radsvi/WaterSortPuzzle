@@ -13,7 +13,10 @@
         //}
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            const int newHeight = 900;
+            //2400x1080 ratio
+            //const int newHeight = 900;
+            //const int newWidth = 450;
+            const int newHeight = 1000;
             const int newWidth = 450;
 
             var newWindow = new Window(new AppShell())

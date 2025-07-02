@@ -17,7 +17,7 @@
         <StackLayout Orientation="Vertical" Margin="10">
             <controls:GroupBoxControl Header="Flasks">
                 <StackLayout>
-                    <Label Text="Limit extra vial to maximum of:"/>
+                    <Label Text="Limit extra flask to maximum of:"/>
                     <Grid ColumnDefinitions="auto,*">
                         <Label
                             Text="{Binding AppSettings.MaximumExtraTubes, StringFormat='[{0}]'}"
@@ -58,7 +58,7 @@
             <controls:GroupBoxControl Header="Controls">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Center">
                     <CheckBox IsChecked="{Binding AppSettings.UnselectTubeEvenOnIllegalMove}"/>
-                    <Label Text="Unselect tube even when using illegal move" VerticalOptions="Center"/>
+                    <Label Text="Unselect flask even when using illegal move" VerticalOptions="Center"/>
                 </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Help">
