@@ -14,6 +14,8 @@ namespace WaterSortPuzzle.Enums
         Help,
         LoadLevel,
         SaveLevel,
-        CloseNotification
+        CloseNotification,
+        OptionsPage,
+        LoadLevelPage,
     }
 }

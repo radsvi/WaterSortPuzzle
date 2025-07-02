@@ -155,24 +155,24 @@ namespace WaterSortPuzzle.ViewModels
             //TubesManager.GlobalPropertyChanged += TubeCount_PropertyChanged;
             //Tubes.CollectionChanged += Tubes_CollectionChanged;
 
-            PopupWindow = new PopupScreenCommand(this);
-            if (AppSettings.DontShowHelpScreenAtStart == false)
-            {
-                SelectedViewModel = new HelpVM(this);
-            }
+            //PopupWindow = new PopupScreenCommand(this);
+            //if (AppSettings.DontShowHelpScreenAtStart == false)
+            //{
+            //    SelectedViewModel = new HelpVM(this);
+            //}
 
             LoadLevelVM = new LoadLevelVM(this);
-            PopupActions = new ObservableCollection<PopupScreenActions>
-            {
-                new PopupScreenActions(PopupParams.NewLevel, new NewLevelVM(this), null, () => GenerateNewLevel()),
-                new PopupScreenActions(PopupParams.RestartLevel, new RestartLevelVM(this), null, () => RestartLevel()),
-                new PopupScreenActions(PopupParams.LevelComplete, new LevelCompleteVM(this), null, () => GenerateNewLevel()),
-                new PopupScreenActions(PopupParams.Help, new HelpVM(this), null, () => ClosePopupWindow()),
-                new PopupScreenActions(PopupParams.LoadLevel, LoadLevelVM, () => LoadLevelVM.LoadLevelScreen(), () => LoadLevelVM.LoadLevel()),
-                //new PopupScreenActions(PopupParams.LoadLevel, loadLevelVM, () => loadLevelVM.LoadLevelScreen(), () => loadLevelVM.LoadLevel()),
-                //new PopupScreenActions(PopupParams.GameSaved, new GameSavedNotificationVM(this), null, () => CloseNotification()),
-                new PopupScreenActions(PopupParams.SaveLevel, new SaveLevelVM(this), null, () => SaveLevel()),
-            };
+            //PopupActions = new ObservableCollection<PopupScreenActions>
+            //{
+            //    new PopupScreenActions(PopupParams.NewLevel, new NewLevelVM(this), null, () => GenerateNewLevel()),
+            //    new PopupScreenActions(PopupParams.RestartLevel, new RestartLevelVM(this), null, () => RestartLevel()),
+            //    new PopupScreenActions(PopupParams.LevelComplete, new LevelCompleteVM(this), null, () => GenerateNewLevel()),
+            //    new PopupScreenActions(PopupParams.Help, new HelpVM(this), null, () => ClosePopupWindow()),
+            //    new PopupScreenActions(PopupParams.LoadLevel, LoadLevelVM, () => LoadLevelVM.LoadLevelScreen(), () => LoadLevelVM.LoadLevel()),
+            //    //new PopupScreenActions(PopupParams.LoadLevel, loadLevelVM, () => loadLevelVM.LoadLevelScreen(), () => loadLevelVM.LoadLevel()),
+            //    //new PopupScreenActions(PopupParams.GameSaved, new GameSavedNotificationVM(this), null, () => CloseNotification()),
+            //    new PopupScreenActions(PopupParams.SaveLevel, new SaveLevelVM(this), null, () => SaveLevel()),
+            //};
 
             
             //ContainerForTubes = mainPage.FindByName("NotificationBox") as Grid;
@@ -191,8 +191,26 @@ namespace WaterSortPuzzle.ViewModels
         }
         #endregion
         #region Navigation
+        //[RelayCommand]
+        //async Task NavigateToOptions() => await AppShell.Current.GoToAsync(nameof(OptionsPage));
         [RelayCommand]
-        async Task NavigateToOptions() => await AppShell.Current.GoToAsync(nameof(OptionsPage));
+        async Task NavigateToPage(PopupParams menuItem)
+        {
+            string destination;
+            switch (menuItem)
+            {
+                case PopupParams.OptionsPage:
+                    destination = nameof(OptionsPage);
+                    break;
+                //case PopupParams.LoadLevelPage:
+                //    destination = nameof(LoadLevelPage);
+                //    break;
+                default:
+                    return;
+            }
+
+            await AppShell.Current.GoToAsync(destination);
+        }
         [RelayCommand]
         public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
         [RelayCommand]
@@ -220,9 +238,9 @@ namespace WaterSortPuzzle.ViewModels
                 case PopupParams.Help:
                     await MainPage.DisplayAlert("Help", "## Dodelat text ##", "OK");
                     break;
-                case PopupParams.LoadLevel:
-                    await MainPage.DisplayAlert("Load Level", "## Dodelat text ##", "OK");
-                    break;
+                //case PopupParams.LoadLevel:
+                    
+                //    break;
                 case PopupParams.SaveLevel:
                     await MainPage.DisplayAlert("Save Level", "## Dodelat text ##", "OK");
                     break;
@@ -251,21 +269,21 @@ namespace WaterSortPuzzle.ViewModels
                 ClosePopupWindow();
             }
         }
-        [RelayCommand]
-        private void ConfirmPopup()
-        {
-            if (SelectedViewModel == null)
-            {
-                return;
-            }
-            //var action = Array.Find(PopupActions, x => x.SelectedViewModel.GetType() == SelectedViewModel.GetType());
-            var action = PopupActions.Where(x => x.SelectedViewModel.GetType() == SelectedViewModel.GetType());
-            action.ElementAt(0)?.ConfirmationAction.Invoke();
-        }
+        //[RelayCommand]
+        //private void ConfirmPopup()
+        //{
+        //    if (SelectedViewModel == null)
+        //    {
+        //        return;
+        //    }
+        //    //var action = Array.Find(PopupActions, x => x.SelectedViewModel.GetType() == SelectedViewModel.GetType());
+        //    var action = PopupActions.Where(x => x.SelectedViewModel.GetType() == SelectedViewModel.GetType());
+        //    action.ElementAt(0)?.ConfirmationAction.Invoke();
+        //}
         [RelayCommand]
         internal void ClosePopupWindow()
         {
-            PopupWindow.Execute(null);
+            //PopupWindow.Execute(null);
         }
         [RelayCommand(CanExecute = nameof(CanAddExtraTube))]
         private void AddExtraTube()

@@ -28,7 +28,7 @@
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                 <Button Text="New Level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.NewLevel}"/>
                 <Button Text="Restart level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}"/>
-                <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateToOptionsCommand}"/>
+                <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}"/>
             </StackLayout>
             <BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>
         </StackLayout>
@@ -113,7 +113,7 @@
                 <!-- // Bottom Bar - Left side // -->
                 <StackLayout Orientation="Horizontal">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
-                        <Button Text="Load level" Style="{StaticResource NavigationButtonBottomLeft}"/>
+                        <Button Text="Load level" Style="{StaticResource NavigationButtonBottomLeft}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.LoadLevelPage}"/>
                         <Button Text="Save level" Style="{StaticResource NavigationButtonBottomLeft}"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="End">

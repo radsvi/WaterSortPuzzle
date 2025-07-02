@@ -1,12 +1,13 @@
 ﻿namespace WaterSortPuzzle.ViewModels
 {
-    public partial class LoadLevelVM : PopupScreenBase
+    public partial class LoadLevelVM : ObservableObject
     {
-        private AppSettings appSettings;
-        public LoadLevelVM(object viewModel) : base(viewModel)
+        public MainVM MainVM { get; }
+        public AppSettings AppSettings { get; }
+        public LoadLevelVM(object viewModel)
         {
-            mainVM = (MainVM)viewModel;
-            appSettings = mainVM.AppSettings;
+            MainVM = (MainVM)viewModel;
+            AppSettings = MainVM.AppSettings;
             LoadLevelList.CollectionChanged += LoadLevelList_CollectionChanged;
             //MainVM.LoadLevelScreen();
 
@@ -113,7 +114,7 @@
             ObservableCollection<StoredLevel>? deserializedList;
             try
             {
-                deserializedList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(appSettings.SavedLevels);
+                deserializedList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(AppSettings.SavedLevels);
             }
             catch
             {
@@ -147,10 +148,10 @@
             {
                 return;
             }
-            mainVM.ClosePopupWindow();
-            mainVM.PropertyChangedEventPaused = true;
+            MainVM.ClosePopupWindow();
+            MainVM.PropertyChangedEventPaused = true;
             //MainVM.GameState.StartingPosition = MainVM.GameState.CloneGrid(SelectedLevelForLoading.GameGrid);
-            mainVM.GameState.StartingPosition = CloneGrid(SelectedLevelForLoading.GameGrid);
+            MainVM.GameState.StartingPosition = CloneGrid(SelectedLevelForLoading.GameGrid);
 
 
             //TubesManager.Tubes = DeepCopyTubesCollection(TubesManager.SavedStartingTubes);
@@ -162,8 +163,8 @@
             //}
             //OnStartingLevel();
 
-            mainVM.RestartLevel();
-            mainVM.PropertyChangedEventPaused = false;
+            MainVM.RestartLevel();
+            MainVM.PropertyChangedEventPaused = false;
         }
         private LiquidColor[,] CloneGrid(LiquidColor[,] gameGrid)
         {
@@ -208,7 +209,7 @@
                 LoadLevelList.Remove(levelToRemove);
             }
 
-            appSettings.SavedLevels = JsonConvert.SerializeObject(LoadLevelList);
+            AppSettings.SavedLevels = JsonConvert.SerializeObject(LoadLevelList);
         }
         //public RelayCommand MarkForDeletionCommand => new RelayCommand(savedGame => MarkForDeletion(savedGame));
         [RelayCommand]
@@ -279,7 +280,7 @@
             // ## MAUI
             //MainVM.WindowService?.CloseWindow(); // close options menu
 
-            ObservableCollection<StoredLevel> savedLevelList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(appSettings.SavedLevels) ?? [];
+            ObservableCollection<StoredLevel> savedLevelList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(AppSettings.SavedLevels) ?? [];
 
 
             //var additionalLevels = new List<StoredLevel>();
@@ -365,14 +366,14 @@
             savedLevelList.Insert(0, new StoredLevel(ConvertToColorBrush(secondLevel)!, "asdfTesting"));
 
 
-            appSettings.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
-            mainVM.NoteForSavedLevel = null!;
+            AppSettings.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
+            MainVM.NoteForSavedLevel = null!;
 
             //MainVM.TokenSource = new CancellationTokenSource();
             //var token = MainVM.TokenSource.Token;
             //MainVM.PopupWindowNotification(token);
 
-            appSettings.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
+            AppSettings.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
         }
         public string ImportGameStateString { get; set; } = string.Empty;
         //public string ImportGameStateString { get; set; } = "[-.-.-.-][-.-.-.-][-.-.03.03][-.02.02.02][-.03.02.03][01.01.01.01]";
@@ -387,19 +388,19 @@
         [RelayCommand]
         private void ImportExactGameState()
         {
-            mainVM.ClosePopupWindow();
+            MainVM.ClosePopupWindow();
 
             if (ImportGameStateString.Substring(0, 2) != "\"[" && ImportGameStateString.Substring(0, 1) != "[")
             {
-                mainVM.Notification.Show($"Wrong format of the import string. Canceling import.", 10000);
+                MainVM.Notification.Show($"Wrong format of the import string. Canceling import.", 10000);
                 return;
             }
 
             var importedGameState = DecodeImportedString(ImportGameStateString);
             if (importedGameState is null) return;
 
-            mainVM.GameState.SetGameState(importedGameState);
-            mainVM.OnStartingLevel();
+            MainVM.GameState.SetGameState(importedGameState);
+            MainVM.OnStartingLevel();
             ImportGameStateString = string.Empty;
         }
         private LiquidColor[,] DecodeImportedString(string importString)
@@ -409,7 +410,7 @@
 
             var importStringTrimmed = importString.Trim(new char[] { '[', ']', '"' });
             var splitToTubes = importStringTrimmed.Split("][");
-            LiquidColor[,] importedGameState = new LiquidColor[splitToTubes.Count(), mainVM.GameState.gameGrid.GetLength(1)];
+            LiquidColor[,] importedGameState = new LiquidColor[splitToTubes.Count(), MainVM.GameState.gameGrid.GetLength(1)];
 
             for (int x = 0; x < splitToTubes.Length; x++)
             {
@@ -425,7 +426,7 @@
                         int liquid = Int32.Parse(layer[y]);
                         if (liquid > LiquidColor.ColorKeys.Count - 2)
                         {
-                            mainVM.Notification.Show($"Wrong number ({liquid}) in the import string. Canceling import.", 10000);
+                            MainVM.Notification.Show($"Wrong number ({liquid}) in the import string. Canceling import.", 10000);
                             return null;
                         }
                         importedGameState[x, y] = new LiquidColor(liquid);
