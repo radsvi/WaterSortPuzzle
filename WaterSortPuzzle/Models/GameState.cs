@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Specialized;
 using ColN = WaterSortPuzzle.Enums.LiquidColorName; // creating alias so that I dont have to have long names in GenerateDebugLevel();
 
 namespace WaterSortPuzzle.Models
@@ -79,19 +80,22 @@ namespace WaterSortPuzzle.Models
         public int ExtraTubesAdded { get; private set; }
         private LiquidColor[,] startingPosition;
         public LiquidColor[,] StartingPosition { get; set; }
-        private ObservableCollection<LiquidColor[,]> savedGameSteps = new ObservableCollection<LiquidColor[,]>();
-        public ObservableCollection<LiquidColor[,]> SavedGameStates
-        {
-            get { return savedGameSteps; }
-            private set
-            {
-                if (value != savedGameSteps)
-                {
-                    savedGameSteps = value;
-                    //OnPropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(StepBackCommand))]
+        private ObservableCollection<LiquidColor[,]> savedGameStates = new ObservableCollection<LiquidColor[,]>();
+        //public ObservableCollection<LiquidColor[,]> SavedGameStates
+        //{
+        //    get { return savedGameStates; }
+        //    private set
+        //    {
+        //        if (value != savedGameStates)
+        //        {
+        //            savedGameStates = value;
+        //            //OnPropertyChanged();
+        //        }
+        //    }
+        //}
+
         public LiquidColor[,] LastGameState { get; set; }
         public GameState() { }
         public GameState(MainVM mainVM)
@@ -99,6 +103,7 @@ namespace WaterSortPuzzle.Models
             this.mainVM = mainVM;
             appSettings = this.mainVM.AppSettings;
             notification = mainVM.Notification;
+            this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
 
             //if (Tubes.Count == 0)
             //{
@@ -532,8 +537,15 @@ namespace WaterSortPuzzle.Models
             }
             return true;
         }
-        [RelayCommand]
-        public void StepBack()
+        private void SavedGameStatesCollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                this.StepBackCommand.NotifyCanExecuteChanged();
+            }
+        }
+        [RelayCommand(CanExecute = nameof(CanStepBack))]
+        private void StepBack()
         {
             if (SavedGameStates.Count == 0)
             {
@@ -554,6 +566,12 @@ namespace WaterSortPuzzle.Models
                 mainVM.AutoSolve.CurrentSolutionStep++;
 
             mainVM.DrawTubes();
+        }
+        private bool CanStepBack()
+        {
+            //return SavedGameStates.Count > 0 && mainVM.AutoSolve.LimitToOneStep is false;
+            return SavedGameStates.Count > 0;
+            
         }
         [RelayCommand]
         public async Task WriteToFileStepBack()

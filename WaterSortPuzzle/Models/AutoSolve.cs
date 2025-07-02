@@ -55,6 +55,9 @@
         }
         private int currentSolutionStep = 0;
         public int CurrentSolutionStep { get => currentSolutionStep; set { currentSolutionStep = value; OnPropertyChanged(); } }
+        //[ObservableProperty]
+        //[NotifyCanExecuteChangedFor(nameof(GameState.StepBackCommand))]
+        //private bool limitToOneStep = false;
         public bool LimitToOneStep { get; set; } = false; // When true - makes the AutoSolve generate only one step for each press of the button and visualises the changes. When false - generates whole solution
         public AutoSolve(MainVM mainVM)
         {

@@ -326,7 +326,6 @@ namespace WaterSortPuzzle.ViewModels
             PopupWindowNotification(token);
         }
         //public RelayCommand AddPresetLevels_Command => new RelayCommand(execute => LoadLevelVM.AddPresetLevels());
-        //public RelayCommand ExportStepBack_Command => new RelayCommand(execute => GameState.WriteToFileStepBack());
         public CancellationTokenSource TokenSource { get; set; } = null;
         public async void PopupWindowNotification(CancellationToken token)
         {
