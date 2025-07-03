@@ -322,6 +322,8 @@ namespace WaterSortPuzzle.ViewModels
             GameState.SaveGameState();
             AutoSolve = new AutoSolve(this); // guarantees that we remove stuff like previous moves in autosolving
             RecalculateTubesPerLine();
+            AddExtraTubeCommand.NotifyCanExecuteChanged();
+            GameState.StepBackCommand.NotifyCanExecuteChanged();
             DrawTubes();
         }
         public string NoteForSavedLevel { get; set; }
