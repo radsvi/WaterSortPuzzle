@@ -11,7 +11,7 @@
              Title="Options">
     <!--<ContentPage.BindingContext>
         <viewmodel:OptionsVM />
-        <models:AppSettings />
+        <models:AppPreferences />
     </ContentPage.BindingContext>-->
     <ScrollView Background="AliceBlue">
         <StackLayout Orientation="Vertical" Margin="10">
@@ -20,7 +20,7 @@
                     <Label Text="Limit extra flask to maximum of:"/>
                     <Grid ColumnDefinitions="auto,*">
                         <Label
-                            Text="{Binding AppSettings.MaximumExtraTubes, StringFormat='[{0}]'}"
+                            Text="{Binding AppPreferences.MaximumExtraTubes, StringFormat='[{0}]'}"
                             FontAttributes="Bold"
                             HorizontalOptions="Start"
                             VerticalOptions="Center"
@@ -29,19 +29,19 @@
                             Grid.Column="1"
                             Minimum="{Binding Source={x:Static models:Constants.MinimumNumberOfExtraTubesAllowedToBeAdded}}"
                             Maximum="{Binding Source={x:Static models:Constants.MaximumNumberOfExtraTubesAllowedToBeAdded}}"
-                            Value="{Binding AppSettings.MaximumExtraTubes}"
+                            Value="{Binding AppPreferences.MaximumExtraTubes}"
                             VerticalOptions="Center"
                             />
                     </Grid>
                     <Label Text="Recommended to leave at just 1. Raising it any higher make the game too easy." FontSize="12"/>
 
                     <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                        <CheckBox IsChecked="{Binding AppSettings.RandomNumberOfTubes}" HorizontalOptions="Start"/>
+                        <CheckBox IsChecked="{Binding AppPreferences.RandomNumberOfTubes}" HorizontalOptions="Start"/>
                         <Label Text="Randomize number of colors." VerticalOptions="Center"/>
                     </StackLayout>
-                    <Grid ColumnDefinitions="auto,*" IsEnabled="{Binding AppSettings.SetSpecificNumberOfTubes}">
+                    <Grid ColumnDefinitions="auto,*" IsEnabled="{Binding AppPreferences.SetSpecificNumberOfTubes}">
                         <Label
-                            Text="{Binding AppSettings.NumberOfColorsToGenerate, StringFormat='[{0}]'}"
+                            Text="{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[{0}]'}"
                             FontAttributes="Bold"
                             HorizontalOptions="Start"
                             VerticalOptions="Center"
@@ -49,7 +49,7 @@
                         <Slider
                             Grid.Column="1"
                             Minimum="{Binding Source={x:Static models:Constants.MinColors}}" Maximum="{Binding Source={x:Static models:Constants.MaxColors}}"
-                            Value="{Binding AppSettings.NumberOfColorsToGenerate}"
+                            Value="{Binding AppPreferences.NumberOfColorsToGenerate}"
                             VerticalOptions="Center"
                             />
                     </Grid>
@@ -57,27 +57,27 @@
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Controls">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                    <CheckBox IsChecked="{Binding AppSettings.UnselectTubeEvenOnIllegalMove}"/>
+                    <CheckBox IsChecked="{Binding AppPreferences.UnselectTubeEvenOnIllegalMove}"/>
                     <Label Text="Unselect flask even when using illegal move" VerticalOptions="Center"/>
                 </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Help">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                    <CheckBox IsChecked="{Binding AppSettings.DontShowHelpScreenAtStart}"/>
+                    <CheckBox IsChecked="{Binding AppPreferences.DontShowHelpScreenAtStart}"/>
                     <Label Text="Don't show help at startup" VerticalOptions="Center"/>
                 </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Advanced options">
                 <StackLayout Orientation="Vertical">
                     <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                        <CheckBox IsChecked="{Binding AppSettings.AdvancedOptionsVisible}"/>
+                        <CheckBox IsChecked="{Binding AppPreferences.AdvancedOptionsVisible}"/>
                         <Label Text="Enable Advanced options" VerticalOptions="Center"/>
                     </StackLayout>
 
                     <Button Text="Add couple presets to saved levels for testing" Command="{Binding MainVM.LoadLevelVM.AddPresetLevelsCommand}" Padding="20,1" HorizontalOptions="Start" Margin="0,10,0,0"/>
 
                     <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                        <CheckBox IsChecked="{Binding AppSettings.LoadDebugLevel}"/>
+                        <CheckBox IsChecked="{Binding AppPreferences.LoadDebugLevel}"/>
                         <Label Text="Generate preset debug level instead of random one" VerticalOptions="Center"/>
                     </StackLayout>
 

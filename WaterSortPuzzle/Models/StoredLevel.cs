@@ -107,4 +107,8 @@ namespace WaterSortPuzzle.Models
 
         //}
     }
+    //public class NullStoredLevel : StoredLevel
+    //{
+    //    public NullStoredLevel() : base(new LiquidColor[0,0], "") {}
+    //}
 }

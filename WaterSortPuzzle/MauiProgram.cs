@@ -16,7 +16,7 @@ namespace WaterSortPuzzle
                 });
 
             //builder.Services.AddSingleton(new MainVM(new MainPage()));
-            //builder.Services.AddSingleton<AppSettings>();
+            //builder.Services.AddSingleton<AppPreferences>();
             builder.Services.AddSingleton<MainVM>();
             builder.Services.AddSingleton<DetailPageVM>();
             builder.Services.AddSingleton<OptionsVM>();

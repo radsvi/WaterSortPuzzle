@@ -7,7 +7,7 @@ public partial class DetailPage : ContentPage
 	{
 		InitializeComponent();
 
-		//BindingContext = ServiceHelper.GetService<AppSettings>();
-		BindingContext = detailPageVM;
+        //BindingContext = ServiceHelper.GetService<AppPreferences>();
+        BindingContext = detailPageVM;
 	}
 }

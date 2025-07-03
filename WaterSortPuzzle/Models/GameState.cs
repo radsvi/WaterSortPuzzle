@@ -7,7 +7,7 @@ namespace WaterSortPuzzle.Models
     public partial class GameState : ViewModelBase
     {
         MainVM mainVM;
-        AppSettings appSettings;
+        AppPreferences appPreferences;
         Notification notification;
 
         private string readableGameState;
@@ -114,7 +114,7 @@ namespace WaterSortPuzzle.Models
         public GameState(MainVM mainVM)
         {
             this.mainVM = mainVM;
-            appSettings = this.mainVM.AppSettings;
+            appPreferences = this.mainVM.AppPreferences;
             notification = mainVM.Notification;
             this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
 
@@ -125,7 +125,7 @@ namespace WaterSortPuzzle.Models
 
             //gameState = new int[Tubes, Layers];
 
-            GenerateNewLevel();
+            GenerateNewLevel(true);
         }
         //private void SetGameGrid(int numberOfTubes)
         //{
@@ -136,12 +136,36 @@ namespace WaterSortPuzzle.Models
         //{
         //    MainPage.DrawTubes();
         //}
-        public void GenerateNewLevel()
+        public void GenerateNewLevel(bool loadLastLevel = false)
         {
-            if (appSettings.LoadDebugLevel is true)
-                GenerateDebugLevel();
+            if (loadLastLevel)
+            {
+                var lastLevelBeforeClosing = appPreferences.LastLevelBeforeClosing;
+                if (lastLevelBeforeClosing is not null && lastLevelBeforeClosing.GameGrid.Length > 0)
+                {
+                    LoadLastLevel();
+                }
+                else
+                {
+                    if (appPreferences.LoadDebugLevel is true)
+                        GenerateDebugLevel();
+                    else
+                    {
+                        GenerateStandardLevel();
+                    }
+                }
+            }
             else
-                GenerateStandardLevel();
+            {
+                if (appPreferences.LoadDebugLevel is true)
+                    GenerateDebugLevel();
+                else
+                {
+                    GenerateStandardLevel();
+                }
+            }
+
+            StoreStartingGrid();
         }
         private void GenerateDebugLevel()
         {
@@ -330,7 +354,6 @@ namespace WaterSortPuzzle.Models
 
             //gameGrid = CloneGrid(gameGrid, i + 2);
             gameGrid = CloneGrid(gameGrid, i + 2);
-            StoreStartingGrid();
         }
         private void CheckCorrectColorNumber(LiquidColor[,] gameGrid)
         {
@@ -372,7 +395,7 @@ namespace WaterSortPuzzle.Models
         }
         //public bool CanAddExtraTube()
         //{
-        //    return CountColors() + appSettings.MaximumExtraTubes + 2 - gameGrid.GetLength(0) > 0;
+        //    return CountColors() + appPreferences.MaximumExtraTubes + 2 - gameGrid.GetLength(0) > 0;
         //}
         public static LiquidColor[,] CloneGridStatic(LiquidColor[,] grid)
         {
@@ -411,12 +434,12 @@ namespace WaterSortPuzzle.Models
             Random rnd = new Random();
 
             List<LiquidColor> colorsList = new List<LiquidColor>();
-            if (appSettings.RandomNumberOfTubes)
+            if (appPreferences.RandomNumberOfTubes)
             {
-                appSettings.NumberOfColorsToGenerate = rnd.Next(Constants.MinColors, LiquidColor.ColorKeys.Count - 1);
+                appPreferences.NumberOfColorsToGenerate = rnd.Next(Constants.MinColors, LiquidColor.ColorKeys.Count - 1);
             }
 
-            gameGrid = new LiquidColor[appSettings.NumberOfColorsToGenerate + 2, Constants.Layers];
+            gameGrid = new LiquidColor[appPreferences.NumberOfColorsToGenerate + 2, Constants.Layers];
             //Tube.ResetCounter();
             SetFreshGameState();
 
@@ -426,7 +449,7 @@ namespace WaterSortPuzzle.Models
                 selectedColors.Add(i);
             }
 
-            for (int i = 0; i < LiquidColor.ColorKeys.Count - 1 - appSettings.NumberOfColorsToGenerate; i++) // now remove some random colors. 
+            for (int i = 0; i < LiquidColor.ColorKeys.Count - 1 - appPreferences.NumberOfColorsToGenerate; i++) // now remove some random colors. 
             {
                 //selectedColors.Remove(selectedColors[NumberOfColorsToGenerate]); // this always keeps the same colors
                 selectedColors.Remove(selectedColors[rnd.Next(0, selectedColors.Count)]);
@@ -441,7 +464,7 @@ namespace WaterSortPuzzle.Models
             }
 
             // add colors randomly to the grid
-            for (int x = 0; x < appSettings.NumberOfColorsToGenerate; x++)
+            for (int x = 0; x < appPreferences.NumberOfColorsToGenerate; x++)
             {
                 for (int y = 0; y < Constants.Layers; y++)
                 {
@@ -456,7 +479,12 @@ namespace WaterSortPuzzle.Models
             }
 
             ColorCount = selectedColors.Count();
-            StoreStartingGrid();
+        }
+        private void LoadLastLevel()
+        {
+            StartingPosition = CloneGrid(appPreferences.LastLevelBeforeClosing.GameGrid);
+            gameGrid = CloneGrid(StartingPosition);
+            ColorCount = CountColors(StartingPosition);
         }
         private void SetFreshGameState()
         {
@@ -466,6 +494,7 @@ namespace WaterSortPuzzle.Models
         private void StoreStartingGrid()
         {
             StartingPosition = CloneGrid(gameGrid);
+            appPreferences.LastLevelBeforeClosing = new StoredLevel(StartingPosition, "Last level");
         }
         public void SaveGameState()
         {
@@ -606,21 +635,21 @@ namespace WaterSortPuzzle.Models
             await mainVM.NavigateBack();
         }
 
-        public int CountColors()
+        private int CountColors(LiquidColor[,] iGameGrid)
         {
             int numberOfColors = 0;
             List<LiquidColorName?> liquidColors = new List<LiquidColorName?>();
-            for (int x = 0; x < gameGrid.GetLength(0); x++)
+            for (int x = 0; x < iGameGrid.GetLength(0); x++)
             {
-                for (int y = 0; y < gameGrid.GetLength(1); y++)
+                for (int y = 0; y < iGameGrid.GetLength(1); y++)
                 {
-                    if (gameGrid[x, y] is null)
+                    if (iGameGrid[x, y] is null)
                     {
                         continue;
                     }
-                    if (liquidColors.Contains(gameGrid[x, y].Name) == false)
+                    if (liquidColors.Contains(iGameGrid[x, y].Name) == false)
                     {
-                        liquidColors.Add(gameGrid[x, y].Name);
+                        liquidColors.Add(iGameGrid[x, y].Name);
                         numberOfColors++;
                     }
                 }

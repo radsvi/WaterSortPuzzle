@@ -22,7 +22,7 @@ namespace WaterSortPuzzle.ViewModels
         }
 
         //public IWindowService WindowService { get; }
-        public AppSettings AppSettings { get; }
+        public AppPreferences AppPreferences { get; }
         public MainPage MainPage { get; }
         public Notification Notification { get; }
         //public AutoSolve AutoSolve { get; set; }
@@ -144,7 +144,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             //this.WindowService = new WindowService();
             
-            AppSettings = new AppSettings(this);
+            AppPreferences = new AppPreferences(this);
             Notification = new Notification(this);
             MainPage = mainPage;
             GameState = new GameState(this);
@@ -156,7 +156,7 @@ namespace WaterSortPuzzle.ViewModels
             //Tubes.CollectionChanged += Tubes_CollectionChanged;
 
             //PopupWindow = new PopupScreenCommand(this);
-            //if (AppSettings.DontShowHelpScreenAtStart == false)
+            //if (AppPreferences.DontShowHelpScreenAtStart == false)
             //{
             //    SelectedViewModel = new HelpVM(this);
             //}
@@ -298,7 +298,7 @@ namespace WaterSortPuzzle.ViewModels
         }
         public bool CanAddExtraTube()
         {
-            return GameState.ColorCount + AppSettings.MaximumExtraTubes + 2 - GameState.TubeCount > 0;
+            return GameState.ColorCount + AppPreferences.MaximumExtraTubes + 2 - GameState.TubeCount > 0;
         }
         private void GenerateNewLevel()
         {
@@ -332,7 +332,7 @@ namespace WaterSortPuzzle.ViewModels
             ObservableCollection<StoredLevel>? savedLevelList;
             try
             {
-                savedLevelList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(AppSettings.SavedLevels);
+                savedLevelList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(AppPreferences.SavedLevels);
             }
             catch
             {
@@ -345,7 +345,7 @@ namespace WaterSortPuzzle.ViewModels
 
             savedLevelList.Add(new StoredLevel(GameState.StartingPosition, NoteForSavedLevel));
 
-            AppSettings.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
+            AppPreferences.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
             //Settings.Default.SavedLevels = JsonConvert.SerializeObject(new ObservableCollection<StoredLevel>() { new StoredLevel(TubesManager.SavedStartingTubes) });
             NoteForSavedLevel = null;
 
@@ -485,7 +485,7 @@ namespace WaterSortPuzzle.ViewModels
                 //RippleSurfaceAnimation(currentTubeReference);
                 OnChangingGameState();
             }
-            if (successAtLeastOnce == 0 && AppSettings.UnselectTubeEvenOnIllegalMove == true)
+            if (successAtLeastOnce == 0 && AppPreferences.UnselectTubeEvenOnIllegalMove == true)
             {
                 DeselectTube(AnimationSpeed.Animation);
             }
@@ -567,7 +567,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             if (GameState.IsLevelCompleted())
             {
-                if (AppSettings.AdvancedOptionsVisible == false)
+                if (AppPreferences.AdvancedOptionsVisible == false)
                     UIEnabled = false;
                 //PopupWindow.Execute(PopupParams.LevelComplete);
                 NavigationMenuPopup(PopupParams.LevelComplete);

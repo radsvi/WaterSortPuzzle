@@ -3,12 +3,12 @@
     public partial class OptionsVM : ObservableObject //  : ViewModelBase
     {
         public MainVM MainVM { get; }
-        public AppSettings AppSettings { get; }
+        public AppPreferences AppPreferences { get; }
         public GameState GameState { get; }
         public OptionsVM(MainVM mainVM)
         {
             MainVM = mainVM;
-            AppSettings = mainVM.AppSettings;
+            AppPreferences = mainVM.AppPreferences;
             GameState = MainVM.GameState;
         }
         //[RelayCommand]

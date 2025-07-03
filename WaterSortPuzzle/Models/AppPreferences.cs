@@ -2,10 +2,10 @@
 
 namespace WaterSortPuzzle.Models
 {
-    public partial class AppSettings : ObservableObject
+    public partial class AppPreferences : ObservableObject
     {
         private MainVM mainVM;
-        public AppSettings(MainVM mainVM)
+        public AppPreferences(MainVM mainVM)
         {
             this.mainVM = mainVM;
         }
@@ -131,6 +131,45 @@ namespace WaterSortPuzzle.Models
         {
             get => Preferences.Default.Get(nameof(SavedLevels), string.Empty);
             set => Preferences.Set(nameof(SavedLevels), value);
+        }
+        //public string LastLevelBeforeClosing_Serialized
+        //{
+        //    get => Preferences.Default.Get(nameof(LastLevelBeforeClosing_Serialized), string.Empty);
+        //    set => Preferences.Set(nameof(LastLevelBeforeClosing_Serialized), value);
+        //}
+        //public StoredLevel LastLevelBeforeClosing
+        //{
+        //    get => JsonConvert.DeserializeObject<StoredLevel>(LastLevelBeforeClosing_Serialized);
+        //    set => Preferences.Set(nameof(SavedLevels), value);
+        //    ////get => Preferences.Default.Get(nameof(LastLevelBeforeClosing), new NullStoredLevel());
+        //    //get
+        //    //{
+        //    //    //var temp = Preferences.Default.Get(nameof(LastLevelBeforeClosing), new StoredLevel(new LiquidColor[0, 0], ""));
+        //    //    StoredLevel temp = Preferences.Default.Get(nameof(LastLevelBeforeClosing), new NullStoredLevel());
+
+        //    //    return JsonConvert.DeserializeObject<StoredLevel>(temp);
+        //    //}
+        //    //set
+        //    //{
+        //    //    string savedLevelList = JsonConvert.SerializeObject(value);
+        //    //    Preferences.Set(nameof(LastLevelBeforeClosing), savedLevelList);
+        //    //}
+        //}
+        public StoredLevel LastLevelBeforeClosing
+        {
+            //get => Preferences.Default.Get(nameof(LastLevelBeforeClosing), new NullStoredLevel());
+            get
+            {
+                //var temp = Preferences.Default.Get(nameof(LastLevelBeforeClosing), new StoredLevel(new LiquidColor[0, 0], ""));
+                string temp = Preferences.Default.Get(nameof(LastLevelBeforeClosing) + "_Serialized", string.Empty);
+
+                return JsonConvert.DeserializeObject<StoredLevel>(temp)!;
+            }
+            set
+            {
+                string savedLevelList = JsonConvert.SerializeObject(value);
+                Preferences.Set(nameof(LastLevelBeforeClosing) + "_Serialized", savedLevelList);
+            }
         }
     }
 }

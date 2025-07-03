@@ -2,7 +2,7 @@
 {
     public partial class MainPage : ContentPage
     {
-        //internal AppSettings AppSettings { get; }
+        //internal AppPreferences AppPreferences { get; }
 
         //public MainPage()
         public MainPage()

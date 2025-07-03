@@ -36,15 +36,15 @@
 
         <!-- // Mid section // -->
         <!-- // Notification Overlay // -->
-        <ScrollView VerticalOptions="Start" HeightRequest="62" Grid.Row="1">
+        <!--<ScrollView VerticalOptions="Start" HeightRequest="62" Grid.Row="1">
             <StackLayout VerticalOptions="Start" x:Name="NotificationBox" />
             
-            <!--<controls:QuickNotificationOverlay Title="Testovaci notifikace"/>-->
-        </ScrollView>
+            <controls:QuickNotificationOverlay Title="Testovaci notifikace"/>
+        </ScrollView>-->
 
         <!-- // Grid for Tubes // -->
         <Grid Grid.Row="1" Margin="0,5,0,0">
-            <CollectionView SelectionMode="None" ItemsSource="{Binding TubesItemsSource}">
+            <CollectionView SelectionMode="None" ItemsSource="{Binding TubesItemsSource}" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"
                                     Span="{Binding TubesPerLine}"/>

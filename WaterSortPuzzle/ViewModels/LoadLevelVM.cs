@@ -3,11 +3,11 @@
     public partial class LoadLevelVM : ObservableObject
     {
         public MainVM MainVM { get; }
-        public AppSettings AppSettings { get; }
+        public AppPreferences AppPreferences { get; }
         public LoadLevelVM(object viewModel)
         {
             MainVM = (MainVM)viewModel;
-            AppSettings = MainVM.AppSettings;
+            AppPreferences = MainVM.AppPreferences;
             LoadLevelList.CollectionChanged += LoadLevelList_CollectionChanged;
             //MainVM.LoadLevelScreen();
 
@@ -114,7 +114,7 @@
             ObservableCollection<StoredLevel>? deserializedList;
             try
             {
-                deserializedList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(AppSettings.SavedLevels);
+                deserializedList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(AppPreferences.SavedLevels);
             }
             catch
             {
@@ -209,7 +209,7 @@
                 LoadLevelList.Remove(levelToRemove);
             }
 
-            AppSettings.SavedLevels = JsonConvert.SerializeObject(LoadLevelList);
+            AppPreferences.SavedLevels = JsonConvert.SerializeObject(LoadLevelList);
         }
         //public RelayCommand MarkForDeletionCommand => new RelayCommand(savedGame => MarkForDeletion(savedGame));
         [RelayCommand]
@@ -280,7 +280,7 @@
             // ## MAUI
             //MainVM.WindowService?.CloseWindow(); // close options menu
 
-            ObservableCollection<StoredLevel> savedLevelList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(AppSettings.SavedLevels) ?? [];
+            ObservableCollection<StoredLevel> savedLevelList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(AppPreferences.SavedLevels) ?? [];
 
 
             //var additionalLevels = new List<StoredLevel>();
@@ -366,14 +366,14 @@
             savedLevelList.Insert(0, new StoredLevel(ConvertToColorBrush(secondLevel)!, "asdfTesting"));
 
 
-            AppSettings.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
+            AppPreferences.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
             MainVM.NoteForSavedLevel = null!;
 
             //MainVM.TokenSource = new CancellationTokenSource();
             //var token = MainVM.TokenSource.Token;
             //MainVM.PopupWindowNotification(token);
 
-            AppSettings.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
+            AppPreferences.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
         }
         public string ImportGameStateString { get; set; } = string.Empty;
         //public string ImportGameStateString { get; set; } = "[-.-.-.-][-.-.-.-][-.-.03.03][-.02.02.02][-.03.02.03][01.01.01.01]";
