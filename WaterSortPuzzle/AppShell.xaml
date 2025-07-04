@@ -4,19 +4,30 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:WaterSortPuzzle.Views"
+    xmlns:viewmodels="clr-namespace:WaterSortPuzzle.ViewModels"
+    xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
+    x:DataType="viewmodels:MainVM"
     Shell.FlyoutBehavior="Flyout"
     FlyoutBackgroundColor="#6b95ed"
     Title="WaterSortPuzzle">
 
-    <!--<ShellContent
+    <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage" />-->
+        Route="MainPage" />
 
-    <!--<ShellContent
+    <ShellContent
         Title="Options"
         ContentTemplate="{DataTemplate views:OptionsPage}"
-        Route="OptionsPage" />-->
+        Route="OptionsPage" />
+    <ShellContent
+        Title="Load Level"
+        ContentTemplate="{DataTemplate views:LoadLevelPage}"
+        Route="LoadLevelPage" />
+    <!--<ShellContent
+        Title="Save Level"
+        ContentTemplate="{DataTemplate views:LoadLevelPage}"
+        Route="LoadLevelPage" />-->
 
     <!--<FlyoutItem Title="Options" Route="MainPage" >
         <ShellContent
@@ -29,15 +40,38 @@
         ContentTemplate="{DataTemplate views:OptionsPage}"
         Route="MainPage/OptionsPage" />-->
 
-    <FlyoutItem Title="Home">
+    <!--<FlyoutItem Title="Home">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Options">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:OptionsPage}" />
+            <ShellContent ContentTemplate="{DataTemplate views:OptionsPage}" Route="MainPage/OptionsPage" />
+        </Tab>
+    </FlyoutItem>-->
+
+    <!--<ShellContent ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage" Title="Home"/>-->
+
+    <!--<MenuItem
+        Text="Options"
+        Command="{Binding NavigateToPageCommand}"
+        CommandParameter="{x:Static enums:PopupParams.OptionsPage}"
+        />-->
+
+    <!--<FlyoutItem Title="Home" Route="MainPage">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage" />
         </Tab>
     </FlyoutItem>
+    <Shell.FlyoutFooter>
+        <StackLayout Orientation="Horizontal">
+            <Button
+                Text="OptionsButton"
+                Command="{Binding NavigateToPageCommand}"
+                CommandParameter="{x:Static enums:PopupParams.OptionsPage}"/>
+        </StackLayout>
+    </Shell.FlyoutFooter>-->
+
 
 </Shell>

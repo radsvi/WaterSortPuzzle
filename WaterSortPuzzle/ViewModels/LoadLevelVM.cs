@@ -14,6 +14,16 @@
             //MainVM.LoadLevelList = LoadLevelList;
             //MainVM.LoadLevelVM = this;
         }
+        //public LoadLevelVM(object viewModel)
+        //{
+        //    MainVM = (MainVM)viewModel;
+        //    AppPreferences = MainVM.AppPreferences;
+        //    LoadLevelList.CollectionChanged += LoadLevelList_CollectionChanged;
+        //    //MainVM.LoadLevelScreen();
+
+        //    //MainVM.LoadLevelList = LoadLevelList;
+        //    //MainVM.LoadLevelVM = this;
+        //}
         private StoredLevel selectedLevelForLoading;
         public StoredLevel SelectedLevelForLoading
         {

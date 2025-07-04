@@ -11,6 +11,6 @@
              
              Title="Load Level">
     <VerticalStackLayout>
-        
+        <Label Text="Load level page sample text"/>
     </VerticalStackLayout>
 </ContentPage>
