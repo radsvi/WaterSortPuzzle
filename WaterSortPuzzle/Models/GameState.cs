@@ -25,6 +25,7 @@ namespace WaterSortPuzzle.Models
                 }
             }
         }
+        public int StepBackCounter { get; private set; } = 0;
         public int TubeCount { get => gameGrid.GetLength(0); }
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(mainVM.AddExtraTubeCommand))]
@@ -596,6 +597,8 @@ namespace WaterSortPuzzle.Models
                 return;
             }
 
+            StepBackCounter++;
+
             LiquidColor[,] lastGameStatus = SavedGameStates[SavedGameStates.Count - 1];
 
             mainVM.PropertyChangedEventPaused = true;
@@ -705,6 +708,10 @@ namespace WaterSortPuzzle.Models
                 stringGameState += tube.ToString();
             }
             return stringGameState;
+        }
+        public void ResetStepBackCounter()
+        {
+            StepBackCounter = 0;
         }
 
 

@@ -83,6 +83,11 @@
                         </StackLayout>
 
                         <Button Text="Export all steps taken so far (StepBack)" Command="{Binding GameState.WriteToFileStepBackCommand}" Padding="20,1" HorizontalOptions="Start" Margin="0,10,0,0"/>
+
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                            <CheckBox IsChecked="{Binding AppPreferences.UnlimitedStepBack}"/>
+                            <Label Text="Unlimited Step Back (otherwise maximum 5 per level)" VerticalOptions="Center"/>
+                        </StackLayout>
                     </StackLayout>
                 </StackLayout>
             </controls:GroupBoxControl>

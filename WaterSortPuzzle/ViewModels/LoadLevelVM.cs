@@ -148,7 +148,7 @@
             {
                 return;
             }
-            MainVM.ClosePopupWindow();
+            //MainVM.ClosePopupWindow();
             MainVM.PropertyChangedEventPaused = true;
             //MainVM.GameState.StartingPosition = MainVM.GameState.CloneGrid(SelectedLevelForLoading.GameGrid);
             MainVM.GameState.StartingPosition = CloneGrid(SelectedLevelForLoading.GameGrid);
@@ -388,7 +388,7 @@
         [RelayCommand]
         private void ImportExactGameState()
         {
-            MainVM.ClosePopupWindow();
+            //MainVM.ClosePopupWindow();
 
             if (ImportGameStateString.Substring(0, 2) != "\"[" && ImportGameStateString.Substring(0, 1) != "[")
             {

@@ -265,19 +265,19 @@ namespace WaterSortPuzzle.ViewModels
 
 
 
-        [RelayCommand]
-        private async void CloseWindow()
-        {
-            if (SelectedViewModel == null)
-            {
-                //WindowService?.CloseWindow();
-                await NavigateBack();
-            }
-            else
-            {
-                ClosePopupWindow();
-            }
-        }
+        //[RelayCommand]
+        //private async void CloseWindow()
+        //{
+        //    if (SelectedViewModel == null)
+        //    {
+        //        //WindowService?.CloseWindow();
+        //        await NavigateBack();
+        //    }
+        //    else
+        //    {
+        //        //ClosePopupWindow();
+        //    }
+        //}
         //[RelayCommand]
         //private void ConfirmPopup()
         //{
@@ -289,11 +289,6 @@ namespace WaterSortPuzzle.ViewModels
         //    var action = PopupActions.Where(x => x.SelectedViewModel.GetType() == SelectedViewModel.GetType());
         //    action.ElementAt(0)?.ConfirmationAction.Invoke();
         //}
-        [RelayCommand]
-        internal void ClosePopupWindow()
-        {
-            //PopupWindow.Execute(null);
-        }
         [RelayCommand(CanExecute = nameof(CanAddExtraTube))]
         private void AddExtraTube()
         {
@@ -311,14 +306,14 @@ namespace WaterSortPuzzle.ViewModels
         }
         private void GenerateNewLevel()
         {
-            ClosePopupWindow();
+            //ClosePopupWindow();
             GameState.GenerateNewLevel();
             OnStartingLevel();
         }
         [RelayCommand]
         public void RestartLevel()
         {
-            ClosePopupWindow();
+            //ClosePopupWindow();
             GameState.RestartLevel();
             OnStartingLevel();
         }
@@ -329,6 +324,7 @@ namespace WaterSortPuzzle.ViewModels
             GameState.SavedGameStates.Clear();
             GameState.LastGameState = null;
             GameState.SaveGameState();
+            GameState.ResetStepBackCounter();
             AutoSolve = new AutoSolve(this); // guarantees that we remove stuff like previous moves in autosolving
             RecalculateTubesPerLine();
             AddExtraTubeCommand.NotifyCanExecuteChanged();
@@ -338,7 +334,7 @@ namespace WaterSortPuzzle.ViewModels
         public string NoteForSavedLevel { get; set; }
         private void SaveLevel()
         {
-            ClosePopupWindow();
+            //ClosePopupWindow();
 
             ObservableCollection<StoredLevel>? savedLevelList;
             try
@@ -381,7 +377,7 @@ namespace WaterSortPuzzle.ViewModels
                 }
             }
 
-            ClosePopupWindow();
+            //ClosePopupWindow();
         }
         private void CloseNotification()
         {
