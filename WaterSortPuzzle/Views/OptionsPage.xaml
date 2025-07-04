@@ -74,17 +74,18 @@
                         <Label Text="Enable Advanced options" VerticalOptions="Center"/>
                     </StackLayout>
 
-                    <Button Text="Add couple presets to saved levels for testing" Command="{Binding MainVM.LoadLevelVM.AddPresetLevelsCommand}" Padding="20,1" HorizontalOptions="Start" Margin="0,10,0,0"/>
+                    <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}">
+                        <Button Text="Add couple presets to saved levels for testing" Command="{Binding MainVM.LoadLevelVM.AddPresetLevelsCommand}" Padding="20,1" HorizontalOptions="Start" Margin="0,10,0,0"/>
 
-                    <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                        <CheckBox IsChecked="{Binding AppPreferences.LoadDebugLevel}"/>
-                        <Label Text="Generate preset debug level instead of random one" VerticalOptions="Center"/>
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                            <CheckBox IsChecked="{Binding AppPreferences.LoadDebugLevel}"/>
+                            <Label Text="Generate preset debug level instead of random one" VerticalOptions="Center"/>
+                        </StackLayout>
+
+                        <Button Text="Export all steps taken so far (StepBack)" Command="{Binding GameState.WriteToFileStepBackCommand}" Padding="20,1" HorizontalOptions="Start" Margin="0,10,0,0"/>
                     </StackLayout>
-
-                    <Button Text="Export all steps taken so far (StepBack)" Command="{Binding GameState.WriteToFileStepBackCommand}" Padding="20,1" HorizontalOptions="Start" Margin="0,10,0,0"/>
                 </StackLayout>
             </controls:GroupBoxControl>
-
             <Button Text="Go Back" Command="{Binding MainVM.NavigateBackCommand}"/>
         </StackLayout>
     </ScrollView>
