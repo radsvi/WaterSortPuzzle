@@ -4,9 +4,13 @@
     {
         public MainVM MainVM { get; }
         public AppPreferences AppPreferences { get; }
-        public LoadLevelVM(object viewModel)
+        //public LoadLevelVM()
+        //{
+
+        //}
+        public LoadLevelVM(MainVM mainVM)
         {
-            MainVM = (MainVM)viewModel;
+            MainVM = mainVM;
             AppPreferences = MainVM.AppPreferences;
             LoadLevelList.CollectionChanged += LoadLevelList_CollectionChanged;
             //MainVM.LoadLevelScreen();
@@ -14,16 +18,6 @@
             //MainVM.LoadLevelList = LoadLevelList;
             //MainVM.LoadLevelVM = this;
         }
-        //public LoadLevelVM(object viewModel)
-        //{
-        //    MainVM = (MainVM)viewModel;
-        //    AppPreferences = MainVM.AppPreferences;
-        //    LoadLevelList.CollectionChanged += LoadLevelList_CollectionChanged;
-        //    //MainVM.LoadLevelScreen();
-
-        //    //MainVM.LoadLevelList = LoadLevelList;
-        //    //MainVM.LoadLevelVM = this;
-        //}
         private StoredLevel selectedLevelForLoading;
         public StoredLevel SelectedLevelForLoading
         {

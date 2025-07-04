@@ -170,7 +170,7 @@ namespace WaterSortPuzzle.ViewModels
             //    SelectedViewModel = new HelpVM(this);
             //}
 
-            LoadLevelVM = new LoadLevelVM(this);
+            //LoadLevelVM = new LoadLevelVM(this);
             //PopupActions = new ObservableCollection<PopupScreenActions>
             //{
             //    new PopupScreenActions(PopupParams.NewLevel, new NewLevelVM(this), null, () => GenerateNewLevel()),
