@@ -17,5 +17,6 @@ namespace WaterSortPuzzle.Enums
         CloseNotification,
         OptionsPage,
         LoadLevelPage,
+        MainPage
     }
 }

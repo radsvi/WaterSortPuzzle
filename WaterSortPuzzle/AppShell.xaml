@@ -5,11 +5,39 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:WaterSortPuzzle.Views"
     Shell.FlyoutBehavior="Flyout"
+    FlyoutBackgroundColor="#6b95ed"
     Title="WaterSortPuzzle">
 
-    <ShellContent
+    <!--<ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage" />
+        Route="MainPage" />-->
+
+    <!--<ShellContent
+        Title="Options"
+        ContentTemplate="{DataTemplate views:OptionsPage}"
+        Route="OptionsPage" />-->
+
+    <!--<FlyoutItem Title="Options" Route="MainPage" >
+        <ShellContent
+            Title="OptionsAA"
+            ContentTemplate="{DataTemplate views:OptionsPage}"
+            Route="OptionsPage" />
+    </FlyoutItem>-->
+    <!--<ShellContent
+        Title="Options"
+        ContentTemplate="{DataTemplate views:OptionsPage}"
+        Route="MainPage/OptionsPage" />-->
+
+    <FlyoutItem Title="Home">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Options">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:OptionsPage}" />
+        </Tab>
+    </FlyoutItem>
 
 </Shell>

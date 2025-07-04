@@ -205,20 +205,31 @@ namespace WaterSortPuzzle.ViewModels
         [RelayCommand]
         async Task NavigateToPage(PopupParams menuItem)
         {
-            string destination;
-            switch (menuItem)
+            //string destination;
+            //switch (menuItem)
+            //{
+            //    case PopupParams.OptionsPage:
+            //        destination = nameof(OptionsPage);
+            //        break;
+            //    //case PopupParams.LoadLevelPage:
+            //    //    destination = nameof(LoadLevelPage);
+            //    //    break;
+            //    default:
+            //        return;
+            //}
+
+            string route;
+            if (menuItem == PopupParams.MainPage)
             {
-                case PopupParams.OptionsPage:
-                    destination = nameof(OptionsPage);
-                    break;
-                //case PopupParams.LoadLevelPage:
-                //    destination = nameof(LoadLevelPage);
-                //    break;
-                default:
-                    return;
+                route = "///MainPage";
+            }
+            else
+            {
+                route = menuItem.ToString();
             }
 
-            await AppShell.Current.GoToAsync(destination);
+
+            await AppShell.Current.GoToAsync(route);
         }
         [RelayCommand]
         public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);

@@ -4,11 +4,15 @@
              x:Class="WaterSortPuzzle.Views.OptionsPage"
              xmlns:controls="clr-namespace:WaterSortPuzzle.Views.Controls"
              xmlns:models="clr-namespace:WaterSortPuzzle.Models"
+             xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
              
              xmlns:viewmodel="clr-namespace:WaterSortPuzzle.ViewModels"
              x:DataType="viewmodel:OptionsVM"
              
+
+             
              Title="Options">
+    <!--Shell.PresentationMode="Modal"-->
     <!--<ContentPage.BindingContext>
         <viewmodel:OptionsVM />
         <models:AppPreferences />
@@ -92,6 +96,7 @@
                 </StackLayout>
             </controls:GroupBoxControl>
             <Button Text="Go Back" Command="{Binding MainVM.NavigateBackCommand}"/>
+            <Button Text="Go Home" Command="{Binding MainVM.NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.MainPage}"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>
