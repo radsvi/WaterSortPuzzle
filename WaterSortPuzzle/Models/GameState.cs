@@ -25,7 +25,34 @@ namespace WaterSortPuzzle.Models
                 }
             }
         }
-        public int StepBackCounter { get; private set; } = 0;
+        private int stepBackPressesCounter;
+        public int StepBackPressesCounter
+        {
+            get { return stepBackPressesCounter; }
+            private set
+            {
+                if (value != stepBackPressesCounter)
+                {
+                    stepBackPressesCounter = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(StepBackDisplay));
+                }
+            }
+        }
+        public int StepBackDisplay
+        {
+            get
+            {
+                if (appPreferences.UnlimitedStepBack)
+                {
+                    return SavedGameStates.Count;
+                }
+                else
+                {
+                    return Constants.MaxStepBack - StepBackPressesCounter;
+                }
+            }
+        }
         public int TubeCount { get => gameGrid.GetLength(0); }
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(mainVM.AddExtraTubeCommand))]
@@ -94,21 +121,24 @@ namespace WaterSortPuzzle.Models
         public int ExtraTubesAdded { get; private set; }
         private LiquidColor[,] startingPosition;
         public LiquidColor[,] StartingPosition { get; set; }
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(StepBackCommand))]
+        //[ObservableProperty]
+        //[NotifyCanExecuteChangedFor(nameof(StepBackCommand), nameof(StepBackDisplay))]
         private ObservableCollection<LiquidColor[,]> savedGameStates = new ObservableCollection<LiquidColor[,]>();
-        //public ObservableCollection<LiquidColor[,]> SavedGameStates
-        //{
-        //    get { return savedGameStates; }
-        //    private set
-        //    {
-        //        if (value != savedGameStates)
-        //        {
-        //            savedGameStates = value;
-        //            //OnPropertyChanged();
-        //        }
-        //    }
-        //}
+        public ObservableCollection<LiquidColor[,]> SavedGameStates
+        {
+            get { return savedGameStates; }
+            private set
+            {
+                if (value != savedGameStates)
+                {
+                    savedGameStates = value;
+                    OnPropertyChanged();
+                    //OnPropertyChanged(nameof(StepBackCommand));
+                    StepBackCommand.NotifyCanExecuteChanged();
+                    OnPropertyChanged(nameof(StepBackDisplay));
+                }
+            }
+        }
 
         public LiquidColor[,] LastGameState { get; set; }
         public GameState() { }
@@ -587,17 +617,16 @@ namespace WaterSortPuzzle.Models
             if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove)
             {
                 this.StepBackCommand.NotifyCanExecuteChanged();
+                OnPropertyChanged(nameof(StepBackDisplay));
             }
         }
         [RelayCommand(CanExecute = nameof(CanStepBack))]
         private void StepBack()
         {
-            if (SavedGameStates.Count == 0)
-            {
+            if (CanStepBack() == false)
                 return;
-            }
 
-            StepBackCounter++;
+            StepBackPressesCounter++;
 
             LiquidColor[,] lastGameStatus = SavedGameStates[SavedGameStates.Count - 1];
 
@@ -612,13 +641,20 @@ namespace WaterSortPuzzle.Models
             if (mainVM.AutoSolve.CompleteSolution.Count > 0)
                 mainVM.AutoSolve.CurrentSolutionStep++;
 
+
             mainVM.DrawTubes();
         }
         private bool CanStepBack()
         {
             //return SavedGameStates.Count > 0 && mainVM.AutoSolve.LimitToOneStep is false;
-            return SavedGameStates.Count > 0;
-            
+            //return SavedGameStates.Count > 0;
+
+            if (SavedGameStates.Count == 0)
+                return false;
+            if (appPreferences.UnlimitedStepBack == false && Constants.MaxStepBack <= StepBackPressesCounter)
+                return false;
+
+            return true;
         }
         [RelayCommand]
         public async Task WriteToFileStepBack()
@@ -711,7 +747,7 @@ namespace WaterSortPuzzle.Models
         }
         public void ResetStepBackCounter()
         {
-            StepBackCounter = 0;
+            StepBackPressesCounter = 0;
         }
 
 

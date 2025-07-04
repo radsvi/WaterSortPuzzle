@@ -86,7 +86,7 @@
 
                         <StackLayout Orientation="Horizontal" VerticalOptions="Center">
                             <CheckBox IsChecked="{Binding AppPreferences.UnlimitedStepBack}"/>
-                            <Label Text="Unlimited Step Back (otherwise maximum 5 per level)" VerticalOptions="Center"/>
+                            <Label Text="{Binding Source={x:Static models:Constants.MaxStepBack}, StringFormat='Unlimited Step Back (otherwise maximum {0} per level)'}" VerticalOptions="Center"/>
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
@@ -94,14 +94,4 @@
             <Button Text="Go Back" Command="{Binding MainVM.NavigateBackCommand}"/>
         </StackLayout>
     </ScrollView>
-
-
-    <!--<VerticalStackLayout>
-        <Label 
-        Text="Nova stranka. Udelam z ni pak options!"
-        VerticalOptions="Center" 
-        HorizontalOptions="Center" />
-
-        <Button Text="Go Back" Command="{Binding NavigateBackCommand}"/>
-    </VerticalStackLayout>-->
 </ContentPage>

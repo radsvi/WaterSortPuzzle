@@ -15,6 +15,7 @@ namespace WaterSortPuzzle.Models
         public const int MinimumNumberOfExtraTubesAllowedToBeAdded = 0;
         public const int MaximumNumberOfExtraTubesAllowedToBeAdded = 4;
         public const int MaxTubesPerLine = 7;
+        public const int MaxStepBack = 5;
 
         //public readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
         //public static readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;

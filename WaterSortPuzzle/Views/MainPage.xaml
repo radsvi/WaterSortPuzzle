@@ -144,7 +144,9 @@
                 <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
                     <!--<Button Text="Next Step" Style="{StaticResource NavigationButtonBottom}"/>-->
                     <Button Text="Add extra flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}" Grid.Column="2"/>
-                    <Button Text="« Back ()" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}" Grid.Column="1"/>
+                    <!--<Button Text="{Binding GameState.StepBackCounter, StringFormat='« Back ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}" Grid.Column="1"/>-->
+                    <Button Text="{Binding GameState.StepBackDisplay, StringFormat='« Back ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}" Grid.Column="1"/>
+                    <!--{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[{0}]'}"-->
                 </Grid>
             </Grid>
 

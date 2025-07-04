@@ -138,9 +138,9 @@ namespace WaterSortPuzzle.Models
             get
             {
                 //var temp = Preferences.Default.Get(nameof(LastLevelBeforeClosing), new StoredLevel(new LiquidColor[0, 0], ""));
-                string temp = Preferences.Default.Get(nameof(LastLevelBeforeClosing) + "_Serialized", string.Empty);
+                string serialized = Preferences.Default.Get(nameof(LastLevelBeforeClosing) + "_Serialized", string.Empty);
 
-                return JsonConvert.DeserializeObject<StoredLevel>(temp)!;
+                return JsonConvert.DeserializeObject<StoredLevel>(serialized)!;
             }
             set
             {
@@ -148,10 +148,26 @@ namespace WaterSortPuzzle.Models
                 Preferences.Set(nameof(LastLevelBeforeClosing) + "_Serialized", savedLevelList);
             }
         }
+        //public bool UnlimitedStepBack
+        //{
+        //    get => Preferences.Default.Get(nameof(UnlimitedStepBack), false);
+        //    set
+        //    {
+        //        Preferences.Set(nameof(UnlimitedStepBack), value);
+        //        OnPropertyChanged(nameof(mainVM.GameState.StepBackDisplay));
+        //        //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(mainVM.GameState.StepBackDisplay)));
+        //    }
+        //}
         public bool UnlimitedStepBack
         {
             get => Preferences.Default.Get(nameof(UnlimitedStepBack), false);
-            set => Preferences.Set(nameof(UnlimitedStepBack), value);
+            set
+            {
+                Preferences.Set(nameof(UnlimitedStepBack), value);
+                OnPropertyChanged(nameof(mainVM.GameState.StepBackDisplay));
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(mainVM.GameState.StepBackDisplay)));
+                mainVM.GameState.StepBackCommand.NotifyCanExecuteChanged();
+            }
         }
     }
 }
