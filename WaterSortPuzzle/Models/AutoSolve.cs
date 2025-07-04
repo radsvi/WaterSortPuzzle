@@ -8,6 +8,7 @@
         //TreeNode<ValidMove> SolvingSteps;
         //TreeNode<ValidMove> FirstStep;
         private bool ResumeRequest { get; set; }
+        public bool InProgress { get; private set; }
         //[Obsolete]public int ResumeRequestCounterDebug { get; set; } = 0; // used only for debugging how many times I clicked the button and only triggering breakpoint upon certain number.
         //public List<ValidMove> CompleteSolution { get; private set; }
         private ObservableCollection<ValidMove> completeSolution = new ObservableCollection<ValidMove>();
@@ -19,7 +20,6 @@
                 if (value != completeSolution)
                 {
                     completeSolution = value;
-                    
                 }
             }
         }
@@ -829,6 +829,7 @@
             if (mainVM.UIEnabled == true) // disable UI once starting the Auto Solve process
             {
                 mainVM.UIEnabled = false;
+                InProgress = true;
                 Start(gameState);
                 return;
             }

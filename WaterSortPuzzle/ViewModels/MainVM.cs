@@ -119,7 +119,16 @@ namespace WaterSortPuzzle.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        public bool TubesClickable
+        {
+            get
+            {
+                if (UIEnabled == false || AutoSolve.InProgress == false)
+                    return true;
+                else
+                    return false;
+            }
+        }
         private bool uiEnabled = false; // also used to mean that level is completed
         public bool UIEnabled
         {
@@ -135,7 +144,6 @@ namespace WaterSortPuzzle.ViewModels
             }
         }
         public bool UIDisabled { get => !UIEnabled; }
-        public bool PropertyChangedEventPaused { get; set; } = false;
         public ObservableCollection<PopupScreenActions> PopupActions { get; set; }
         internal readonly string logFolderName = "log";
         #endregion
@@ -446,7 +454,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             //await MainPage.DisplayAlert("Alert", $"Tube number [{tubeId}] was clicked", "OK");
 
-            if (UIEnabled == false)
+            if (TubesClickable == false)
             {
                 return;
             }

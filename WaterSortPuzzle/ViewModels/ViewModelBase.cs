@@ -10,5 +10,6 @@
         string title = string.Empty;
 
         public bool IsNotBusy => !IsBusy;
+        public bool PropertyChangedEventPaused { get; set; } = false;
     }
 }
