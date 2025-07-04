@@ -140,6 +140,7 @@ namespace WaterSortPuzzle.ViewModels
                     uiEnabled = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(UIDisabled));
+                    OnPropertyChanged(nameof(TubesClickable));
                 }
             }
         }
