@@ -169,5 +169,10 @@ namespace WaterSortPuzzle.Models
                 mainVM.GameState.StepBackCommand.NotifyCanExecuteChanged();
             }
         }
+        public bool InstantAnimations
+        {
+            get => Preferences.Default.Get(nameof(InstantAnimations), false);
+            set => Preferences.Set(nameof(InstantAnimations), value);
+        }
     }
 }

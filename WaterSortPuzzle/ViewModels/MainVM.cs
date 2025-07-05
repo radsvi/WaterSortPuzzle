@@ -685,13 +685,15 @@ namespace WaterSortPuzzle.ViewModels
         //}
         #endregion
         #region Animation
-        private static async void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
+        private async void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
         {
             if (tubeReference.VisualElement is null)
                 return;
 
             uint speedMS;
-            if (speed == AnimationSpeed.Animation)
+            if (AppPreferences.InstantAnimations)
+                speedMS = 0;
+            else if (speed == AnimationSpeed.Animation)
                 speedMS = 75;
             else
                 speedMS = 0;
