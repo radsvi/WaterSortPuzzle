@@ -199,7 +199,7 @@ namespace WaterSortPuzzle.ViewModels
 
             //TubeControl(MainVM mainPageVM, int tubeId, LiquidColor[] liquidColors)
 
-            DisplayStartupPopup();
+            //DisplayStartupPopup();
 
             OnStartingLevel();
         }
@@ -274,35 +274,35 @@ namespace WaterSortPuzzle.ViewModels
             
             
         }
-        private void DisplayStartupPopup() // predelat, tohle je hrozny to takhle mit dvakrat
-        {
-            if (AppPreferences.DontShowHelpScreenAtStart)
-                return;
+        //private void DisplayStartupPopup() // predelat, tohle je hrozny to takhle mit dvakrat
+        //{
+        //    if (AppPreferences.DontShowHelpScreenAtStart)
+        //        return;
             
-            string text = "Separate each color into different flasks.\n";
-            text += "You can only move matching colors onto each other.\n";
-            text += "You can always move colors to empty flask.\n";
-            text += "You can add empty flasks, if you are really stuck.\n";
+        //    string text = "Separate each color into different flasks.\n";
+        //    text += "You can only move matching colors onto each other.\n";
+        //    text += "You can always move colors to empty flask.\n";
+        //    text += "You can add empty flasks, if you are really stuck.\n";
 
-            Task.Run(async () =>
-            {
-                await Task.Delay(1000);
-                //App.AlertSvc.ShowConfirmation("Title", "Confirmation message.", (result =>
-                //{
-                //    App.AlertSvc.ShowAlert("Result", $"{result}");
-                //}));
-                //App.AlertSvc.ShowConfirmation("Help", text, new Action<bool>((c) => { }), "Don't show this again.", "Close");
-                //App.AlertSvc.ShowConfirmationSimple("Help", text, "Don't show this again.", "Close");
+        //    Task.Run(async () =>
+        //    {
+        //        await Task.Delay(1000);
+        //        //App.AlertSvc.ShowConfirmation("Title", "Confirmation message.", (result =>
+        //        //{
+        //        //    App.AlertSvc.ShowAlert("Result", $"{result}");
+        //        //}));
+        //        //App.AlertSvc.ShowConfirmation("Help", text, new Action<bool>((c) => { }), "Don't show this again.", "Close");
+        //        //App.AlertSvc.ShowConfirmationSimple("Help", text, "Don't show this again.", "Close");
                 
-                App.AlertSvc.ShowConfirmation("Help", text, (result =>
-                {
-                    //App.AlertSvc.ShowAlert("Result", $"{result}");
-                    if (result)
-                        AppPreferences.DontShowHelpScreenAtStart = true;
+        //        App.AlertSvc.ShowConfirmation("Help", text, (result =>
+        //        {
+        //            //App.AlertSvc.ShowAlert("Result", $"{result}");
+        //            if (result)
+        //                AppPreferences.DontShowHelpScreenAtStart = true;
 
-                }), "Don't show this again.", "Close");
-            });
-        }
+        //        }), "Don't show this again.", "Close");
+        //    });
+        //}
         public async Task DisplayHelpPopup()
         {
             string text = "Separate each color into different flasks.\n";
