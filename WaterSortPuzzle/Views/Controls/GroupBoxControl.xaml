@@ -20,7 +20,7 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5" />
                     </Border.StrokeShape>
-                    <ContentPresenter/>
+                    <ContentPresenter IsClippedToBounds="True"/>
                 </Border>
             </Grid>
         </ControlTemplate>
