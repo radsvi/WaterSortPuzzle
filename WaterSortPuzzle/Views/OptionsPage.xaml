@@ -12,12 +12,17 @@
 
              
              Title="Options">
+    <ContentPage.Resources>
+        <Style TargetType="ScrollView">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource OffLight}, Dark={StaticResource OffBlack}}" />
+        </Style>
+    </ContentPage.Resources>
     <!--Shell.PresentationMode="Modal"-->
     <!--<ContentPage.BindingContext>
         <viewmodel:OptionsVM />
         <models:AppPreferences />
     </ContentPage.BindingContext>-->
-    <ScrollView Background="AliceBlue">
+    <ScrollView >
         <StackLayout Orientation="Vertical" Margin="10">
             <controls:GroupBoxControl Header="Flasks">
                 <StackLayout>
@@ -103,6 +108,20 @@
                             <Label Text="{Binding Source={x:Static models:Constants.MaxStepBack}, StringFormat='Unlimited Step Back (otherwise maximum {0} per level)'}"/>
                         </FlexLayout>
                     </StackLayout>
+                </StackLayout>
+            </controls:GroupBoxControl>
+            <controls:GroupBoxControl Header="Theme" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}">
+                <StackLayout Orientation="Vertical">
+                    <!--<FlexLayout>
+                        <RadioButton Content="Default" GroupName="Theme" />
+                        <RadioButton Content="Light theme" GroupName="Theme" />
+                        <RadioButton Content="Dark theme" GroupName="Theme" />
+                        
+                        <Label Text="Don't show help at startup" VerticalOptions="Center"/>
+                    </FlexLayout>-->
+
+                    <Button Text="Switch Theme" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.SwitchThemeCommand}" />
+                    <Label Text="{Binding AppPreferences.ThemeUserSetting}" />
                 </StackLayout>
             </controls:GroupBoxControl>
             <!--<Button Text="Go Back" Command="{Binding MainVM.NavigateBackCommand}"/>-->

@@ -139,7 +139,6 @@ namespace WaterSortPuzzle.Models
             {
                 //var temp = Preferences.Default.Get(nameof(LastLevelBeforeClosing), new StoredLevel(new LiquidColor[0, 0], ""));
                 string serialized = Preferences.Default.Get(nameof(LastLevelBeforeClosing) + "_Serialized", string.Empty);
-
                 return JsonConvert.DeserializeObject<StoredLevel>(serialized)!;
             }
             set
@@ -173,6 +172,20 @@ namespace WaterSortPuzzle.Models
         {
             get => Preferences.Default.Get(nameof(InstantAnimations), false);
             set => Preferences.Set(nameof(InstantAnimations), value);
+        }
+        public AppTheme ThemeUserSetting
+        {
+            get
+            {
+                var text = Preferences.Default.Get(nameof(ThemeUserSetting) + "_string", AppTheme.Unspecified.ToString());
+                Enum.TryParse(text, out AppTheme result);
+                return result;
+            }
+            set
+            {
+                Preferences.Set(nameof(ThemeUserSetting) + "_string", value.ToString());
+                OnPropertyChanged();
+            }
         }
     }
 }
