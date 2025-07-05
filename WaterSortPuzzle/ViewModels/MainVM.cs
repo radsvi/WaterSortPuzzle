@@ -692,7 +692,7 @@ namespace WaterSortPuzzle.ViewModels
 
             uint speedMS;
             if (speed == AnimationSpeed.Animation)
-                speedMS = 150;
+                speedMS = 75;
             else
                 speedMS = 0;
 
