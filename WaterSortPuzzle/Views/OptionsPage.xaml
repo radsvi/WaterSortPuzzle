@@ -72,10 +72,14 @@
                 </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Help">
-                <FlexLayout>
-                    <CheckBox IsChecked="{Binding AppPreferences.DontShowHelpScreenAtStart}"/>
-                    <Label Text="Don't show help at startup" VerticalOptions="Center"/>
-                </FlexLayout>
+                <StackLayout Orientation="Vertical">
+                    <FlexLayout>
+                        <CheckBox IsChecked="{Binding AppPreferences.DontShowHelpScreenAtStart}"/>
+                        <Label Text="Don't show help at startup" VerticalOptions="Center"/>
+                    </FlexLayout>
+
+                    <Button Text="Open Help window" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.Help}" />
+                </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Advanced options" IsClippedToBounds="True">
                 <StackLayout Orientation="Vertical">
@@ -85,14 +89,14 @@
                     </FlexLayout>
 
                     <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}">
-                        <Button Text="Add couple presets to saved levels for testing" Command="{Binding MainVM.LoadLevelVM.AddPresetLevelsCommand}" Padding="20,1" HorizontalOptions="Start" Margin="0,10,0,0"/>
+                        <Button Text="Add couple presets to saved levels for testing" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.LoadLevelVM.AddPresetLevelsCommand}"/>
 
                         <FlexLayout>
                             <CheckBox FlexLayout.Shrink="0" IsChecked="{Binding AppPreferences.LoadDebugLevel}"/>
                             <Label FlexLayout.Shrink="1" Text="Generate preset debug level instead of random one" VerticalOptions="Center"/>
                         </FlexLayout>
 
-                        <Button Text="Export all steps taken so far (StepBack)" Command="{Binding GameState.WriteToFileStepBackCommand}" Padding="20,1" HorizontalOptions="Start" Margin="0,10,0,0"/>
+                        <Button Text="Export all steps taken so far (StepBack)" Style="{StaticResource OptionsButton}" Command="{Binding GameState.WriteToFileStepBackCommand}"/>
 
                         <FlexLayout>
                             <CheckBox IsChecked="{Binding AppPreferences.UnlimitedStepBack}"/>

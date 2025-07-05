@@ -485,5 +485,12 @@
 
     <!-- // Quick Notification Overlay // -->
     
+    <!-- // Options menu // -->
+    <Style x:Key="OptionsButton" TargetType="Button">
+        <Setter Property="Padding" Value="20,1" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="Margin" Value="0,10,0,0" />
+    </Style>
+    
 
 </ResourceDictionary>

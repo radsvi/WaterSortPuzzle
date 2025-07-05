@@ -256,7 +256,7 @@ namespace WaterSortPuzzle.ViewModels
                         RestartLevel();
                     break;
                 case PopupParams.Help:
-                    await MainPage.DisplayAlert("Help", "## Dodelat text ##", "OK");
+                    await DisplayHelpPopup();
                     break;
                 //case PopupParams.LoadLevel:
                     
@@ -267,6 +267,22 @@ namespace WaterSortPuzzle.ViewModels
             }
             
             
+        }
+        private async Task DisplayHelpPopup()
+        {
+            //await MainPage.DisplayAlert("Help", "## Dodelat text ##", "OK");
+            //string action = await MainPage.DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "Email", "Twitter", "Facebook");
+            //Debug.WriteLine("Action: " + action);
+
+            //await MainPage.DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "Email", "Twitter", "Facebook");
+
+            string text = "Separate each color into different vials.\n";
+            text += "You can only move matching colors onto each other.\n";
+            text += "You can always move colors to empty vial.\n";
+            text += "You can add empty vials, if you are really stuck.\n";
+            bool answer = await MainPage.DisplayAlert("Help", text, "Don't show this again.", "Close");
+            if (answer)
+                AppPreferences.DontShowHelpScreenAtStart = true;
         }
 
 
