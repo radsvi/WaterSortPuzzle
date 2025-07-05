@@ -17,6 +17,8 @@ namespace WaterSortPuzzle.Models
         /// <param name="callback">Action to perform afterwards.</param>
         void ShowConfirmation(string title, string message, Action<bool> callback,
                               string accept = "Yes", string cancel = "No");
+        void ShowConfirmationSimple(string title, string message,
+                              string accept = "Yes", string cancel = "No");
     }
 
     internal class AlertService : IAlertService
@@ -57,6 +59,14 @@ namespace WaterSortPuzzle.Models
             {
                 bool answer = await ShowConfirmationAsync(title, message, accept, cancel);
                 callback(answer);
+            });
+        }
+        public void ShowConfirmationSimple(string title, string message,
+                                     string accept = "Yes", string cancel = "No")
+        {
+            Application.Current!.MainPage!.Dispatcher.Dispatch(async () =>
+            {
+                bool answer = await ShowConfirmationAsync(title, message, accept, cancel);
             });
         }
     }

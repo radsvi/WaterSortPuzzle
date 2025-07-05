@@ -1,6 +1,8 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
+using System.Threading.Channels;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WaterSortPuzzle.ViewModels
 {
@@ -193,10 +195,11 @@ namespace WaterSortPuzzle.ViewModels
             AutoSolve = new AutoSolve(this);
             //Task.Run(() => this.DisplayHelpPopup());
             //Task.Run(async () => await this.DisplayHelpPopup());
-            
+
 
             //TubeControl(MainVM mainPageVM, int tubeId, LiquidColor[] liquidColors)
 
+            DisplayStartupPopup();
 
             OnStartingLevel();
         }
@@ -270,6 +273,23 @@ namespace WaterSortPuzzle.ViewModels
             }
             
             
+        }
+        private void DisplayStartupPopup()
+        {
+            string text = "Separate each color into different vials.\n";
+            text += "You can only move matching colors onto each other.\n";
+            text += "You can always move colors to empty vial.\n";
+            text += "You can add empty vials, if you are really stuck.\n";
+            Task.Run(async () =>
+            {
+                await Task.Delay(1000);
+                //App.AlertSvc.ShowConfirmation("Title", "Confirmation message.", (result =>
+                //{
+                //    App.AlertSvc.ShowAlert("Result", $"{result}");
+                //}));
+                //App.AlertSvc.ShowConfirmation("Help", text, new Action<bool>((c) => { }), "Don't show this again.", "Close");
+                App.AlertSvc.ShowConfirmationSimple("Help", text, "Don't show this again.", "Close");
+            });
         }
         public async Task DisplayHelpPopup()
         {
