@@ -191,13 +191,16 @@ namespace WaterSortPuzzle.ViewModels
             //if (System.IO.Directory.Exists(logFolderName) == false) System.IO.Directory.CreateDirectory(logFolderName);
 
             AutoSolve = new AutoSolve(this);
-
+            //Task.Run(() => this.DisplayHelpPopup());
+            //Task.Run(async () => await this.DisplayHelpPopup());
+            
 
             //TubeControl(MainVM mainPageVM, int tubeId, LiquidColor[] liquidColors)
 
 
             OnStartingLevel();
         }
+        
         #endregion
         #region Navigation
         //[RelayCommand]
@@ -268,14 +271,8 @@ namespace WaterSortPuzzle.ViewModels
             
             
         }
-        private async Task DisplayHelpPopup()
+        public async Task DisplayHelpPopup()
         {
-            //await MainPage.DisplayAlert("Help", "## Dodelat text ##", "OK");
-            //string action = await MainPage.DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "Email", "Twitter", "Facebook");
-            //Debug.WriteLine("Action: " + action);
-
-            //await MainPage.DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "Email", "Twitter", "Facebook");
-
             string text = "Separate each color into different vials.\n";
             text += "You can only move matching colors onto each other.\n";
             text += "You can always move colors to empty vial.\n";
