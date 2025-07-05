@@ -43,10 +43,10 @@ namespace WaterSortPuzzle.Views
             //{
             //    //label.Text = DateTime.Now.ToString();
             //    await mainVM.DisplayHelpPopup();
-                
+
             //};
             //timer.Start();
-            
+
 
             //Task.Run( async () => await mainVM.DisplayHelpPopup()).Wait();
             //var result = Task.Run(async () => await DisplayHelpPopup());
@@ -68,6 +68,24 @@ namespace WaterSortPuzzle.Views
             // now you can continue executing code here
             //string result = myTask.Result; // wait for the task to complete to continue
             // use result
+
+            //Task.Run(async () =>
+            //{
+            //    await Task.Delay(2000);
+            //    App.AlertSvc.ShowConfirmation("Title", "Confirmation message.", (result =>
+            //    {
+            //        App.AlertSvc.ShowAlert("Result", $"{result}");
+            //    }));
+            //});
+
+            Task.Run(async () =>
+            {
+                await Task.Delay(2000);
+                App.AlertSvc.ShowConfirmation("Title", "Confirmation message.", (result =>
+                {
+                    App.AlertSvc.ShowAlert("Result", $"{result}");
+                }));
+            });
 
         }
         //async Task MainAsync()

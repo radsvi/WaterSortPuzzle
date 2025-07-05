@@ -30,9 +30,11 @@ namespace WaterSortPuzzle
             builder.Services.AddTransient<OptionsPage>();
             builder.Services.AddTransient<LoadLevelPage>();
 
+            builder.Services.AddSingleton<IAlertService, AlertService>();
+
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
