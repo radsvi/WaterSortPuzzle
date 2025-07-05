@@ -94,8 +94,9 @@
                                     <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
                                 </Grid>
                             </Border>
-                            <BoxView Margin="8,4,8,10" WidthRequest="38" HeightRequest="10" VerticalOptions="Start"
+                            <BoxView Margin="0,4,0,0" WidthRequest="36" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center"
                                     Background="LightBlue" CornerRadius="0,0,5,5"/>
+                            
                             <!--<Border Margin="8,4,8,0" WidthRequest="38" HeightRequest="10" VerticalOptions="Start"
                                     Background="LightBlue">
                                 <Border.StrokeShape>
