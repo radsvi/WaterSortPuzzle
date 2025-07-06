@@ -8,10 +8,11 @@
     xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
     x:DataType="viewmodels:MainVM"
     Shell.FlyoutBehavior="Flyout"
-    FlyoutBackgroundColor="#6b95ed"
-    Title="WaterSortPuzzle">
-
-    <ShellContent
+    
+    
+    Title="WaterSortPuzzle"><!--FlyoutBackgroundColor="#6b95ed"-->
+    <!--Shell.NavBarIsVisible="False"-->
+    <!--<ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:MainPage}"
         Route="MainPage" />
@@ -23,7 +24,7 @@
     <ShellContent
         Title="Load Level"
         ContentTemplate="{DataTemplate views:LoadLevelPage}"
-        Route="LoadLevelPage" />
+        Route="LoadLevelPage" />-->
     <!--<ShellContent
         Title="Save Level"
         ContentTemplate="{DataTemplate views:LoadLevelPage}"
@@ -73,5 +74,20 @@
         </StackLayout>
     </Shell.FlyoutFooter>-->
 
+    <FlyoutItem >
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate views:MainPage}"
+            Route="MainPage" />
+
+        <ShellContent
+            Title="Options"
+            ContentTemplate="{DataTemplate views:OptionsPage}"
+            Route="OptionsPage" />
+        <ShellContent
+            Title="Load Level"
+            ContentTemplate="{DataTemplate views:LoadLevelPage}"
+            Route="LoadLevelPage" />
+    </FlyoutItem>
 
 </Shell>
