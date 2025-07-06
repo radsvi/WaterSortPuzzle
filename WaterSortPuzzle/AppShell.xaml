@@ -74,7 +74,7 @@
         </StackLayout>
     </Shell.FlyoutFooter>-->
 
-    <FlyoutItem >
+    <!--<FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
             Title="Home"
             ContentTemplate="{DataTemplate views:MainPage}"
@@ -83,11 +83,25 @@
         <ShellContent
             Title="Options"
             ContentTemplate="{DataTemplate views:OptionsPage}"
-            Route="OptionsPage" />
+            Route="MainPage/OptionsPage" />
         <ShellContent
             Title="Load Level"
             ContentTemplate="{DataTemplate views:LoadLevelPage}"
-            Route="LoadLevelPage" />
+            Route="MainPage/LoadLevelPage" />
+    </FlyoutItem>-->
+
+    <FlyoutItem Title="Home" Route="MainPage">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
+        </Tab>
     </FlyoutItem>
+    <FlyoutItem Title="Options" Route="OptionsPage" >
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:OptionsPage}" />
+        </Tab>
+    </FlyoutItem>
+
+    
+
 
 </Shell>
