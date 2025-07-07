@@ -5,10 +5,18 @@ using System.Threading.Channels;
 
 namespace WaterSortPuzzle.ViewModels
 {
+    public partial class TestovaniDInjectionVM : ViewModelBase
+    {
+        //public AppPreferences AppPreferences { get; }
+        public TestovaniDInjectionVM(AppPreferences appPreferences)
+        {
+            //AppPreferences = appPreferences;
+        }
+    }
     public partial class MainVM : ViewModelBase
     {
         #region Constructor
-        public MainVM(MainPage mainPage)
+        public MainVM()
         {
             //this.WindowService = new WindowService();
 
