@@ -46,18 +46,17 @@
         <Grid Grid.Row="1" Margin="0,5,0,0">
             <Grid.Style>
                 <Style TargetType="Grid">
-                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BackgroundColor" Value="Transparent" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding UIEnabled}" Value="False" TargetType="Grid">
-                            <Setter Property="Background" Value="#475573" />
+                            <Setter Property="BackgroundColor" Value="#475573" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
             <CollectionView SelectionMode="None" ItemsSource="{Binding TubesItemsSource}" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical"
-                                    Span="{Binding TubesPerLine}"/>
+                    <GridItemsLayout Orientation="Vertical" Span="{Binding TubesPerLine}"/>
                 </CollectionView.ItemsLayout>
                 <!--<CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal" />
@@ -114,7 +113,8 @@
             <!--<Grid VerticalOptions="Start" HorizontalOptions="Center" x:Name="GridForTubes">
                 <usercontrols:TubeControl TubeItem="{Binding Tubes[0]}"/>
             </Grid>-->
-            <Button Text="Get Solution" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding AutoSolve.StartCommand}" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}" />
+            <!--<Button Text="Get Solution" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding AutoSolve.StartCommand}" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}" />-->
+            <!--<Button Text="Test" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding TestMethodaCommand}" />-->
             <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
                 <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
             </Border>

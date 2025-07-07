@@ -633,8 +633,10 @@ namespace WaterSortPuzzle.Models
         }
         
         [RelayCommand]
-        public async Task WriteToFileStepBack()
+        public void WriteToFileStepBack()
         {
+            //await App.Current!.Windows[0].Page!.DisplayAlert("zkouska","zkouska text", "ok");
+
             string exportString = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + "\n";
             foreach (var savedState in SavedGameStates)
             {
@@ -646,7 +648,6 @@ namespace WaterSortPuzzle.Models
             //System.IO.File.WriteAllText("ExportStepBack.log", exportString);
             System.IO.File.AppendAllText("Export-StepBack.log", exportString);
 
-            //mainVM.WindowService?.CloseWindow(); // close options menu
             //await mainVM.NavigateBack();
         }
 

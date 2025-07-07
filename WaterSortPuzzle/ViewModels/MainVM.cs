@@ -87,7 +87,7 @@ namespace WaterSortPuzzle.ViewModels
             else if (e.PropertyName == nameof(AppPreferences.UnlimitedStepBack) || e.PropertyName == nameof(GameState.SavedGameStates))
                 StepBackCommand.NotifyCanExecuteChanged();
             else if (e.PropertyName == nameof(AutoSolve.InProgress))
-                UIEnabled = AutoSolve.InProgress;
+                UIEnabled = !AutoSolve.InProgress;
         }
         private void CollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
         {
@@ -1046,6 +1046,11 @@ namespace WaterSortPuzzle.ViewModels
         //    TubeCount = Tubes.Count;
         //}
         //public RelayCommand StepThroughCommand => new RelayCommand(execute => AutoSolve.StepThrough(), canExecute => AutoSolve.CompleteSolution.Count > 0 && AutoSolve.CurrentSolutionStep > 0);
+        //[RelayCommand]
+        //void TestMethoda()
+        //{
+        //    var qwer = UIEnabled;
+        //}
         #endregion
     }
 }

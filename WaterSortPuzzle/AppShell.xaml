@@ -90,7 +90,7 @@
             Route="MainPage/LoadLevelPage" />
     </FlyoutItem>-->
 
-    <FlyoutItem Title="Home" Route="MainPage">
+    <FlyoutItem Title="Home" Route="MainPage" FlyoutItemIsVisible="True">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
         </Tab>

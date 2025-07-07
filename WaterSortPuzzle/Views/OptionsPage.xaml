@@ -101,7 +101,7 @@
                             <Label FlexLayout.Shrink="1" Text="Generate preset debug level instead of random one" VerticalOptions="Center"/>
                         </FlexLayout>
 
-                        <Button Text="Export all steps taken so far (StepBack)" Style="{StaticResource OptionsButton}" Command="{Binding GameState.WriteToFileStepBackCommand}"/>
+                        <!--<Button Text="Export all steps taken so far (StepBack)" Style="{StaticResource OptionsButton}" Command="{Binding GameState.WriteToFileStepBackCommand}"/>-->
 
                         <FlexLayout>
                             <CheckBox IsChecked="{Binding AppPreferences.UnlimitedStepBack}"/>
