@@ -3,15 +3,19 @@
     public partial class LoadLevelVM : ObservableObject
     {
         public MainVM MainVM { get; }
+        public GameState GameState { get; }
         public AppPreferences AppPreferences { get; }
+        public Notification Notification { get; }
         //public LoadLevelVM()
         //{
 
         //}
-        public LoadLevelVM(MainVM mainVM, AppPreferences appPreferences)
+        public LoadLevelVM(MainVM mainVM, AppPreferences appPreferences, GameState gameState, Notification notification)
         {
             MainVM = mainVM;
             AppPreferences = appPreferences;
+            GameState = gameState;
+            Notification = notification;
 
             LoadLevelList.CollectionChanged += LoadLevelList_CollectionChanged;
             //MainVM.LoadLevelScreen();
@@ -156,7 +160,7 @@
             //MainVM.ClosePopupWindow();
             MainVM.PropertyChangedEventPaused = true;
             //MainVM.GameState.StartingPosition = MainVM.GameState.CloneGrid(SelectedLevelForLoading.GameGrid);
-            MainVM.GameState.StartingPosition = CloneGrid(SelectedLevelForLoading.GameGrid);
+            GameState.StartingPosition = CloneGrid(SelectedLevelForLoading.GameGrid);
 
 
             //TubesManager.Tubes = DeepCopyTubesCollection(TubesManager.SavedStartingTubes);
@@ -404,7 +408,7 @@
             var importedGameState = DecodeImportedString(ImportGameStateString);
             if (importedGameState is null) return;
 
-            MainVM.GameState.SetGameState(importedGameState);
+            GameState.SetGameState(importedGameState);
             MainVM.OnStartingLevel();
             ImportGameStateString = string.Empty;
         }
@@ -415,7 +419,7 @@
 
             var importStringTrimmed = importString.Trim(new char[] { '[', ']', '"' });
             var splitToTubes = importStringTrimmed.Split("][");
-            LiquidColor[,] importedGameState = new LiquidColor[splitToTubes.Count(), MainVM.GameState.gameGrid.GetLength(1)];
+            LiquidColor[,] importedGameState = new LiquidColor[splitToTubes.Count(), GameState.gameGrid.GetLength(1)];
 
             for (int x = 0; x < splitToTubes.Length; x++)
             {
@@ -431,7 +435,7 @@
                         int liquid = Int32.Parse(layer[y]);
                         if (liquid > LiquidColor.ColorKeys.Count - 2)
                         {
-                            MainVM.Notification.Show($"Wrong number ({liquid}) in the import string. Canceling import.", 10000);
+                            Notification.Show($"Wrong number ({liquid}) in the import string. Canceling import.", 10000);
                             return null;
                         }
                         importedGameState[x, y] = new LiquidColor(liquid);

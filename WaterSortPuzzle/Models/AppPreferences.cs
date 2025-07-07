@@ -4,8 +4,8 @@ namespace WaterSortPuzzle.Models
 {
     public partial class AppPreferences : ObservableObject
     {
-        private MainVM mainVM;
-        private GameState gameState;
+        readonly MainVM mainVM;
+        readonly GameState gameState;
         public AppPreferences(MainVM mainVM, GameState gameState)
         {
             this.mainVM = mainVM;

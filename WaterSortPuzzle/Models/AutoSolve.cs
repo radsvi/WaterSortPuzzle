@@ -2,9 +2,9 @@
 {
     public partial class AutoSolve : ViewModelBase
     {
-        MainVM mainVM;
-        Notification notification;
-        GameState gameState;
+        readonly MainVM mainVM;
+        readonly Notification notification;
+        readonly GameState gameState;
 
         readonly string exportLogFilename;
         private int currentSolutionStep = 0;
