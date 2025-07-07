@@ -20,18 +20,19 @@ namespace WaterSortPuzzle
             //builder.Services.AddSingleton(new MainVM(new MainPage()));
             //builder.Services.AddSingleton<AppPreferences>();
             builder.Services.AddSingleton<MainVM>();
-            builder.Services.AddSingleton<DetailPageVM>();
-            builder.Services.AddSingleton<OptionsVM>();
-            builder.Services.AddSingleton<LoadLevelVM>();
+            builder.Services.AddSingleton<TestDInjectionVM>(); // ##
+            //builder.Services.AddSingleton<DetailPageVM>();
+            //builder.Services.AddSingleton<OptionsVM>();
+            //builder.Services.AddSingleton<LoadLevelVM>();
 
-            //builder.Services.AddTransient<DetailPage>();
-            builder.Services.AddSingleton<Notification>();
+            ////builder.Services.AddTransient<DetailPage>();
+            //builder.Services.AddSingleton<Notification>();
             
-            builder.Services.AddSingleton<DetailPage>();
-            builder.Services.AddTransient<OptionsPage>();
-            builder.Services.AddTransient<LoadLevelPage>();
+            //builder.Services.AddSingleton<DetailPage>();
+            //builder.Services.AddTransient<OptionsPage>();
+            //builder.Services.AddTransient<LoadLevelPage>();
 
-            builder.Services.AddSingleton<IAlertService, AlertService>();
+            //builder.Services.AddSingleton<IAlertService, AlertService>();
 
 
 #if DEBUG

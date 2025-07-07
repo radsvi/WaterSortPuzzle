@@ -9,13 +9,13 @@ namespace WaterSortPuzzle.Views
         //readonly MainVM mainVM;
 
         //public MainPage()
-        public MainPage()
+        public MainPage(TestDInjectionVM mainVM)
         {
             InitializeComponent();
 
             //BindingContext = new MainVM();
             //BindingContext = ServiceHelper.GetService<MainVM>();
-            var mainVM = new MainVM(this);
+            //var mainVM = new MainVM(this);
             BindingContext = mainVM;
         }
     }
