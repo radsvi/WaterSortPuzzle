@@ -50,7 +50,7 @@ namespace WaterSortPuzzle.ViewModels
 
             //AppPreferences.MaximumExtraTubes.Prop
             //PropertyChanged += NejakaMethoda;
-            AppPreferences.PropertyChanged += NotifyCommand;
+            AppPreferences.PropertyChanged += PropertyChangedHandler;
 
             OnStartingLevel();
         }
@@ -73,19 +73,28 @@ namespace WaterSortPuzzle.ViewModels
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
             //PropertyChanged += NejakaMethoda;
-            AppPreferences.PropertyChanged += NotifyCommand;
-            GameState.SavedGameStates.CollectionChanged += SavedGameStatesCollectionChangedHandler;
+            GameState.SavedGameStates.CollectionChanged += CollectionChangedHandler;
+            AppPreferences.PropertyChanged += PropertyChangedHandler;
+            AppPreferences.PropertyChanged += PropertyChangedHandler;
+            GameState.PropertyChanged += PropertyChangedHandler;
 
             OnStartingLevel();
         }
-        private void NotifyCommand(object? sender, PropertyChangedEventArgs e)
+        private void PropertyChangedHandler(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(AppPreferences.MaximumExtraTubes) || e.PropertyName == nameof(GameState.ColorCount))
                 AddExtraTubeCommand.NotifyCanExecuteChanged();
-            else if (e.PropertyName == nameof(GameState.SavedGameStates) || e.PropertyName == nameof(AppPreferences.UnlimitedStepBack))
+            else if (e.PropertyName == nameof(AppPreferences.UnlimitedStepBack) || e.PropertyName == nameof(GameState.SavedGameStates))
                 StepBackCommand.NotifyCanExecuteChanged();
         }
-
+        private void CollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                this.StepBackCommand.NotifyCanExecuteChanged();
+                OnPropertyChanged(nameof(GameState.StepBackDisplay));
+            }
+        }
         #endregion
         #region Properties
         private ObservableCollection<TubeData> tubesItemsSource = new ObservableCollection<TubeData>();
@@ -267,15 +276,6 @@ namespace WaterSortPuzzle.ViewModels
 
             return true;
         }
-        private void SavedGameStatesCollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                this.StepBackCommand.NotifyCanExecuteChanged();
-                OnPropertyChanged(nameof(GameState.StepBackDisplay));
-            }
-        }
-        
         [RelayCommand]
         async Task NavigateToPage(PopupParams menuItem)
         {

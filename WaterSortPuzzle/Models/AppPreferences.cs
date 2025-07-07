@@ -4,14 +4,7 @@ namespace WaterSortPuzzle.Models
 {
     public partial class AppPreferences : ObservableObject
     {
-        readonly GameState gameState;
-        public AppPreferences(GameState gameState)
-        {
-            this.gameState = gameState;
-        }
-        public AppPreferences() // ##
-        {
-        }
+        public AppPreferences() {}
 
         public bool LoadDebugLevel
         {
@@ -165,7 +158,7 @@ namespace WaterSortPuzzle.Models
             set
             {
                 Preferences.Set(nameof(UnlimitedStepBack), value);
-                OnPropertyChanged(nameof(gameState.StepBackDisplay));
+                //OnPropertyChanged(nameof(gameState.StepBackDisplay));
                 //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(gameState.StepBackDisplay)));
                 //gameState.StepBackCommand.NotifyCanExecuteChanged();
             }
