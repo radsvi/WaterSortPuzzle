@@ -2,14 +2,9 @@
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using System.Threading.Channels;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WaterSortPuzzle.ViewModels
 {
-    public partial class TestDInjectionVM : ViewModelBase
-    {
-
-    }
     public partial class MainVM : ViewModelBase
     {
         #region Constructor
@@ -19,7 +14,7 @@ namespace WaterSortPuzzle.ViewModels
 
             AppPreferences = new AppPreferences(this);
             Notification = new Notification(this);
-            MainPage = mainPage;
+            //MainPage = mainPage;
             GameState = new GameState(this);
             //Tubes = TubesManager.Tubes;
 
@@ -87,7 +82,7 @@ namespace WaterSortPuzzle.ViewModels
 
         //public IWindowService WindowService { get; }
         public AppPreferences AppPreferences { get; }
-        public MainPage MainPage { get; }
+        //public MainPage MainPage { get; }
         public Notification Notification { get; }
         //public AutoSolve AutoSolve { get; set; }
         private AutoSolve autoSolve;
@@ -252,17 +247,17 @@ namespace WaterSortPuzzle.ViewModels
             switch (menuItem)
             {
                 case PopupParams.NewLevel:
-                    bool answer = await MainPage.DisplayAlert("New level", "Do you want to start a new level?", "OK", "Cancel");
+                    bool answer = await Application.Current.MainPage.DisplayAlert("New level", "Do you want to start a new level?", "OK", "Cancel");
                     if (answer)
                         GenerateNewLevel();
                     break;
                 case PopupParams.RestartLevel:
-                    bool answer1 = await MainPage.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
+                    bool answer1 = await Application.Current.MainPage.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
                     if (answer1)
                         RestartLevel();
                     break;
                 case PopupParams.LevelComplete:
-                    bool answer2 = await MainPage.DisplayAlert("Level complete", "Congratulation! You won!", "Next level", "Restart level");
+                    bool answer2 = await Application.Current.MainPage.DisplayAlert("Level complete", "Congratulation! You won!", "Next level", "Restart level");
                     if (answer2)
                         GenerateNewLevel();
                     else
@@ -275,7 +270,7 @@ namespace WaterSortPuzzle.ViewModels
                     
                 //    break;
                 case PopupParams.SaveLevel:
-                    await MainPage.DisplayAlert("Save Level", "## Dodelat text ##", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Save Level", "## Dodelat text ##", "OK");
                     break;
             }
             
