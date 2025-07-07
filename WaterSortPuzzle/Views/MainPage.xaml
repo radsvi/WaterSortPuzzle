@@ -16,9 +16,9 @@
         <!--#region Top section -->
 
         <!-- // AutoSolve box // -->
-        <!--<Border HorizontalOptions="Start" Background="White" IsVisible="{Binding AutoSolve.DisplayIterations}" HeightRequest="40">
+        <Border HorizontalOptions="Start" Background="White" IsVisible="{Binding AutoSolve.Started}" HeightRequest="40">
             <Label Text="{Binding AutoSolve.Iterations}" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-        </Border>-->
+        </Border>
         <!--<Border HorizontalOptions="Start" Background="White" HeightRequest="40">
             <Label Text="{Binding DrawTubesCounter}" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
         </Border>-->
@@ -122,7 +122,11 @@
         <!--#region Bottom section -->
         <!-- // Bottom Bar // -->
         <StackLayout Orientation="Vertical" Grid.Row="2" Margin="5">
+            <Button
+                Text="Get Solution" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding AutoSolve.StartCommand}" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}" />
+            
             <BoxView Style="{StaticResource Separator}" Margin="0,0,0,4"/>
+
             <Grid>
                 <!-- // Bottom Bar - Left side // -->
                 <!--<StackLayout Orientation="Horizontal">
@@ -143,7 +147,7 @@
                     </StackLayout>
                 </StackLayout>-->
                 <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
-                    <!--<Button Text="Next Step" Style="{StaticResource NavigationButtonBottom}"/>-->
+                    <Button Text="Next Step" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AutoSolve.StepThroughCommand}" IsVisible="{Binding AutoSolve.Solved}"/>
                     <Button Text="Add extra flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}" Grid.Column="1"/>
                     <!--<Button Text="{Binding GameState.StepBackCounter, StringFormat='« Back ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}" Grid.Column="1"/>-->
                     <Button Text="{Binding GameState.StepBackDisplay, StringFormat='« Back ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}" Grid.Column="2"/>

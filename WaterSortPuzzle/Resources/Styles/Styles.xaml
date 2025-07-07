@@ -479,6 +479,15 @@
         <Setter Property="FontSize" Value="12" />
         <Setter Property="LineBreakMode" Value="WordWrap" />
     </Style>
+    <Style x:Key="NavigationButtonAdvancedSettings" TargetType="Button">
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HeightRequest" Value="-1" />
+        <Setter Property="MinimumHeightRequest" Value="-1" />
+        <Setter Property="Margin" Value="0,0,0,5" />
+        <Setter Property="Padding" Value="10,8" />
+        <Setter Property="BorderColor" Value="#7db2da" />
+        <Setter Property="Background" Value="#5fa3d9" />
+    </Style>
     <!--<Style x:Key="NavigationButtonBottomRight" TargetType="Button" BasedOn="NavigationButtonBottomLeft">
         
     </Style>-->

@@ -392,20 +392,6 @@ namespace WaterSortPuzzle.ViewModels
             GameState.RestartLevel();
             OnStartingLevel();
         }
-        public void OnStartingLevel()
-        {
-            UIEnabled = true;
-            DeselectTube(AnimationSpeed.Animation);
-            GameState.SavedGameStates.Clear();
-            GameState.LastGameState = null;
-            GameState.SaveGameState();
-            GameState.ResetStepBackCounter();
-            AutoSolve = new AutoSolve(this); // guarantees that we remove stuff like previous moves in autosolving
-            RecalculateTubesPerLine();
-            AddExtraTubeCommand.NotifyCanExecuteChanged();
-            GameState.StepBackCommand.NotifyCanExecuteChanged();
-            DrawTubes();
-        }
         public string NoteForSavedLevel { get; set; }
         private void SaveLevel()
         {
@@ -578,6 +564,20 @@ namespace WaterSortPuzzle.ViewModels
 
             IsLevelCompleted();
             GameState.SaveGameState();
+        }
+        public void OnStartingLevel()
+        {
+            UIEnabled = true;
+            DeselectTube(AnimationSpeed.Animation);
+            GameState.SavedGameStates.Clear();
+            GameState.LastGameState = null;
+            GameState.SaveGameState();
+            GameState.ResetStepBackCounter();
+            AutoSolve = new AutoSolve(this); // guarantees that we remove stuff like previous moves in autosolving
+            RecalculateTubesPerLine();
+            AddExtraTubeCommand.NotifyCanExecuteChanged();
+            GameState.StepBackCommand.NotifyCanExecuteChanged();
+            DrawTubes();
         }
         private void GetTopmostLiquid(TubeReference sourceTube) // selects topmost liquid in a sourceTube
         {

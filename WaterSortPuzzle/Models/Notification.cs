@@ -24,7 +24,10 @@
         public void Show(string text) => Show(text, MessageType.Information);
         public void Show(string text, int closeDelay = closeDelayDefault) => Show(text, MessageType.Information, closeDelay);
         public void Show(string text, MessageType messageType, int closeDelay = closeDelayDefault)
-        { }
+        {
+            // tohle je docasne zjednoduseny
+            Debug.WriteLine(text);
+        }
 
 
 

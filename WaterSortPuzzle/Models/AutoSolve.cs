@@ -5,10 +5,23 @@
         MainVM mainVM;
         Notification notification;
         readonly string exportLogFilename;
+        private int currentSolutionStep = 0;
+        private int iterations = 0;
+        private bool solved = false;
+        private bool started = false;
         //TreeNode<ValidMove> SolvingSteps;
         //TreeNode<ValidMove> FirstStep;
+        public AutoSolve(MainVM mainVM)
+        {
+            this.mainVM = mainVM;
+            notification = mainVM.Notification;
+            exportLogFilename = this.mainVM.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
+        }
         private bool ResumeRequest { get; set; }
-        public bool InProgress { get; private set; }
+        private bool inProgress;
+        public bool InProgress { get => inProgress; private set { inProgress = value; OnPropertyChanged(); } }
+        public bool Started { get => started; private set { started = value; OnPropertyChanged(); } }
+        public bool Solved { get => solved; private set { solved = value; OnPropertyChanged(); } }
         //[Obsolete]public int ResumeRequestCounterDebug { get; set; } = 0; // used only for debugging how many times I clicked the button and only triggering breakpoint upon certain number.
         //public List<ValidMove> CompleteSolution { get; private set; }
         private ObservableCollection<ValidMove> completeSolution = new ObservableCollection<ValidMove>();
@@ -23,9 +36,8 @@
                 }
             }
         }
-        private Action stepThrough;
-        public Action StepThrough { get => stepThrough; set => stepThrough = value; }
-        private int iterations = 0;
+
+
         public int Iterations
         {
             get { return iterations; }
@@ -35,39 +47,19 @@
                 {
                     iterations = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(DisplayIterations));
                 }
             }
         }
-        public Visibility DisplayIterations
-        {
-            get
-            {
-                if (iterations > 0)
-                {
-                    return Visibility.Visible;
-                }
-                else
-                {
-                    return Visibility.Hidden;
-                }
-            }
-        }
-        private int currentSolutionStep = 0;
+
+
         public int CurrentSolutionStep { get => currentSolutionStep; set { currentSolutionStep = value; OnPropertyChanged(); } }
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(GameState.StepBackCommand))]
         //private bool limitToOneStep = false;
         public bool LimitToOneStep { get; set; } = false; // When true - makes the AutoSolve generate only one step for each press of the button and visualises the changes. When false - generates whole solution
-        public AutoSolve(MainVM mainVM)
+        private async void StartSolution(LiquidColor[,] startingPosition)
         {
-            this.mainVM = mainVM;
-            notification = mainVM.Notification;
-            StepThrough += StepThroughMethod;
-            exportLogFilename = this.mainVM.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
-        }
-        private async void Start(LiquidColor[,] startingPosition)
-        {
+            IsBusy = true;
             //var notificationType = MessageType.Debug;
             var notificationType = MessageType.Hidden;
             var startTime = DateTime.Now;
@@ -211,6 +203,10 @@
                 notification.Show($"Total states taken to generate: {Iterations}. Steps required to solve the puzzle {CompleteSolution.Count}. Duration: {duration.TotalSeconds} seconds", MessageType.Debug, 60000);
             else 
                 notification.Show($"Total states taken to generate: {Iterations}. Puzzle wasn't solved, something went wrong ({CompleteSolution.Count} steps generated). Duration: {duration.TotalSeconds} seconds", MessageType.Debug, 60000);
+
+            IsBusy = false;
+            Solved = true;
+            InProgress = false;
         }
         private List<ValidMove> OrderList(List<ValidMove> validMoves, ColorCount mostFrequentColors)
         {
@@ -821,16 +817,19 @@
 
         #region Controls
         [RelayCommand]
-        public void CalculateNextStep(LiquidColor[,] gameState)
+        public void Start()
         {
+
             //Notification.Show("Game grid locked while automatic solution is engaged",MessageType.Information, 10000);
             ResumeRequest = true; // provede se i pri prvnim spusteni, protoze je pauza na zacatku
             //ResumeRequestCounterDebug++;
-            if (mainVM.UIEnabled == true) // disable UI once starting the Auto Solve process
+            //if (mainVM.UIEnabled == true)
+            if (IsBusy == false)
             {
                 mainVM.UIEnabled = false;
+                Started = true;
                 InProgress = true;
-                Start(gameState);
+                StartSolution(mainVM.GameState.gameGrid);
                 return;
             }
         }
@@ -853,7 +852,8 @@
         //        await WaitForButtonPress();
         //    }
         //}
-        public void StepThroughMethod()
+        [RelayCommand]
+        public void StepThrough()
         {
             MakeAMove(CompleteSolution[--CurrentSolutionStep]);
         }
