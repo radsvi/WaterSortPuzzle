@@ -47,7 +47,14 @@ namespace WaterSortPuzzle.ViewModels
 
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
+            //AppPreferences.MaximumExtraTubes.Prop
+            PropertyChanged += NejakaMethoda;
+
             OnStartingLevel();
+        }
+        private void NejakaMethoda(object? sender, PropertyChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
         public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
         {
