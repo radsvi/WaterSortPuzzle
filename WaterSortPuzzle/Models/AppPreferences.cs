@@ -159,8 +159,8 @@ namespace WaterSortPuzzle.Models
         //    set
         //    {
         //        Preferences.Set(nameof(UnlimitedStepBack), value);
-        //        OnPropertyChanged(nameof(mainVM.GameState.StepBackDisplay));
-        //        //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(mainVM.GameState.StepBackDisplay)));
+        //        OnPropertyChanged(nameof(gameState.StepBackDisplay));
+        //        //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(gameState.StepBackDisplay)));
         //    }
         //}
         public bool UnlimitedStepBack

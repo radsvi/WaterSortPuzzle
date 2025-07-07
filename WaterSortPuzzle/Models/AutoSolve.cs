@@ -4,6 +4,8 @@
     {
         MainVM mainVM;
         Notification notification;
+        GameState gameState;
+
         readonly string exportLogFilename;
         private int currentSolutionStep = 0;
         private int iterations = 0;
@@ -11,10 +13,18 @@
         private bool started = false;
         //TreeNode<ValidMove> SolvingSteps;
         //TreeNode<ValidMove> FirstStep;
-        public AutoSolve(MainVM mainVM)
+        public AutoSolve(MainVM mainVM) // ##
         {
             this.mainVM = mainVM;
             notification = mainVM.Notification;
+            exportLogFilename = this.mainVM.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
+        }
+        public AutoSolve(MainVM mainVM, Notification notification, GameState gameState)
+        {
+            this.mainVM = mainVM;
+            this.notification = notification;
+            this.gameState = gameState;
+
             exportLogFilename = this.mainVM.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
         }
         private bool ResumeRequest { get; set; }
@@ -168,7 +178,7 @@
 
                     if (UnvisitedChildrenExist(treeNode) == false)
                     {
-                        if (mainVM.GameState.IsLevelCompleted(treeNode.Data.GameState) is false)
+                        if (gameState.IsLevelCompleted(treeNode.Data.GameState) is false)
                         {
                             treeNode.Data.FullyVisited = true;
                             //if (treeNode.Parent is not null)
@@ -242,7 +252,7 @@
                 return new NullTreeNode(parentNode);
             }
 
-            var newGameState = mainVM.GameState.CloneGrid(parentNode.Data.GameState);
+            var newGameState = gameState.CloneGrid(parentNode.Data.GameState);
             var validMove = new ValidMove(dualColorTube, singleColorTube, newGameState, MoveType.NeverWrong);
 
             return GeneratePriorityFutureState(parentNode, validMove, hashedSteps);
@@ -528,7 +538,7 @@
             //SolvingStepsOLD.Add(upcomingStep);
 
             //previousGameState = node.Data.GameState; // tohle je gamestate kterej uchovavam jen uvnitr autosolvu
-            mainVM.GameState.SetGameState(move.GameState);
+            gameState.SetGameState(move.GameState);
             var currentTubeReference = new TubeReference(
                 move.Target.X,
                 move.GameState[move.Target.X, move.Target.Y],
@@ -680,7 +690,7 @@
         }
         //private LiquidColorNew[,] CloneGrid(LiquidColorNew[,] gameState)
         //{
-        //    return MainVM.GameState.CloneGrid(gameState);
+        //    return gameState.CloneGrid(gameState);
         //}
         private (bool, int) AreAllLayersIdentical(LiquidColor[,] gameState, int x, int y)
         {
@@ -828,7 +838,7 @@
                 mainVM.UIEnabled = false;
                 Started = true;
                 InProgress = true;
-                StartSolution(mainVM.GameState.gameGrid);
+                StartSolution(gameState.gameGrid);
                 return;
             }
         }

@@ -8,10 +8,11 @@
         //{
 
         //}
-        public LoadLevelVM(MainVM mainVM)
+        public LoadLevelVM(MainVM mainVM, AppPreferences appPreferences)
         {
             MainVM = mainVM;
-            AppPreferences = MainVM.AppPreferences;
+            AppPreferences = appPreferences;
+
             LoadLevelList.CollectionChanged += LoadLevelList_CollectionChanged;
             //MainVM.LoadLevelScreen();
 

@@ -145,8 +145,9 @@ namespace WaterSortPuzzle.Models
         public GameState(MainVM mainVM)
         {
             this.mainVM = mainVM;
-            appPreferences = this.mainVM.AppPreferences;
-            notification = mainVM.Notification;
+            this.appPreferences = this.mainVM.AppPreferences;
+            this.notification = mainVM.Notification;
+
             this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
 
             //if (Tubes.Count == 0)

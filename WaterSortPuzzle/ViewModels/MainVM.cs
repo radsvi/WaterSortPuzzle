@@ -10,11 +10,25 @@ namespace WaterSortPuzzle.ViewModels
         public AppPreferences AppPreferences { get; }
         public GameState GameState { get; }
         public Notification Notification { get; }
-        public TestovaniDInjectionVM(AppPreferences appPreferences, GameState gameState, Notification notification)
+        private AutoSolve autoSolve;
+        public AutoSolve AutoSolve
+        {
+            get { return autoSolve; }
+            set
+            {
+                if (value != autoSolve)
+                {
+                    autoSolve = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public TestovaniDInjectionVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
         {
             AppPreferences = appPreferences;
             GameState = gameState;
             Notification = notification;
+            AutoSolve = autoSolve;
         }
     }
     public partial class MainVM : ViewModelBase
@@ -24,54 +38,14 @@ namespace WaterSortPuzzle.ViewModels
         {
             //this.WindowService = new WindowService();
 
+
             AppPreferences = new AppPreferences(this);
             Notification = new Notification(this);
             //MainPage = mainPage;
             GameState = new GameState(this);
-            //Tubes = TubesManager.Tubes;
-
-            //PropertyChanged += RegenerateTubeDisplay;
-            //PropertyChanged += TubeCount_PropertyChanged;
-            //TubesManager.GlobalPropertyChanged += TubeCount_PropertyChanged;
-            //Tubes.CollectionChanged += Tubes_CollectionChanged;
-
-            //PopupWindow = new PopupScreenCommand(this);
-            //if (AppPreferences.DontShowHelpScreenAtStart == false)
-            //{
-            //    SelectedViewModel = new HelpVM(this);
-            //}
-
-            //LoadLevelVM = new LoadLevelVM(this);
-            //PopupActions = new ObservableCollection<PopupScreenActions>
-            //{
-            //    new PopupScreenActions(PopupParams.NewLevel, new NewLevelVM(this), null, () => GenerateNewLevel()),
-            //    new PopupScreenActions(PopupParams.RestartLevel, new RestartLevelVM(this), null, () => RestartLevel()),
-            //    new PopupScreenActions(PopupParams.LevelComplete, new LevelCompleteVM(this), null, () => GenerateNewLevel()),
-            //    new PopupScreenActions(PopupParams.Help, new HelpVM(this), null, () => ClosePopupWindow()),
-            //    new PopupScreenActions(PopupParams.LoadLevel, LoadLevelVM, () => LoadLevelVM.LoadLevelScreen(), () => LoadLevelVM.LoadLevel()),
-            //    //new PopupScreenActions(PopupParams.LoadLevel, loadLevelVM, () => loadLevelVM.LoadLevelScreen(), () => loadLevelVM.LoadLevel()),
-            //    //new PopupScreenActions(PopupParams.GameSaved, new GameSavedNotificationVM(this), null, () => CloseNotification()),
-            //    new PopupScreenActions(PopupParams.SaveLevel, new SaveLevelVM(this), null, () => SaveLevel()),
-            //};
-
-
-            //ContainerForTubes = mainPage.FindByName("NotificationBox") as Grid;
-            //ContainerForTubes = mainPage.FindByName("GridForTubes") as Grid;
-
-
-            //if (System.IO.Directory.Exists(logFolderName) == false) System.IO.Directory.CreateDirectory(logFolderName);
-
             AutoSolve = new AutoSolve(this);
-            //Task.Run(() => this.DisplayHelpPopup());
-            //Task.Run(async () => await this.DisplayHelpPopup());
 
-
-            //TubeControl(MainVM mainPageVM, int tubeId, LiquidColor[] liquidColors)
-
-            //DisplayStartupPopup();
-
-            //App.Current.UserAppTheme = AppTheme.Dark; // for testing
-            App.Current.UserAppTheme = AppPreferences.ThemeUserSetting;
+            App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
             OnStartingLevel();
         }
