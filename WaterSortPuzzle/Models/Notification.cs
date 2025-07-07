@@ -13,11 +13,9 @@
     public class Notification
     {
         const int closeDelayDefault = 2000; // in ms
-        MainVM MainPageVM;
         public StackLayout NotificationBox { get; private set; }
-        public Notification(MainVM mainPageVM)
+        public Notification()
         {
-            MainPageVM = mainPageVM;
             //NotificationList = new NotificationsList(MainVM.MainPage.NotificationBox);
             //NotificationBox = mainPageVM.MainPage.NotificationBox;
         }

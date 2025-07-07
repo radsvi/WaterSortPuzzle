@@ -39,7 +39,7 @@ namespace WaterSortPuzzle.ViewModels
             //this.WindowService = new WindowService();
 
             AppPreferences = new AppPreferences();
-            Notification = new Notification(this);
+            Notification = new Notification();
             //MainPage = mainPage;
             GameState = new GameState(this);
             //GameState = gameState;
