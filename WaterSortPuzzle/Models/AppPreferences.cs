@@ -4,16 +4,13 @@ namespace WaterSortPuzzle.Models
 {
     public partial class AppPreferences : ObservableObject
     {
-        readonly MainVM mainVM;
         readonly GameState gameState;
         public AppPreferences(GameState gameState)
         {
-            this.mainVM = mainVM;
             this.gameState = gameState;
         }
         public AppPreferences() // ##
         {
-            this.mainVM = mainVM;
         }
 
         public bool LoadDebugLevel
@@ -93,7 +90,6 @@ namespace WaterSortPuzzle.Models
                     }
 
                     OnPropertyChanged();
-                    mainVM.AddExtraTubeCommand.NotifyCanExecuteChanged(); // #### odpoznamkovat
                 }
             }
         }

@@ -5,32 +5,32 @@ using System.Threading.Channels;
 
 namespace WaterSortPuzzle.ViewModels
 {
-    public partial class TestovaniDInjectionVM : ViewModelBase
-    {
-        public AppPreferences AppPreferences { get; }
-        public GameState GameState { get; }
-        public Notification Notification { get; }
-        private AutoSolve autoSolve;
-        public AutoSolve AutoSolve
-        {
-            get { return autoSolve; }
-            set
-            {
-                if (value != autoSolve)
-                {
-                    autoSolve = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        //public TestovaniDInjectionVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
-        //{
-        //    AppPreferences = appPreferences;
-        //    GameState = gameState;
-        //    Notification = notification;
-        //    AutoSolve = autoSolve;
-        //}
-    }
+    //public partial class TestovaniDInjectionVM : ViewModelBase
+    //{
+    //    public AppPreferences AppPreferences { get; }
+    //    public GameState GameState { get; }
+    //    public Notification Notification { get; }
+    //    private AutoSolve autoSolve;
+    //    public AutoSolve AutoSolve
+    //    {
+    //        get { return autoSolve; }
+    //        set
+    //        {
+    //            if (value != autoSolve)
+    //            {
+    //                autoSolve = value;
+    //                OnPropertyChanged();
+    //            }
+    //        }
+    //    }
+    //    public TestovaniDInjectionVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
+    //    {
+    //        AppPreferences = appPreferences;
+    //        GameState = gameState;
+    //        Notification = notification;
+    //        AutoSolve = autoSolve;
+    //    }
+    //}
     public partial class MainVM : ViewModelBase
     {
         #region Constructor
@@ -48,13 +48,10 @@ namespace WaterSortPuzzle.ViewModels
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
             //AppPreferences.MaximumExtraTubes.Prop
-            PropertyChanged += NejakaMethoda;
+            //PropertyChanged += NejakaMethoda;
+            AppPreferences.PropertyChanged += NotifyAddExtraTubeCommand;
 
             OnStartingLevel();
-        }
-        private void NejakaMethoda(object? sender, PropertyChangedEventArgs e)
-        {
-            throw new NotImplementedException();
         }
         public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
         {
@@ -74,9 +71,18 @@ namespace WaterSortPuzzle.ViewModels
 
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
+            //PropertyChanged += NejakaMethoda;
+            AppPreferences.PropertyChanged += NotifyAddExtraTubeCommand;
+
             OnStartingLevel();
         }
-
+        private void NotifyAddExtraTubeCommand(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(AppPreferences.MaximumExtraTubes))
+            {
+                AddExtraTubeCommand.NotifyCanExecuteChanged();
+            }
+        }
 
         #endregion
         #region Properties

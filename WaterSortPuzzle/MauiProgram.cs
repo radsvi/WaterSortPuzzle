@@ -25,7 +25,7 @@ namespace WaterSortPuzzle
             builder.Services.AddSingleton<DetailPageVM>();
             builder.Services.AddSingleton<OptionsVM>();
             builder.Services.AddSingleton<LoadLevelVM>();
-            builder.Services.AddSingleton<TestovaniDInjectionVM>(); // ##
+            //builder.Services.AddSingleton<TestovaniDInjectionVM>(); // ##
 
 
             //builder.Services.AddTransient<DetailPage>();
