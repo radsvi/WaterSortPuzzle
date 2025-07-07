@@ -167,7 +167,7 @@ namespace WaterSortPuzzle.Models
                 Preferences.Set(nameof(UnlimitedStepBack), value);
                 OnPropertyChanged(nameof(gameState.StepBackDisplay));
                 //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(gameState.StepBackDisplay)));
-                gameState.StepBackCommand.NotifyCanExecuteChanged();
+                //gameState.StepBackCommand.NotifyCanExecuteChanged();
             }
         }
         public bool InstantAnimations

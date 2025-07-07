@@ -6,38 +6,35 @@ namespace WaterSortPuzzle.Models
 {
     public partial class GameState : ViewModelBase
     {
-        readonly MainVM mainVM;
         readonly AppPreferences appPreferences;
         readonly Notification notification;
         readonly AutoSolve autoSolve;
         public GameState() { }
-        //public GameState(MainVM mainVM)
-        //{
-        //    this.mainVM = mainVM;
-        //    this.appPreferences = this.mainVM.AppPreferences;
-        //    this.notification = mainVM.Notification;
-
-        //    this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
-
-        //    GenerateNewLevel(true);
-        //}
-        //public GameState(MainVM mainVM, AppPreferences appPreferences, Notification notification, AutoSolve autoSolve)
         public GameState(MainVM mainVM)
         {
-            this.mainVM = mainVM;
-            this.appPreferences = this.mainVM.AppPreferences;
+            //this.mainVM = mainVM;
+            //this.appPreferences = this.mainVM.AppPreferences;
             this.notification = mainVM.Notification;
 
-            this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
 
             GenerateNewLevel(true);
+        }
+        //public GameState(MainVM mainVM, AppPreferences appPreferences, Notification notification, AutoSolve autoSolve)
+        public GameState(AppPreferences appPreferences, Notification notification, AutoSolve autoSolve)
+        {
+            //this.mainVM = mainVM;
+            //this.appPreferences = this.mainVM.AppPreferences;
+            //this.notification = mainVM.Notification;
 
             //this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
 
-            //this.mainVM = mainVM;
-            //this.appPreferences = appPreferences;
-            //this.notification = notification;
-            //this.autoSolve = autoSolve;
+            //GenerateNewLevel(true);
+
+            //this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
+
+            this.appPreferences = appPreferences;
+            this.notification = notification;
+            this.autoSolve = autoSolve;
 
             //this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
 
@@ -70,7 +67,7 @@ namespace WaterSortPuzzle.Models
         public int StepBackPressesCounter
         {
             get { return stepBackPressesCounter; }
-            private set
+            set
             {
                 if (value != stepBackPressesCounter)
                 {
@@ -109,7 +106,7 @@ namespace WaterSortPuzzle.Models
                     colorCount = value;
                     OnPropertyChanged();
                     //OnPropertyChanged(nameof(mainVM.AddExtraTubeCommand));
-                    mainVM.AddExtraTubeCommand.NotifyCanExecuteChanged();
+                    //mainVM.AddExtraTubeCommand.NotifyCanExecuteChanged();
                 }
             }
         }
@@ -175,7 +172,7 @@ namespace WaterSortPuzzle.Models
                     savedGameStates = value;
                     OnPropertyChanged();
                     //OnPropertyChanged(nameof(StepBackCommand));
-                    StepBackCommand.NotifyCanExecuteChanged();
+                    //StepBackCommand.NotifyCanExecuteChanged();
                     OnPropertyChanged(nameof(StepBackDisplay));
                 }
             }
@@ -636,50 +633,7 @@ namespace WaterSortPuzzle.Models
             }
             return true;
         }
-        private void SavedGameStatesCollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                this.StepBackCommand.NotifyCanExecuteChanged();
-                OnPropertyChanged(nameof(StepBackDisplay));
-            }
-        }
-        [RelayCommand(CanExecute = nameof(CanStepBack))]
-        private void StepBack()
-        {
-            if (CanStepBack() == false)
-                return;
-
-            StepBackPressesCounter++;
-
-            LiquidColor[,] lastGameStatus = SavedGameStates[SavedGameStates.Count - 1];
-
-            mainVM.PropertyChangedEventPaused = true;
-            gameGrid = lastGameStatus;
-            mainVM.PropertyChangedEventPaused = false;
-
-            LastGameState = CloneGrid(lastGameStatus);
-
-            SavedGameStates.Remove(lastGameStatus);
-
-            if (autoSolve.CompleteSolution.Count > 0)
-                autoSolve.CurrentSolutionStep++;
-
-
-            mainVM.DrawTubes();
-        }
-        private bool CanStepBack()
-        {
-            //return SavedGameStates.Count > 0 && autoSolve.LimitToOneStep is false;
-            //return SavedGameStates.Count > 0;
-
-            if (SavedGameStates.Count == 0)
-                return false;
-            if (appPreferences.UnlimitedStepBack == false && Constants.MaxStepBack <= StepBackPressesCounter)
-                return false;
-
-            return true;
-        }
+        
         [RelayCommand]
         public async Task WriteToFileStepBack()
         {
@@ -695,7 +649,7 @@ namespace WaterSortPuzzle.Models
             System.IO.File.AppendAllText("Export-StepBack.log", exportString);
 
             //mainVM.WindowService?.CloseWindow(); // close options menu
-            await mainVM.NavigateBack();
+            //await mainVM.NavigateBack();
         }
 
         private int CountColors(LiquidColor[,] iGameGrid)
@@ -725,7 +679,7 @@ namespace WaterSortPuzzle.Models
             //Clipboard.SetText(ReadableGameState);
             await Clipboard.Default.SetTextAsync(ReadableGameState);
             //mainVM.ClosePopupWindow();
-            await mainVM.NavigateBack();
+            //await mainVM.NavigateBack();
         }
         //public static string GameStateToString(LiquidColorNew[,] gameState, bool enableSort = false)
         //{

@@ -148,7 +148,7 @@
                     <Button Text="{Binding AutoSolve.CurrentSolutionStep, StringFormat='Next Step ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AutoSolve.StepThroughCommand}" IsVisible="{Binding AutoSolve.Solved}"/>
                     <Button Text="Add extra flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}" Grid.Column="1"/>
                     <!--<Button Text="{Binding GameState.StepBackCounter, StringFormat='« Back ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}" Grid.Column="1"/>-->
-                    <Button Text="{Binding GameState.StepBackDisplay, StringFormat='« Back ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}" Grid.Column="2"/>
+                    <Button Text="{Binding GameState.StepBackDisplay, StringFormat='« Back ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepBackCommand}" Grid.Column="2"/>
                     <!--{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[{0}]'}"-->
                 </Grid>
             </Grid>

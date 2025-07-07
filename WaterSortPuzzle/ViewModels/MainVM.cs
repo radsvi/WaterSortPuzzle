@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using System.Threading.Channels;
+using System.Collections.Specialized;
 
 namespace WaterSortPuzzle.ViewModels
 {
@@ -49,7 +50,7 @@ namespace WaterSortPuzzle.ViewModels
 
             //AppPreferences.MaximumExtraTubes.Prop
             //PropertyChanged += NejakaMethoda;
-            AppPreferences.PropertyChanged += NotifyAddExtraTubeCommand;
+            AppPreferences.PropertyChanged += NotifyCommand;
 
             OnStartingLevel();
         }
@@ -72,16 +73,17 @@ namespace WaterSortPuzzle.ViewModels
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
             //PropertyChanged += NejakaMethoda;
-            AppPreferences.PropertyChanged += NotifyAddExtraTubeCommand;
+            AppPreferences.PropertyChanged += NotifyCommand;
+            GameState.SavedGameStates.CollectionChanged += SavedGameStatesCollectionChangedHandler;
 
             OnStartingLevel();
         }
-        private void NotifyAddExtraTubeCommand(object? sender, PropertyChangedEventArgs e)
+        private void NotifyCommand(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(AppPreferences.MaximumExtraTubes))
-            {
+            if (e.PropertyName == nameof(AppPreferences.MaximumExtraTubes) || e.PropertyName == nameof(GameState.ColorCount))
                 AddExtraTubeCommand.NotifyCanExecuteChanged();
-            }
+            else if (e.PropertyName == nameof(GameState.SavedGameStates) || e.PropertyName == nameof(AppPreferences.UnlimitedStepBack))
+                StepBackCommand.NotifyCanExecuteChanged();
         }
 
         #endregion
@@ -230,6 +232,50 @@ namespace WaterSortPuzzle.ViewModels
         #region Navigation
         //[RelayCommand]
         //async Task NavigateToOptions() => await AppShell.Current.GoToAsync(nameof(OptionsPage));
+        [RelayCommand(CanExecute = nameof(CanStepBack))]
+        private void StepBack()
+        {
+            if (CanStepBack() == false)
+                return;
+
+            GameState.StepBackPressesCounter++;
+
+            LiquidColor[,] lastGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 1];
+
+            PropertyChangedEventPaused = true;
+            GameState.gameGrid = lastGameStatus;
+            PropertyChangedEventPaused = false;
+
+            GameState.LastGameState = GameState.CloneGrid(lastGameStatus);
+
+            GameState.SavedGameStates.Remove(lastGameStatus);
+
+            if (autoSolve.CompleteSolution.Count > 0)
+                autoSolve.CurrentSolutionStep++;
+
+            DrawTubes();
+        }
+        private bool CanStepBack()
+        {
+            //return SavedGameStates.Count > 0 && autoSolve.LimitToOneStep is false;
+            //return SavedGameStates.Count > 0;
+
+            if (GameState.SavedGameStates.Count == 0)
+                return false;
+            if (AppPreferences.UnlimitedStepBack == false && Constants.MaxStepBack <= GameState.StepBackPressesCounter)
+                return false;
+
+            return true;
+        }
+        private void SavedGameStatesCollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                this.StepBackCommand.NotifyCanExecuteChanged();
+                OnPropertyChanged(nameof(GameState.StepBackDisplay));
+            }
+        }
+        
         [RelayCommand]
         async Task NavigateToPage(PopupParams menuItem)
         {
@@ -595,7 +641,7 @@ namespace WaterSortPuzzle.ViewModels
             AutoSolve = new AutoSolve(this); // guarantees that we remove stuff like previous moves in autosolving
             RecalculateTubesPerLine();
             AddExtraTubeCommand.NotifyCanExecuteChanged();
-            GameState.StepBackCommand.NotifyCanExecuteChanged();
+            StepBackCommand.NotifyCanExecuteChanged();
             DrawTubes();
         }
         private void GetTopmostLiquid(TubeReference sourceTube) // selects topmost liquid in a sourceTube
