@@ -4,10 +4,16 @@ namespace WaterSortPuzzle.Models
 {
     public partial class AppPreferences : ObservableObject
     {
-        //private MainVM mainVM;
-        public AppPreferences(MainVM mainVM)
+        private MainVM mainVM;
+        private GameState gameState;
+        public AppPreferences(MainVM mainVM, GameState gameState)
         {
-            //this.mainVM = mainVM;
+            this.mainVM = mainVM;
+            this.gameState = gameState;
+        }
+        public AppPreferences(MainVM mainVM) // ##
+        {
+            this.mainVM = mainVM;
         }
 
         public bool LoadDebugLevel
@@ -87,7 +93,7 @@ namespace WaterSortPuzzle.Models
                     }
 
                     OnPropertyChanged();
-                    //mainVM.AddExtraTubeCommand.NotifyCanExecuteChanged();
+                    mainVM.AddExtraTubeCommand.NotifyCanExecuteChanged();
                 }
             }
         }
@@ -163,9 +169,9 @@ namespace WaterSortPuzzle.Models
             set
             {
                 Preferences.Set(nameof(UnlimitedStepBack), value);
-                //OnPropertyChanged(nameof(mainVM.GameState.StepBackDisplay));
-                ////PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(mainVM.GameState.StepBackDisplay)));
-                //mainVM.GameState.StepBackCommand.NotifyCanExecuteChanged();
+                OnPropertyChanged(nameof(gameState.StepBackDisplay));
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(gameState.StepBackDisplay)));
+                gameState.StepBackCommand.NotifyCanExecuteChanged();
             }
         }
         public bool InstantAnimations

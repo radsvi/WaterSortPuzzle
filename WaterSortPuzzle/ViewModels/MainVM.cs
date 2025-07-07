@@ -7,10 +7,14 @@ namespace WaterSortPuzzle.ViewModels
 {
     public partial class TestovaniDInjectionVM : ViewModelBase
     {
-        //public AppPreferences AppPreferences { get; }
-        public TestovaniDInjectionVM(AppPreferences appPreferences)
+        public AppPreferences AppPreferences { get; }
+        public GameState GameState { get; }
+        public Notification Notification { get; }
+        public TestovaniDInjectionVM(AppPreferences appPreferences, GameState gameState, Notification notification)
         {
-            //AppPreferences = appPreferences;
+            AppPreferences = appPreferences;
+            GameState = gameState;
+            Notification = notification;
         }
     }
     public partial class MainVM : ViewModelBase

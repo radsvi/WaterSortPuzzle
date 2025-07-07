@@ -31,6 +31,7 @@ namespace WaterSortPuzzle
             //builder.Services.AddTransient<DetailPage>();
             builder.Services.AddSingleton<Notification>();
             builder.Services.AddSingleton<AppPreferences>();
+            builder.Services.AddSingleton<GameState>();
 
 
 
