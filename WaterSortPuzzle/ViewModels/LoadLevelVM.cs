@@ -401,7 +401,7 @@
 
             if (ImportGameStateString.Substring(0, 2) != "\"[" && ImportGameStateString.Substring(0, 1) != "[")
             {
-                MainVM.Notification.Show($"Wrong format of the import string. Canceling import.", 10000);
+                Notification.Show($"Wrong format of the import string. Canceling import.", 10000);
                 return;
             }
 

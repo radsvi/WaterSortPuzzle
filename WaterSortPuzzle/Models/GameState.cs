@@ -6,9 +6,39 @@ namespace WaterSortPuzzle.Models
 {
     public partial class GameState : ViewModelBase
     {
-        MainVM mainVM;
-        AppPreferences appPreferences;
-        Notification notification;
+        readonly MainVM mainVM;
+        readonly AppPreferences appPreferences;
+        readonly Notification notification;
+        readonly AutoSolve autoSolve;
+        public GameState() { }
+        public GameState(MainVM mainVM)
+        {
+            this.mainVM = mainVM;
+            this.appPreferences = this.mainVM.AppPreferences;
+            this.notification = mainVM.Notification;
+
+            this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
+
+            GenerateNewLevel(true);
+        }
+        //public GameState(MainVM mainVM, AppPreferences appPreferences, Notification notification, AutoSolve autoSolve)
+        //{
+        //    this.mainVM = mainVM;
+        //    this.appPreferences = appPreferences;
+        //    this.notification = notification;
+        //    this.autoSolve = autoSolve;
+
+        //    this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
+
+        //    //if (Tubes.Count == 0)
+        //    //{
+        //    //    GenerateNewLevel();
+        //    //}
+
+        //    //gameState = new int[Tubes, Layers];
+
+        //    GenerateNewLevel(true);
+        //}
 
         private string readableGameState;
         public string ReadableGameState
@@ -141,24 +171,6 @@ namespace WaterSortPuzzle.Models
         }
 
         public LiquidColor[,] LastGameState { get; set; }
-        public GameState() { }
-        public GameState(MainVM mainVM)
-        {
-            this.mainVM = mainVM;
-            this.appPreferences = this.mainVM.AppPreferences;
-            this.notification = mainVM.Notification;
-
-            this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
-
-            //if (Tubes.Count == 0)
-            //{
-            //    GenerateNewLevel();
-            //}
-
-            //gameState = new int[Tubes, Layers];
-
-            GenerateNewLevel(true);
-        }
         //private void SetGameGrid(int numberOfTubes)
         //{
         //    //gameGrid = new LiquidColorNew[(NumberOfTubes + ExtraTubesAdded + 2), NumberOfLayers];
@@ -639,15 +651,15 @@ namespace WaterSortPuzzle.Models
 
             SavedGameStates.Remove(lastGameStatus);
 
-            if (mainVM.AutoSolve.CompleteSolution.Count > 0)
-                mainVM.AutoSolve.CurrentSolutionStep++;
+            if (autoSolve.CompleteSolution.Count > 0)
+                autoSolve.CurrentSolutionStep++;
 
 
             mainVM.DrawTubes();
         }
         private bool CanStepBack()
         {
-            //return SavedGameStates.Count > 0 && mainVM.AutoSolve.LimitToOneStep is false;
+            //return SavedGameStates.Count > 0 && autoSolve.LimitToOneStep is false;
             //return SavedGameStates.Count > 0;
 
             if (SavedGameStates.Count == 0)
