@@ -1,4 +1,5 @@
-﻿namespace WaterSortPuzzle
+﻿
+namespace WaterSortPuzzle
 {
     public partial class AppShell : Shell
     {
@@ -14,7 +15,13 @@
             //Routing.RegisterRoute(nameof(MainPage) + "/" + nameof(OptionsPage), typeof(OptionsPage));
             Routing.RegisterRoute(nameof(LoadLevelPage), typeof(LoadLevelPage));
 
-            //BindingContext = vm = IPlatformApplication.Current!.Services.GetService<MainVM>()!;
+            BindingContext = vm = IPlatformApplication.Current!.Services.GetService<MainVM>()!;
         }
+        //protected override void OnNavigated(ShellNavigatedEventArgs args)
+        //{
+        //    base.OnNavigated(args);
+        //    //title.Text = Shell.Current.CurrentItem.Title;
+        //    // make the title always show correctly
+        //}
     }
 }
