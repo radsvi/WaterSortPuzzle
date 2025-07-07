@@ -5,7 +5,7 @@
         readonly Notification notification;
         readonly GameState gameState;
 
-        readonly string exportLogFilename;
+        string exportLogFilename;
         private int currentSolutionStep = 0;
         private int iterations = 0;
         private bool solved = false;
@@ -836,6 +836,17 @@
         //        await WaitForButtonPress();
         //    }
         //}
+        public void Reset()
+        {
+            exportLogFilename = Constants.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
+            CompleteSolution.Clear();
+            ResumeRequest = false;
+            InProgress = false;
+            Started = false;
+            Solved = false;
+            Iterations = 0;
+            CurrentSolutionStep = 0;
+        }
         #endregion
         #region debug
         private List<int> ListHashedSteps(CollisionDictionary<int, TreeNode<ValidMove>> hashedSteps)

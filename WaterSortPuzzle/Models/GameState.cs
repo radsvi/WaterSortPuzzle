@@ -8,7 +8,6 @@ namespace WaterSortPuzzle.Models
     {
         readonly AppPreferences appPreferences;
         readonly Notification notification;
-        readonly AutoSolve autoSolve;
         public GameState() { }
         public GameState(MainVM mainVM)
         {
@@ -20,7 +19,7 @@ namespace WaterSortPuzzle.Models
             GenerateNewLevel(true);
         }
         //public GameState(MainVM mainVM, AppPreferences appPreferences, Notification notification, AutoSolve autoSolve)
-        public GameState(AppPreferences appPreferences, Notification notification, AutoSolve autoSolve)
+        public GameState(AppPreferences appPreferences, Notification notification)
         {
             //this.mainVM = mainVM;
             //this.appPreferences = this.mainVM.AppPreferences;
@@ -34,7 +33,6 @@ namespace WaterSortPuzzle.Models
 
             this.appPreferences = appPreferences;
             this.notification = notification;
-            this.autoSolve = autoSolve;
 
             //this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
 

@@ -35,25 +35,25 @@ namespace WaterSortPuzzle.ViewModels
     public partial class MainVM : ViewModelBase
     {
         #region Constructor
-        public MainVM()
-        {
-            //this.WindowService = new WindowService();
+        //public MainVM()
+        //{
+        //    //this.WindowService = new WindowService();
 
-            AppPreferences = new AppPreferences();
-            Notification = new Notification();
-            //MainPage = mainPage;
-            GameState = new GameState(this);
-            //GameState = gameState;
-            AutoSolve = new AutoSolve(this);
+        //    AppPreferences = new AppPreferences();
+        //    Notification = new Notification();
+        //    //MainPage = mainPage;
+        //    GameState = new GameState(this);
+        //    //GameState = gameState;
+        //    AutoSolve = new AutoSolve();
 
-            App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
+        //    App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
-            //AppPreferences.MaximumExtraTubes.Prop
-            //PropertyChanged += NejakaMethoda;
-            AppPreferences.PropertyChanged += PropertyChangedHandler;
+        //    //AppPreferences.MaximumExtraTubes.Prop
+        //    //PropertyChanged += NejakaMethoda;
+        //    AppPreferences.PropertyChanged += PropertyChangedHandler;
 
-            OnStartingLevel();
-        }
+        //    OnStartingLevel();
+        //}
         public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
         {
             //this.WindowService = new WindowService();
@@ -668,7 +668,8 @@ namespace WaterSortPuzzle.ViewModels
             GameState.LastGameState = null;
             GameState.SaveGameState();
             GameState.ResetStepBackCounter();
-            AutoSolve = new AutoSolve(this); // guarantees that we remove stuff like previous moves in autosolving
+            //AutoSolve = new AutoSolve(); // guarantees that we remove stuff like previous moves in autosolving
+            AutoSolve.Reset();
             RecalculateTubesPerLine();
             AddExtraTubeCommand.NotifyCanExecuteChanged();
             StepBackCommand.NotifyCanExecuteChanged();
