@@ -6,12 +6,12 @@ namespace WaterSortPuzzle.Models
     {
         readonly MainVM mainVM;
         readonly GameState gameState;
-        public AppPreferences(MainVM mainVM, GameState gameState)
+        public AppPreferences(GameState gameState)
         {
             this.mainVM = mainVM;
             this.gameState = gameState;
         }
-        public AppPreferences(MainVM mainVM) // ##
+        public AppPreferences() // ##
         {
             this.mainVM = mainVM;
         }
@@ -93,7 +93,7 @@ namespace WaterSortPuzzle.Models
                     }
 
                     OnPropertyChanged();
-                    mainVM.AddExtraTubeCommand.NotifyCanExecuteChanged();
+                    mainVM.AddExtraTubeCommand.NotifyCanExecuteChanged(); // #### odpoznamkovat
                 }
             }
         }
