@@ -247,17 +247,17 @@ namespace WaterSortPuzzle.ViewModels
             switch (menuItem)
             {
                 case PopupParams.NewLevel:
-                    bool answer = await Application.Current.MainPage.DisplayAlert("New level", "Do you want to start a new level?", "OK", "Cancel");
+                    bool answer = await App.Current!.Windows[0].Page!.DisplayAlert("New level", "Do you want to start a new level?", "OK", "Cancel");
                     if (answer)
                         GenerateNewLevel();
                     break;
                 case PopupParams.RestartLevel:
-                    bool answer1 = await Application.Current.MainPage.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
+                    bool answer1 = await App.Current!.Windows[0].Page!.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
                     if (answer1)
                         RestartLevel();
                     break;
                 case PopupParams.LevelComplete:
-                    bool answer2 = await Application.Current.MainPage.DisplayAlert("Level complete", "Congratulation! You won!", "Next level", "Restart level");
+                    bool answer2 = await App.Current!.Windows[0].Page!.DisplayAlert("Level complete", "Congratulation! You won!", "Next level", "Restart level");
                     if (answer2)
                         GenerateNewLevel();
                     else
@@ -270,17 +270,17 @@ namespace WaterSortPuzzle.ViewModels
                     
                 //    break;
                 case PopupParams.SaveLevel:
-                    await Application.Current.MainPage.DisplayAlert("Save Level", "## Dodelat text ##", "OK");
+                    await App.Current!.Windows[0].Page!.DisplayAlert("Save Level", "## Dodelat text ##", "OK");
                     break;
             }
             
             
         }
         [RelayCommand]
-        private async Task SwitchTheme()
+        private void SwitchTheme()
         {
             //App.Current.UserAppTheme = AppTheme.Dark; // for testing
-            if (App.Current.UserAppTheme == AppTheme.Unspecified)
+            if (App.Current!.UserAppTheme == AppTheme.Unspecified)
                 App.Current.UserAppTheme = AppTheme.Dark;
             else if (App.Current.UserAppTheme == AppTheme.Dark)
                 App.Current.UserAppTheme = AppTheme.Light;
@@ -327,7 +327,7 @@ namespace WaterSortPuzzle.ViewModels
             text += "You can only move matching colors onto each other.\n";
             text += "You can always move colors to empty flask.\n";
             text += "You can add empty flasks, if you are really stuck.\n";
-            bool answer = await MainPage.DisplayAlert("Help", text, "Don't show this again.", "Close");
+            bool answer = await App.Current!.Windows[0].Page!.DisplayAlert("Help", text, "Don't show this again.", "Close");
             if (answer)
                 AppPreferences.DontShowHelpScreenAtStart = true;
         }
