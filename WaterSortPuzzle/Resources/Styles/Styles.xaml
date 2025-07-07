@@ -478,19 +478,39 @@
         <!--<Setter Property="WidthRequest" Value="55" />-->
         <Setter Property="FontSize" Value="12" />
         <Setter Property="LineBreakMode" Value="WordWrap" />
+        
+        
     </Style>
     <Style x:Key="NavigationButtonAdvancedSettings" TargetType="Button">
         <Setter Property="HorizontalOptions" Value="Start" />
         <Setter Property="HeightRequest" Value="-1" />
         <Setter Property="MinimumHeightRequest" Value="-1" />
-        <Setter Property="Margin" Value="0,0,0,5" />
+        <Setter Property="Margin" Value="5,0,0,5" />
         <Setter Property="Padding" Value="10,8" />
-        <Setter Property="BorderColor" Value="#7db2da" />
-        <Setter Property="Background" Value="#5fa3d9" />
-    </Style>
-    <!--<Style x:Key="NavigationButtonBottomRight" TargetType="Button" BasedOn="NavigationButtonBottomLeft">
+        <Setter Property="FontSize" Value="12" />
+        <!--<Setter Property="BorderColor" Value="#7db2da" />-->
+        <Setter Property="BackgroundColor" Value="#5fa3d9" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Pressed" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <!--<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />-->
+                            <Setter Property="TextColor" Value="{StaticResource Gray400}" />
+                            <!--<Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />-->
+                            <Setter Property="BackgroundColor" Value="{StaticResource Gray100}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver" />
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+
+        <Setter Property="VerticalOptions" Value="End" />
         
-    </Style>-->
+    </Style>
 
     <!-- // Quick Notification Overlay // -->
     

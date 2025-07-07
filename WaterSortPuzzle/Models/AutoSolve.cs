@@ -20,7 +20,7 @@
         private bool ResumeRequest { get; set; }
         private bool inProgress;
         public bool InProgress { get => inProgress; private set { inProgress = value; OnPropertyChanged(); } }
-        public bool Started { get => started; private set { started = value; OnPropertyChanged(); } }
+        public bool Started { get => started; private set { started = value; OnPropertyChanged(); StartCommand.NotifyCanExecuteChanged(); } }
         public bool Solved { get => solved; private set { solved = value; OnPropertyChanged(); } }
         //[Obsolete]public int ResumeRequestCounterDebug { get; set; } = 0; // used only for debugging how many times I clicked the button and only triggering breakpoint upon certain number.
         //public List<ValidMove> CompleteSolution { get; private set; }
@@ -36,8 +36,6 @@
                 }
             }
         }
-
-
         public int Iterations
         {
             get { return iterations; }
@@ -816,7 +814,8 @@
         }
 
         #region Controls
-        [RelayCommand]
+        //[RelayCommand(CanExecute = nameof(CanStart))]
+        [RelayCommand(CanExecute = nameof(CanStart))]
         public void Start()
         {
 
@@ -832,6 +831,10 @@
                 StartSolution(mainVM.GameState.gameGrid);
                 return;
             }
+        }
+        public bool CanStart()
+        {
+            return !Started;
         }
         private async Task WaitForButtonPress()
         {
@@ -857,6 +860,7 @@
         {
             MakeAMove(CompleteSolution[--CurrentSolutionStep]);
         }
+
         #endregion
         #region debug
         private List<int> ListHashedSteps(CollisionDictionary<int, TreeNode<ValidMove>> hashedSteps)
