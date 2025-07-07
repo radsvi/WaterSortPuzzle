@@ -9,7 +9,7 @@ namespace WaterSortPuzzle.Views
         //readonly MainVM mainVM;
 
         //public MainPage()
-        public MainPage(TestovaniDInjectionVM mainVM)
+        public MainPage(MainVM mainVM)
         {
             InitializeComponent();
 

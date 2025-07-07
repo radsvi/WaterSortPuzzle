@@ -11,6 +11,17 @@ namespace WaterSortPuzzle.Models
         readonly Notification notification;
         readonly AutoSolve autoSolve;
         public GameState() { }
+        //public GameState(MainVM mainVM)
+        //{
+        //    this.mainVM = mainVM;
+        //    this.appPreferences = this.mainVM.AppPreferences;
+        //    this.notification = mainVM.Notification;
+
+        //    this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
+
+        //    GenerateNewLevel(true);
+        //}
+        //public GameState(MainVM mainVM, AppPreferences appPreferences, Notification notification, AutoSolve autoSolve)
         public GameState(MainVM mainVM)
         {
             this.mainVM = mainVM;
@@ -20,25 +31,25 @@ namespace WaterSortPuzzle.Models
             this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
 
             GenerateNewLevel(true);
+
+            //this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
+
+            //this.mainVM = mainVM;
+            //this.appPreferences = appPreferences;
+            //this.notification = notification;
+            //this.autoSolve = autoSolve;
+
+            //this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
+
+            //if (Tubes.Count == 0)
+            //{
+            //    GenerateNewLevel();
+            //}
+
+            //gameState = new int[Tubes, Layers];
+
+            GenerateNewLevel(true);
         }
-        //public GameState(MainVM mainVM, AppPreferences appPreferences, Notification notification, AutoSolve autoSolve)
-        //{
-        //    this.mainVM = mainVM;
-        //    this.appPreferences = appPreferences;
-        //    this.notification = notification;
-        //    this.autoSolve = autoSolve;
-
-        //    this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
-
-        //    //if (Tubes.Count == 0)
-        //    //{
-        //    //    GenerateNewLevel();
-        //    //}
-
-        //    //gameState = new int[Tubes, Layers];
-
-        //    GenerateNewLevel(true);
-        //}
 
         private string readableGameState;
         public string ReadableGameState

@@ -23,13 +23,13 @@ namespace WaterSortPuzzle.ViewModels
                 }
             }
         }
-        public TestovaniDInjectionVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
-        {
-            AppPreferences = appPreferences;
-            GameState = gameState;
-            Notification = notification;
-            AutoSolve = autoSolve;
-        }
+        //public TestovaniDInjectionVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
+        //{
+        //    AppPreferences = appPreferences;
+        //    GameState = gameState;
+        //    Notification = notification;
+        //    AutoSolve = autoSolve;
+        //}
     }
     public partial class MainVM : ViewModelBase
     {
@@ -42,12 +42,34 @@ namespace WaterSortPuzzle.ViewModels
             Notification = new Notification(this);
             //MainPage = mainPage;
             GameState = new GameState(this);
+            //GameState = gameState;
             AutoSolve = new AutoSolve(this);
 
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
             OnStartingLevel();
         }
+        public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
+        {
+            //this.WindowService = new WindowService();
+
+            //AppPreferences = new AppPreferences(this);
+            //Notification = new Notification(this);
+            ////MainPage = mainPage;
+            //GameState = new GameState(this);
+            ////GameState = gameState;
+            //AutoSolve = new AutoSolve(this);
+
+            AppPreferences = appPreferences;
+            GameState = gameState;
+            Notification = notification;
+            AutoSolve = autoSolve;
+
+            App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
+
+            OnStartingLevel();
+        }
+
 
         #endregion
         #region Properties
