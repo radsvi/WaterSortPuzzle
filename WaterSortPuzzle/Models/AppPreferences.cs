@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Storage;
-
-namespace WaterSortPuzzle.Models
+﻿namespace WaterSortPuzzle.Models
 {
     public partial class AppPreferences : ObservableObject
     {
@@ -142,26 +140,10 @@ namespace WaterSortPuzzle.Models
                 Preferences.Set(nameof(LastLevelBeforeClosing) + "_Serialized", savedLevelList);
             }
         }
-        //public bool UnlimitedStepBack
-        //{
-        //    get => Preferences.Default.Get(nameof(UnlimitedStepBack), false);
-        //    set
-        //    {
-        //        Preferences.Set(nameof(UnlimitedStepBack), value);
-        //        OnPropertyChanged(nameof(gameState.StepBackDisplay));
-        //        //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(gameState.StepBackDisplay)));
-        //    }
-        //}
         public bool UnlimitedStepBack
         {
             get => Preferences.Default.Get(nameof(UnlimitedStepBack), false);
-            set
-            {
-                Preferences.Set(nameof(UnlimitedStepBack), value);
-                //OnPropertyChanged(nameof(gameState.StepBackDisplay));
-                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(gameState.StepBackDisplay)));
-                //gameState.StepBackCommand.NotifyCanExecuteChanged();
-            }
+            set { Preferences.Set(nameof(UnlimitedStepBack), value); OnPropertyChanged(); }
         }
         public bool InstantAnimations
         {

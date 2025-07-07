@@ -16,13 +16,11 @@ namespace WaterSortPuzzle
                 });
 
             builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<DetailPage>();
             builder.Services.AddTransient<OptionsPage>();
             builder.Services.AddTransient<LoadLevelPage>();
 
             //builder.Services.AddSingleton(new MainVM(new MainPage()));
             builder.Services.AddSingleton<MainVM>();
-            builder.Services.AddSingleton<DetailPageVM>();
             builder.Services.AddSingleton<OptionsVM>();
             builder.Services.AddSingleton<LoadLevelVM>();
             //builder.Services.AddSingleton<TestovaniDInjectionVM>(); // ##

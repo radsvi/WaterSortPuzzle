@@ -83,7 +83,7 @@
                         <Label Text="Don't show help at startup" VerticalOptions="Center"/>
                     </FlexLayout>
 
-                    <Button Text="Open Help window" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.Help}" />
+                    <Button Text="Open Help" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.Help}" />
                 </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Advanced options" IsClippedToBounds="True">
@@ -94,7 +94,7 @@
                     </FlexLayout>
 
                     <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}">
-                        <Button Text="Add couple presets to saved levels for testing" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.LoadLevelVM.AddPresetLevelsCommand}"/>
+                        <!--<Button Text="Add couple presets to saved levels for testing" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.LoadLevelVM.AddPresetLevelsCommand}"/>-->
 
                         <FlexLayout>
                             <CheckBox FlexLayout.Shrink="0" IsChecked="{Binding AppPreferences.LoadDebugLevel}"/>
@@ -111,20 +111,12 @@
                 </StackLayout>
             </controls:GroupBoxControl>
 
-            <controls:GroupBoxControl Header="Other Options" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}">
+            <!--<controls:GroupBoxControl Header="Other Options" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}">
                 <StackLayout Orientation="Vertical">
-                    <!--<FlexLayout>
-                        <RadioButton Content="Default" GroupName="Theme" />
-                        <RadioButton Content="Light theme" GroupName="Theme" />
-                        <RadioButton Content="Dark theme" GroupName="Theme" />
-                        
-                        <Label Text="Don't show help at startup" VerticalOptions="Center"/>
-                    </FlexLayout>-->
-
                     <Button Text="Solve the puzzle" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.AutoSolve.StartCommand}" />
                     <Label Text="Generates step-by-step solution of current level" />
                 </StackLayout>
-            </controls:GroupBoxControl>
+            </controls:GroupBoxControl>-->
 
             <controls:GroupBoxControl Header="Theme" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}">
                 <StackLayout Orientation="Vertical">

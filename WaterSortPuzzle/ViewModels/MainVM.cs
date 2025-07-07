@@ -6,65 +6,11 @@ using System.Collections.Specialized;
 
 namespace WaterSortPuzzle.ViewModels
 {
-    //public partial class TestovaniDInjectionVM : ViewModelBase
-    //{
-    //    public AppPreferences AppPreferences { get; }
-    //    public GameState GameState { get; }
-    //    public Notification Notification { get; }
-    //    private AutoSolve autoSolve;
-    //    public AutoSolve AutoSolve
-    //    {
-    //        get { return autoSolve; }
-    //        set
-    //        {
-    //            if (value != autoSolve)
-    //            {
-    //                autoSolve = value;
-    //                OnPropertyChanged();
-    //            }
-    //        }
-    //    }
-    //    public TestovaniDInjectionVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
-    //    {
-    //        AppPreferences = appPreferences;
-    //        GameState = gameState;
-    //        Notification = notification;
-    //        AutoSolve = autoSolve;
-    //    }
-    //}
     public partial class MainVM : ViewModelBase
     {
         #region Constructor
-        //public MainVM()
-        //{
-        //    //this.WindowService = new WindowService();
-
-        //    AppPreferences = new AppPreferences();
-        //    Notification = new Notification();
-        //    //MainPage = mainPage;
-        //    GameState = new GameState(this);
-        //    //GameState = gameState;
-        //    AutoSolve = new AutoSolve();
-
-        //    App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
-
-        //    //AppPreferences.MaximumExtraTubes.Prop
-        //    //PropertyChanged += NejakaMethoda;
-        //    AppPreferences.PropertyChanged += PropertyChangedHandler;
-
-        //    OnStartingLevel();
-        //}
         public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
         {
-            //this.WindowService = new WindowService();
-
-            //AppPreferences = new AppPreferences(this);
-            //Notification = new Notification(this);
-            ////MainPage = mainPage;
-            //GameState = new GameState(this);
-            ////GameState = gameState;
-            //AutoSolve = new AutoSolve(this);
-
             AppPreferences = appPreferences;
             GameState = gameState;
             Notification = notification;
@@ -72,7 +18,6 @@ namespace WaterSortPuzzle.ViewModels
 
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
-            //PropertyChanged += NejakaMethoda;
             GameState.SavedGameStates.CollectionChanged += CollectionChangedHandler;
             AppPreferences.PropertyChanged += PropertyChangedHandler;
             GameState.PropertyChanged += PropertyChangedHandler;
@@ -85,9 +30,12 @@ namespace WaterSortPuzzle.ViewModels
             if (e.PropertyName == nameof(AppPreferences.MaximumExtraTubes) || e.PropertyName == nameof(GameState.ColorCount))
                 AddExtraTubeCommand.NotifyCanExecuteChanged();
             else if (e.PropertyName == nameof(AppPreferences.UnlimitedStepBack) || e.PropertyName == nameof(GameState.SavedGameStates))
+            {
                 StepBackCommand.NotifyCanExecuteChanged();
+                //OnPropertyChanged(nameof(GameState.StepBackDisplay));
+            }
             else if (e.PropertyName == nameof(AutoSolve.InProgress))
-                UIEnabled = !AutoSolve.InProgress;
+                UIEnabled = !AutoSolve!.InProgress;
         }
         private void CollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
         {
@@ -118,8 +66,8 @@ namespace WaterSortPuzzle.ViewModels
         //public MainPage MainPage { get; }
         public Notification Notification { get; }
         //public AutoSolve AutoSolve { get; set; }
-        private AutoSolve autoSolve;
-        public AutoSolve AutoSolve
+        private AutoSolve? autoSolve;
+        public AutoSolve? AutoSolve
         {
             get { return autoSolve; }
             set
@@ -132,8 +80,8 @@ namespace WaterSortPuzzle.ViewModels
             }
         }
         public GameState GameState { get; }
-        private LoadLevelVM loadLevelVM;
-        public LoadLevelVM LoadLevelVM
+        private LoadLevelVM? loadLevelVM;
+        public LoadLevelVM? LoadLevelVM
         {
             get { return loadLevelVM; }
             set
@@ -147,17 +95,17 @@ namespace WaterSortPuzzle.ViewModels
         }
         //private Grid ContainerForTubes;
 
-        private ViewModelBase _selectedViewModel;
-        public ViewModelBase SelectedViewModel
+        private ViewModelBase? selectedViewModel;
+        public ViewModelBase? SelectedViewModel
         {
-            get { return _selectedViewModel; }
+            get { return selectedViewModel; }
             set
             {
-                _selectedViewModel = value;
+                selectedViewModel = value;
                 OnPropertyChanged();
             }
         }
-        public ICommand PopupWindow { get; set; }
+        //public ICommand PopupWindow { get; set; }
 
         //private LiquidColorNew[] selectedTube;
         //public LiquidColorNew[] SelectedTube
@@ -237,7 +185,7 @@ namespace WaterSortPuzzle.ViewModels
             }
         }
         public bool UIDisabled { get => !UIEnabled; }
-        public ObservableCollection<PopupScreenActions> PopupActions { get; set; }
+        public ObservableCollection<PopupScreenActions>? PopupActions { get; set; }
 
         #endregion
         #region Navigation
@@ -487,7 +435,7 @@ namespace WaterSortPuzzle.ViewModels
             GameState.RestartLevel();
             OnStartingLevel();
         }
-        public string NoteForSavedLevel { get; set; }
+        public string? NoteForSavedLevel { get; set; }
         private void SaveLevel()
         {
             //ClosePopupWindow();
@@ -851,12 +799,10 @@ namespace WaterSortPuzzle.ViewModels
                 return;
 
             uint speedMS;
-            if (AppPreferences.InstantAnimations)
-                speedMS = 0;
-            else if (speed == AnimationSpeed.Animation)
-                speedMS = 75;
+            if (AppPreferences.InstantAnimations || speed == AnimationSpeed.Instant)
+                speedMS = 10; // making it 0 created disappearing elements
             else
-                speedMS = 0;
+                speedMS = 75;
 
             if (verticalAnimation == VerticalAnimation.Raise)
             {

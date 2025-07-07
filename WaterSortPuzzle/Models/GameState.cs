@@ -9,39 +9,10 @@ namespace WaterSortPuzzle.Models
         readonly AppPreferences appPreferences;
         readonly Notification notification;
         public GameState() { }
-        //public GameState(MainVM mainVM)
-        //{
-        //    //this.mainVM = mainVM;
-        //    //this.appPreferences = this.mainVM.AppPreferences;
-        //    this.notification = mainVM.Notification;
-
-
-        //    GenerateNewLevel(true);
-        //}
-        //public GameState(MainVM mainVM, AppPreferences appPreferences, Notification notification, AutoSolve autoSolve)
         public GameState(AppPreferences appPreferences, Notification notification)
         {
-            //this.mainVM = mainVM;
-            //this.appPreferences = this.mainVM.AppPreferences;
-            //this.notification = mainVM.Notification;
-
-            //this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
-
-            //GenerateNewLevel(true);
-
-            //this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
-
             this.appPreferences = appPreferences;
             this.notification = notification;
-
-            //this.SavedGameStates.CollectionChanged += this.SavedGameStatesCollectionChangedHandler;
-
-            //if (Tubes.Count == 0)
-            //{
-            //    GenerateNewLevel();
-            //}
-
-            //gameState = new int[Tubes, Layers];
 
             GenerateNewLevel(true);
         }
