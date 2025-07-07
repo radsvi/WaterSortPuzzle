@@ -9,15 +9,15 @@ namespace WaterSortPuzzle.Models
         readonly AppPreferences appPreferences;
         readonly Notification notification;
         public GameState() { }
-        public GameState(MainVM mainVM)
-        {
-            //this.mainVM = mainVM;
-            //this.appPreferences = this.mainVM.AppPreferences;
-            this.notification = mainVM.Notification;
+        //public GameState(MainVM mainVM)
+        //{
+        //    //this.mainVM = mainVM;
+        //    //this.appPreferences = this.mainVM.AppPreferences;
+        //    this.notification = mainVM.Notification;
 
 
-            GenerateNewLevel(true);
-        }
+        //    GenerateNewLevel(true);
+        //}
         //public GameState(MainVM mainVM, AppPreferences appPreferences, Notification notification, AutoSolve autoSolve)
         public GameState(AppPreferences appPreferences, Notification notification)
         {
