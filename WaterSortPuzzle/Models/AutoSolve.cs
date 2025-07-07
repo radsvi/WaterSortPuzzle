@@ -2,7 +2,6 @@
 {
     public partial class AutoSolve : ViewModelBase
     {
-        readonly MainVM mainVM;
         readonly Notification notification;
         readonly GameState gameState;
 
@@ -13,19 +12,13 @@
         private bool started = false;
         //TreeNode<ValidMove> SolvingSteps;
         //TreeNode<ValidMove> FirstStep;
-        public AutoSolve(MainVM mainVM) // ##
+
+        public AutoSolve(Notification notification, GameState gameState)
         {
-            this.mainVM = mainVM;
-            notification = mainVM.Notification;
-            exportLogFilename = this.mainVM.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
-        }
-        public AutoSolve(MainVM mainVM, Notification notification, GameState gameState)
-        {
-            this.mainVM = mainVM;
             this.notification = notification;
             this.gameState = gameState;
 
-            exportLogFilename = this.mainVM.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
+            exportLogFilename = Constants.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
         }
         private bool ResumeRequest { get; set; }
         private bool inProgress;
@@ -96,7 +89,7 @@
                 Iterations++;
                 
 #if DEBUG
-                if (LimitToOneStep) { MakeAMove(treeNode.Data); await WaitForButtonPress(); }
+                //if (LimitToOneStep) { MakeAMove(treeNode.Data); await WaitForButtonPress(); }
 #endif
 
                 TreeNode<ValidMove> highestPriority_TreeNode = null;
@@ -201,7 +194,7 @@
                         continue;
                     }
 #if DEBUG
-                    if (LimitToOneStep) MakeAMove(treeNode.Data);
+                    //if (LimitToOneStep) MakeAMove(treeNode.Data);
 #endif
                 }
             }
@@ -528,28 +521,7 @@
 
             return resultNode;
         }
-        private void MakeAMove(ValidMove move)
-        {
-            //Debug.WriteLine($"# [{node.Source.X},{node.Source.Y}] => [{node.Target.X},{node.Target.Y}] {{{node.Source.ColorName}}} {{HowMany {node.Source.NumberOfRepeatingLiquids}}}");
-            
-            //Node.Data.GameState = newGameState;
 
-            //var upcomingStep = new SolutionStepsOLD(newGameState, Node.Data);
-            //SolvingStepsOLD.Add(upcomingStep);
-
-            //previousGameState = node.Data.GameState; // tohle je gamestate kterej uchovavam jen uvnitr autosolvu
-            gameState.SetGameState(move.GameState);
-            var currentTubeReference = new TubeReference(
-                move.Target.X,
-                move.GameState[move.Target.X, move.Target.Y],
-                move.Target.Y,
-                move.Source.NumberOfRepeatingLiquids
-            );
-            mainVM.DrawTubes();
-
-            //mainVM.RippleSurfaceAnimation(currentTubeReference);
-            mainVM.OnChangingGameState();
-        }
         /// <summary>
         /// Determines how close we are to a solution. Higher value means closer to a solution
         /// </summary>
@@ -835,7 +807,6 @@
             //if (mainVM.UIEnabled == true)
             if (IsBusy == false)
             {
-                mainVM.UIEnabled = false;
                 Started = true;
                 InProgress = true;
                 StartSolution(gameState.gameGrid);
@@ -865,12 +836,6 @@
         //        await WaitForButtonPress();
         //    }
         //}
-        [RelayCommand]
-        public void StepThrough()
-        {
-            MakeAMove(CompleteSolution[--CurrentSolutionStep]);
-        }
-
         #endregion
         #region debug
         private List<int> ListHashedSteps(CollisionDictionary<int, TreeNode<ValidMove>> hashedSteps)

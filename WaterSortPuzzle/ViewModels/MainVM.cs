@@ -75,8 +75,8 @@ namespace WaterSortPuzzle.ViewModels
             //PropertyChanged += NejakaMethoda;
             GameState.SavedGameStates.CollectionChanged += CollectionChangedHandler;
             AppPreferences.PropertyChanged += PropertyChangedHandler;
-            AppPreferences.PropertyChanged += PropertyChangedHandler;
             GameState.PropertyChanged += PropertyChangedHandler;
+            AutoSolve.PropertyChanged += PropertyChangedHandler;
 
             OnStartingLevel();
         }
@@ -86,6 +86,8 @@ namespace WaterSortPuzzle.ViewModels
                 AddExtraTubeCommand.NotifyCanExecuteChanged();
             else if (e.PropertyName == nameof(AppPreferences.UnlimitedStepBack) || e.PropertyName == nameof(GameState.SavedGameStates))
                 StepBackCommand.NotifyCanExecuteChanged();
+            else if (e.PropertyName == nameof(AutoSolve.InProgress))
+                UIEnabled = AutoSolve.InProgress;
         }
         private void CollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
         {
@@ -236,11 +238,37 @@ namespace WaterSortPuzzle.ViewModels
         }
         public bool UIDisabled { get => !UIEnabled; }
         public ObservableCollection<PopupScreenActions> PopupActions { get; set; }
-        internal readonly string logFolderName = "log";
+
         #endregion
         #region Navigation
-        //[RelayCommand]
-        //async Task NavigateToOptions() => await AppShell.Current.GoToAsync(nameof(OptionsPage));
+        [RelayCommand]
+        public void StepThrough()
+        {
+            MakeAMove(AutoSolve.CompleteSolution[--AutoSolve.CurrentSolutionStep]);
+        }
+        private void MakeAMove(ValidMove move)
+        {
+            //Debug.WriteLine($"# [{node.Source.X},{node.Source.Y}] => [{node.Target.X},{node.Target.Y}] {{{node.Source.ColorName}}} {{HowMany {node.Source.NumberOfRepeatingLiquids}}}");
+
+            //Node.Data.GameState = newGameState;
+
+            //var upcomingStep = new SolutionStepsOLD(newGameState, Node.Data);
+            //SolvingStepsOLD.Add(upcomingStep);
+
+            //previousGameState = node.Data.GameState; // tohle je gamestate kterej uchovavam jen uvnitr autosolvu
+            GameState.SetGameState(move.GameState);
+            var currentTubeReference = new TubeReference(
+                move.Target.X,
+                move.GameState[move.Target.X, move.Target.Y],
+                move.Target.Y,
+                move.Source.NumberOfRepeatingLiquids
+            );
+            DrawTubes();
+
+            //mainVM.RippleSurfaceAnimation(currentTubeReference);
+            OnChangingGameState();
+        }
+
         [RelayCommand(CanExecute = nameof(CanStepBack))]
         private void StepBack()
         {
@@ -276,6 +304,8 @@ namespace WaterSortPuzzle.ViewModels
 
             return true;
         }
+        //[RelayCommand]
+        //async Task NavigateToOptions() => await AppShell.Current.GoToAsync(nameof(OptionsPage));
         [RelayCommand]
         async Task NavigateToPage(PopupParams menuItem)
         {
