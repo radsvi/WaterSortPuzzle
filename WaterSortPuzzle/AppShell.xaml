@@ -101,7 +101,7 @@
         </Tab>
     </FlyoutItem>
 
-    
 
+    <MenuItem Text="Get Solution" Command="{Binding AutoSolve.StartCommand}"/>
 
 </Shell>

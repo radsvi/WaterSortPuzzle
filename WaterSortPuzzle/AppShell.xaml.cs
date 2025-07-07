@@ -2,6 +2,7 @@
 {
     public partial class AppShell : Shell
     {
+        readonly MainVM vm;
         public AppShell()
         {
             InitializeComponent();
@@ -12,6 +13,8 @@
             //Routing.RegisterRoute("MainPage/OptionsPage", typeof(OptionsPage));
             //Routing.RegisterRoute(nameof(MainPage) + "/" + nameof(OptionsPage), typeof(OptionsPage));
             Routing.RegisterRoute(nameof(LoadLevelPage), typeof(LoadLevelPage));
+
+            BindingContext = vm = IPlatformApplication.Current!.Services.GetService<MainVM>()!;
         }
     }
 }
