@@ -47,19 +47,20 @@ namespace WaterSortPuzzle.ViewModels
         }
         #endregion
         #region Properties
+        [ObservableProperty]
         private ObservableCollection<TubeData> tubesItemsSource = new ObservableCollection<TubeData>();
-        public ObservableCollection<TubeData> TubesItemsSource
-        {
-            get { return tubesItemsSource; }
-            private set
-            {
-                if (value != tubesItemsSource)
-                {
-                    tubesItemsSource = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        //public ObservableCollection<TubeData> TubesItemsSource
+        //{
+        //    get { return tubesItemsSource; }
+        //    private set
+        //    {
+        //        if (value != tubesItemsSource)
+        //        {
+        //            tubesItemsSource = value;
+        //            OnPropertyChanged();
+        //        }
+        //    }
+        //}
 
         //public IWindowService WindowService { get; }
         public AppPreferences AppPreferences { get; }
@@ -591,7 +592,8 @@ namespace WaterSortPuzzle.ViewModels
             } while (success == true && SourceTube.TopMostLiquid is not null);
             if (successAtLeastOnce > 0)
             {
-                DrawTubes();
+                //DrawTubes();
+                var task = DrawTubesAsync(SourceTube, currentTubeReference);
                 currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
                 //RippleSurfaceAnimation(currentTubeReference);
                 OnChangingGameState();
@@ -617,7 +619,7 @@ namespace WaterSortPuzzle.ViewModels
             GameState.SaveGameState();
             GameState.ResetStepBackCounter();
             //AutoSolve = new AutoSolve(); // guarantees that we remove stuff like previous moves in autosolving
-            AutoSolve.Reset();
+            AutoSolve?.Reset();
             RecalculateTubesPerLine();
             AddExtraTubeCommand.NotifyCanExecuteChanged();
             StepBackCommand.NotifyCanExecuteChanged();
@@ -702,18 +704,104 @@ namespace WaterSortPuzzle.ViewModels
 
         #endregion
         #region Draw tubes from code
-        //[Obsolete] public RelayCommand TestDraw_Command => new RelayCommand(execute => DrawTubes());
-        public void DrawTubes()
+        [RelayCommand]
+        void ArbitraryChange()
         {
-            TubesItemsSource.Clear();
-            TubeData.ResetCounter();
+            //TubesItemsSource[0].Layers[3] = GameState[1, 3];
+            //TubesItemsSource[0].Layers[3] = TubesItemsSource[1].Layers[3];
+            //TubesItemsSource.Remove(TubesItemsSource.Last());
+            //TubesItemsSource[0] = TubesItemsSource[1];
+            //TubesItemsSource[0].Layers[2] = TubesItemsSource[1].Layers[2];
+            //TubesItemsSource[0].Layers[3] = TubesItemsSource[0].Layers[0];
 
-            for (int x = 0; x < GameState.GetLength(0); x++)
-            {
-                TubesItemsSource.Add(new TubeData(GameState[x, 0], GameState[x, 1], GameState[x, 2], GameState[x, 3]));
-            }
-            OnPropertyChanged(nameof(TubesItemsSource));
+            //TubesItemsSource[0].Layers[1].Name = LiquidColorName.Yellow;
+            //TubesItemsSource[0].Layers[1].Brush = Color.FromRgb(74, 219, 36);
+
+            //TubesItemsSource[0].Layers[1].Change(LiquidColorName.Pink);
+            //TubesItemsSource[0].Layers[1].Change(LiquidColorName.Lime);
+            //TubesItemsSource[0].Layers[1].Change(GameState[0, 3].Name);
+            //TubesItemsSource[0].CopyFrom(GameState.gameGrid, 0);
+            TubesItemsSource[0].Layers[1].CopyFrom(GameState[0, 3].Name);
         }
+        public void DrawTubes(int source = -1, int target = -1)
+        {
+            //if (TubesItemsSource.Count == 0)
+            if (source == -1 || target == -1)
+            {
+                TubesItemsSource.Clear();
+                TubeData.ResetCounter();
+                for (int x = 0; x < GameState.GetLength(0); x++)
+                {
+                    TubesItemsSource.Add(new TubeData(GameState[x, 0], GameState[x, 1], GameState[x, 2], GameState[x, 3]));
+                }
+                OnPropertyChanged(nameof(TubesItemsSource));
+            }
+            else
+            {
+                //TubesItemsSource[source].Layers[3] = GameState[0, 3];
+                //TubesItemsSource[source].Layers[3].Change(GameState[0, 3].Name);
+                //TubesItemsSource[source].CopyValuesFrom(GameState.gameGrid, source);
+                TubesItemsSource[target].CopyValuesFrom(GameState.gameGrid, target);
+                
+
+                //TubesItemsSource[source].Layers[0] = TubeData.CheckColor(GameState[source, 0]);
+                //TubesItemsSource[source].Layers[1] = TubeData.CheckColor(GameState[source, 1]);
+                //TubesItemsSource[source].Layers[2] = TubeData.CheckColor(GameState[source, 2]);
+                //TubesItemsSource[source].Layers[3] = TubeData.CheckColor(GameState[source, 3]);
+
+                //TubesItemsSource[target].Layers[0] = TubeData.CheckColor(GameState[target, 0]);
+                //TubesItemsSource[target].Layers[1] = TubeData.CheckColor(GameState[target, 1]);
+                //TubesItemsSource[target].Layers[2] = TubeData.CheckColor(GameState[target, 2]);
+                //TubesItemsSource[target].Layers[3] = TubeData.CheckColor(GameState[target, 3]);
+
+                //TubesItemsSource[source] = new TubeData(GameState[source, 0], GameState[source, 1], GameState[source, 2], GameState[source, 3]);
+                //TubesItemsSource[target] = new TubeData(GameState[target, 0], GameState[target, 1], GameState[target, 2], GameState[target, 3]);
+
+                //var targetTube = TubesItemsSource[target];
+                //TubesItemsSource.Remove(TubesItemsSource[source]);
+                //TubesItemsSource.Remove(targetTube);
+
+                //TubesItemsSource.Remove(TubesItemsSource[source]);
+                //TubesItemsSource.Insert(source, new TubeData(GameState[source, 0], GameState[source, 1], GameState[source, 2], GameState[source, 3]));
+
+                //TubesItemsSource.Remove(TubesItemsSource[target]);
+                //TubesItemsSource.Insert(target, new TubeData(GameState[target, 0], GameState[target, 1], GameState[target, 2], GameState[target, 3]));
+
+                //var sourceItem = TubesItemsSource[source];
+                //TubesItemsSource.Remove(sourceItem);
+                //sourceItem.Layers[0] = GameState[source, 0];
+                //sourceItem.Layers[1] = GameState[source, 1];
+                //sourceItem.Layers[2] = GameState[source, 2];
+                //sourceItem.Layers[3] = GameState[source, 3];
+                //TubesItemsSource.Insert(source, sourceItem);
+
+                //var targetItem = TubesItemsSource[target];
+                //TubesItemsSource.Remove(targetItem);
+                //targetItem.Layers[0] = GameState[target, 0];
+                //targetItem.Layers[1] = GameState[target, 1];
+                //targetItem.Layers[2] = GameState[target, 2];
+                //targetItem.Layers[3] = GameState[target, 3];
+                //TubesItemsSource.Insert(target, targetItem);
+
+
+
+                //OnPropertyChanged(nameof(TubesItemsSource));
+            }
+        }
+        #region testing
+        public async Task DrawTubesAsync(TubeReference source, TubeReference target)
+        {
+            await Task.Run(() => DrawTubes(source.TubeId, target.TubeId));
+        }
+        [ObservableProperty]
+        bool delayAnimation = false;
+        //public bool DelayAnimation { get; private set; } = false;
+        [RelayCommand]
+        void SwitchDelayAnimation()
+        {
+            DelayAnimation = !DelayAnimation;
+        }
+        #endregion
         private void RecalculateTubesPerLine()
         {
             if (GameState.TubeCount > Constants.MaxTubesPerLine * 2)

@@ -88,24 +88,25 @@
     //    //}
     //}
 
-    public class TubeData
+    public partial class TubeData : ObservableObject
     {
         public int TubeId { get; set; }
         private static int tubeIdCounter = 0;
 
-        private List<LiquidColor> layers = new List<LiquidColor>();
-        public List<LiquidColor> Layers
-        {
-            get { return layers; }
-            set
-            {
-                if (layers != value)
-                {
-                    layers = value;
-                    //OnPropertyChanged();
-                }
-            }
-        }
+        public ObservableCollection<LiquidColor?> Layers { get; set; } = new ObservableCollection<LiquidColor?>();
+        //private List<LiquidColor> layers = new List<LiquidColor>();
+        //public List<LiquidColor> Layers
+        //{
+        //    get { return layers; }
+        //    set
+        //    {
+        //        if (layers != value)
+        //        {
+        //            layers = value;
+        //            OnPropertyChanged();
+        //        }
+        //    }
+        //}
 
         //public TubeNew DeepCopy()
         //{
@@ -143,7 +144,7 @@
         {
             tubeIdCounter = 0;
         }
-        private LiquidColor CheckColor(LiquidColor? color = null)
+        private static LiquidColor CheckColor(LiquidColor? color = null)
         {
             if (color is not null)
             {
@@ -151,7 +152,19 @@
             }
             else
             {
-                return LiquidColor.ColorKeys[LiquidColorName.Blank];
+                //return LiquidColor.ColorKeys[LiquidColorName.Blank];
+                return new LiquidColor(LiquidColorName.Blank);
+            }
+        }
+        public void CopyValuesFrom(LiquidColor[,] gameGrid, int tubeId)
+        {
+            for (int y = 0; y < Constants.Layers; y++)
+            {
+                if (gameGrid[tubeId, y] is null)
+                    this.Layers[y]?.CopyFrom(LiquidColorName.Blank);
+                else
+                    this.Layers[y]?.CopyFrom(gameGrid[tubeId, y].Name);
+                    //this.Layers[y] = gameGrid[tubeId, y].Clone();
             }
         }
     }

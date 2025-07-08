@@ -1,10 +1,13 @@
 ﻿
 namespace WaterSortPuzzle.Models
 {
-    public class LiquidColor
+    public class LiquidColor : ObservableObject
     {
-        [JsonProperty] public LiquidColorName Name { get; private set; }
-        [JsonProperty] public Color Brush { get; private set; }
+        private LiquidColorName name;
+        private Color brush;
+
+        [JsonProperty] public LiquidColorName Name { get => name; private set { name = value; OnPropertyChanged(); } }
+        [JsonProperty] public Color Brush { get => brush; private set { brush = value; OnPropertyChanged(); } }
         //public static List<LiquidColorNew> ColorKeys { get; } = new List<LiquidColorNew>() {
         //    new LiquidColorNew(LiquidColorName.Blank, new SolidColorBrush(Color.FromRgb(0,0,0))),
         //    new LiquidColorNew(LiquidColorName.Blue, new SolidColorBrush(Color.FromRgb(20,93,239))),
@@ -82,6 +85,16 @@ namespace WaterSortPuzzle.Models
         {
             return new LiquidColor(this.Name, this.Brush);
         }
+        public void CopyFrom(LiquidColorName name)
+        {
+            Name = name;
+            var color = ColorKeys[name].Brush;
+            Brush = new Color(color.Red, color.Green, color.Blue);
+        }
+        //public static LiquidColor Copy(LiquidColorName name)
+        //{
+        //    return new LiquidColor(name, ColorKeys[name].Brush);
+        //}
         //private static bool OperatorOverload(LiquidColorNew first, LiquidColorNew second)
         //{
         //    //Debug.WriteLine($"first.Source.X [{first.Source.X}] == second.Source.X [{second.Source.X}] && first.Source.Y [{first.Source.Y}] == second.Source.Y [{second.Source.Y}]");
