@@ -178,7 +178,7 @@
             GameState = new LiquidColor[0,0];
             Target = new NullPositionPointer();
             Source = new NullPositionPointer();
-            Liquid = new NullLiquidColorNew();
+            Liquid = new NullLiquidColor();
             Visited = true; // setting this to true because NullValidMove shouldn't even be even considered as a valid move.
             FullyVisited = true; // setting this to true because NullValidMove shouldn't even be even considered as a valid move.
         }

@@ -570,7 +570,7 @@ namespace WaterSortPuzzle.ViewModels
                 GetTopmostLiquid(SourceTube);
                 return;
             }
-            if (LastClickedTube == currentTubeReference)
+            if (LastClickedTube.TubeId == currentTubeReference.TubeId)
             {
                 DeselectTube(AnimationSpeed.Animation);
                 return;
@@ -721,7 +721,9 @@ namespace WaterSortPuzzle.ViewModels
             //TubesItemsSource[0].Layers[1].Change(LiquidColorName.Lime);
             //TubesItemsSource[0].Layers[1].Change(GameState[0, 3].Name);
             //TubesItemsSource[0].CopyFrom(GameState.gameGrid, 0);
-            TubesItemsSource[0].Layers[1].CopyFrom(GameState[0, 3].Name);
+            //TubesItemsSource[0].Layers[1].CopyFrom(GameState[0, 3].Name);
+
+            //LiquidColor.Testuju();
         }
         public void DrawTubes(int source = -1, int target = -1)
         {
@@ -732,7 +734,8 @@ namespace WaterSortPuzzle.ViewModels
                 TubeData.ResetCounter();
                 for (int x = 0; x < GameState.GetLength(0); x++)
                 {
-                    TubesItemsSource.Add(new TubeData(GameState[x, 0], GameState[x, 1], GameState[x, 2], GameState[x, 3]));
+                    //TubesItemsSource.Add(new TubeData(GameState[x, 0], GameState[x, 1], GameState[x, 2], GameState[x, 3]));
+                    TubesItemsSource.Add(new TubeData(GameState.gameGrid, x));
                 }
                 OnPropertyChanged(nameof(TubesItemsSource));
             }
@@ -740,7 +743,7 @@ namespace WaterSortPuzzle.ViewModels
             {
                 //TubesItemsSource[source].Layers[3] = GameState[0, 3];
                 //TubesItemsSource[source].Layers[3].Change(GameState[0, 3].Name);
-                //TubesItemsSource[source].CopyValuesFrom(GameState.gameGrid, source);
+                TubesItemsSource[source].CopyValuesFrom(GameState.gameGrid, source);
                 TubesItemsSource[target].CopyValuesFrom(GameState.gameGrid, target);
                 
 

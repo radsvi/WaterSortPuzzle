@@ -69,7 +69,7 @@
         internal void LoadLevelList_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             int increaseHeight = 0;
-            if (LoadLevelList.Count > 3 && LoadLevelList.Count < LiquidColor.ColorKeys.Count)
+            if (LoadLevelList.Count > 3 && LoadLevelList.Count < Constants.ColorCount)
             {
                 increaseHeight = (LoadLevelList.Count - 3) * 45; //vyska jedne polozky je 45
                 LoadLevelScreenHeight = 280 + increaseHeight;
@@ -78,7 +78,7 @@
             {
                 LoadLevelScreenHeight = 280;
             }
-            else if (LoadLevelList.Count >= LiquidColor.ColorKeys.Count)
+            else if (LoadLevelList.Count >= Constants.ColorCount)
             {
                 LoadLevelScreenHeight = 640;
                 LoadLevelScreenScroll = true;
@@ -433,7 +433,7 @@
                     if (layer[y] != "-")
                     {
                         int liquid = Int32.Parse(layer[y]);
-                        if (liquid > LiquidColor.ColorKeys.Count - 2)
+                        if (liquid > Constants.ColorCount - 2)
                         {
                             Notification.Show($"Wrong number ({liquid}) in the import string. Canceling import.", 10000);
                             return null;

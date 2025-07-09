@@ -55,5 +55,13 @@
                 }
             }
         }
+        //public static bool operator ==(TubeReference first, TubeReference second)
+        //{
+        //    return IsMatching(first, second);
+        //}
+        //private static bool IsMatching(TubeReference first, TubeReference second)
+        //{
+        //    first.TubeType.
+        //}
     }
 }

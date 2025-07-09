@@ -140,6 +140,18 @@
             Layers.Add(CheckColor(thirdLayer));
             Layers.Add(CheckColor(fourthLayer));
         }
+
+        public TubeData(LiquidColor[,] gameGrid, int tubeId)
+        {
+            TubeId = tubeIdCounter++;
+
+            for (int i = 0; i < Constants.ColorCount; i++)
+            {
+                Layers.Add(new NullLiquidColor());
+            }
+            CopyValuesFrom(gameGrid, tubeId);
+        }
+
         public static void ResetCounter()
         {
             tubeIdCounter = 0;
