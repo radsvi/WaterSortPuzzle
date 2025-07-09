@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.Maui.Controls;
+
 namespace WaterSortPuzzle.Models
 {
     public class LiquidColor : ObservableObject
@@ -80,6 +82,16 @@ namespace WaterSortPuzzle.Models
 
             //return ColorKeys.Where(key => key.Name == Name).ToList()[0];
             return ColorKeys[name];
+            //switch (name)
+            //{
+            //    case LiquidColorName.:
+
+            //        break;
+
+            //    default:
+            //        return null;
+
+            //}
         }
         public LiquidColor Clone()
         {

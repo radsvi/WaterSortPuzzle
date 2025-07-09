@@ -457,7 +457,7 @@ namespace WaterSortPuzzle.Models
             List<LiquidColor> colorsList = new List<LiquidColor>();
             if (appPreferences.RandomNumberOfTubes)
             {
-                appPreferences.NumberOfColorsToGenerate = rnd.Next(Constants.MinColors, LiquidColor.ColorKeys.Count - 1);
+                appPreferences.NumberOfColorsToGenerate = rnd.Next(Constants.MinColors, Constants.ColorCount - 1);
             }
 
             gameGrid = new LiquidColor[appPreferences.NumberOfColorsToGenerate + 2, Constants.Layers];
@@ -465,12 +465,12 @@ namespace WaterSortPuzzle.Models
             SetFreshGameState();
 
             List<int> selectedColors = new List<int>();
-            for (int i = 0; i < LiquidColor.ColorKeys.Count - 1; i++) // generate list of all colors. Doing '- 1' because color number 0 is blank (and is used for other purposes) but still count towards total.
+            for (int i = 0; i < Constants.ColorCount - 1; i++) // generate list of all colors. Doing '- 1' because color number 0 is blank (and is used for other purposes) but still count towards total.
             {
                 selectedColors.Add(i);
             }
 
-            for (int i = 0; i < LiquidColor.ColorKeys.Count - 1 - appPreferences.NumberOfColorsToGenerate; i++) // now remove some random colors. 
+            for (int i = 0; i < Constants.ColorCount - 1 - appPreferences.NumberOfColorsToGenerate; i++) // now remove some random colors. 
             {
                 //selectedColors.Remove(selectedColors[NumberOfColorsToGenerate]); // this always keeps the same colors
                 selectedColors.Remove(selectedColors[rnd.Next(0, selectedColors.Count)]);

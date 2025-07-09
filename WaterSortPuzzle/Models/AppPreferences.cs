@@ -32,9 +32,9 @@
                     {
                         Preferences.Set(nameof(NumberOfColorsToGenerate), Constants.MinColors);
                     }
-                    else if (value > Constants.MaxColors)
+                    else if (value > Constants.ColorCount)
                     {
-                        Preferences.Set(nameof(NumberOfColorsToGenerate), Constants.MaxColors);
+                        Preferences.Set(nameof(NumberOfColorsToGenerate), Constants.ColorCount);
                     }
                     else
                     {
