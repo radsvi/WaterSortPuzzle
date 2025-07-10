@@ -130,8 +130,8 @@ namespace WaterSortPuzzle.Models
         public LiquidColor[,] StartingPosition { get; set; }
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(StepBackCommand), nameof(StepBackDisplay))]
-        private ObservableCollection<LiquidColor[,]> savedGameStates = new ObservableCollection<LiquidColor[,]>();
-        public ObservableCollection<LiquidColor[,]> SavedGameStates
+        private ObservableCollection<SavedGameState> savedGameStates = new ObservableCollection<SavedGameState>();
+        public ObservableCollection<SavedGameState> SavedGameStates
         {
             get { return savedGameStates; }
             private set
@@ -147,7 +147,7 @@ namespace WaterSortPuzzle.Models
             }
         }
 
-        public LiquidColor[,] LastGameState { get; set; }
+        public SavedGameState LastGameState { get; set; }
         //private void SetGameGrid(int numberOfTubes)
         //{
         //    //gameGrid = new LiquidColorNew[(NumberOfTubes + ExtraTubesAdded + 2), NumberOfLayers];
@@ -426,9 +426,13 @@ namespace WaterSortPuzzle.Models
         {
             return CloneGrid(grid, grid.GetLength(0));
         }
-        public LiquidColor[,] CloneGrid(LiquidColor[,] gameGrid, int numberOfTubes)
+        //public SavedGameState CloneGrid(SavedGameState savedGameState)
+        //{
+        //    return new SavedGameState(CloneGrid(savedGameState.GameGrid, savedGameState.GameGrid.GetLength(0)));
+        //}
+        public LiquidColor[,] CloneGrid(LiquidColor[,] gameGrid, int newNumberOfTubes)
         {
-            LiquidColor[,] gridClone = new LiquidColor[numberOfTubes, gameGrid.GetLength(1)];
+            LiquidColor[,] gridClone = new LiquidColor[newNumberOfTubes, gameGrid.GetLength(1)];
             for (int x = 0; x < gameGrid.GetLength(0); x++)
             {
                 for (int y = 0; y < gameGrid.GetLength(1); y++)
@@ -517,7 +521,7 @@ namespace WaterSortPuzzle.Models
             StartingPosition = CloneGrid(gameGrid);
             appPreferences.LastLevelBeforeClosing = new StoredLevel(StartingPosition, "Last level");
         }
-        public void SaveGameState()
+        public void SaveGameState(int source, int target)
         {
             if (DidGameStateChange() == true)
             //if (SolvingSteps[SolvingSteps.Count - 1] != Tubes)
@@ -528,7 +532,7 @@ namespace WaterSortPuzzle.Models
                     LastGameState = null;
                 }
 
-                LastGameState = CloneGrid(gameGrid);
+                LastGameState = new SavedGameState(CloneGrid(gameGrid), source, target);
                 return;
             }
         }
@@ -547,15 +551,15 @@ namespace WaterSortPuzzle.Models
             {
                 for (int y = 0; y < gameGrid.GetLength(1); y++)
                 {
-                    if (LastGameState[x, y] is null && gameGrid[x, y] is null)
+                    if (LastGameState.GameGrid[x, y] is null && gameGrid[x, y] is null)
                     {
                         continue;
                     }
-                    if (LastGameState[x, y] is null && gameGrid[x, y] is not null || LastGameState[x, y] is not null && gameGrid[x, y] is null)
+                    if (LastGameState.GameGrid[x, y] is null && gameGrid[x, y] is not null || LastGameState.GameGrid[x, y] is not null && gameGrid[x, y] is null)
                     {
                         return true;
                     }
-                    if (LastGameState[x,y].Name != gameGrid[x,y].Name)
+                    if (LastGameState.GameGrid[x,y].Name != gameGrid[x,y].Name)
                     {
                         return true;
                     }
@@ -611,7 +615,7 @@ namespace WaterSortPuzzle.Models
             string exportString = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + "\n";
             foreach (var savedState in SavedGameStates)
             {
-                exportString += GameStateToString(savedState, StringFormat.Names, true) + "\n";
+                exportString += GameStateToString(savedState.GameGrid, StringFormat.Names, true) + "\n";
             }
             exportString += GameStateToString(gameGrid, StringFormat.Names) + "\n";
             exportString += "===================================\n";

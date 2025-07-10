@@ -215,7 +215,7 @@ namespace WaterSortPuzzle.ViewModels
             var task = DrawTubesAsync();
 
             //mainVM.RippleSurfaceAnimation(currentTubeReference);
-            OnChangingGameState();
+            OnChangingGameState(move.Source.X, move.Target.X);
         }
 
         [RelayCommand(CanExecute = nameof(CanStepBack))]
@@ -226,13 +226,13 @@ namespace WaterSortPuzzle.ViewModels
 
             GameState.StepBackPressesCounter++;
 
-            LiquidColor[,] lastGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 1];
+            SavedGameState lastGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 1];
 
             PropertyChangedEventPaused = true;
-            GameState.gameGrid = lastGameStatus;
+            GameState.gameGrid = lastGameStatus.GameGrid;
             PropertyChangedEventPaused = false;
 
-            GameState.LastGameState = GameState.CloneGrid(lastGameStatus);
+            GameState.LastGameState = SavedGameState.Clone(lastGameStatus);
 
             GameState.SavedGameStates.Remove(lastGameStatus);
 
@@ -240,7 +240,7 @@ namespace WaterSortPuzzle.ViewModels
                 autoSolve.CurrentSolutionStep++;
 
             RecalculateTubesPerLine();
-            var task = DrawTubesAsync();
+            var task = DrawTubesAsync(lastGameStatus.Source, lastGameStatus.Target);
         }
         private bool CanStepBack()
         {
@@ -596,19 +596,19 @@ namespace WaterSortPuzzle.ViewModels
                 var task = DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
                 currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
                 //RippleSurfaceAnimation(currentTubeReference);
-                OnChangingGameState();
+                OnChangingGameState(SourceTube.TubeId, currentTubeReference.TubeId);
             }
             if (successAtLeastOnce == 0 && AppPreferences.UnselectTubeEvenOnIllegalMove == true)
             {
                 DeselectTube(AnimationSpeed.Animation);
             }
         }
-        public void OnChangingGameState()
+        public void OnChangingGameState(int source, int target)
         {
             DeselectTube(AnimationSpeed.Instant);
 
             IsLevelCompleted();
-            GameState.SaveGameState();
+            GameState.SaveGameState(source, target);
         }
         public void OnStartingLevel()
         {
@@ -616,7 +616,7 @@ namespace WaterSortPuzzle.ViewModels
             DeselectTube(AnimationSpeed.Animation);
             GameState.SavedGameStates.Clear();
             GameState.LastGameState = null;
-            GameState.SaveGameState();
+            GameState.SaveGameState(-1, -1);
             GameState.ResetStepBackCounter();
             //AutoSolve = new AutoSolve(); // guarantees that we remove stuff like previous moves in autosolving
             AutoSolve?.Reset();
