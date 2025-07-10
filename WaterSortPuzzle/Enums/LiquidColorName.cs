@@ -18,7 +18,7 @@ namespace WaterSortPuzzle.Enums
         Yellow,
         Pink,
         Green,
-        LightGreen,
+        //LightGreen,
         Olive,
         Red,
         Brown,
