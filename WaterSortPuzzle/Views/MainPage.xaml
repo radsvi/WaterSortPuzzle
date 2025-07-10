@@ -82,56 +82,17 @@
                             <!--<BoxView Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
                                 CornerRadius="0,0,5,5" Background="LightBlue"/>-->
 
-                            <Grid >
-                                <Grid.Style>
-                                    <Style TargetType="Grid" >
-                                        <Setter Property="Margin" Value="0,4,0,0" />
-                                        <!--<Setter Property="Background" Value="LightBlue" />-->
-                                        <Setter Property="VerticalOptions" Value="Start" />
-                                        <!--<Setter Property="Stroke" Value="LightBlue" />-->
-                                        <!--<Setter Property="StrokeThickness" Value="1" />-->
-                                        <!--<Setter Property="StrokeShape" Value="RoundRectangle 0,0,28,2284" />-->
-                                        <Setter Property="BackgroundColor" Value="#ad1c42" />
+                            <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" VerticalOptions="Start"
+                                    Stroke="LightBlue" StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 0,0,28,2284" >
 
-                                        <Setter Property="HeightRequest" Value="194" />
-                                        <Style.Triggers >
-                                            <!--<DataTrigger Value="0" TargetType="Grid" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
-                                                 <Setter Property="BackgroundColor" Value="#475573" />
-                                            </DataTrigger>
-                                            <DataTrigger Value="1" TargetType="Grid">
-                                                <DataTrigger.Binding>
-                                                    <Binding Path="BindingContext.TubeStyle"
-                                                             Source="{RelativeSource AncestorType={x:Type CollectionView}}" />
-                                                </DataTrigger.Binding>
-                                                <Setter Property="BackgroundColor" Value="#ad1c42" />
-                                            </DataTrigger>
-                                            <DataTrigger Value="2" TargetType="Grid">
-                                                <DataTrigger.Binding>
-                                                    <Binding Path="BindingContext.TubeStyle"
-                                                             Source="{RelativeSource AncestorType={x:Type CollectionView}}" />
-                                                </DataTrigger.Binding>
-                                                <Setter Property="BackgroundColor" Value="#c3d21b" />
-                                            </DataTrigger>-->
-                                            <DataTrigger Value="0" TargetType="Grid" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
-                                                <Setter Property="BackgroundColor" Value="#475573" />
-                                            </DataTrigger>
-                                            <DataTrigger Value="1" TargetType="Grid" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
-                                                <Setter Property="BackgroundColor" Value="#ad1c42" />
-                                            </DataTrigger>
-                                            <DataTrigger Value="2" TargetType="Grid" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
-                                                <Setter Property="BackgroundColor" Value="#c3d21b" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Grid.Style>
-
-                                <!--<Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*">
+                                <Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*">
                                     <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
                                     <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
                                     <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
                                     <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
-                                </Grid>-->
-                            </Grid>
+                                </Grid>
+                            </Border>
                             <BoxView Margin="0,4,0,0" WidthRequest="53" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center"
                                     Background="LightBlue" CornerRadius="0,0,5,5"/>
                             
@@ -162,7 +123,7 @@
                 <Grid Style="{StaticResource TubeGrid}" WidthRequest="100" HeightRequest="100">
                     
                 </Grid>
-                
+                <Button Text="{Binding ChangingColor, StringFormat='num: {0}'}" Command="{Binding ChangeColorCommand}" />
             </StackLayout>
             
             <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
