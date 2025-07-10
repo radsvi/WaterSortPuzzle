@@ -82,7 +82,7 @@
                             <!--<BoxView Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
                                 CornerRadius="0,0,5,5" Background="LightBlue"/>-->
 
-                            <Border Margin="0,4,0,0" HeightRequest="194" Background="LightBlue" VerticalOptions="Start"
+                            <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" VerticalOptions="Start"
                                     Stroke="LightBlue" StrokeThickness="1"
                                     StrokeShape="RoundRectangle 0,0,28,2284" >
 
