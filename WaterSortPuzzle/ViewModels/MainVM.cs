@@ -631,12 +631,12 @@ namespace WaterSortPuzzle.ViewModels
         }
         public void OnStartingLevel()
         {
+            GameState.ResetStepBackCounter();
             UIEnabled = true;
             DeselectTube(AnimationSpeed.Animation);
             GameState.SavedGameStates.Clear();
             GameState.LastGameState = null;
             GameState.SaveGameState(-1, -1);
-            GameState.ResetStepBackCounter();
             //AutoSolve = new AutoSolve(); // guarantees that we remove stuff like previous moves in autosolving
             AutoSolve?.Reset();
             RecalculateTubesPerLine();

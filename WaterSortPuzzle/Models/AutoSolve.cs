@@ -69,6 +69,7 @@
             var treeNode = new TreeNode<ValidMove>(new ValidMove(startingPosition));
             treeNode.Data.StepNumber = -1;
             treeNode.Data.UpdateHash();
+            bool canceledByUser = false;
             //Dictionary<int, LinkedList<TreeNode<ValidMove>>> hashedSteps = new Dictionary<int, LinkedList<TreeNode<ValidMove>>>();
             CollisionDictionary<int, TreeNode<ValidMove>> hashedSteps = new CollisionDictionary<int, TreeNode<ValidMove>>();
 #if DEBUG            
@@ -82,6 +83,15 @@
             while (true)
             {
                 await Task.Delay(1);
+                if (Iterations % 10000 == 0 && Iterations > 0)
+                {
+                    bool answer = await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve", $"Reached {Iterations}.\nDo you want to continue?", "Stop", "Continue");
+                    if (answer == true)
+                    {
+                        canceledByUser = true;
+                        break;
+                    }
+                }
 #if DEBUG
                 debugList.Add(treeNode);
 #endif
@@ -200,10 +210,17 @@
             }
             var duration = DateTime.Now.Subtract(startTime);
             CreateListOfSteps(treeNode!);
-            if (CompleteSolution.Count > 0)
-                notification.Show($"Total states taken to generate: {Iterations}. Steps required to solve the puzzle {CompleteSolution.Count}. Duration: {duration.TotalSeconds} seconds", MessageType.Debug, 60000);
-            else 
-                notification.Show($"Total states taken to generate: {Iterations}. Puzzle wasn't solved, something went wrong ({CompleteSolution.Count} steps generated). Duration: {duration.TotalSeconds} seconds", MessageType.Debug, 60000);
+            //if (CompleteSolution.Count > 0)
+            //    notification.Show($"Total states taken to generate: {Iterations}. Steps required to solve the puzzle {CompleteSolution.Count}. Duration: {duration.TotalSeconds} seconds", MessageType.Debug, 60000);
+            //else 
+            //    notification.Show($"Total states taken to generate: {Iterations}. Puzzle wasn't solved, something went wrong ({CompleteSolution.Count} steps generated). Duration: {duration.TotalSeconds} seconds", MessageType.Debug, 60000);
+            if (canceledByUser == false)
+            {
+                if (CompleteSolution.Count > 0)
+                    await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve finished", $"Total states taken to generate: {Iterations}.\nSteps required to solve the puzzle: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds", "Close");
+                else
+                    await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve finished - No Solution found", $"Total states taken to generate: {Iterations}.\nSteps generated: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds\nNo solution found", "Close");
+            }
 
             IsBusy = false;
             Solved = true;

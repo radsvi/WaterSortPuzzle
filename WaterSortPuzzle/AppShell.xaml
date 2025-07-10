@@ -97,7 +97,7 @@
     </FlyoutItem>
 
     <MenuItem Text="Options" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}"/>
-    <MenuItem Text="Get Solution" Command="{Binding AutoSolve.StartCommand}"/>
+    <MenuItem Text="Calculate Solution" Command="{Binding AutoSolve.StartCommand}"/>
     <!--<MenuItem Text="Save &amp; Load" Command="{Binding AutoSolve.StartCommand}"/>-->
 
 </Shell>
