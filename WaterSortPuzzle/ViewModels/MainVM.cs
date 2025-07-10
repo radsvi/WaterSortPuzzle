@@ -725,6 +725,17 @@ namespace WaterSortPuzzle.ViewModels
 
             //LiquidColor.Testuju();
         }
+        //public void DrawTubes()
+        //{
+        //    TubesItemsSource.Clear();
+        //    TubeData.ResetCounter();
+
+        //    for (int x = 0; x < GameState.GetLength(0); x++)
+        //    {
+        //        TubesItemsSource.Add(new TubeData(GameState[x, 0], GameState[x, 1], GameState[x, 2], GameState[x, 3]));
+        //    }
+        //    OnPropertyChanged(nameof(TubesItemsSource));
+        //}
         public void DrawTubes(int source = -1, int target = -1)
         {
             //if (TubesItemsSource.Count == 0)
