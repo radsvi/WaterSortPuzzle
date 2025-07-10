@@ -212,7 +212,7 @@ namespace WaterSortPuzzle.ViewModels
                 move.Target.Y,
                 move.Source.NumberOfRepeatingLiquids
             );
-            var task = DrawTubesAsync();
+            var task = DrawTubesAsync(move.Source.X, move.Target.X);
 
             //mainVM.RippleSurfaceAnimation(currentTubeReference);
             OnChangingGameState(move.Source.X, move.Target.X);
@@ -418,7 +418,7 @@ namespace WaterSortPuzzle.ViewModels
             GameState.AddExtraTube();
             AddExtraTubeCommand.NotifyCanExecuteChanged();
             RecalculateTubesPerLine();
-            var task = DrawTubesAsync();
+            var task = DrawTubesAsync(GameState.gameGrid.GetLength(0));
         }
         public bool CanAddExtraTube()
         {
@@ -594,6 +594,7 @@ namespace WaterSortPuzzle.ViewModels
             if (successAtLeastOnce > 0)
             {
                 var task = DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+                //OnPropertyChanged(nameof(GameState.StepBackDisplay));
                 currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
                 //RippleSurfaceAnimation(currentTubeReference);
                 OnChangingGameState(SourceTube.TubeId, currentTubeReference.TubeId);
@@ -757,7 +758,8 @@ namespace WaterSortPuzzle.ViewModels
             else
             {
                 TubesItemsSource[source].CopyValuesFrom(GameState.gameGrid, source);
-                TubesItemsSource[target].CopyValuesFrom(GameState.gameGrid, target);
+                if (target != -1)
+                    TubesItemsSource[target].CopyValuesFrom(GameState.gameGrid, target);
             }
         }
         #region testing

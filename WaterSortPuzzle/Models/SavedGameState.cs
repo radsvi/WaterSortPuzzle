@@ -22,5 +22,10 @@ namespace WaterSortPuzzle.Models
         {
             return new SavedGameState(GameState.CloneGridStatic(original.GameGrid), original.Source, original.Target);
         }
+        public void UpdateSourceNTarget(int source, int target)
+        {
+            Source = source;
+            Target = target;
+        }
     }
 }

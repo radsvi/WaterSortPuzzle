@@ -528,8 +528,8 @@ namespace WaterSortPuzzle.Models
             {
                 if (LastGameState != null) // pridavam to tady, protoze nechci v game states mit i current game state.
                 {
+                    LastGameState.UpdateSourceNTarget(source, target);
                     SavedGameStates.Add(LastGameState);
-                    LastGameState = null;
                 }
 
                 LastGameState = new SavedGameState(CloneGrid(gameGrid), source, target);
