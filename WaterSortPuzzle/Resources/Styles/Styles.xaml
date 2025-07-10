@@ -538,15 +538,15 @@
         <Setter Property="StrokeShape" Value="RoundRectangle 0,0,28,2284" />-->
 
 
-        <Setter Property="HeightRequest" Value="194" />
+        <!--<Setter Property="HeightRequest" Value="194" />-->
         <Style.Triggers>
-            <DataTrigger Binding="{Binding TubeStyle}" Value="0" TargetType="Border">
+            <DataTrigger Value="0" TargetType="Border" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
                 <Setter Property="HeightRequest" Value="194" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding TubeStyle}" Value="1" TargetType="Border">
+            <DataTrigger Value="1" TargetType="Border" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
                 <Setter Property="HeightRequest" Value="129" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding TubeStyle}" Value="2" TargetType="Border">
+            <DataTrigger Value="2" TargetType="Border" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
                 <Setter Property="HeightRequest" Value="50" />
             </DataTrigger>
         </Style.Triggers>
