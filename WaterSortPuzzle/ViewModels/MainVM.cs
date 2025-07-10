@@ -165,9 +165,10 @@ namespace WaterSortPuzzle.ViewModels
         {
             get
             {
-                if (TubesPerLine <= 5)
+                // Dont forget we are always adding 2 extra empty tubes, and those count too
+                if (GameState.TubeCount <= 10)
                     return 0;
-                else if (TubesPerLine <= 7)
+                else if (GameState.TubeCount <= 14)
                     return 1;
                 else
                     return 2;
