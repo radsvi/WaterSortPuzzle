@@ -515,8 +515,8 @@
 
     <!-- // Tube design switching // -->
 
-    <Style TargetType="Grid" x:Key="TubeGrid">
-        <!--<Setter Property="BackgroundColor" Value="Transparent" />-->
+    <!--<Style TargetType="Grid" x:Key="TubeGrid">
+        <Setter Property="BackgroundColor" Value="Transparent" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding TubeStyle}" Value="0" TargetType="Grid">
                 <Setter Property="BackgroundColor" Value="#475573" />
@@ -528,17 +528,21 @@
                 <Setter Property="BackgroundColor" Value="#c3d21b" />
             </DataTrigger>
         </Style.Triggers>
+    </Style>-->
+    <Style TargetType="Grid" x:Key="TubeGrid">
+        <Style.Triggers>
+            <DataTrigger Value="0" TargetType="Grid" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
+                <Setter Property="WidthRequest" Value="51" />
+            </DataTrigger>
+            <DataTrigger Value="1" TargetType="Grid" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
+                <Setter Property="WidthRequest" Value="34" />
+            </DataTrigger>
+            <!--<DataTrigger Value="2" TargetType="Grid" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
+                <Setter Property="WidthRequest" Value="50" />
+            </DataTrigger>-->
+        </Style.Triggers>
     </Style>
     <Style TargetType="Border" x:Key="TubeBorder">
-        <!--<Setter Property="Margin" Value="0,4,0,0" />
-        <Setter Property="Background" Value="LightBlue" />
-        <Setter Property="VerticalOptions" Value="Start" />
-        <Setter Property="Stroke" Value="LightBlue" />
-        <Setter Property="StrokeThickness" Value="1" />
-        <Setter Property="StrokeShape" Value="RoundRectangle 0,0,28,2284" />-->
-
-
-        <!--<Setter Property="HeightRequest" Value="194" />-->
         <Style.Triggers>
             <DataTrigger Value="0" TargetType="Border" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
                 <Setter Property="HeightRequest" Value="194" />
@@ -546,11 +550,43 @@
             <DataTrigger Value="1" TargetType="Border" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
                 <Setter Property="HeightRequest" Value="129" />
             </DataTrigger>
-            <DataTrigger Value="2" TargetType="Border" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
+            <!--<DataTrigger Value="2" TargetType="Border" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
                 <Setter Property="HeightRequest" Value="50" />
-            </DataTrigger>
+            </DataTrigger>-->
         </Style.Triggers>
     </Style>
+    <Style TargetType="BoxView" x:Key="TubeBoxView">
+        <Style.Triggers>
+            <DataTrigger Value="0" TargetType="BoxView" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
+                <Setter Property="WidthRequest" Value="53" />
+            </DataTrigger>
+            <DataTrigger Value="1" TargetType="BoxView" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
+                <Setter Property="WidthRequest" Value="36" />
+            </DataTrigger>
+            <!--<DataTrigger Value="2" TargetType="BoxView" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
+                <Setter Property="WidthRequest" Value="20" />
+            </DataTrigger>-->
+        </Style.Triggers>
+    </Style>
+    <!--
+    <Style TargetType="Grid" x:Key="TubeGrid">
+        <Setter Property="WidthRequest" Value="51" />
+    </Style>
+    <Style TargetType="Border" x:Key="TubeBorder">
+        <Setter Property="HeightRequest" Value="194" />
+    </Style>
+    <Style TargetType="BoxView" x:Key="TubeBoxView">
+        <Setter Property="WidthRequest" Value="53" />
+    </Style>-->
+    <!--<Style TargetType="Grid" x:Key="TubeGrid">
+        <Setter Property="WidthRequest" Value="34" />
+    </Style>
+    <Style TargetType="Border" x:Key="TubeBorder">
+        <Setter Property="HeightRequest" Value="129" />
+    </Style>
+    <Style TargetType="BoxView" x:Key="TubeBoxView">
+        <Setter Property="WidthRequest" Value="36" />
+    </Style>-->
 
     <!-- // Options menu // -->
     <Style x:Key="OptionsButton" TargetType="Button">

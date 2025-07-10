@@ -165,12 +165,17 @@ namespace WaterSortPuzzle.ViewModels
         {
             get
             {
-                if (TubesPerLine <= 5)
+                //if (GameState.TubeCount <= 10)
+                //    return 0;
+                //else if (GameState.TubeCount <= 14)
+                //    return 1;
+                //else
+                //    return 2;
+
+                if (GameState.TubeCount <= 14)
                     return 0;
-                else if (TubesPerLine <= 7)
-                    return 1;
                 else
-                    return 2;
+                    return 1;
             }
         }
         public bool TubesClickable

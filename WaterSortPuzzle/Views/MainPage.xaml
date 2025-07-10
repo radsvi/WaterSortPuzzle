@@ -54,7 +54,7 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <CollectionView SelectionMode="None" ItemsSource="{Binding TubesItemsSource}" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+            <CollectionView SelectionMode="None" ItemsSource="{Binding TubesItemsSource}" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" VerticalOptions="Center">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="{Binding TubesPerLine}"/>
                 </CollectionView.ItemsLayout>
@@ -63,7 +63,7 @@
                 </CollectionView.ItemsLayout>-->
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:TubeData">
-                        <Grid WidthRequest="51" Padding="0,20,0,0">
+                        <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1"
                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}">
@@ -84,7 +84,7 @@
 
                             <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" VerticalOptions="Start"
                                     Stroke="LightBlue" StrokeThickness="1"
-                                    StrokeShape="RoundRectangle 0,0,28,2284" >
+                                    StrokeShape="RoundRectangle 0,0,28,28" >
 
                                 <Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*">
                                     <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
@@ -93,7 +93,7 @@
                                     <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
                                 </Grid>
                             </Border>
-                            <BoxView Margin="0,4,0,0" WidthRequest="53" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center"
+                            <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center"
                                     Background="LightBlue" CornerRadius="0,0,5,5"/>
                             
                             <!--<Border Margin="8,4,8,0" WidthRequest="38" HeightRequest="10" VerticalOptions="Start"
@@ -119,12 +119,12 @@
                 <Button Text="{Binding DelayAnimation, StringFormat='Test {0}'}" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding SwitchDelayAnimationCommand}" />
                 <Button Text="Change!" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding ArbitraryChangeCommand}" />
             </StackLayout>-->
-            <StackLayout Orientation="Horizontal" VerticalOptions="End">
+            <!--<StackLayout Orientation="Horizontal" VerticalOptions="End">
                 <Grid Style="{StaticResource TubeGrid}" WidthRequest="100" HeightRequest="100">
                     
                 </Grid>
                 <Button Text="{Binding ChangingColor, StringFormat='num: {0}'}" Command="{Binding ChangeColorCommand}" />
-            </StackLayout>
+            </StackLayout>-->
             
             <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
                 <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
