@@ -11,8 +11,6 @@ Global
 		Debug|ARM64 = Debug|ARM64
 		Release|Any CPU = Release|Any CPU
 		Release|ARM64 = Release|ARM64
-		ReleaseForAndroid|Any CPU = ReleaseForAndroid|Any CPU
-		ReleaseForAndroid|ARM64 = ReleaseForAndroid|ARM64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9E7F0315-7F11-4753-BD2B-AEAE28C1AEA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -25,12 +23,6 @@ Global
 		{9E7F0315-7F11-4753-BD2B-AEAE28C1AEA8}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{9E7F0315-7F11-4753-BD2B-AEAE28C1AEA8}.Release|ARM64.ActiveCfg = Release|ARM64
 		{9E7F0315-7F11-4753-BD2B-AEAE28C1AEA8}.Release|ARM64.Build.0 = Release|ARM64
-		{9E7F0315-7F11-4753-BD2B-AEAE28C1AEA8}.ReleaseForAndroid|Any CPU.ActiveCfg = Release|Any CPU
-		{9E7F0315-7F11-4753-BD2B-AEAE28C1AEA8}.ReleaseForAndroid|Any CPU.Build.0 = Release|Any CPU
-		{9E7F0315-7F11-4753-BD2B-AEAE28C1AEA8}.ReleaseForAndroid|Any CPU.Deploy.0 = Release|Any CPU
-		{9E7F0315-7F11-4753-BD2B-AEAE28C1AEA8}.ReleaseForAndroid|ARM64.ActiveCfg = Release|ARM64
-		{9E7F0315-7F11-4753-BD2B-AEAE28C1AEA8}.ReleaseForAndroid|ARM64.Build.0 = Release|ARM64
-		{9E7F0315-7F11-4753-BD2B-AEAE28C1AEA8}.ReleaseForAndroid|ARM64.Deploy.0 = Release|ARM64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
