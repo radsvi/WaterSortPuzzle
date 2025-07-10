@@ -158,6 +158,19 @@ namespace WaterSortPuzzle.ViewModels
             {
                 tubesPerLine = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(TubeStyle));
+            }
+        }
+        public int TubeStyle
+        {
+            get
+            {
+                if (TubesPerLine <= 5)
+                    return 0;
+                else if (TubesPerLine <= 7)
+                    return 1;
+                else
+                    return 2;
             }
         }
         public bool TubesClickable
@@ -975,6 +988,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             container.Children.Remove(gridElement);
         }
+
         //private void MoveAndTiltTube(TubeReference tubeReference)
         //{
         //    if (tubeReference.ButtonElement is null)

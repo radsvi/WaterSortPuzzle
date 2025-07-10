@@ -513,8 +513,23 @@
         
     </Style>
 
-    <!-- // Quick Notification Overlay // -->
-    
+    <!-- // Tube design switching // -->
+
+    <Style TargetType="Grid" x:Key="TubeGrid">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding TubeStyle}" Value="0" TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="#475573" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding TubeStyle}" Value="1" TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="#ad1c42" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding TubeStyle}" Value="2" TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="#c3d21b" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <!-- // Options menu // -->
     <Style x:Key="OptionsButton" TargetType="Button">
         <Setter Property="Padding" Value="20,1" />

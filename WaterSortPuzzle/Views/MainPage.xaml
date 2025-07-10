@@ -119,6 +119,12 @@
                 <Button Text="{Binding DelayAnimation, StringFormat='Test {0}'}" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding SwitchDelayAnimationCommand}" />
                 <Button Text="Change!" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding ArbitraryChangeCommand}" />
             </StackLayout>-->
+            <StackLayout Orientation="Horizontal" VerticalOptions="End">
+                <Grid Style="{StaticResource TubeGrid}" WidthRequest="100" HeightRequest="100">
+                    
+                </Grid>
+                <Button Text="{Binding ChangingColor, StringFormat='num: {0}'}" Command="{Binding ChangeColorCommand}" />
+            </StackLayout>
             
             <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
                 <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
