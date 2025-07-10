@@ -532,7 +532,7 @@
     <Style TargetType="Grid" x:Key="TubeGrid">
         <Style.Triggers>
             <DataTrigger Value="0" TargetType="Grid" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
-                <Setter Property="WidthRequest" Value="51" />
+                <Setter Property="WidthRequest" Value="46" />
             </DataTrigger>
             <DataTrigger Value="1" TargetType="Grid" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
                 <Setter Property="WidthRequest" Value="34" />
@@ -545,7 +545,7 @@
     <Style TargetType="Border" x:Key="TubeBorder">
         <Style.Triggers>
             <DataTrigger Value="0" TargetType="Border" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
-                <Setter Property="HeightRequest" Value="194" />
+                <Setter Property="HeightRequest" Value="174" />
             </DataTrigger>
             <DataTrigger Value="1" TargetType="Border" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
                 <Setter Property="HeightRequest" Value="129" />
@@ -558,7 +558,7 @@
     <Style TargetType="BoxView" x:Key="TubeBoxView">
         <Style.Triggers>
             <DataTrigger Value="0" TargetType="BoxView" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
-                <Setter Property="WidthRequest" Value="53" />
+                <Setter Property="WidthRequest" Value="48" />
             </DataTrigger>
             <DataTrigger Value="1" TargetType="BoxView" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
                 <Setter Property="WidthRequest" Value="36" />
