@@ -9,6 +9,12 @@ namespace WaterSortPuzzle
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .ConfigureMauiHandlers(handlers =>
+                {
+#if ANDROID
+                    handlers.AddHandler<ScrollView, ScrollViewEnableHandler>();     
+#endif
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
