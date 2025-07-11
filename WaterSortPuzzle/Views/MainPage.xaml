@@ -17,10 +17,6 @@
     <Grid RowDefinitions="auto,*,auto" VerticalOptions="Fill">
         <!--#region Top section -->
 
-        <!-- // AutoSolve box // -->
-        <Border HorizontalOptions="Start" Background="White" IsVisible="{Binding AutoSolve.Started}" HeightRequest="40">
-            <Label Text="{Binding AutoSolve.Iterations}" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-        </Border>
         <!--<Border HorizontalOptions="Start" Background="White" HeightRequest="40">
             <Label Text="{Binding DrawTubesCounter}" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
         </Border>-->
@@ -28,10 +24,9 @@
         <!-- // Top Bar // -->
         <StackLayout Orientation="Vertical" Margin="5">
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button Text="{Binding AppPreferences.NewLevelButtonText}" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.NewLevel}"/>
-                <Button
-                    Text="Restart level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}"/>
-                <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}"/>
+                <Button Text="{Binding AppPreferences.NewLevelButtonText}" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.NewLevel}" ImageSource="{StaticResource NewLevelIcon}"/>
+                <Button Text="Restart level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}" ImageSource="{StaticResource RestartIcon}"/>
+                <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}" ImageSource="{StaticResource SettingsIcon}"/>
             </StackLayout>
             <BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>
         </StackLayout>
@@ -113,6 +108,12 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <!-- // AutoSolve box // -->
+            <Border VerticalOptions="End" Background="White" IsVisible="{Binding AutoSolve.Started}" BackgroundColor="Red" HorizontalOptions="Start" Margin="5,0" >
+                <Label Text="{Binding AutoSolve.Iterations}" HeightRequest="40" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            </Border>
+
             <!--<Grid VerticalOptions="Start" HorizontalOptions="Center" x:Name="GridForTubes">
                 <usercontrols:TubeControl TubeItem="{Binding Tubes[0]}"/>
             </Grid>-->
@@ -122,7 +123,7 @@
                 <Button Text="{Binding DelayAnimation, StringFormat='Test {0}'}" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding SwitchDelayAnimationCommand}" />
                 <Button Text="Change!" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding ArbitraryChangeCommand}" />
             </StackLayout>-->
-            
+
             <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
                 <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
             </Border>
@@ -153,10 +154,10 @@
                     </StackLayout>
                 </StackLayout>-->
                 <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
-                    <Button Text="{Binding AutoSolve.CurrentSolutionStep, StringFormat='Next Step ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepThroughCommand}" IsVisible="{Binding AutoSolve.Solved}"/>
-                    <Button Padding="25,5" Text="Add Empty Flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}" Grid.Column="1"/>
+                    <Button Text="{Binding AutoSolve.CurrentSolutionStep, StringFormat='Next Step ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepThroughCommand}" IsVisible="{Binding AutoSolve.Solved}" ImageSource="{StaticResource NextStepIcon}"/>
+                    <Button Text="Add Empty Flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}" Grid.Column="1" ImageSource="{StaticResource AddFlaskIcon}"/>
                     <!--<Button Text="{Binding GameState.StepBackCounter, StringFormat='« Back ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}" Grid.Column="1"/>-->
-                    <Button Padding="15,5" Text="{Binding GameState.StepBackDisplay, StringFormat='Previous Step ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepBackCommand}" Grid.Column="2"/>
+                    <Button Text="{Binding GameState.StepBackDisplay, StringFormat='Previous Step ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepBackCommand}" Grid.Column="2" ImageSource="{StaticResource PreviousStepIcon}"/>
                     <!--{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[{0}]'}"-->
                 </Grid>
             </Grid>

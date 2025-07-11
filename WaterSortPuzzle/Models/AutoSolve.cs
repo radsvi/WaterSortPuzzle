@@ -217,9 +217,9 @@
             if (canceledByUser == false)
             {
                 if (CompleteSolution.Count > 0)
-                    await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve finished", $"Total states taken to generate: {Iterations}.\nSteps required to solve the puzzle: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds", "Close");
+                    await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve finished", $"Total states explored: {Iterations}.\nSteps required to solve the puzzle: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds", "Close");
                 else
-                    await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve finished - No Solution found", $"Total states taken to generate: {Iterations}.\nSteps generated: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds\nNo solution found", "Close");
+                    await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve finished - No Solution found", $"Total states explored: {Iterations}.\nSteps generated: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds\nNo solution found", "Close");
             }
 
             IsBusy = false;
@@ -817,7 +817,7 @@
         [RelayCommand(CanExecute = nameof(CanStart))]
         public void Start()
         {
-
+            Shell.Current.FlyoutIsPresented = false;
             //Notification.Show("Game grid locked while automatic solution is engaged",MessageType.Information, 10000);
             ResumeRequest = true; // provede se i pri prvnim spusteni, protoze je pauza na zacatku
             //ResumeRequestCounterDebug++;
@@ -899,7 +899,7 @@
 
             exportString += GameState.GameStateToString(treeNode.Data.GameState, StringFormat.Numbers, true);
             exportString += "{" + note + "}" + "\n";
-            System.IO.File.AppendAllText(exportLogFilename, exportString);
+            //System.IO.File.AppendAllText(exportLogFilename, exportString); // ## convertovat do MAUI
         }
         #endregion
     }

@@ -29,7 +29,7 @@
     </MenuItem>
     <MenuItem Text="Calculate Solution" Command="{Binding AutoSolve.StartCommand}">
         <MenuItem.IconImageSource>
-            <FontImageSource FontFamily="FontAwesomeRegular" Size="24" Glyph="&#xf074;" Color="Black" />
+            <FontImageSource FontFamily="FontAwesomeSolid" Size="24" Glyph="&#xf074;" Color="Black" />
         </MenuItem.IconImageSource>
     </MenuItem>
     <!--<MenuItem Text="Save &amp; Load" Command="{Binding AutoSolve.StartCommand}"/>-->

@@ -463,9 +463,14 @@
         <Setter Property="Color" Value="#b2cbde" />
     </Style>
 
+    <!-- // Top Buttons // -->
+
     <Style x:Key="NavigationButtonPrimary" TargetType="Button">
         <Setter Property="Margin" Value="0,0,5,0" />
     </Style>
+
+    <!-- // Bottom Buttons // -->
+
     <Style x:Key="NavigationButtonBottom" TargetType="Button">
         <Setter Property="Margin" Value="0,0,5,0" />
         <!--<Setter Property="Padding" Value="14,10"/>-->
@@ -479,8 +484,6 @@
         <!--<Setter Property="WidthRequest" Value="55" />-->
         <Setter Property="FontSize" Value="12" />
         <Setter Property="LineBreakMode" Value="WordWrap" />
-        
-        
     </Style>
     <Style x:Key="NavigationButtonAdvancedSettings" TargetType="Button">
         <Setter Property="HorizontalOptions" Value="Start" />
@@ -510,7 +513,7 @@
         </Setter>
 
         <Setter Property="VerticalOptions" Value="End" />
-        
+
     </Style>
 
     <!-- // Tube design switching // -->
@@ -589,11 +592,51 @@
     </Style>-->
 
     <!-- // Options menu // -->
+    
     <Style x:Key="OptionsButton" TargetType="Button">
         <Setter Property="Padding" Value="20,1" />
         <Setter Property="HorizontalOptions" Value="Start" />
         <Setter Property="Margin" Value="0,10,0,0" />
     </Style>
+
+    <!-- // Button images // -->
     
+    <x:Double x:Key="FontSizeSmall">14</x:Double>
+    <FontImageSource
+        x:Key="NewLevelIcon"
+        FontFamily="FontAwesomeSolid"
+        Glyph="&#x00bb;"
+        Size="{StaticResource FontSizeSmall}"
+        Color="{AppThemeBinding Light=Black, Dark=White}" />
+    <FontImageSource
+        x:Key="SettingsIcon"
+        FontFamily="FontAwesomeSolid"
+        Glyph="&#x2699;"
+        Size="{StaticResource FontSizeSmall}"
+        Color="{AppThemeBinding Light=Black, Dark=White}" />
+    <FontImageSource
+        x:Key="RestartIcon"
+        FontFamily="FontAwesomeSolid"
+        Glyph="&#xf2f1;"
+        Size="{StaticResource FontSizeSmall}"
+        Color="{AppThemeBinding Light=Black, Dark=White}" />
+    <FontImageSource
+        x:Key="NextStepIcon"
+        FontFamily="FontAwesomeSolid"
+        Glyph="&#x203a;"
+        Size="{StaticResource FontSizeSmall}"
+        Color="{AppThemeBinding Light=Black, Dark=White}" />
+    <FontImageSource
+        x:Key="PreviousStepIcon"
+        FontFamily="FontAwesomeSolid"
+        Glyph="&#x2039;"
+        Size="{StaticResource FontSizeSmall}"
+        Color="{AppThemeBinding Light=Black, Dark=White}" />
+    <FontImageSource
+        x:Key="AddFlaskIcon"
+        FontFamily="FontAwesomeSolid"
+        Glyph="&#xf055;"
+        Size="{StaticResource FontSizeSmall}"
+        Color="{AppThemeBinding Light=Black, Dark=White}" />
 
 </ResourceDictionary>

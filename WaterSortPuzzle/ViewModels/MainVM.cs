@@ -300,8 +300,8 @@ namespace WaterSortPuzzle.ViewModels
                 route = menuItem.ToString();
             }
 
-
             await AppShell.Current.GoToAsync(route);
+            Shell.Current.FlyoutIsPresented = false;
         }
         [RelayCommand]
         public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
