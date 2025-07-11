@@ -20,6 +20,12 @@
     <Color x:Key="ButtonText">White</Color>
     <Color x:Key="ButtonTextDark">Black</Color>
 
+    <Color x:Key="BackgroundLight">#304674</Color>
+    <Color x:Key="BackgroundDark">#1f1f1f</Color>
+
+    <Color x:Key="PageBackgroundLight">AliceBlue</Color>
+    <Color x:Key="PageBackgroundDark">#1f1f1f</Color>
+
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
     <Color x:Key="Magenta">#D600AA</Color>

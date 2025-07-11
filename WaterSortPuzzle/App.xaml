@@ -5,7 +5,6 @@
              x:Class="WaterSortPuzzle.App">
     <Application.Resources>
         <ResourceDictionary>
-            <x:String x:Key="IconCoffee">&#xf0f4;</x:String>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

@@ -9,7 +9,8 @@
     xmlns:fontAwesome="clr-namespace:FontAwesome"
     x:DataType="viewmodels:MainVM"
     Shell.FlyoutBehavior="Flyout"
-    
+    Shell.BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
+    FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
     
     Title="WaterSortPuzzle"><!--FlyoutBackgroundColor="#6b95ed"-->
     <!--Shell.NavBarIsVisible="False"-->

@@ -14,7 +14,7 @@
              Title="Options">
     <ContentPage.Resources>
         <Style TargetType="ScrollView">
-            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource OffLight}, Dark={StaticResource OffBlack}}" />
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}" />
         </Style>
     </ContentPage.Resources>
     <!--Shell.PresentationMode="Modal"-->
