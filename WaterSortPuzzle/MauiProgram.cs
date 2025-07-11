@@ -1,9 +1,10 @@
-﻿using Android.Views;
-using AndroidX.RecyclerView.Widget;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Handlers.Items;
+#if ANDROID
+using Android.Views;
+using AndroidX.RecyclerView.Widget;
 using WaterSortPuzzle.Platforms.Android;
-using YourApp.Platforms.Android;
+#endif
 
 namespace WaterSortPuzzle
 {
@@ -14,12 +15,6 @@ namespace WaterSortPuzzle
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .ConfigureMauiHandlers(handlers =>
-                {
-#if ANDROID
-                    handlers.AddHandler<ScrollView, ScrollViewEnableHandler>();     
-#endif
-                })
                 .ConfigureFonts(fonts =>
                 {
                     //fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -48,7 +43,6 @@ namespace WaterSortPuzzle
 #if ANDROID
             builder.ConfigureMauiHandlers(handlers =>
             {
-                handlers.AddHandler<ScrollView, CustomScrollViewHandler>();
                 handlers.AddHandler<CollectionView, CustomCollectionViewHandler>();
             });
 
