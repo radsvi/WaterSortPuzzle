@@ -6,98 +6,32 @@
     xmlns:views="clr-namespace:WaterSortPuzzle.Views"
     xmlns:viewmodels="clr-namespace:WaterSortPuzzle.ViewModels"
     xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
+    xmlns:fontAwesome="clr-namespace:FontAwesome"
     x:DataType="viewmodels:MainVM"
     Shell.FlyoutBehavior="Flyout"
     
     
     Title="WaterSortPuzzle"><!--FlyoutBackgroundColor="#6b95ed"-->
     <!--Shell.NavBarIsVisible="False"-->
-    <!--<ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage" />
-
-    <ShellContent
-        Title="Options"
-        ContentTemplate="{DataTemplate views:OptionsPage}"
-        Route="OptionsPage" />
-    <ShellContent
-        Title="Load Level"
-        ContentTemplate="{DataTemplate views:LoadLevelPage}"
-        Route="LoadLevelPage" />-->
-    <!--<ShellContent
-        Title="Save Level"
-        ContentTemplate="{DataTemplate views:LoadLevelPage}"
-        Route="LoadLevelPage" />-->
-
-    <!--<FlyoutItem Title="Options" Route="MainPage" >
-        <ShellContent
-            Title="OptionsAA"
-            ContentTemplate="{DataTemplate views:OptionsPage}"
-            Route="OptionsPage" />
-    </FlyoutItem>-->
-    <!--<ShellContent
-        Title="Options"
-        ContentTemplate="{DataTemplate views:OptionsPage}"
-        Route="MainPage/OptionsPage" />-->
-
-    <!--<FlyoutItem Title="Home">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage" />
-        </Tab>
-    </FlyoutItem>
-    <FlyoutItem Title="Options">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:OptionsPage}" Route="MainPage/OptionsPage" />
-        </Tab>
-    </FlyoutItem>-->
-
-    <!--<ShellContent ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage" Title="Home"/>-->
-
-    <!--<MenuItem
-        Text="Options"
-        Command="{Binding NavigateToPageCommand}"
-        CommandParameter="{x:Static enums:PopupParams.OptionsPage}"
-        />-->
-
-    <!--<FlyoutItem Title="Home" Route="MainPage">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage" />
-        </Tab>
-    </FlyoutItem>
-    <Shell.FlyoutFooter>
-        <StackLayout Orientation="Horizontal">
-            <Button
-                Text="OptionsButton"
-                Command="{Binding NavigateToPageCommand}"
-                CommandParameter="{x:Static enums:PopupParams.OptionsPage}"/>
-        </StackLayout>
-    </Shell.FlyoutFooter>-->
-
-    <!--<FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent
-            Title="Home"
-            ContentTemplate="{DataTemplate views:MainPage}"
-            Route="MainPage" />
-
-        <ShellContent
-            Title="Options"
-            ContentTemplate="{DataTemplate views:OptionsPage}"
-            Route="MainPage/OptionsPage" />
-        <ShellContent
-            Title="Load Level"
-            ContentTemplate="{DataTemplate views:LoadLevelPage}"
-            Route="MainPage/LoadLevelPage" />
-    </FlyoutItem>-->
 
     <FlyoutItem Title="Home" Route="MainPage" FlyoutItemIsVisible="True">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
-        </Tab>
+        <FlyoutItem.Icon>
+            <!--<FontImageSource FontFamily="FontAwesomeRegular" Glyph="{x:Static fontAwesome:FontAwesomeIcons.AddressBook}"/>-->
+            <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#xf015;"/>
+        </FlyoutItem.Icon>
+        <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
     </FlyoutItem>
 
-    <MenuItem Text="Options" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}"/>
-    <MenuItem Text="Calculate Solution" Command="{Binding AutoSolve.StartCommand}"/>
+    <MenuItem Text="Options" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}">
+        <MenuItem.IconImageSource>
+            <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#x2699;" Color="Black" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <MenuItem Text="Calculate Solution" Command="{Binding AutoSolve.StartCommand}">
+        <MenuItem.IconImageSource>
+            <FontImageSource FontFamily="FontAwesomeRegular" Size="24" Glyph="&#xf074;" Color="Black" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
     <!--<MenuItem Text="Save &amp; Load" Command="{Binding AutoSolve.StartCommand}"/>-->
 
 </Shell>

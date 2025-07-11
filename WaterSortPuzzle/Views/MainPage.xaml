@@ -6,6 +6,7 @@
              xmlns:models="clr-namespace:WaterSortPuzzle.Models"
              xmlns:controls="clr-namespace:WaterSortPuzzle.Views.Controls"
              xmlns:converters="clr-namespace:WaterSortPuzzle.Converters"
+             xmlns:fontAwesome="clr-namespace:FontAwesome"
              xmlns:fonts="clr-namespace:FontAwesome"
              x:Class="WaterSortPuzzle.Views.MainPage"
              x:DataType="viewModels:MainVM">
@@ -28,7 +29,8 @@
         <StackLayout Orientation="Vertical" Margin="5">
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                 <Button Text="{Binding AppPreferences.NewLevelButtonText}" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.NewLevel}"/>
-                <Button Text="Restart level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}"/>
+                <Button
+                    Text="Restart level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}"/>
                 <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}"/>
             </StackLayout>
             <BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>
@@ -120,17 +122,6 @@
                 <Button Text="{Binding DelayAnimation, StringFormat='Test {0}'}" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding SwitchDelayAnimationCommand}" />
                 <Button Text="Change!" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding ArbitraryChangeCommand}" />
             </StackLayout>-->
-            <StackLayout Orientation="Horizontal" VerticalOptions="End">
-                <Label Text="&#xf004;" FontFamily="FontAwesomeRegular" FontSize="40" />
-                <Label Text="&#xf058;" FontFamily="FontAwesomeRegular" FontSize="40" />
-                <Label 
-        Text="&#xf007;" 
-        FontFamily="ms-appx:///Resources/Fonts/fa-solid-900.ttf#Font Awesome 6 Free Solid"
-        FontSize="64"
-        HorizontalOptions="Center"
-        VerticalOptions="Center"/>
-
-            </StackLayout>
             
             <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
                 <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
