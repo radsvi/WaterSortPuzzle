@@ -23,6 +23,11 @@
 
   <Resources>
     <Resource Language="x-generate" />
+    <Fonts>
+      <Font uap:FontUri="ms-appx:///Resources/Fonts/fa-solid-900.ttf" uap:FontFamily="FontAwesomeSolid" />
+      <Font uap:FontUri="ms-appx:///Resources/Fonts/fa-regular-400.ttf" uap:FontFamily="FontAwesomeRegular" />
+      <Font uap:FontUri="ms-appx:///Resources/Fonts/fa-brands-400.ttf" uap:FontFamily="FontAwesomeBrands" />
+    </Fonts>
   </Resources>
 
   <Applications>
