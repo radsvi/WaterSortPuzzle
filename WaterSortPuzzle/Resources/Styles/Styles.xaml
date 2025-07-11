@@ -25,7 +25,7 @@
 
     <Style TargetType="Button">
         <!--<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PrimaryDarkText}}" />-->
-        <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}" />
         <!--<Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />-->
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
@@ -607,36 +607,36 @@
         FontFamily="FontAwesomeSolid"
         Glyph="&#x00bb;"
         Size="{StaticResource FontSizeSmall}"
-        Color="{AppThemeBinding Light=Black, Dark=White}" />
+        Color="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}" />
     <FontImageSource
         x:Key="SettingsIcon"
         FontFamily="FontAwesomeSolid"
         Glyph="&#x2699;"
         Size="{StaticResource FontSizeSmall}"
-        Color="{AppThemeBinding Light=Black, Dark=White}" />
+        Color="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}" />
     <FontImageSource
         x:Key="RestartIcon"
         FontFamily="FontAwesomeSolid"
         Glyph="&#xf2f1;"
         Size="{StaticResource FontSizeSmall}"
-        Color="{AppThemeBinding Light=Black, Dark=White}" />
+        Color="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}" />
     <FontImageSource
         x:Key="NextStepIcon"
         FontFamily="FontAwesomeSolid"
         Glyph="&#x203a;"
         Size="{StaticResource FontSizeSmall}"
-        Color="{AppThemeBinding Light=Black, Dark=White}" />
+        Color="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}" />
     <FontImageSource
         x:Key="PreviousStepIcon"
         FontFamily="FontAwesomeSolid"
         Glyph="&#x2039;"
         Size="{StaticResource FontSizeSmall}"
-        Color="{AppThemeBinding Light=Black, Dark=White}" />
+        Color="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}" />
     <FontImageSource
         x:Key="AddFlaskIcon"
         FontFamily="FontAwesomeSolid"
         Glyph="&#xf055;"
         Size="{StaticResource FontSizeSmall}"
-        Color="{AppThemeBinding Light=Black, Dark=White}" />
+        Color="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}" />
 
 </ResourceDictionary>

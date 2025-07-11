@@ -24,7 +24,7 @@ namespace WaterSortPuzzle
                     fonts.AddFont("fa-solid-900.ttf", "FontAwesomeSolid");
 
 #if WINDOWS
-                    // Workaround: Remap font alias to actual Windows font file URI
+                    // Remap font alias to actual Windows font file URI
                     Microsoft.Maui.Handlers.LabelHandler.Mapper.AppendToMapping("FontFix", (handler, view) =>
                     {
                         if (view is Label label)
