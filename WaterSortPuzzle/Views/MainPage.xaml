@@ -14,129 +14,139 @@
         <converters:MultiValueConverter x:Key="MultiValueConv"/>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="auto,*,auto" VerticalOptions="Fill">
-        <!--#region Top section -->
+    <Grid>
+        <Image
+            Source="blue_blobs_lowerres.jpg"
+            Aspect="AspectFill"
+            HorizontalOptions="Start"
+            ZIndex="-10"
+            />
 
-        <!--<Border HorizontalOptions="Start" Background="White" HeightRequest="40">
+        <Grid RowDefinitions="auto,*,auto" VerticalOptions="Fill">
+
+
+            <!--#region Top section -->
+
+            <!--<Border HorizontalOptions="Start" Background="White" HeightRequest="40">
             <Label Text="{Binding DrawTubesCounter}" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
         </Border>-->
 
-        <!-- // Top Bar // -->
-        <StackLayout Orientation="Vertical" Margin="5">
-            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button Text="{Binding AppPreferences.NewLevelButtonText}" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.NewLevel}" ImageSource="{StaticResource NewLevelIcon}"/>
-                <Button Text="Restart level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}" ImageSource="{StaticResource RestartIcon}"/>
-                <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}" ImageSource="{StaticResource SettingsIcon}"/>
+            <!-- // Top Bar // -->
+            <StackLayout Orientation="Vertical" Margin="5">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                    <Button Text="{Binding AppPreferences.NewLevelButtonText}" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.NewLevel}" ImageSource="{StaticResource NewLevelIcon}"/>
+                    <Button Text="Restart level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}" ImageSource="{StaticResource RestartIcon}"/>
+                    <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}" ImageSource="{StaticResource SettingsIcon}"/>
+                </StackLayout>
+                <BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>
             </StackLayout>
-            <BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>
-        </StackLayout>
-        <!--#endregion-->
+            <!--#endregion-->
 
-        <!-- // Mid section // -->
-        <!-- // Notification Overlay // -->
-        <!--<ScrollView VerticalOptions="Start" HeightRequest="62" Grid.Row="1">
+            <!-- // Mid section // -->
+            <!-- // Notification Overlay // -->
+            <!--<ScrollView VerticalOptions="Start" HeightRequest="62" Grid.Row="1">
             <StackLayout VerticalOptions="Start" x:Name="NotificationBox" />
             
             <controls:QuickNotificationOverlay Title="Testovaci notifikace"/>
         </ScrollView>-->
 
-        <!-- // Grid for Tubes // -->
-        <Grid Grid.Row="1" Margin="0,5,0,0">
-            <Grid.Style>
-                <Style TargetType="Grid">
-                    <Setter Property="BackgroundColor" Value="Transparent" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding UIEnabled}" Value="False" TargetType="Grid">
-                            <Setter Property="BackgroundColor" Value="#475573" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Style>
-            <CollectionView SelectionMode="None" ItemsSource="{Binding TubesItemsSource}" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" VerticalOptions="Center">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="{Binding TubesPerLine}"/>
-                </CollectionView.ItemsLayout>
-                <!--<CollectionView.ItemsLayout>
+            <!-- // Grid for Tubes // -->
+            <Grid Grid.Row="1" Margin="0,5,0,0">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding UIEnabled}" Value="False" TargetType="Grid">
+                                <Setter Property="BackgroundColor" Value="#475573" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <CollectionView SelectionMode="None" ItemsSource="{Binding TubesItemsSource}" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" VerticalOptions="Center">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="{Binding TubesPerLine}"/>
+                    </CollectionView.ItemsLayout>
+                    <!--<CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal" />
                 </CollectionView.ItemsLayout>-->
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:TubeData">
-                        <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0">
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:TubeData">
+                            <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1"
                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}">
-                                    <TapGestureRecognizer.CommandParameter>
-                                        <MultiBinding Converter="{StaticResource MultiValueConv}">
-                                            <MultiBinding.Bindings>
-                                                <Binding/>
-                                                <Binding Source="{RelativeSource Mode=Self}"/>
-                                                <!--<Binding Source="{RelativeSource Mode=FindAncestor,AncestorType=Grid}"/>-->
-                                                <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" />
-                                            </MultiBinding.Bindings>
-                                        </MultiBinding>
-                                    </TapGestureRecognizer.CommandParameter>
-                                </TapGestureRecognizer>
-                            </Grid.GestureRecognizers>
-                            <!--<BoxView Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
+                                        <TapGestureRecognizer.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiValueConv}">
+                                                <MultiBinding.Bindings>
+                                                    <Binding/>
+                                                    <Binding Source="{RelativeSource Mode=Self}"/>
+                                                    <!--<Binding Source="{RelativeSource Mode=FindAncestor,AncestorType=Grid}"/>-->
+                                                    <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" />
+                                                </MultiBinding.Bindings>
+                                            </MultiBinding>
+                                        </TapGestureRecognizer.CommandParameter>
+                                    </TapGestureRecognizer>
+                                </Grid.GestureRecognizers>
+                                <!--<BoxView Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
                                 CornerRadius="0,0,5,5" Background="LightBlue"/>-->
 
-                            <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" VerticalOptions="Start"
+                                <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" VerticalOptions="Start"
                                     Stroke="LightBlue" StrokeThickness="1"
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
-                                <Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*">
-                                    <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
-                                    <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
-                                    <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
-                                    <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
-                                </Grid>
-                            </Border>
-                            <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center"
+                                    <Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*">
+                                        <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
+                                        <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
+                                        <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
+                                        <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
+                                    </Grid>
+                                </Border>
+                                <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center"
                                     Background="LightBlue" CornerRadius="0,0,5,5"/>
-                            
-                            <!--<Border Margin="8,4,8,0" WidthRequest="38" HeightRequest="10" VerticalOptions="Start"
+
+                                <!--<Border Margin="8,4,8,0" WidthRequest="38" HeightRequest="10" VerticalOptions="Start"
                                     Background="LightBlue">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="0,0,5,5" />
                                 </Border.StrokeShape>
                             </Border>-->
 
-                            <!--<Button Text="Test" x:DataType="viewModel:MainVM" Command="{Binding Path=TubeButtonClickCommand}" />-->
-                        </Grid>
-                        <!--<Button Text="Test" x:DataType="viewModels:MainVM"
+                                <!--<Button Text="Test" x:DataType="viewModel:MainVM" Command="{Binding Path=TubeButtonClickCommand}" />-->
+                            </Grid>
+                            <!--<Button Text="Test" x:DataType="viewModels:MainVM"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}"/>-->
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-            <!-- // AutoSolve box // -->
-            <Border VerticalOptions="End" Background="White" IsVisible="{Binding AutoSolve.Started}" BackgroundColor="Red" HorizontalOptions="Start" Margin="5,0" >
-                <Label Text="{Binding AutoSolve.Iterations}" HeightRequest="40" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-            </Border>
+                <!-- // AutoSolve box // -->
+                <Border VerticalOptions="End" Background="White" IsVisible="{Binding AutoSolve.Started}" BackgroundColor="Red" HorizontalOptions="Start" Margin="5,0" >
+                    <Label Text="{Binding AutoSolve.Iterations}" HeightRequest="40" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                </Border>
 
-            <!--<Grid VerticalOptions="Start" HorizontalOptions="Center" x:Name="GridForTubes">
+                <!--<Grid VerticalOptions="Start" HorizontalOptions="Center" x:Name="GridForTubes">
                 <usercontrols:TubeControl TubeItem="{Binding Tubes[0]}"/>
             </Grid>-->
-            <!--<Button Text="Get Solution" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding AutoSolve.StartCommand}" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}" />-->
+                <!--<Button Text="Get Solution" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding AutoSolve.StartCommand}" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}" />-->
 
-            <!--<StackLayout Orientation="Horizontal" VerticalOptions="End">
+                <!--<StackLayout Orientation="Horizontal" VerticalOptions="End">
                 <Button Text="{Binding DelayAnimation, StringFormat='Test {0}'}" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding SwitchDelayAnimationCommand}" />
                 <Button Text="Change!" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding ArbitraryChangeCommand}" />
             </StackLayout>-->
 
-            <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
-                <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
-            </Border>
-        </Grid>
-        
-        <!--#region Bottom section -->
-        <!-- // Bottom Bar // -->
-        <StackLayout Orientation="Vertical" Grid.Row="2" Margin="5">
-            <BoxView Style="{StaticResource Separator}" Margin="0,0,0,4"/>
+                <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
+                    <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
+                </Border>
+            </Grid>
 
-            <Grid>
-                <!-- // Bottom Bar - Left side // -->
-                <!--<StackLayout Orientation="Horizontal">
+            <!--#region Bottom section -->
+            <!-- // Bottom Bar // -->
+            <StackLayout Orientation="Vertical" Grid.Row="2" Margin="5">
+                <BoxView Style="{StaticResource Separator}" Margin="0,0,0,4"/>
+
+                <Grid>
+                    <!-- // Bottom Bar - Left side // -->
+                    <!--<StackLayout Orientation="Horizontal">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                         <Button Text="Load level" Style="{StaticResource NavigationButtonBottom}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.LoadLevelPage}"/>
                         <Button Text="Save level" Style="{StaticResource NavigationButtonBottom}"/>
@@ -146,24 +156,25 @@
                         <Button Text="Next Step" Style="{StaticResource NavigationButtonBottom}"/>
                     </StackLayout>
                 </StackLayout>-->
-                <!-- // Bottom Bar - Right side // -->
-                <!--<StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                    <!-- // Bottom Bar - Right side // -->
+                    <!--<StackLayout Orientation="Horizontal" HorizontalOptions="End">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                         <Button Text="« Back ()" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}"/>
                         <Button Text="Add extra flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}"/>
                     </StackLayout>
                 </StackLayout>-->
-                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
-                    <Button Text="{Binding AutoSolve.CurrentSolutionStep, StringFormat='Next Step ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepThroughCommand}" IsVisible="{Binding AutoSolve.Solved}" ImageSource="{StaticResource NextStepIcon}"/>
-                    <Button Text="Add Empty Flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}" Grid.Column="1" ImageSource="{StaticResource AddFlaskIcon}"/>
-                    <!--<Button Text="{Binding GameState.StepBackCounter, StringFormat='« Back ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}" Grid.Column="1"/>-->
-                    <Button Text="{Binding GameState.StepBackDisplay, StringFormat='Previous Step ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepBackCommand}" Grid.Column="2" ImageSource="{StaticResource PreviousStepIcon}"/>
-                    <!--{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[{0}]'}"-->
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
+                        <Button Text="{Binding AutoSolve.CurrentSolutionStep, StringFormat='Next Step ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepThroughCommand}" IsVisible="{Binding AutoSolve.Solved}" ImageSource="{StaticResource NextStepIcon}"/>
+                        <Button Text="Add Empty Flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}" Grid.Column="1" ImageSource="{StaticResource AddFlaskIcon}"/>
+                        <!--<Button Text="{Binding GameState.StepBackCounter, StringFormat='« Back ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}" Grid.Column="1"/>-->
+                        <Button Text="{Binding GameState.StepBackDisplay, StringFormat='Previous Step ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepBackCommand}" Grid.Column="2" ImageSource="{StaticResource PreviousStepIcon}"/>
+                        <!--{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[{0}]'}"-->
+                    </Grid>
                 </Grid>
-            </Grid>
 
-        </StackLayout>
-        <!--#endregion-->
+            </StackLayout>
+            <!--#endregion-->
 
+        </Grid>
     </Grid>
 </ContentPage>
