@@ -146,7 +146,7 @@ namespace WaterSortPuzzle.ViewModels
         public TubeReference? LastClickedTube { get; set; }
         public TubeReference? SourceTube { get; set; }
 
-        private int tubesPerLine = 8;
+        private int tubesPerLine = 9;
         public int TubesPerLine
         {
             get
