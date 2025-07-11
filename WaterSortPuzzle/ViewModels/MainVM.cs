@@ -235,7 +235,6 @@ namespace WaterSortPuzzle.ViewModels
             //mainVM.RippleSurfaceAnimation(currentTubeReference);
             OnChangingGameState(move.Source.X, move.Target.X);
         }
-
         [RelayCommand(CanExecute = nameof(CanStepBack))]
         private void StepBack()
         {

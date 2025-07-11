@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Android.Views;
+using AndroidX.RecyclerView.Widget;
+using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.Handlers.Items;
+using WaterSortPuzzle.Platforms.Android;
+using YourApp.Platforms.Android;
 
 namespace WaterSortPuzzle
 {
@@ -39,6 +44,26 @@ namespace WaterSortPuzzle
                     });
 #endif
                 });
+
+#if ANDROID
+            builder.ConfigureMauiHandlers(handlers =>
+            {
+                handlers.AddHandler<ScrollView, CustomScrollViewHandler>();
+                handlers.AddHandler<CollectionView, CustomCollectionViewHandler>();
+            });
+
+            CollectionViewHandler.Mapper.ModifyMapping(
+                nameof(Microsoft.Maui.Controls.CollectionView.ItemsSource),
+                (handler, view, action) =>
+                {
+                    action?.Invoke(handler, view);
+
+                    if (handler.PlatformView is RecyclerView recyclerView)
+                    {
+                        recyclerView.OverScrollMode = OverScrollMode.Never;
+                    }
+                });
+#endif
 
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddTransient<OptionsPage>();
