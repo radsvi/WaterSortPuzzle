@@ -14,6 +14,40 @@
         //[RelayCommand]
         //public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
 
+        //[ObservableProperty]
+        //RadioButton selectedTheme;
+        //public RadioButton SelectedTheme { get; set; }
+        private RadioButton selectedTheme;
+        public RadioButton SelectedTheme
+        {
+            get { return selectedTheme; }
+            private set
+            {
+                if (value != selectedTheme)
+                {
+                    selectedTheme = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
+        [RelayCommand]
+        private void SwitchTheme()
+        {
+            //App.Current.UserAppTheme = AppTheme.Dark; // for testing
+            if (App.Current!.UserAppTheme == AppTheme.Unspecified)
+                App.Current.UserAppTheme = AppTheme.Dark;
+            else if (App.Current.UserAppTheme == AppTheme.Dark)
+                App.Current.UserAppTheme = AppTheme.Light;
+            else
+            {
+                App.Current.UserAppTheme = AppTheme.Unspecified;
+                //await MainPage.DisplayAlert("Theme", $"Theme set to {App.Current.UserAppTheme}", "OK");
+            }
+
+            AppPreferences.ThemeUserSetting = App.Current.UserAppTheme;
+        }
 
     }
 }
