@@ -641,5 +641,12 @@
         Glyph="&#xf055;"
         Size="{StaticResource FontSizeSmall}"
         Color="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}" />
+    <FontImageSource
+        x:Key="BackNavigationIcon"
+        FontFamily="FontAwesomeSolid"
+        Glyph="&#x23ea;"
+        Size="{StaticResource FontSizeSmall}"
+        Color="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}" />
+    
 
 </ResourceDictionary>

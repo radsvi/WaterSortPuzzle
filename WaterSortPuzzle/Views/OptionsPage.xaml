@@ -163,8 +163,7 @@
 
                 </StackLayout>
             </controls:GroupBoxControl>
-            <!--<Button Text="Go Back" Command="{Binding MainVM.NavigateBackCommand}"/>-->
-            <Button Text="Go Back" Command="{Binding MainVM.NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.MainPage}" Margin="0,20,0,0"/>
+            <Button Text="Back" Command="{Binding MainVM.NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.MainPage}" Margin="0,20,0,0" ImageSource="{StaticResource BackNavigationIcon}"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>
