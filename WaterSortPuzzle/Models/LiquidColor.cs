@@ -3,6 +3,34 @@ using Microsoft.Maui.Controls;
 
 namespace WaterSortPuzzle.Models
 {
+    public static class LiquidHelper
+    {
+        private static Dictionary<LiquidColorName, LiquidColor> ColorKeys { get; } = new Dictionary<LiquidColorName, LiquidColor>() {
+            //{ LiquidColorName.Blank, new LiquidColor(LiquidColorName.Blank, Color.FromArgb("0xFFFFFFFF")) }, // blank mam to tu kvuli typu NullLiquidColorNew. a ted uz i kvuli DrawTubes()
+            { LiquidColorName.Blank, new LiquidColor(LiquidColorName.Blank, Color.FromRgb(173,216,230)) }, // blank mam to tu kvuli typu NullLiquidColorNew. a ted uz i kvuli DrawTubes()
+            { LiquidColorName.Blue, new LiquidColor(LiquidColorName.Blue, Color.FromRgb(20,93,239)) },
+            { LiquidColorName.Indigo, new LiquidColor(LiquidColorName.Indigo, Color.FromRgb(63,68,130)) },
+            //{ LiquidColorName.Turquoise, new LiquidColor(LiquidColorName.Turquoise, Color.FromRgb(136,170,255)) },
+            { LiquidColorName.Turquoise, new LiquidColor(LiquidColorName.Turquoise, Color.FromRgb(0,167,209)) },
+            { LiquidColorName.Orange, new LiquidColor(LiquidColorName.Orange, Color.FromRgb(242,121,20)) },
+            { LiquidColorName.Gray, new LiquidColor(LiquidColorName.Gray, Color.FromRgb(108,116,144)) },
+            { LiquidColorName.Purple, new LiquidColor(LiquidColorName.Purple, Color.FromRgb(191,60,191)) },
+            { LiquidColorName.Yellow, new LiquidColor(LiquidColorName.Yellow, Color.FromRgb(244,201,22)) },
+            { LiquidColorName.Pink, new LiquidColor(LiquidColorName.Pink, Color.FromRgb(255,148,209)) },
+            { LiquidColorName.Green, new LiquidColor(LiquidColorName.Green, Color.FromRgb(0,129,96)) },
+            //{ LiquidColorName.LightGreen, new LiquidColor(LiquidColorName.LightGreen, Color.FromRgb(179,214,102)) },
+            { LiquidColorName.Olive, new LiquidColor(LiquidColorName.Olive, Color.FromRgb(128,153,23)) },
+            { LiquidColorName.Red, new LiquidColor(LiquidColorName.Red, Color.FromRgb(237,50,41)) },
+            { LiquidColorName.Brown, new LiquidColor(LiquidColorName.Brown, Color.FromRgb(114,74,23)) },
+            { LiquidColorName.Lime, new LiquidColor(LiquidColorName.Lime, Color.FromRgb(74,219,36)) },
+            { LiquidColorName.Scarlet, new LiquidColor(LiquidColorName.Scarlet, Color.FromRgb(188,36,94)) },
+        };
+        public static LiquidColor GetKey(LiquidColorName name)
+        {
+            var brush = ColorKeys[name].Brush;
+            return new LiquidColor(name, new Color(brush.Red, brush.Green, brush.Blue));
+        }
+    }
     public class LiquidColor : ObservableObject
     {
         private LiquidColorName name;
@@ -157,34 +185,5 @@ namespace WaterSortPuzzle.Models
     internal class NullLiquidColor : LiquidColor
     {
         public NullLiquidColor() : base(LiquidColorName.Blank, Color.FromRgb(0, 0, 0)) { }
-    }
-    public static class LiquidHelper
-    {
-        private static Dictionary<LiquidColorName, LiquidColor> ColorKeys { get; } = new Dictionary<LiquidColorName, LiquidColor>() {
-            //{ LiquidColorName.Blank, new LiquidColor(LiquidColorName.Blank, Color.FromArgb("0xFFFFFFFF")) }, // blank mam to tu kvuli typu NullLiquidColorNew. a ted uz i kvuli DrawTubes()
-            { LiquidColorName.Blank, new LiquidColor(LiquidColorName.Blank, Color.FromRgb(173,216,230)) }, // blank mam to tu kvuli typu NullLiquidColorNew. a ted uz i kvuli DrawTubes()
-            { LiquidColorName.Blue, new LiquidColor(LiquidColorName.Blue, Color.FromRgb(20,93,239)) },
-            { LiquidColorName.Indigo, new LiquidColor(LiquidColorName.Indigo, Color.FromRgb(63,68,130)) },
-            //{ LiquidColorName.Turquoise, new LiquidColor(LiquidColorName.Turquoise, Color.FromRgb(136,170,255)) },
-            { LiquidColorName.Turquoise, new LiquidColor(LiquidColorName.Turquoise, Color.FromRgb(0,138,173)) },
-            { LiquidColorName.Orange, new LiquidColor(LiquidColorName.Orange, Color.FromRgb(242,121,20)) },
-            { LiquidColorName.Gray, new LiquidColor(LiquidColorName.Gray, Color.FromRgb(108,116,144)) },
-            { LiquidColorName.Purple, new LiquidColor(LiquidColorName.Purple, Color.FromRgb(191,60,191)) },
-            { LiquidColorName.Yellow, new LiquidColor(LiquidColorName.Yellow, Color.FromRgb(244,201,22)) },
-            { LiquidColorName.Pink, new LiquidColor(LiquidColorName.Pink, Color.FromRgb(255,148,209)) },
-            { LiquidColorName.Green, new LiquidColor(LiquidColorName.Green, Color.FromRgb(0,129,96)) },
-            //{ LiquidColorName.LightGreen, new LiquidColor(LiquidColorName.LightGreen, Color.FromRgb(179,214,102)) },
-            { LiquidColorName.Olive, new LiquidColor(LiquidColorName.Olive, Color.FromRgb(128,153,23)) },
-            { LiquidColorName.Red, new LiquidColor(LiquidColorName.Red, Color.FromRgb(237,50,41)) },
-            { LiquidColorName.Brown, new LiquidColor(LiquidColorName.Brown, Color.FromRgb(114,74,23)) },
-            { LiquidColorName.Lime, new LiquidColor(LiquidColorName.Lime, Color.FromRgb(74,219,36)) },
-            { LiquidColorName.Scarlet, new LiquidColor(LiquidColorName.Scarlet, Color.FromRgb(188,36,94)) },
-        };
-        public static LiquidColor GetKey(LiquidColorName name)
-        {
-            var brush = ColorKeys[name].Brush;
-            return new LiquidColor(name, new Color(brush.Red, brush.Green, brush.Blue));
-        }
-
     }
 }
