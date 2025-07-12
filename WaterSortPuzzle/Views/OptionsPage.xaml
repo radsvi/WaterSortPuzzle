@@ -26,7 +26,7 @@
         <StackLayout Orientation="Vertical" Margin="10">
             <controls:GroupBoxControl Header="Flasks">
                 <StackLayout>
-                    <Label Text="Limit extra flask to maximum of:"/>
+                    <Label Text="Limit &quot;Add empty flask&quot; to maximum of:"/>
                     <Grid ColumnDefinitions="auto,*">
                         <Label
                             Text="{Binding AppPreferences.MaximumExtraTubes, StringFormat='[{0}]'}"
@@ -50,7 +50,7 @@
                     </FlexLayout>
                     <Grid ColumnDefinitions="auto,*" IsEnabled="{Binding AppPreferences.SetSpecificNumberOfTubes}">
                         <Label
-                            Text="{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[{0}]'}"
+                            Text="{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[Colors: {0}]'}"
                             FontAttributes="Bold"
                             HorizontalOptions="Start"
                             VerticalOptions="Center"
@@ -72,7 +72,7 @@
                     </FlexLayout>
                     <FlexLayout>
                         <CheckBox IsChecked="{Binding AppPreferences.InstantAnimations}"/>
-                        <Label Text="Disable animations. Actions are performed instantly" VerticalOptions="Center"/>
+                        <Label Text="Disable animations (Actions performed instantly)" VerticalOptions="Center"/>
                     </FlexLayout>
                 </StackLayout>
             </controls:GroupBoxControl>

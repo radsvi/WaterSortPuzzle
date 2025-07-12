@@ -57,7 +57,7 @@
                         <Setter Property="BackgroundColor" Value="Transparent" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding UIEnabled}" Value="False" TargetType="Grid">
-                                <Setter Property="BackgroundColor" Value="#475573" />
+                                <Setter Property="BackgroundColor" Value="#96000000" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

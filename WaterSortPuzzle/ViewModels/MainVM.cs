@@ -218,6 +218,7 @@ namespace WaterSortPuzzle.ViewModels
             }
         }
         public bool UIDisabled { get => !UIEnabled; }
+        public bool AutoSolveUsed { get; private set; } = false;
         public ObservableCollection<PopupScreenActions>? PopupActions { get; set; }
 
         #endregion
@@ -233,9 +234,15 @@ namespace WaterSortPuzzle.ViewModels
             }
         }
         [RelayCommand]
+        void StartAutoSolve()
+        {
+            AutoSolve?.Start();
+            AutoSolveUsed = true;
+        }
+        [RelayCommand]
         public void StepThrough()
         {
-            MakeAMove(AutoSolve.CompleteSolution[--AutoSolve.CurrentSolutionStep]);
+            MakeAMove(AutoSolve!.CompleteSolution[--AutoSolve.CurrentSolutionStep]);
         }
         private void MakeAMove(ValidMove move)
         {
@@ -331,21 +338,30 @@ namespace WaterSortPuzzle.ViewModels
         [RelayCommand]
         private async Task NavigationMenuPopup(PopupParams menuItem)
         {
+            bool answer;
             switch (menuItem)
             {
                 case PopupParams.NewLevel:
-                    bool answer = await App.Current!.Windows[0].Page!.DisplayAlert("New level", "Do you want to start a new level?", "OK", "Cancel");
+                    answer = await App.Current!.Windows[0].Page!.DisplayAlert("New level", "Do you want to start a new level?", "OK", "Cancel");
                     if (answer)
                         GenerateNewLevel();
                     break;
                 case PopupParams.RestartLevel:
-                    bool answer1 = await App.Current!.Windows[0].Page!.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
-                    if (answer1)
+                    answer = await App.Current!.Windows[0].Page!.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
+                    if (answer)
                         RestartLevel();
                     break;
                 case PopupParams.LevelComplete:
-                    bool answer2 = await App.Current!.Windows[0].Page!.DisplayAlert("Level complete", "Congratulation! You won!", "Next level", "Restart level");
-                    if (answer2)
+                    if (AutoSolveUsed)
+                    {
+                        answer = await App.Current!.Windows[0].Page!.DisplayAlert("Level complete", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
+                    }
+                    else
+                    {
+                        answer = await App.Current!.Windows[0].Page!.DisplayAlert("Level complete", "Congratulation! You won!", "Next level", "Restart level");
+                    }
+                    
+                    if (answer)
                         GenerateNewLevel();
                     else
                         RestartLevel();
@@ -600,6 +616,8 @@ namespace WaterSortPuzzle.ViewModels
             if (TubesClickable == false)
                 return;
 
+            AutoSolve?.Reset(); // Disable autosolve when changing the game grid manually
+
             if (obj is not TubeReference currentTubeReference)
                 return;
 
@@ -660,6 +678,7 @@ namespace WaterSortPuzzle.ViewModels
             GameState.SaveGameState(-1, -1);
             //AutoSolve = new AutoSolve(); // guarantees that we remove stuff like previous moves in autosolving
             AutoSolve?.Reset();
+            AutoSolveUsed = false;
             RecalculateTubesPerLine();
             AddExtraTubeCommand.NotifyCanExecuteChanged();
             StepBackCommand.NotifyCanExecuteChanged();

@@ -85,7 +85,7 @@
                 await Task.Delay(1);
                 if (Iterations % 10000 == 0 && Iterations > 0)
                 {
-                    bool answer = await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve", $"Reached {Iterations}.\nDo you want to continue?", "Stop", "Continue");
+                    bool answer = await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve", $"Reached {Iterations} visited states.{Environment.NewLine}Do you want to continue?", "Stop", "Continue");
                     if (answer == true)
                     {
                         canceledByUser = true;
@@ -191,6 +191,7 @@
                             continue;
                         }
 
+                        Solved = true;
                         break;
                     }
 
@@ -223,7 +224,6 @@
             }
 
             IsBusy = false;
-            Solved = true;
             InProgress = false;
         }
         private List<ValidMove> OrderList(List<ValidMove> validMoves, ColorCount mostFrequentColors)
@@ -817,6 +817,9 @@
         [RelayCommand(CanExecute = nameof(CanStart))]
         public void Start()
         {
+            if (CanStart() == false)
+                return;
+
             Shell.Current.FlyoutIsPresented = false;
             //Notification.Show("Game grid locked while automatic solution is engaged",MessageType.Information, 10000);
             ResumeRequest = true; // provede se i pri prvnim spusteni, protoze je pauza na zacatku

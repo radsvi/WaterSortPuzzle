@@ -28,7 +28,7 @@
             <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#x2699;" Color="Black" />
         </MenuItem.IconImageSource>
     </MenuItem>
-    <MenuItem Text="Calculate Solution" Command="{Binding AutoSolve.StartCommand}">
+    <MenuItem Text="Calculate Solution" Command="{Binding StartAutoSolveCommand}">
         <MenuItem.IconImageSource>
             <FontImageSource FontFamily="FontAwesomeSolid" Size="24" Glyph="&#xf074;" Color="Black" />
         </MenuItem.IconImageSource>
