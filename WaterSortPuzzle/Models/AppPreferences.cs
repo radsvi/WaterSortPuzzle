@@ -17,8 +17,8 @@
         {
             get
             {
-                if (LoadDebugLevel) return "[DEBUG] level";
-                else return "New level";
+                if (LoadDebugLevel) return "[DEBUG]\nlevel";
+                else return "New\nlevel";
             }
         }
         public int NumberOfColorsToGenerate

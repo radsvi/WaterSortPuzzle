@@ -35,7 +35,7 @@
             <StackLayout Orientation="Vertical" Margin="5">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                     <Button Text="{Binding AppPreferences.NewLevelButtonText}" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.NewLevel}" ImageSource="{StaticResource NewLevelIcon}"/>
-                    <Button Text="Restart level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}" ImageSource="{StaticResource RestartIcon}"/>
+                    <Button Text="Restart&#10;level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}" ImageSource="{StaticResource RestartIcon}"/>
                     <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}" ImageSource="{StaticResource SettingsIcon}"/>
                 </StackLayout>
                 <BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>
@@ -140,34 +140,18 @@
             </Grid>
 
             <!--#region Bottom section -->
+            
             <!-- // Bottom Bar // -->
+
             <StackLayout Orientation="Vertical" Grid.Row="2" Margin="5">
                 <BoxView Style="{StaticResource Separator}" Margin="0,0,0,4"/>
 
                 <Grid>
-                    <!-- // Bottom Bar - Left side // -->
-                    <!--<StackLayout Orientation="Horizontal">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
-                        <Button Text="Load level" Style="{StaticResource NavigationButtonBottom}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.LoadLevelPage}"/>
-                        <Button Text="Save level" Style="{StaticResource NavigationButtonBottom}"/>
-                    </StackLayout>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                        <Button Text="Get solution" Style="{StaticResource NavigationButtonBottom}"/>
-                        <Button Text="Next Step" Style="{StaticResource NavigationButtonBottom}"/>
-                    </StackLayout>
-                </StackLayout>-->
-                    <!-- // Bottom Bar - Right side // -->
-                    <!--<StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                        <Button Text="« Back ()" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}"/>
-                        <Button Text="Add extra flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}"/>
-                    </StackLayout>
-                </StackLayout>-->
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
-                        <Button Text="{Binding AutoSolve.CurrentSolutionStep, StringFormat='Next Step ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepThroughCommand}" IsVisible="{Binding AutoSolve.Solved}" ImageSource="{StaticResource NextStepIcon}"/>
-                        <Button Text="Add Empty Flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}" Grid.Column="1" ImageSource="{StaticResource AddFlaskIcon}"/>
+                        <Button Text="{Binding AutoSolve.CurrentSolutionStep, StringFormat='Next&#10;Step&#10;({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepThroughCommand}" IsVisible="{Binding AutoSolve.Solved}" ImageSource="{StaticResource NextStepIcon}"/>
+                        <Button Text="Add&#10;Empty&#10;Flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}" Grid.Column="1" ImageSource="{StaticResource AddFlaskIcon}"/>
                         <!--<Button Text="{Binding GameState.StepBackCounter, StringFormat='« Back ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding GameState.StepBackCommand}" Grid.Column="1"/>-->
-                        <Button Text="{Binding GameState.StepBackDisplay, StringFormat='Previous Step ({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepBackCommand}" Grid.Column="2" ImageSource="{StaticResource PreviousStepIcon}"/>
+                        <Button Text="{Binding GameState.StepBackDisplay, StringFormat='Previous&#10;Step&#10;({0})'}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepBackCommand}" Grid.Column="2" ImageSource="{StaticResource PreviousStepIcon}"/>
                         <!--{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[{0}]'}"-->
                     </Grid>
                 </Grid>

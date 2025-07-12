@@ -468,6 +468,9 @@
 
     <Style x:Key="NavigationButtonPrimary" TargetType="Button">
         <Setter Property="Margin" Value="0,0,5,0" />
+        <Setter Property="HeightRequest" Value="90" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+        <Setter Property="HeightRequest" Value="66" />
     </Style>
 
     <!-- // Bottom Buttons // -->
