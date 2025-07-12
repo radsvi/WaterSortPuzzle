@@ -10,15 +10,7 @@
             set
             {
                 Preferences.Set(nameof(LoadDebugLevel), value);
-                OnPropertyChanged(nameof(NewLevelButtonText));
-            }
-        }
-        public string NewLevelButtonText
-        {
-            get
-            {
-                if (LoadDebugLevel) return "[DEBUG]\nlevel";
-                else return "New\nlevel";
+                OnPropertyChanged();
             }
         }
         public int NumberOfColorsToGenerate

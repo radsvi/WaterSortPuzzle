@@ -28,21 +28,33 @@ namespace WaterSortPuzzle.ViewModels
         private void PropertyChangedHandler(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(AppPreferences.MaximumExtraTubes) || e.PropertyName == nameof(GameState.ColorCount))
+            {
                 AddExtraTubeCommand.NotifyCanExecuteChanged();
+            }
             else if (e.PropertyName == nameof(AppPreferences.UnlimitedStepBack) || e.PropertyName == nameof(GameState.SavedGameStates))
             {
                 StepBackCommand.NotifyCanExecuteChanged();
-                //OnPropertyChanged(nameof(GameState.StepBackDisplay));
+            }
+            else if (e.PropertyName == nameof(AutoSolve.CurrentSolutionStep))
+            {
+                OnPropertyChanged(nameof(NextStepButtonText));
+            }
+            else if (e.PropertyName == nameof(AppPreferences.LoadDebugLevel))
+            {
+                OnPropertyChanged(nameof(NewLevelButtonText));
             }
             else if (e.PropertyName == nameof(AutoSolve.InProgress))
+            {
                 UIEnabled = !AutoSolve!.InProgress;
+            }
         }
         private void CollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove)
             {
                 this.StepBackCommand.NotifyCanExecuteChanged();
-                OnPropertyChanged(nameof(GameState.StepBackDisplay));
+                //OnPropertyChanged(nameof(GameState.StepBackDisplay));
+                OnPropertyChanged(nameof(StepBackButtonText));
             }
         }
         #endregion
@@ -106,6 +118,8 @@ namespace WaterSortPuzzle.ViewModels
                 OnPropertyChanged();
             }
         }
+
+
         //public ICommand PopupWindow { get; set; }
 
         //private LiquidColorNew[] selectedTube;
@@ -208,6 +222,16 @@ namespace WaterSortPuzzle.ViewModels
 
         #endregion
         #region Navigation
+        public string StepBackButtonText { get => $"Previous{Environment.NewLine}Step ({GameState.StepBackDisplay})"; }
+        public string NextStepButtonText { get => $"Next{Environment.NewLine}Step{Environment.NewLine}({AutoSolve?.CurrentSolutionStep})"; }
+        public string NewLevelButtonText
+        {
+            get
+            {
+                if (AppPreferences.LoadDebugLevel) return $"[DEBUG]{Environment.NewLine}level";
+                else return $"New{Environment.NewLine}level";
+            }
+        }
         [RelayCommand]
         public void StepThrough()
         {
@@ -565,7 +589,6 @@ namespace WaterSortPuzzle.ViewModels
             Notification.Show("Priorities list: " + displayText, 10000);
 #endif
         }
-
         #endregion
         #region Moving Liquids
         //internal void OnTubeButtonClick(object obj)
@@ -612,6 +635,7 @@ namespace WaterSortPuzzle.ViewModels
             {
                 var task = DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
                 //OnPropertyChanged(nameof(GameState.StepBackDisplay));
+                OnPropertyChanged(nameof(StepBackButtonText));
                 currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
                 //RippleSurfaceAnimation(currentTubeReference);
                 OnChangingGameState(SourceTube.TubeId, currentTubeReference.TubeId);
@@ -641,6 +665,7 @@ namespace WaterSortPuzzle.ViewModels
             RecalculateTubesPerLine();
             AddExtraTubeCommand.NotifyCanExecuteChanged();
             StepBackCommand.NotifyCanExecuteChanged();
+            OnPropertyChanged(nameof(StepBackButtonText));
             var task = DrawTubesAsync();
         }
         private void GetTopmostLiquid(TubeReference sourceTube) // selects topmost liquid in a sourceTube
