@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WaterSortPuzzle.Views.OptionsPage"
+             
+             xmlns:appTheme="clr-namespace:Microsoft.Maui.ApplicationModel;assembly=Microsoft.Maui.Essentials"
              xmlns:controls="clr-namespace:WaterSortPuzzle.Views.Controls"
              xmlns:models="clr-namespace:WaterSortPuzzle.Models"
              xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
@@ -11,7 +13,7 @@
              
 
              
-             Title="Options">
+             Title="Options"><!--xmlns:AppTheme="clr-namespace:Microsoft.Maui.ApplicationModel;assembly=Microsoft.Maui.Controls"-->
     <ContentPage.Resources>
         <Style TargetType="ScrollView">
             <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}" />
@@ -128,17 +130,25 @@
                         <Label Text="Don't show help at startup" VerticalOptions="Center"/>
                     </FlexLayout>-->
 
-                    <Button Text="Switch Theme" Style="{StaticResource OptionsButton}" Command="{Binding SwitchThemeCommand}" />
-                    <Label Text="{Binding AppPreferences.ThemeUserSetting}" />
+                    <!--<Button Text="Switch Theme" Style="{StaticResource OptionsButton}" Command="{Binding SwitchThemeCommand}" />
+                    <Label Text="{Binding AppPreferences.ThemeUserSetting}" />-->
 
-                    <StackLayout
+                    <!--<StackLayout
+                        Orientation="Horizontal"
                         RadioButtonGroup.GroupName="ThemeSelection"
-                        BindableLayout.ItemsSource="{ Binding SelectedTheme }">
-                        <RadioButton Content="Red" />
-                        <RadioButton Content="Green" />
-                        <RadioButton Content="Blue" />
-                        <RadioButton Content="Other" />
-                    </StackLayout>
+                        RadioButtonGroup.SelectedValue="{Binding SelectedTheme, Mode=TwoWay}">
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" />
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Light}" Value="{x:Static appTheme:AppTheme.Light}" />
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Unspecified}" Value="{x:Static appTheme:AppTheme.Unspecified}" />
+                    </StackLayout>-->
+                    <Grid
+                        ColumnDefinitions="*,*,*"
+                        RadioButtonGroup.GroupName="ThemeSelection"
+                        RadioButtonGroup.SelectedValue="{Binding SelectedTheme, Mode=TwoWay}">
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" />
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Light}" Value="{x:Static appTheme:AppTheme.Light}" Grid.Column="1" />
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Unspecified}" Value="{x:Static appTheme:AppTheme.Unspecified}" Grid.Column="2" />
+                    </Grid>
                     <!--<StackLayout
                         Orientation="Vertical"
                         RadioButtonGroup.GroupName="subscriptions"

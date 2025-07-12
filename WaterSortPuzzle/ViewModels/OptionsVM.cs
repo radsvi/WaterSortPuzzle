@@ -17,15 +17,16 @@
         //[ObservableProperty]
         //RadioButton selectedTheme;
         //public RadioButton SelectedTheme { get; set; }
-        private RadioButton selectedTheme;
-        public RadioButton SelectedTheme
+        private AppTheme selectedTheme;
+        public AppTheme SelectedTheme
         {
             get { return selectedTheme; }
-            private set
+            set
             {
                 if (value != selectedTheme)
                 {
                     selectedTheme = value;
+                    App.Current!.UserAppTheme = value;
                     OnPropertyChanged();
                 }
             }
