@@ -166,7 +166,7 @@ namespace WaterSortPuzzle.Models
             { LiquidColorName.Blue, new LiquidColor(LiquidColorName.Blue, Color.FromRgb(20,93,239)) },
             { LiquidColorName.Indigo, new LiquidColor(LiquidColorName.Indigo, Color.FromRgb(63,68,130)) },
             //{ LiquidColorName.Turquoise, new LiquidColor(LiquidColorName.Turquoise, Color.FromRgb(136,170,255)) },
-            { LiquidColorName.Turquoise, new LiquidColor(LiquidColorName.Turquoise, Color.FromRgb(0,255,239)) },
+            { LiquidColorName.Turquoise, new LiquidColor(LiquidColorName.Turquoise, Color.FromRgb(0,138,173)) },
             { LiquidColorName.Orange, new LiquidColor(LiquidColorName.Orange, Color.FromRgb(242,121,20)) },
             { LiquidColorName.Gray, new LiquidColor(LiquidColorName.Gray, Color.FromRgb(108,116,144)) },
             { LiquidColorName.Purple, new LiquidColor(LiquidColorName.Purple, Color.FromRgb(191,60,191)) },
