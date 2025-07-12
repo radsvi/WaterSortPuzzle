@@ -196,7 +196,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             get
             {
-                if (UIEnabled == false || AutoSolve.InProgress == false)
+                if (UIEnabled == true || AutoSolve?.InProgress == false)
                     return true;
                 else
                     return false;
@@ -598,9 +598,7 @@ namespace WaterSortPuzzle.ViewModels
             //await MainPage.DisplayAlert("Alert", $"Tube number [{tubeId}] was clicked", "OK");
 
             if (TubesClickable == false)
-            {
                 return;
-            }
 
             if (obj is not TubeReference currentTubeReference)
                 return;
