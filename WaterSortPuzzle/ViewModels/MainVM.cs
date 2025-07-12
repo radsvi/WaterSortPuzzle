@@ -719,13 +719,13 @@ namespace WaterSortPuzzle.ViewModels
 
             if (firstEmptyLayer > 0)
             {
-                if (SourceTube.TopMostLiquid.Name != GameState[currentTubeReference.TubeId, firstEmptyLayer - 1].Name)
+                if (SourceTube!.TopMostLiquid.Name != GameState[currentTubeReference.TubeId, firstEmptyLayer - 1].Name)
                 {
                     return false; // Pokud ma zkumavka v sobe uz nejaky barvy a nejvrchnejsi barva neshoulasi se SourceLiquid tak vratit false
                 }
             }
 
-            currentTubeReference.LastColorMoved = SourceTube.TopMostLiquid.Clone(); // saving this to use in CreateImageBackground(). Musim dat Clone protoze jinak se to deselectne
+            currentTubeReference.LastColorMoved = SourceTube!.TopMostLiquid.Clone(); // saving this to use in CreateImageBackground(). Musim dat Clone protoze jinak se to deselectne
             GameState[currentTubeReference.TubeId, firstEmptyLayer] = SourceTube.TopMostLiquid;
             currentTubeReference.TargetEmptyRow = firstEmptyLayer;
             return true;
@@ -734,7 +734,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             for (int y = Constants.Layers - 1; y >= 0; y--)
             {
-                if (GameState[SourceTube.TubeId, y] is not null)
+                if (GameState[SourceTube!.TubeId, y] is not null)
                 {
                     GameState[SourceTube.TubeId, y] = null;
                     SourceTube.TopMostLiquid = null;
@@ -758,44 +758,14 @@ namespace WaterSortPuzzle.ViewModels
                 if (AppPreferences.AdvancedOptionsVisible == false)
                     UIEnabled = false;
                 //PopupWindow.Execute(PopupParams.LevelComplete);
-                NavigationMenuPopup(PopupParams.LevelComplete);
+                var task = NavigationMenuPopup(PopupParams.LevelComplete);
+                //Task.Run(() => NavigationMenuPopup(PopupParams.LevelComplete));
+                //Task.Run(() => NavigationMenuPopup(PopupParams.LevelComplete)).GetAwaiter().GetResult();
             }
         }
 
         #endregion
         #region Draw tubes from code
-        [RelayCommand]
-        void ArbitraryChange()
-        {
-            //TubesItemsSource[0].Layers[3] = GameState[1, 3];
-            //TubesItemsSource[0].Layers[3] = TubesItemsSource[1].Layers[3];
-            //TubesItemsSource.Remove(TubesItemsSource.Last());
-            //TubesItemsSource[0] = TubesItemsSource[1];
-            //TubesItemsSource[0].Layers[2] = TubesItemsSource[1].Layers[2];
-            //TubesItemsSource[0].Layers[3] = TubesItemsSource[0].Layers[0];
-
-            //TubesItemsSource[0].Layers[1].Name = LiquidColorName.Yellow;
-            //TubesItemsSource[0].Layers[1].Brush = Color.FromRgb(74, 219, 36);
-
-            //TubesItemsSource[0].Layers[1].Change(LiquidColorName.Pink);
-            //TubesItemsSource[0].Layers[1].Change(LiquidColorName.Lime);
-            //TubesItemsSource[0].Layers[1].Change(GameState[0, 3].Name);
-            //TubesItemsSource[0].CopyFrom(GameState.gameGrid, 0);
-            //TubesItemsSource[0].Layers[1].CopyFrom(GameState[0, 3].Name);
-
-            //LiquidColor.Testuju();
-        }
-        //public void DrawTubes()
-        //{
-        //    TubesItemsSource.Clear();
-        //    TubeData.ResetCounter();
-
-        //    for (int x = 0; x < GameState.GetLength(0); x++)
-        //    {
-        //        TubesItemsSource.Add(new TubeData(GameState[x, 0], GameState[x, 1], GameState[x, 2], GameState[x, 3]));
-        //    }
-        //    OnPropertyChanged(nameof(TubesItemsSource));
-        //}
         public void DrawTubes(int source = -1, int target = -1)
         {
             //if (TubesItemsSource.Count == 0)
@@ -821,20 +791,10 @@ namespace WaterSortPuzzle.ViewModels
                     TubesItemsSource[target].CopyValuesFrom(GameState.gameGrid, target);
             }
         }
-        #region testing
         public async Task DrawTubesAsync(int source = -1, int target = -1)
         {
             await Task.Run(() => DrawTubes(source, target));
         }
-        [ObservableProperty]
-        bool delayAnimation = false;
-        //public bool DelayAnimation { get; private set; } = false;
-        [RelayCommand]
-        void SwitchDelayAnimation()
-        {
-            DelayAnimation = !DelayAnimation;
-        }
-        #endregion
         private void RecalculateTubesPerLine()
         {
             if (GameState.TubeCount > Constants.MaxTubesPerLine * 2)

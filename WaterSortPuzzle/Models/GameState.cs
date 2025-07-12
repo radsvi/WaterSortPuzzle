@@ -124,8 +124,6 @@ namespace WaterSortPuzzle.Models
         //    }
         //}
 
-        private int extraTubesAdded = 0;
-        public int ExtraTubesAdded { get; private set; }
         private LiquidColor[,] startingPosition;
         public LiquidColor[,] StartingPosition { get; set; }
         //[ObservableProperty]
@@ -451,7 +449,6 @@ namespace WaterSortPuzzle.Models
         }
         public void RestartLevel()
         {
-            SetFreshGameState();
             gameGrid = CloneGrid(StartingPosition);
         }
         private void GenerateStandardLevel()
@@ -466,7 +463,6 @@ namespace WaterSortPuzzle.Models
 
             gameGrid = new LiquidColor[appPreferences.NumberOfColorsToGenerate + 2, Constants.Layers];
             //Tube.ResetCounter();
-            SetFreshGameState();
 
             List<int> selectedColors = new List<int>();
             for (int i = 0; i < Constants.ColorCount; i++) // generate list of all colors. Doing '- 1' because color number 0 is blank (and is used for other purposes) but still count towards total.
@@ -510,11 +506,6 @@ namespace WaterSortPuzzle.Models
             StartingPosition = CloneGrid(appPreferences.LastLevelBeforeClosing.GameGrid);
             gameGrid = CloneGrid(StartingPosition);
             ColorCount = CountColors(StartingPosition);
-        }
-        private void SetFreshGameState()
-        {
-            //ExtraTubesAdded = 0; // resets how much extra tubes has been added
-            // commented out, because its reset automatically every time new GameState object is created
         }
         private void StoreStartingGrid()
         {

@@ -129,10 +129,6 @@
             </Grid>-->
                 <!--<Button Text="Get Solution" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding AutoSolve.StartCommand}" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}" />-->
 
-                <!--<StackLayout Orientation="Horizontal" VerticalOptions="End">
-                <Button Text="{Binding DelayAnimation, StringFormat='Test {0}'}" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding SwitchDelayAnimationCommand}" />
-                <Button Text="Change!" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding ArbitraryChangeCommand}" />
-            </StackLayout>-->
 
                 <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
                     <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
