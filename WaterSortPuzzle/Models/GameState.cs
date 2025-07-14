@@ -13,7 +13,6 @@ namespace WaterSortPuzzle.Models
         {
             this.appPreferences = appPreferences;
             this.notification = notification;
-
             
             var lastLevelBeforeClosing = appPreferences.LastLevelBeforeClosing;
             if (lastLevelBeforeClosing is not null && lastLevelBeforeClosing.GameGrid.Length > 0)
@@ -24,9 +23,7 @@ namespace WaterSortPuzzle.Models
             {
                 GenerateNewLevel();
             }
-            
         }
-
         private string readableGameState;
         public string ReadableGameState
         {
@@ -674,8 +671,9 @@ namespace WaterSortPuzzle.Models
         private void LoadLastLevel()
         {
             StartingPosition = CloneGrid(appPreferences.LastLevelBeforeClosing.GameGrid);
-            gameGrid = CloneGrid(StartingPosition);
-            ColorCount = CountColors(StartingPosition);
+            //gameGrid = CloneGrid(StartingPosition);
+            //ColorCount = CountColors(StartingPosition);
+            LoadGameState();
         }
         private void StoreStartingGrid()
         {
@@ -686,7 +684,29 @@ namespace WaterSortPuzzle.Models
         {
             appPreferences.GameStateBeforeSleep = gameGrid;
 
-            //SavedGameStates
+            ObservableCollection<SavedGameState> copySavedGameStates = [];
+            foreach (var savedGameState in SavedGameStates)
+            {
+                copySavedGameStates.Add(savedGameState);
+            }
+            copySavedGameStates.Add(LastGameState);
+            appPreferences.SavedGameStatesBeforeSleep = copySavedGameStates;
+        }
+        private void LoadGameState()
+        {
+            if (appPreferences.SavedGameStatesBeforeSleep is not null && appPreferences.SavedGameStatesBeforeSleep.Count > 0)
+            {
+                LastGameState = appPreferences.SavedGameStatesBeforeSleep.Last();
+                SavedGameStates = appPreferences.SavedGameStatesBeforeSleep;
+                SavedGameStates.Remove(LastGameState);
+
+                gameGrid = appPreferences.GameStateBeforeSleep;
+            }
+            else
+            {
+                gameGrid = CloneGrid(StartingPosition);
+                ColorCount = CountColors(StartingPosition);
+            }
         }
     }
 }

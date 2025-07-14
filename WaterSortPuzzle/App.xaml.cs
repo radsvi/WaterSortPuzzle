@@ -12,6 +12,7 @@
 
             Services = provider;
             AlertSvc = Services.GetService<IAlertService>();
+            this.gameState = gameState;
         }
         protected override Window CreateWindow(IActivationState? activationState)
         {
