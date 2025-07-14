@@ -594,7 +594,7 @@ namespace WaterSortPuzzle.ViewModels
         #region Moving Liquids
         //internal void OnTubeButtonClick(object obj)
         [RelayCommand]
-        public void TubeButtonClick(object obj)
+        public async void TubeButtonClick(object obj)
         {
             //await MainPage.DisplayAlert("Alert", $"Tube number [{tubeId}] was clicked", "OK");
 
@@ -634,7 +634,7 @@ namespace WaterSortPuzzle.ViewModels
             } while (success == true && SourceTube.TopMostLiquid is not null);
             if (successAtLeastOnce > 0)
             {
-                var task = DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+                await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
                 //OnPropertyChanged(nameof(GameState.StepBackDisplay));
                 OnPropertyChanged(nameof(StepBackButtonText));
                 currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
