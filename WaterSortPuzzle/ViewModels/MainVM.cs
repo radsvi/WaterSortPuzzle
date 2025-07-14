@@ -330,8 +330,9 @@ namespace WaterSortPuzzle.ViewModels
                 route = menuItem.ToString();
             }
 
+            if (Shell.Current.FlyoutIsPresented is true)
+                Shell.Current.FlyoutIsPresented = false;
             await AppShell.Current.GoToAsync(route);
-            Shell.Current.FlyoutIsPresented = false;
         }
         [RelayCommand]
         public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
@@ -589,6 +590,11 @@ namespace WaterSortPuzzle.ViewModels
             }
             Notification.Show("Priorities list: " + displayText, 10000);
 #endif
+        }
+        [RelayCommand]
+        void OpenFlyout()
+        {
+            Shell.Current.FlyoutIsPresented = true;
         }
         #endregion
         #region Moving Liquids

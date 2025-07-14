@@ -464,6 +464,27 @@
         <Setter Property="Color" Value="#b2cbde" />
     </Style>
 
+    <!-- // Flyout button // -->
+
+    <Style x:Key="FlyoutButton" TargetType="Button">
+        <Setter Property="Margin" Value="0,0,5,0" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+        <Setter Property="HeightRequest" Value="66" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <!--<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />-->
+        <Setter Property="TextColor" Value="#b2cbde" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Text" Value="&#xf0c9;">
+            <Setter.Value>
+                <OnPlatform x:TypeArguments="x:String">
+                    <On Platform="WinUI" Value="☰" />
+                </OnPlatform>
+            </Setter.Value>
+        </Setter>
+        
+    </Style>
+
     <!-- // Top Buttons // -->
 
     <Style x:Key="NavigationButtonPrimary" TargetType="Button">
@@ -645,6 +666,12 @@
         x:Key="BackNavigationIcon"
         FontFamily="FontAwesomeSolid"
         Glyph="&#x23ea;"
+        Size="{StaticResource FontSizeSmall}"
+        Color="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}" />
+    <FontImageSource
+        x:Key="FlyoutNavigationIcon"
+        FontFamily="FontAwesomeSolid"
+        Glyph="&#xf0c9;"
         Size="{StaticResource FontSizeSmall}"
         Color="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}" />
     
