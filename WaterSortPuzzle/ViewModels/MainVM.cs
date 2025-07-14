@@ -23,7 +23,11 @@ namespace WaterSortPuzzle.ViewModels
             GameState.PropertyChanged += PropertyChangedHandler;
             AutoSolve.PropertyChanged += PropertyChangedHandler;
 
-            OnStartingLevel();
+            //if (appPreferences.LastLevelBeforeClosing is null || appPreferences.LastLevelBeforeClosing.GameGrid.Length == 0)
+            //{
+            //    OnStart();
+            //}
+            OnStart();
         }
         private void PropertyChangedHandler(object? sender, PropertyChangedEventArgs e)
         {
@@ -202,7 +206,7 @@ namespace WaterSortPuzzle.ViewModels
                     return false;
             }
         }
-        private bool uiEnabled = false; // also used to mean that level is completed
+        private bool uiEnabled = true; // also used to mean that level is completed
         public bool UIEnabled
         {
             get { return uiEnabled; }
@@ -267,7 +271,7 @@ namespace WaterSortPuzzle.ViewModels
             OnChangingGameState(move.Source.X, move.Target.X);
         }
         [RelayCommand(CanExecute = nameof(CanStepBack))]
-        private void StepBack()
+        private async Task StepBack()
         {
             if (CanStepBack() == false)
                 return;
@@ -284,11 +288,11 @@ namespace WaterSortPuzzle.ViewModels
 
             GameState.SavedGameStates.Remove(lastGameStatus);
 
-            if (autoSolve.CompleteSolution.Count > 0)
+            if (autoSolve?.CompleteSolution.Count > 0)
                 autoSolve.CurrentSolutionStep++;
 
             RecalculateTubesPerLine();
-            var task = DrawTubesAsync(lastGameStatus.Source, lastGameStatus.Target);
+            await DrawTubesAsync(lastGameStatus.Source, lastGameStatus.Target);
         }
         private bool CanStepBack()
         {
@@ -420,38 +424,6 @@ namespace WaterSortPuzzle.ViewModels
             if (answer)
                 AppPreferences.DontShowHelpScreenAtStart = true;
         }
-
-
-
-
-
-
-
-
-        //[RelayCommand]
-        //private async void CloseWindow()
-        //{
-        //    if (SelectedViewModel == null)
-        //    {
-        //        //WindowService?.CloseWindow();
-        //        await NavigateBack();
-        //    }
-        //    else
-        //    {
-        //        //ClosePopupWindow();
-        //    }
-        //}
-        //[RelayCommand]
-        //private void ConfirmPopup()
-        //{
-        //    if (SelectedViewModel == null)
-        //    {
-        //        return;
-        //    }
-        //    //var action = Array.Find(PopupActions, x => x.SelectedViewModel.GetType() == SelectedViewModel.GetType());
-        //    var action = PopupActions.Where(x => x.SelectedViewModel.GetType() == SelectedViewModel.GetType());
-        //    action.ElementAt(0)?.ConfirmationAction.Invoke();
-        //}
         [RelayCommand(CanExecute = nameof(CanAddExtraTube))]
         private void AddExtraTube()
         {
@@ -469,22 +441,18 @@ namespace WaterSortPuzzle.ViewModels
         }
         private void GenerateNewLevel()
         {
-            //ClosePopupWindow();
             GameState.GenerateNewLevel();
             OnStartingLevel();
         }
         [RelayCommand]
         public void RestartLevel()
         {
-            //ClosePopupWindow();
             GameState.RestartLevel();
             OnStartingLevel();
         }
         public string? NoteForSavedLevel { get; set; }
         private void SaveLevel()
         {
-            //ClosePopupWindow();
-
             ObservableCollection<StoredLevel>? savedLevelList;
             try
             {
@@ -658,6 +626,15 @@ namespace WaterSortPuzzle.ViewModels
 
             IsLevelCompleted();
             GameState.SaveGameState(source, target);
+        }
+        private void OnStart() // when starting the application
+        {
+            GameState.SaveGameState(-1, -1);
+            RecalculateTubesPerLine();
+            AddExtraTubeCommand.NotifyCanExecuteChanged();
+            StepBackCommand.NotifyCanExecuteChanged();
+            OnPropertyChanged(nameof(StepBackButtonText));
+            var task = DrawTubesAsync();
         }
         public void OnStartingLevel()
         {

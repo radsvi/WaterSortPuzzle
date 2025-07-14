@@ -14,8 +14,7 @@ namespace WaterSortPuzzle.Models
             this.appPreferences = appPreferences;
             this.notification = notification;
             
-            var lastLevelBeforeClosing = appPreferences.LastLevelBeforeClosing;
-            if (lastLevelBeforeClosing is not null && lastLevelBeforeClosing.GameGrid.Length > 0)
+            if (appPreferences.LastLevelBeforeClosing is not null && appPreferences.LastLevelBeforeClosing.GameGrid.Length > 0)
             {
                 LoadLastLevel();
             }
@@ -86,7 +85,6 @@ namespace WaterSortPuzzle.Models
                 }
             }
         }
-
         public LiquidColor[,] gameGrid;
         public LiquidColor this[int tubes, int layers]
         {
@@ -97,40 +95,6 @@ namespace WaterSortPuzzle.Models
                 //OnLiquidMoving();
             }
         }
-        public int GetLength(int dimension)
-        {
-            return gameGrid.GetLength(dimension);
-        }
-
-        //private List<List<LiquidColorNew>> gameState;
-        //public LiquidColorNew this[int tube, int layer]
-        //{
-        //    get
-        //    {
-        //        //return gameStateList.ElementAt(tubes).ElementAt(layers);
-        //        return gameState[tube][layer];
-        //    }
-        //    set
-        //    {
-        //        gameState[tube][layer] = value;
-        //    }
-        //}
-
-
-        //private ObservableCollection<Tube> tubes = new ObservableCollection<Tube>();
-        //public ObservableCollection<Tube> Tubes
-        //{
-        //    get { return tubes; }
-        //    set
-        //    {
-        //        if (value != tubes)
-        //        {
-        //            tubes = value;
-        //            OnPropertyChanged();
-        //        }
-        //    }
-        //}
-
         private LiquidColor[,] startingPosition;
         public LiquidColor[,] StartingPosition { get; set; }
         //[ObservableProperty]
@@ -162,6 +126,10 @@ namespace WaterSortPuzzle.Models
         //{
         //    MainPage.DrawTubes();
         //}
+        public int GetLength(int dimension)
+        {
+            return gameGrid.GetLength(dimension);
+        }
         public void GenerateNewLevel()
         {
             if (appPreferences.LoadDebugLevel is true)
@@ -679,6 +647,8 @@ namespace WaterSortPuzzle.Models
         {
             StartingPosition = CloneGrid(gameGrid);
             appPreferences.LastLevelBeforeClosing = new StoredLevel(StartingPosition, "Last level");
+            appPreferences.StepBackPressesCounter = StepBackPressesCounter;
+            appPreferences.SavedGameStatesBeforeSleep = new ObservableCollection<SavedGameState>();
         }
         public void SaveGameStateOnSleep()
         {
@@ -691,6 +661,7 @@ namespace WaterSortPuzzle.Models
             }
             copySavedGameStates.Add(LastGameState);
             appPreferences.SavedGameStatesBeforeSleep = copySavedGameStates;
+            appPreferences.StepBackPressesCounter = StepBackPressesCounter;
         }
         private void LoadGameState()
         {
@@ -698,7 +669,8 @@ namespace WaterSortPuzzle.Models
             {
                 LastGameState = appPreferences.SavedGameStatesBeforeSleep.Last();
                 SavedGameStates = appPreferences.SavedGameStatesBeforeSleep;
-                SavedGameStates.Remove(LastGameState);
+                SavedGameStates.Remove(SavedGameStates.Last());
+                StepBackPressesCounter = appPreferences.StepBackPressesCounter;
 
                 gameGrid = appPreferences.GameStateBeforeSleep;
             }
