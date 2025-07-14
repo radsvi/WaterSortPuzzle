@@ -2,16 +2,17 @@
 {
     public partial class App : Application
     {
-        public static IServiceProvider Services;
-        public static IAlertService AlertSvc;
+        //public static IServiceProvider Services;
+        //public static IAlertService AlertSvc;
         readonly GameState gameState;
 
-        public App(IServiceProvider provider, GameState gameState)
+        //public App(IServiceProvider provider, GameState gameState)
+        public App(GameState gameState)
         {
             InitializeComponent();
 
-            Services = provider;
-            AlertSvc = Services.GetService<IAlertService>();
+            //Services = provider;
+            //AlertSvc = Services.GetService<IAlertService>();
             this.gameState = gameState;
         }
         protected override Window CreateWindow(IActivationState? activationState)

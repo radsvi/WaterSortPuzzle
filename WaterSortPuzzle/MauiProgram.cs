@@ -77,10 +77,6 @@ namespace WaterSortPuzzle
             builder.Services.AddSingleton<AutoSolve>();
 
 
-
-            builder.Services.AddSingleton<IAlertService, AlertService>();
-
-
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
