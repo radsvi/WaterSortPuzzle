@@ -132,6 +132,22 @@
                 Preferences.Set(nameof(LastLevelBeforeClosing) + "_Serialized", savedLevelList);
             }
         }
+        public LiquidColor[,] GameStateBeforeSleep
+        {
+            //get => Preferences.Default.Get(nameof(LastLevelBeforeClosing), new NullStoredLevel());
+            get
+            {
+                //var temp = Preferences.Default.Get(nameof(LastLevelBeforeClosing), new StoredLevel(new LiquidColor[0, 0], ""));
+                string serialized = Preferences.Default.Get(nameof(GameStateBeforeSleep) + "_Serialized", string.Empty);
+                return JsonConvert.DeserializeObject<LiquidColor[,]>(serialized)!;
+            }
+            set
+            {
+                string savedLevelList = JsonConvert.SerializeObject(value);
+                Preferences.Set(nameof(GameStateBeforeSleep) + "_Serialized", savedLevelList);
+            }
+        }
+
         public bool UnlimitedStepBack
         {
             get => Preferences.Default.Get(nameof(UnlimitedStepBack), false);

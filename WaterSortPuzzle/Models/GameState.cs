@@ -14,7 +14,17 @@ namespace WaterSortPuzzle.Models
             this.appPreferences = appPreferences;
             this.notification = notification;
 
-            GenerateNewLevel(true);
+            
+            var lastLevelBeforeClosing = appPreferences.LastLevelBeforeClosing;
+            if (lastLevelBeforeClosing is not null && lastLevelBeforeClosing.GameGrid.Length > 0)
+            {
+                LoadLastLevel();
+            }
+            else
+            {
+                GenerateNewLevel();
+            }
+            
         }
 
         private string readableGameState;
@@ -155,33 +165,13 @@ namespace WaterSortPuzzle.Models
         //{
         //    MainPage.DrawTubes();
         //}
-        public void GenerateNewLevel(bool loadLastLevel = false)
+        public void GenerateNewLevel()
         {
-            if (loadLastLevel)
-            {
-                var lastLevelBeforeClosing = appPreferences.LastLevelBeforeClosing;
-                if (lastLevelBeforeClosing is not null && lastLevelBeforeClosing.GameGrid.Length > 0)
-                {
-                    LoadLastLevel();
-                }
-                else
-                {
-                    if (appPreferences.LoadDebugLevel is true)
-                        GenerateDebugLevel();
-                    else
-                    {
-                        GenerateStandardLevel();
-                    }
-                }
-            }
+            if (appPreferences.LoadDebugLevel is true)
+                GenerateDebugLevel();
             else
             {
-                if (appPreferences.LoadDebugLevel is true)
-                    GenerateDebugLevel();
-                else
-                {
-                    GenerateStandardLevel();
-                }
+                GenerateStandardLevel();
             }
 
             StoreStartingGrid();
@@ -501,17 +491,6 @@ namespace WaterSortPuzzle.Models
 
             ColorCount = selectedColors.Count();
         }
-        private void LoadLastLevel()
-        {
-            StartingPosition = CloneGrid(appPreferences.LastLevelBeforeClosing.GameGrid);
-            gameGrid = CloneGrid(StartingPosition);
-            ColorCount = CountColors(StartingPosition);
-        }
-        private void StoreStartingGrid()
-        {
-            StartingPosition = CloneGrid(gameGrid);
-            appPreferences.LastLevelBeforeClosing = new StoredLevel(StartingPosition, "Last level");
-        }
         public void SaveGameState(int source, int target)
         {
             if (DidGameStateChange() == true)
@@ -692,7 +671,22 @@ namespace WaterSortPuzzle.Models
         {
             StepBackPressesCounter = 0;
         }
+        private void LoadLastLevel()
+        {
+            StartingPosition = CloneGrid(appPreferences.LastLevelBeforeClosing.GameGrid);
+            gameGrid = CloneGrid(StartingPosition);
+            ColorCount = CountColors(StartingPosition);
+        }
+        private void StoreStartingGrid()
+        {
+            StartingPosition = CloneGrid(gameGrid);
+            appPreferences.LastLevelBeforeClosing = new StoredLevel(StartingPosition, "Last level");
+        }
+        public void SaveGameStateOnSleep()
+        {
+            appPreferences.GameStateBeforeSleep = gameGrid;
 
-
+            //SavedGameStates
+        }
     }
 }

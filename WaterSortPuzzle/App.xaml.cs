@@ -4,18 +4,15 @@
     {
         public static IServiceProvider Services;
         public static IAlertService AlertSvc;
-        public App(IServiceProvider provider)
+        readonly GameState gameState;
+
+        public App(IServiceProvider provider, GameState gameState)
         {
             InitializeComponent();
 
             Services = provider;
             AlertSvc = Services.GetService<IAlertService>();
         }
-
-        //protected override Window CreateWindow(IActivationState? activationState)
-        //{
-        //    return new Window(new AppShell());
-        //}
         protected override Window CreateWindow(IActivationState? activationState)
         {
             //2400x1080 ratio
@@ -35,6 +32,12 @@
             };
 
             return newWindow;
+        }
+        protected override void OnSleep()
+        {
+            base.OnSleep();
+
+            this.gameState.SaveGameStateOnSleep();
         }
     }
 }
