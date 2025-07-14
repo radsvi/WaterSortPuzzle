@@ -20,21 +20,20 @@
     <FlyoutItem Title="Home" Route="MainPage" FlyoutItemIsVisible="True">
         <FlyoutItem.Icon>
             <!--<FontImageSource FontFamily="FontAwesomeRegular" Glyph="{x:Static fontAwesome:FontAwesomeIcons.AddressBook}"/>-->
-            <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#xf015;"/>
+            <FontImageSource Glyph="&#xf015;" FontFamily="FontAwesomeSolid" />
         </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
     </FlyoutItem>
 
     <MenuItem Text="Options" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}">
         <MenuItem.IconImageSource>
-            <FontImageSource FontFamily="FontAwesomeSolid" Glyph="&#x2699;" Color="Black" />
+            <FontImageSource Glyph="&#x2699;" FontFamily="FontAwesomeSolid" Color="{AppThemeBinding Light=Black, Dark=White}" />
         </MenuItem.IconImageSource>
     </MenuItem>
     <MenuItem Text="Calculate Solution" Command="{Binding StartAutoSolveCommand}">
         <MenuItem.IconImageSource>
-            <FontImageSource FontFamily="FontAwesomeSolid" Size="24" Glyph="&#xf074;" Color="Black" />
+            <FontImageSource Glyph="&#xf074;" FontFamily="FontAwesomeSolid" Color="{AppThemeBinding Light=Black, Dark=White}" />
         </MenuItem.IconImageSource>
     </MenuItem>
-    <!--<MenuItem Text="Save &amp; Load" Command="{Binding AutoSolve.StartCommand}"/>-->
 
 </Shell>

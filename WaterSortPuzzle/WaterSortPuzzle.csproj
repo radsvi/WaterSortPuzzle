@@ -115,15 +115,6 @@
 	  <MauiFont Include="Resources\Fonts\fa-solid-900.ttf">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </MauiFont>
-    <Content Include="Resources\Fonts\fa-solid-900.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Fonts\fa-regular-400.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Fonts\fa-brands-400.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
 	</ItemGroup>
 
 	<ItemGroup>
