@@ -145,9 +145,9 @@
                         ColumnDefinitions="*,*,*"
                         RadioButtonGroup.GroupName="ThemeSelection"
                         RadioButtonGroup.SelectedValue="{Binding SelectedTheme, Mode=TwoWay}">
-                        <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" />
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Unspecified}" Value="{x:Static appTheme:AppTheme.Unspecified}" />
                         <RadioButton Content="{x:Static appTheme:AppTheme.Light}" Value="{x:Static appTheme:AppTheme.Light}" Grid.Column="1" />
-                        <RadioButton Content="{x:Static appTheme:AppTheme.Unspecified}" Value="{x:Static appTheme:AppTheme.Unspecified}" Grid.Column="2" />
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" Grid.Column="2" />
                     </Grid>
                     <!--<StackLayout
                         Orientation="Vertical"

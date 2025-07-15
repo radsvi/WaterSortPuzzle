@@ -121,8 +121,8 @@
                 </CollectionView>
 
                 <!-- // AutoSolve box // -->
-                <Border VerticalOptions="End" Background="White" IsVisible="{Binding AutoSolve.Started}" BackgroundColor="Red" HorizontalOptions="Start" Margin="5,0" >
-                    <Label Text="{Binding AutoSolve.Iterations}" HeightRequest="40" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                <Border VerticalOptions="End" Background="White" IsVisible="{Binding AutoSolve.Started}" HorizontalOptions="Start" Margin="5,0" >
+                    <Label Text="{Binding AutoSolve.Iterations}" HeightRequest="40" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="Black"/>
                 </Border>
 
                 <!--<Grid VerticalOptions="Start" HorizontalOptions="Center" x:Name="GridForTubes">
