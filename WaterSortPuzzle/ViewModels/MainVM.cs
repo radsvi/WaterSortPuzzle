@@ -919,10 +919,17 @@ namespace WaterSortPuzzle.ViewModels
                 return;
 
 
-            for (int i = 0; i < tubeReference.NumberOfRepeatingLiquids * 4; i++)
-            {
-                rippleElement.Children.Add(new Image { Source = "tube_surface_ripple_tallest.png", TranslationY = 50 });
-            }
+            //for (int i = 0; i < tubeReference.NumberOfRepeatingLiquids * 4; i++)
+            //{
+            //    rippleElement.Children.Add(new Image { Source = "tube_surface_ripple_tallest.png", TranslationY = 50 });
+            //}
+
+
+            var innerGrid = new Grid { BackgroundColor = (Brush.LightBlue as SolidColorBrush).Color, TranslationY = 50 };
+            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_tallest.png", Aspect = Aspect.AspectFit });
+            innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_narrow.png", Aspect = Aspect.AspectFill });
+            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_tall_non_transparent.png" });
+            rippleElement.Children.Add(innerGrid);
 
             //rippleElement.Children.Add(new Label { Text = "qwer" });
             //rippleElement.Children.Add(new Image { Source = "tube_surface_ripple_tall_non_transparent.png" });
@@ -940,23 +947,31 @@ namespace WaterSortPuzzle.ViewModels
             //await RippleBackground.TranslateTo(200, 0, duration, Easing.SinInOut);
             //await RippleBackground.TranslateTo(1200, 0, duration);
 
-            //await rippleElement.TranslateTo(-200, -200, duration);
+            await rippleElement.TranslateTo(0, 50, 1);
+            await rippleElement.TranslateTo(0, -1800, duration * 2);
+
             //await Task.WhenAll(
             //    rippleElement.TranslateTo(-200, rippleElement.TranslationY, duration * 4), // X: 1 sec
             //    rippleElement.TranslateTo(rippleElement.TranslationX, -200, duration)  // Y: 2 sec
             //);
 
-            var xAnim = new Animation(v => rippleElement.TranslationX = v, 0, -200);
-            var yAnim = new Animation(v => rippleElement.TranslationY = v, 0, -200);
 
-            var parentAnim = new Animation();
-            parentAnim.Add(0, 1, xAnim);        // Full duration for X
-            parentAnim.Add(0, 0.5, yAnim);      // Y runs faster (ends halfway)
 
-            //parentAnim.Commit(this, "XYAnim", length: 2000, easing: Easing.SinInOut);
+
+            //var xAnim = new Animation(v => rippleElement.TranslationX = v, 0, -200);
+            //var yAnim = new Animation(v => rippleElement.TranslationY = v, 0, -200);
+
+            //var parentAnim = new Animation();
+            //parentAnim.Add(0, 1, xAnim);        // Full duration for X
+            //parentAnim.Add(0, 0.5, yAnim);      // Y runs faster (ends halfway)
+
+            ////parentAnim.Commit(this, "XYAnim", length: 2000, easing: Easing.SinInOut);
 
             rippleElement.Children.Clear();
             _ = rippleElement.TranslateTo(0, 0, 1);
+
+
+
 
 
             //tubeReference.GridElement.Children.Clear();
