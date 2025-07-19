@@ -1,9 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Shapes;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Threading.Channels;
-using System.Windows.Input;
+﻿using System.Collections.Specialized;
 
 namespace WaterSortPuzzle.ViewModels
 {
@@ -612,10 +607,10 @@ namespace WaterSortPuzzle.ViewModels
             if (successAtLeastOnce > 0)
             {
                 await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+                await RippleSurfaceAnimation(currentTubeReference);
                 //OnPropertyChanged(nameof(GameState.StepBackDisplay));
                 OnPropertyChanged(nameof(StepBackButtonText));
                 currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
-                RippleSurfaceAnimation(currentTubeReference);
                 OnChangingGameState(SourceTube.TubeId, currentTubeReference.TubeId);
             }
             if (successAtLeastOnce == 0 && AppPreferences.UnselectTubeEvenOnIllegalMove == true)
@@ -914,7 +909,7 @@ namespace WaterSortPuzzle.ViewModels
             //tubeReference.TubeType.RippleEffectVisible = true;
 
             //var rippleElement = GetVisualTreeDescendantsByStyleId<Grid>(tubeReference.GridElement, Constants.rippleElementName);
-            var rippleElement = GetVisualTreeDescendantsByStyleId<StackLayout>(tubeReference.GridElement, "RippleEffectElement");
+            var rippleElement = GetVisualTreeDescendantsByStyleId<Grid>(tubeReference.GridElement, "RippleEffectElement");
             if (rippleElement is null)
                 return;
 
@@ -925,10 +920,30 @@ namespace WaterSortPuzzle.ViewModels
             //}
 
 
-            var innerGrid = new Grid { BackgroundColor = (Brush.LightBlue as SolidColorBrush).Color, TranslationY = 50 };
-            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_tallest.png", Aspect = Aspect.AspectFit });
-            innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_narrow.png", Aspect = Aspect.AspectFill });
-            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_tall_non_transparent.png" });
+            //var innerGrid = new Grid { BackgroundColor = (Brush.LightBlue as SolidColorBrush).Color, TranslationY = 50 };
+            ////innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_tallest.png", Aspect = Aspect.AspectFit });
+            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_shallow.png", Aspect = Aspect.AspectFill });
+            ////innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_tall_non_transparent.png" });
+            //rippleElement.Children.Add(innerGrid);
+
+            //var innerGrid = new Grid { HorizontalOptions = LayoutOptions.Fill, BackgroundColor = (Brush.Red as SolidColorBrush).Color };
+            //var innerGrid = new Grid { HorizontalOptions = LayoutOptions.Fill };
+            var innerGrid = new Grid { TranslationY = 50 };
+            //innerGrid.Children.Add(new BoxView { BackgroundColor = (Brush.LightBlue as SolidColorBrush).Color, HeightRequest = 200, Margin = new Thickness(0, 0, 0, 10) });
+            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_shallow.png", Aspect = Aspect.AspectFill, VerticalOptions = LayoutOptions.End });
+            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_anim.gif", Aspect = Aspect.AspectFill, VerticalOptions = LayoutOptions.Start, IsAnimationPlaying = true });
+            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple.png", Aspect = Aspect.AspectFill, VerticalOptions = LayoutOptions.Start, TranslationY = 250 });
+            var image = new Image {
+                Source = "tube_surface_ripple_anim.gif",
+                Aspect = Aspect.AspectFill,
+                VerticalOptions = LayoutOptions.End,
+                IsAnimationPlaying = true,
+                WidthRequest = 46,
+                HeightRequest = 1200,
+                //TranslationY = -1000,
+            };
+            innerGrid.Children.Add(image);
+            //rippleElement.Children.Add(innerGrid);
             rippleElement.Children.Add(innerGrid);
 
             //rippleElement.Children.Add(new Label { Text = "qwer" });
@@ -947,8 +962,8 @@ namespace WaterSortPuzzle.ViewModels
             //await RippleBackground.TranslateTo(200, 0, duration, Easing.SinInOut);
             //await RippleBackground.TranslateTo(1200, 0, duration);
 
-            await rippleElement.TranslateTo(0, 50, 1);
-            await rippleElement.TranslateTo(0, -1800, duration * 2);
+            //await image.TranslateTo(0, 50, 1);
+            await innerGrid.TranslateTo(0, -200, 2000);
 
             //await Task.WhenAll(
             //    rippleElement.TranslateTo(-200, rippleElement.TranslationY, duration * 4), // X: 1 sec
@@ -968,7 +983,7 @@ namespace WaterSortPuzzle.ViewModels
             ////parentAnim.Commit(this, "XYAnim", length: 2000, easing: Easing.SinInOut);
 
             rippleElement.Children.Clear();
-            _ = rippleElement.TranslateTo(0, 0, 1);
+            //_ = image.TranslateTo(0, 0, 1);
 
 
 
