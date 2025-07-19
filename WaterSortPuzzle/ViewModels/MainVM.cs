@@ -265,7 +265,7 @@ namespace WaterSortPuzzle.ViewModels
             );
             var task = DrawTubesAsync(move.Source.X, move.Target.X);
 
-            RippleSurfaceAnimationPrep(currentTubeReference);
+            //RippleSurfaceAnimationPrep(currentTubeReference, LiquidHelper.GetKey((LiquidColorName)move.Source.ColorName));
             OnChangingGameState(move.Source.X, move.Target.X);
         }
         [RelayCommand(CanExecute = nameof(CanStepBack))]
@@ -593,6 +593,7 @@ namespace WaterSortPuzzle.ViewModels
             // if selecting different tube:
             bool success = false;
             int successAtLeastOnce = 0;
+            LiquidColor? currentLiquid = null;
 
             do
             {
@@ -600,17 +601,15 @@ namespace WaterSortPuzzle.ViewModels
                 if (success == true)
                 {
                     successAtLeastOnce++;
+                    currentLiquid = SourceTube.TopMostLiquid;
                     RemoveColorFromSourceTube();
                     GetTopmostLiquid(SourceTube); // picks another liquid from the same tube
                 }
             } while (success == true && SourceTube.TopMostLiquid is not null);
             if (successAtLeastOnce > 0)
             {
-                var innerGrid = RippleSurfaceAnimationPrep(currentTubeReference);
-                await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+                DisplayChanges(currentTubeReference, currentLiquid);
 
-                await innerGrid.TranslateTo(0, -200, 2000);
-                //rippleElement.Children.Clear();
 
                 //OnPropertyChanged(nameof(GameState.StepBackDisplay));
                 OnPropertyChanged(nameof(StepBackButtonText));
@@ -908,14 +907,24 @@ namespace WaterSortPuzzle.ViewModels
                 });
             }
         }
-        internal Grid? RippleSurfaceAnimationPrep(TubeReference tubeReference)
+        async Task DisplayChanges(TubeReference currentTubeReference, LiquidColor currentLiquid)
+        {
+            var rippleLayoutElement = GetVisualTreeDescendantsByStyleId<Grid>(currentTubeReference.GridElement, "RippleEffectElement");
+            if (rippleLayoutElement is null)
+                return;
+
+            var innerGrid = RippleSurfaceAnimationPrep(currentTubeReference, currentLiquid, rippleLayoutElement);
+            await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+
+            await innerGrid.TranslateTo(0, -200, 2000);
+            //rippleLayoutElement.Children.Clear();
+            rippleLayoutElement.Children.Remove(innerGrid);
+        }
+        internal Grid? RippleSurfaceAnimationPrep<T>(TubeReference currentTubeReference, LiquidColor sourceLiquid, T rippleLayoutElement) where T : Layout
         {
             //tubeReference.TubeType.RippleEffectVisible = true;
 
             //var rippleElement = GetVisualTreeDescendantsByStyleId<Grid>(tubeReference.GridElement, Constants.rippleElementName);
-            var rippleElement = GetVisualTreeDescendantsByStyleId<Grid>(tubeReference.GridElement, "RippleEffectElement");
-            if (rippleElement is null)
-                return null;
 
 
             //for (int i = 0; i < tubeReference.NumberOfRepeatingLiquids * 4; i++)
@@ -932,7 +941,8 @@ namespace WaterSortPuzzle.ViewModels
 
             //var innerGrid = new Grid { HorizontalOptions = LayoutOptions.Fill, BackgroundColor = (Brush.Red as SolidColorBrush).Color };
             //var innerGrid = new Grid { HorizontalOptions = LayoutOptions.Fill };
-            var innerGrid = new Grid { TranslationY = 50, BackgroundColor = (Brush.LightBlue as SolidColorBrush).Color };
+            //var innerGrid = new Grid { TranslationY = 50, BackgroundColor = Colors.Transparent };
+            var innerGrid = new Grid { TranslationY = 50, BackgroundColor = sourceLiquid.Brush };
             //innerGrid.Children.Add(new BoxView { BackgroundColor = (Brush.LightBlue as SolidColorBrush).Color, HeightRequest = 200, Margin = new Thickness(0, 0, 0, 10) });
             //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_shallow.png", Aspect = Aspect.AspectFill, VerticalOptions = LayoutOptions.End });
             //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_anim.gif", Aspect = Aspect.AspectFill, VerticalOptions = LayoutOptions.Start, IsAnimationPlaying = true });
@@ -948,7 +958,7 @@ namespace WaterSortPuzzle.ViewModels
             };
             innerGrid.Children.Add(image);
             //rippleElement.Children.Add(innerGrid);
-            rippleElement.Children.Add(innerGrid);
+            rippleLayoutElement.Children.Add(innerGrid);
 
             //rippleElement.Children.Add(new Label { Text = "qwer" });
             //rippleElement.Children.Add(new Image { Source = "tube_surface_ripple_tall_non_transparent.png" });
@@ -961,7 +971,7 @@ namespace WaterSortPuzzle.ViewModels
 
             //StartAnimatingSurface(brush, container, gridElement, tubeReference.NumberOfRepeatingLiquids);
             //private void StartAnimatingSurface(ImageBrush brush, Grid container, Grid gridElement, int numberOfLiquids)
-            uint duration = 800 * (uint)tubeReference.NumberOfRepeatingLiquids;
+            uint duration = 800 * (uint)currentTubeReference.NumberOfRepeatingLiquids;
 
             //await RippleBackground.TranslateTo(200, 0, duration, Easing.SinInOut);
             //await RippleBackground.TranslateTo(1200, 0, duration);
