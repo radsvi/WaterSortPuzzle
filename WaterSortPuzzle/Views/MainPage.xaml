@@ -99,19 +99,19 @@
                                     Stroke="LightBlue" StrokeThickness="1"
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
-                                    <Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*">
-                                        <Grid
+                                    <Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*" x:Name="RippleEffectElement">
+                                        <!--<Grid
                                             Grid.RowSpan="4"
                                             ZIndex="1000"
                                             x:Name="RippleEffectElement"
                                             >
-                                            <!--<Image
+                                            <Image
                                                 Margin="0"
                                                 Source="tube_surface_ripple_tallest.png"
                                                 Aspect="AspectFill"
                                                 TranslationX="30"
-                                                />-->
-                                        </Grid>
+                                                />
+                                        </Grid>-->
 
                                         <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
                                         <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />

@@ -913,36 +913,24 @@ namespace WaterSortPuzzle.ViewModels
             if (rippleLayoutElement is null)
                 return;
 
-            var innerGrid = RippleSurfaceAnimationPrep(currentTubeReference, currentLiquid, rippleLayoutElement);
-            await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+            var innerGrid = RippleSurfaceAnimationPrep(rippleLayoutElement);
+            //await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
 
-            await innerGrid.TranslateTo(0, -200, 2000);
-            //rippleLayoutElement.Children.Clear();
-            rippleLayoutElement.Children.Remove(innerGrid);
+            //uint duration = 800 * (uint)currentTubeReference.NumberOfRepeatingLiquids;
+            //await innerGrid.TranslateTo(0, -200, 2000);
+            ////rippleLayoutElement.Children.Clear();
+            //rippleLayoutElement.Children.Remove(innerGrid);
         }
-        internal Grid? RippleSurfaceAnimationPrep<T>(TubeReference currentTubeReference, LiquidColor sourceLiquid, T rippleLayoutElement) where T : Layout
+        internal Grid? RippleSurfaceAnimationPrep<T>(T rippleLayoutElement) where T : Layout
         {
-            //tubeReference.TubeType.RippleEffectVisible = true;
 
-            //var rippleElement = GetVisualTreeDescendantsByStyleId<Grid>(tubeReference.GridElement, Constants.rippleElementName);
+            var innerGrid = new Grid { BackgroundColor = Colors.Red, IsClippedToBounds = true, ZIndex = 1000 };
 
+            //Grid.SetRow(innerGrid, Constants.Layers - 1 - currentTubeReference.TargetEmptyRow - currentTubeReference.NumberOfRepeatingLiquids + 1);
+            //Grid.SetRowSpan(innerGrid, currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
+            Grid.SetRow(innerGrid, 3);
+            Grid.SetRowSpan(innerGrid, 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
 
-            //for (int i = 0; i < tubeReference.NumberOfRepeatingLiquids * 4; i++)
-            //{
-            //    rippleElement.Children.Add(new Image { Source = "tube_surface_ripple_tallest.png", TranslationY = 50 });
-            //}
-
-
-            //var innerGrid = new Grid { BackgroundColor = (Brush.LightBlue as SolidColorBrush).Color, TranslationY = 50 };
-            ////innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_tallest.png", Aspect = Aspect.AspectFit });
-            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_shallow.png", Aspect = Aspect.AspectFill });
-            ////innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_tall_non_transparent.png" });
-            //rippleElement.Children.Add(innerGrid);
-
-            //var innerGrid = new Grid { HorizontalOptions = LayoutOptions.Fill, BackgroundColor = (Brush.Red as SolidColorBrush).Color };
-            //var innerGrid = new Grid { HorizontalOptions = LayoutOptions.Fill };
-            //var innerGrid = new Grid { TranslationY = 50, BackgroundColor = Colors.Transparent };
-            var innerGrid = new Grid { TranslationY = 50, BackgroundColor = sourceLiquid.Brush };
             //innerGrid.Children.Add(new BoxView { BackgroundColor = (Brush.LightBlue as SolidColorBrush).Color, HeightRequest = 200, Margin = new Thickness(0, 0, 0, 10) });
             //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_shallow.png", Aspect = Aspect.AspectFill, VerticalOptions = LayoutOptions.End });
             //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_anim.gif", Aspect = Aspect.AspectFill, VerticalOptions = LayoutOptions.Start, IsAnimationPlaying = true });
@@ -954,75 +942,13 @@ namespace WaterSortPuzzle.ViewModels
                 IsAnimationPlaying = true,
                 WidthRequest = 46,
                 HeightRequest = 1200,
+                TranslationY = 30,
                 //TranslationY = -1000,
             };
             innerGrid.Children.Add(image);
             //rippleElement.Children.Add(innerGrid);
             rippleLayoutElement.Children.Add(innerGrid);
 
-            //rippleElement.Children.Add(new Label { Text = "qwer" });
-            //rippleElement.Children.Add(new Image { Source = "tube_surface_ripple_tall_non_transparent.png" });
-
-            //rippleElement.Children.Add(RippleBackground);
-
-            //await StartAnimatingSurface<StackLayout>(rippleElement);
-
-            // The actual animation part:
-
-            //StartAnimatingSurface(brush, container, gridElement, tubeReference.NumberOfRepeatingLiquids);
-            //private void StartAnimatingSurface(ImageBrush brush, Grid container, Grid gridElement, int numberOfLiquids)
-            uint duration = 800 * (uint)currentTubeReference.NumberOfRepeatingLiquids;
-
-            //await RippleBackground.TranslateTo(200, 0, duration, Easing.SinInOut);
-            //await RippleBackground.TranslateTo(1200, 0, duration);
-
-            //await image.TranslateTo(0, 50, 1);
-
-
-            //await Task.WhenAll(
-            //    rippleElement.TranslateTo(-200, rippleElement.TranslationY, duration * 4), // X: 1 sec
-            //    rippleElement.TranslateTo(rippleElement.TranslationX, -200, duration)  // Y: 2 sec
-            //);
-
-
-
-
-            //var xAnim = new Animation(v => rippleElement.TranslationX = v, 0, -200);
-            //var yAnim = new Animation(v => rippleElement.TranslationY = v, 0, -200);
-
-            //var parentAnim = new Animation();
-            //parentAnim.Add(0, 1, xAnim);        // Full duration for X
-            //parentAnim.Add(0, 0.5, yAnim);      // Y runs faster (ends halfway)
-
-            ////parentAnim.Commit(this, "XYAnim", length: 2000, easing: Easing.SinInOut);
-
-
-            //_ = image.TranslateTo(0, 0, 1);
-
-
-
-
-
-            //tubeReference.GridElement.Children.Clear();
-            //tubeReference.GridElement.GetVisualTreeDescendants().Where(item => item.GetType() == typeof(Label)).First();
-            //var content = tubeReference.GridElement.GetVisualTreeDescendants();
-            //var content2 = tubeReference.GridElement.GetVisualTreeDescendants().Where(item => item.Sty ).First(); ;
-            //content[0].
-
-            //(var brush, var gridElement) = CreateVerticalTubeAnimationBackground(tubeReference);
-            ////container.Children.Add(gridElement);
-
-            //Grid.SetRow(gridElement, GameState.Layers - 1 - tubeReference.TargetEmptyRow - tubeReference.NumberOfRepeatingLiquids + 1);
-            //Grid.SetRowSpan(gridElement, tubeReference.NumberOfRepeatingLiquids > 0 ? tubeReference.NumberOfRepeatingLiquids : 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
-
-            ////Canvas.SetZIndex(borderElement, 3);
-            ////Grid.SetZIndex(borderElement, 4);
-
-            //StartAnimatingSurface(brush, container, gridElement, tubeReference.NumberOfRepeatingLiquids);
-
-
-            //await innerGrid.TranslateTo(0, -200, 2000);
-            //rippleElement.Children.Clear();
             return innerGrid;
         }
         private static T? GetVisualTreeDescendantsByStyleId<T>(Element root, string styleId) where T : Layout
