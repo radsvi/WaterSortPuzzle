@@ -151,11 +151,11 @@ namespace WaterSortPuzzle.Models
             gameGrid = new LiquidColor[20, Constants.Layers];
 
             // Almost solved:
-            //AddTube(i++, new int[] { });
-            //AddTube(i++, new int[] { 1, 1, 1, 3 });
-            //AddTube(i++, new int[] { 2, 3, 1 });
-            //AddTube(i++, new int[] { 2, 2, 2 });
-            //AddTube(i++, new int[] { 3, 3 });
+            AddTube(i++, new int[] { });
+            AddTube(i++, new int[] { 1, 1, 1, 3 });
+            AddTube(i++, new int[] { 2, 3, 1 });
+            AddTube(i++, new int[] { 2, 2, 2 });
+            AddTube(i++, new int[] { 3, 3 });
 
 
 
@@ -202,19 +202,19 @@ namespace WaterSortPuzzle.Models
             //AddTube(i++, new int[] { 8, 12, 6, 12 });
             //AddTube(i++, new int[] { 1, 12, 8, 9 });
 
-            // Ten starej "nikdy" nevyresenej level (vyresenej za 1772 steps to generate, 46 steps to solve, 17.68 sec):
-            AddTube(i++, new int[] { 8, 1, 3, 0 });
-            AddTube(i++, new int[] { 2, 7, 10, 4 });
-            AddTube(i++, new int[] { 8, 10, 10, 11 });
-            AddTube(i++, new int[] { 2, 2, 1, 4 });
-            AddTube(i++, new int[] { 0, 6, 5, 9 });
-            AddTube(i++, new int[] { 2, 3, 6, 3 });
-            AddTube(i++, new int[] { 1, 7, 4, 9 });
-            AddTube(i++, new int[] { 5, 0, 1, 8 });
-            AddTube(i++, new int[] { 10, 9, 6, 5 });
-            AddTube(i++, new int[] { 4, 6, 9, 3 });
-            AddTube(i++, new int[] { 7, 11, 5, 11 });
-            AddTube(i++, new int[] { 0, 11, 7, 8 });
+            //// Ten starej "nikdy" nevyresenej level (vyresenej za 1772 steps to generate, 46 steps to solve, 17.68 sec):
+            //AddTube(i++, new int[] { 8, 1, 3, 0 });
+            //AddTube(i++, new int[] { 2, 7, 10, 4 });
+            //AddTube(i++, new int[] { 8, 10, 10, 11 });
+            //AddTube(i++, new int[] { 2, 2, 1, 4 });
+            //AddTube(i++, new int[] { 0, 6, 5, 9 });
+            //AddTube(i++, new int[] { 2, 3, 6, 3 });
+            //AddTube(i++, new int[] { 1, 7, 4, 9 });
+            //AddTube(i++, new int[] { 5, 0, 1, 8 });
+            //AddTube(i++, new int[] { 10, 9, 6, 5 });
+            //AddTube(i++, new int[] { 4, 6, 9, 3 });
+            //AddTube(i++, new int[] { 7, 11, 5, 11 });
+            //AddTube(i++, new int[] { 0, 11, 7, 8 });
 
             //// Ten starej "nikdy" nevyresenej level (testuju napul vyreseny:
             //AddTube(i++, new LiquidColorName[] { LiquidColorName.Green, LiquidColorName.Indigo, LiquidColorName.Orange, LiquidColorName.Orange });

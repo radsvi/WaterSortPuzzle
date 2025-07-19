@@ -663,7 +663,7 @@ namespace WaterSortPuzzle.ViewModels
                     if (LastClickedTube != sourceTube)
                         LastClickedTube = sourceTube;
                     sourceTube.TopMostLiquid = GameState[sourceTube.TubeId, i];
-                    MoveTubeVertically(sourceTube, VerticalAnimation.Raise);
+                    MainVM.MoveTubeVertically(sourceTube, VerticalAnimation.Raise);
                     //MoveAndTiltTube(sourceTube);
                     return;
                 }
@@ -716,7 +716,7 @@ namespace WaterSortPuzzle.ViewModels
             if (LastClickedTube is not null)
             {
                 if (SourceTube is not null)
-                    MoveTubeVertically(SourceTube, VerticalAnimation.Lower, type);
+                    MainVM.MoveTubeVertically(SourceTube, VerticalAnimation.Lower, type);
                 LastClickedTube = null;
             }
         }
@@ -843,16 +843,12 @@ namespace WaterSortPuzzle.ViewModels
         //}
         #endregion
         #region Animation
-        private async void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
+        private static async void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
         {
             if (tubeReference.VisualElement is null)
                 return;
 
-            uint speedMS;
-            if (AppPreferences.InstantAnimations || speed == AnimationSpeed.Instant)
-                speedMS = 10; // making it 0 created disappearing elements
-            else
-                speedMS = 75;
+            uint speedMS = 75;
 
             if (verticalAnimation == VerticalAnimation.Raise)
             {
@@ -909,19 +905,27 @@ namespace WaterSortPuzzle.ViewModels
         }
         async Task DisplayChanges(TubeReference currentTubeReference, LiquidColor currentLiquid)
         {
-            var rippleLayoutElement = GetVisualTreeDescendantsByStyleId<Grid>(currentTubeReference.GridElement, "RippleEffectElement");
-            if (rippleLayoutElement is null)
-                return;
+            if (AppPreferences.InstantAnimations)
+            {
+                await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+            }
+            else
+            {
+                var rippleLayoutElement = GetVisualTreeDescendantsByStyleId<Grid>(currentTubeReference.GridElement, "RippleEffectElement");
+                if (rippleLayoutElement is null)
+                    return;
 
-            (var innerGrid, var image) = RippleSurfaceAnimationPrep(rippleLayoutElement, currentTubeReference, currentLiquid);
-            await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+                (var innerGrid, var image) = RippleSurfaceBackgroundCreation(rippleLayoutElement, currentTubeReference, currentLiquid);
 
-            uint duration = 800 * (uint)currentTubeReference.NumberOfRepeatingLiquids;
-            await image.TranslateTo(0, -50, 1000);
-            //rippleLayoutElement.Children.Clear();
-            rippleLayoutElement.Children.Remove(innerGrid);
+                await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+
+                uint duration = 800 * (uint)currentTubeReference.NumberOfRepeatingLiquids;
+                await image.TranslateTo(0, -50, 1000);
+                //rippleLayoutElement.Children.Clear();
+                rippleLayoutElement.Children.Remove(innerGrid);
+            }
         }
-        internal (Grid, Image) RippleSurfaceAnimationPrep<T>(T rippleLayoutElement, TubeReference currentTubeReference, LiquidColor sourceLiquid) where T : Layout
+        internal (Grid, Image) RippleSurfaceBackgroundCreation<T>(T rippleLayoutElement, TubeReference currentTubeReference, LiquidColor sourceLiquid) where T : Layout
         {
             var innerGrid = new Grid { BackgroundColor = sourceLiquid.Brush, IsClippedToBounds = true, ZIndex = 1000 };
 
@@ -954,76 +958,6 @@ namespace WaterSortPuzzle.ViewModels
 
             return null;
         }
-        //private (ImageBrush, Grid) CreateVerticalTubeAnimationBackground(TubeReference currentTubeReference)
-        //{
-        //    Grid gridElement = new Grid();
-
-        //    Border borderRoundedCorner = new Border();
-        //    gridElement.Children.Add(borderRoundedCorner);
-        //    borderRoundedCorner.CornerRadius = new CornerRadius(0, 0, 16, 16);
-        //    borderRoundedCorner.Background = currentTubeReference.LastColorMoved.Brush; // sem poslat barvu kterou presouvam
-        //    borderRoundedCorner.Margin = new Thickness(5);
-
-        //    Binding binding = new Binding();
-        //    binding.Source = borderRoundedCorner;
-
-
-        //    //BindingOperations.SetBinding(column, GridViewColumn.WidthProperty, binding);
-        //    //BindingOperations.SetBinding("referal elementu v kterym definuju binding", "nazev/typ property kterou chci bindovat", bindingPromenna);
-        //    VisualBrush visualBrush = new VisualBrush();
-        //    BindingOperations.SetBinding(visualBrush, VisualBrush.VisualProperty, binding);
-
-        //    gridElement.OpacityMask = visualBrush;
-
-        //    ImageBrush brush = new ImageBrush();
-        //    BitmapImage bmpImg = new BitmapImage();
-
-        //    bmpImg.BeginInit();
-        //    bmpImg.UriSource = new Uri("Images\\TubeSurfaceRippleTallest.png", UriKind.Relative);
-        //    bmpImg.EndInit();
-
-        //    brush.ImageSource = bmpImg;
-        //    brush.TileMode = TileMode.Tile;
-        //    brush.ViewportUnits = BrushMappingMode.Absolute;
-        //    //brush.Viewport = new Rect(0, 200, 129, 52);
-
-        //    Rectangle tileSizeRectangle = new Rectangle();
-        //    tileSizeRectangle.VerticalAlignment = VerticalAlignment.Top;
-        //    tileSizeRectangle.Margin = new Thickness(0, -1, 0, 0);
-        //    tileSizeRectangle.Width = 50;
-
-        //    tileSizeRectangle.Height = 52 * currentTubeReference.NumberOfRepeatingLiquids;
-
-        //    tileSizeRectangle.Fill = brush;
-
-        //    gridElement.Children.Add(tileSizeRectangle);
-
-        //    return (brush, gridElement);
-        //}
-        //private void StartAnimatingSurface(ImageBrush brush, Grid container, Grid gridElement, int numberOfLiquids)
-        //{
-        //    if (brush is null)
-        //    {
-        //        return;
-        //    }
-
-        //    int yPosFrom = 390;
-        //    int xSize = 129;
-        //    int ySize = 800;
-
-        //    var viewportAnimation = new RectAnimation()
-        //    {
-        //        From = new Rect(0, yPosFrom + 52 * numberOfLiquids, xSize, ySize),
-        //        To = new Rect(180 * numberOfLiquids, yPosFrom, xSize, ySize),
-        //        Duration = TimeSpan.FromSeconds(0.8 * numberOfLiquids)
-        //    };
-        //    viewportAnimation.Completed += new EventHandler((sender, e) => ViewportAnimation_Completed(sender, e, container, gridElement));
-        //    brush.BeginAnimation(ImageBrush.ViewportProperty, viewportAnimation);
-        //}
-        //private void ViewportAnimation_Completed(object? sender, EventArgs e, Grid container, Grid gridElement)
-        //{
-        //    container.Children.Remove(gridElement);
-        //}
 
         //private void MoveAndTiltTube(TubeReference tubeReference)
         //{
