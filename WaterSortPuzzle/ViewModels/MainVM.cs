@@ -1,8 +1,8 @@
-﻿using Microsoft.Maui.Controls.Shapes;
-using System.Windows.Input;
-using Microsoft.Maui.Controls;
-using System.Threading.Channels;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using System.Collections.Specialized;
+using System.Threading.Channels;
+using System.Windows.Input;
 
 namespace WaterSortPuzzle.ViewModels
 {
@@ -873,6 +873,40 @@ namespace WaterSortPuzzle.ViewModels
         //    }
         //    throw new Exception("This tube should always have empty space.");
         //}
+        //internal void RippleSurfaceAnimation(TubeReference currentTubeReference)
+        //{
+        //    TubeControl tubeControl = (ContainerForTubes.Children[currentTubeReference.TubeId] as TubeControl)!;
+
+        //    // Getting reference to the main grid that contains individual liquids in a tube.
+        //    //Grid container = (GetDescendantByTypeAndName(tubeControl, typeof(Grid), "TubeGrid")) as Grid;
+        //    Grid container = (tubeControl.FindByName("TubeGrid") as Grid)!;
+
+        //    (var brush, var gridElement) = CreateVerticalTubeAnimationBackground(currentTubeReference);
+        //    container.Children.Add(gridElement);
+
+        //    Grid.SetRow(gridElement, GameState.Layers - 1 - currentTubeReference.TargetEmptyRow - currentTubeReference.NumberOfRepeatingLiquids + 1);
+        //    Grid.SetRowSpan(gridElement, currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
+
+        //    //Canvas.SetZIndex(borderElement, 3);
+        //    //Grid.SetZIndex(borderElement, 4);
+
+        //    StartAnimatingSurface(brush, container, gridElement, currentTubeReference.NumberOfRepeatingLiquids);
+        //}
+        internal void RippleSurfaceAnimation(TubeReference tubeReference)
+        {
+            tubeReference.TubeType.RippleEffectVisible = true;
+
+            //(var brush, var gridElement) = CreateVerticalTubeAnimationBackground(tubeReference);
+            ////container.Children.Add(gridElement);
+
+            //Grid.SetRow(gridElement, GameState.Layers - 1 - tubeReference.TargetEmptyRow - tubeReference.NumberOfRepeatingLiquids + 1);
+            //Grid.SetRowSpan(gridElement, tubeReference.NumberOfRepeatingLiquids > 0 ? tubeReference.NumberOfRepeatingLiquids : 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
+
+            ////Canvas.SetZIndex(borderElement, 3);
+            ////Grid.SetZIndex(borderElement, 4);
+
+            //StartAnimatingSurface(brush, container, gridElement, tubeReference.NumberOfRepeatingLiquids);
+        }
         //private (ImageBrush, Grid) CreateVerticalTubeAnimationBackground(TubeReference currentTubeReference)
         //{
         //    Grid gridElement = new Grid();
@@ -918,29 +952,6 @@ namespace WaterSortPuzzle.ViewModels
         //    gridElement.Children.Add(tileSizeRectangle);
 
         //    return (brush, gridElement);
-        //}
-        internal void RippleSurfaceAnimation(TubeReference tubeReference)
-        {
-            tubeReference.TubeType.RippleEffectVisible = true;
-        }
-        //internal void RippleSurfaceAnimation(TubeReference currentTubeReference)
-        //{
-        //    TubeControl tubeControl = (ContainerForTubes.Children[currentTubeReference.TubeId] as TubeControl)!;
-
-        //    // Getting reference to the main grid that contains individual liquids in a tube.
-        //    //Grid container = (GetDescendantByTypeAndName(tubeControl, typeof(Grid), "TubeGrid")) as Grid;
-        //    Grid container = (tubeControl.FindByName("TubeGrid") as Grid)!;
-
-        //    (var brush, var gridElement) = CreateVerticalTubeAnimationBackground(currentTubeReference);
-        //    container.Children.Add(gridElement);
-
-        //    Grid.SetRow(gridElement, GameState.Layers - 1 - currentTubeReference.TargetEmptyRow - currentTubeReference.NumberOfRepeatingLiquids + 1);
-        //    Grid.SetRowSpan(gridElement, currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
-
-        //    //Canvas.SetZIndex(borderElement, 3);
-        //    //Grid.SetZIndex(borderElement, 4);
-
-        //    StartAnimatingSurface(brush, container, gridElement, currentTubeReference.NumberOfRepeatingLiquids);
         //}
         //private void StartAnimatingSurface(ImageBrush brush, Grid container, Grid gridElement, int numberOfLiquids)
         //{

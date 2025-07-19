@@ -52,6 +52,10 @@
         </ScrollView>-->
 
             <!-- // Grid for Tubes // -->
+            <!--<StackLayout x:Name="TestStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
+                <Image Source="tube_surface_ripple_tall_non_transparent.png" />
+            </StackLayout>-->
+            
             <Grid Grid.Row="1" Margin="0,5,0,0">
                 <Grid.Style>
                     <Style TargetType="Grid">
@@ -96,17 +100,28 @@
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
                                     <Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*">
-                                        <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
+                                        <Grid
+                                            Grid.RowSpan="4"
+                                            ZIndex="1000"
+                                            IsVisible="{Binding RippleEffectVisible}"
+                                            BackgroundColor="Red"
+                                            Padding="0"
+                                            >
+                                            <!--<Image Source="Resources\Images\tube_surface_ripple_tallest.png" />-->
+                                            <Image
+                                                Margin="0"
+                                                Source="tube_surface_ripple_tallest.png"
+                                                Aspect="AspectFill"
+                                                TranslationX="30"
+                                                />
+                                        </Grid>
+
+                                        <!--<BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
                                         <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
                                         <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
-                                        <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
+                                        <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />-->
 
-                                        <BoxView
-                                            Grid.RowSpan="4"
-                                            Background="Red"
-                                            IsVisible="{Binding RippleEffectVisible}"
-                                            
-                                            />
+
                                     </Grid>
                                 </Border>
                                 <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center"

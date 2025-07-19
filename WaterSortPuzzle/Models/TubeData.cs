@@ -4,7 +4,7 @@
     {
         public int TubeId { get; set; }
         private static int tubeIdCounter = 0;
-        private bool rippleEffectVisible = false;
+        private bool rippleEffectVisible = true;
         public bool RippleEffectVisible { get => rippleEffectVisible; set { rippleEffectVisible = value; OnPropertyChanged(); } }
         public ObservableCollection<LiquidColor?> Layers { get; set; } = new ObservableCollection<LiquidColor?>();
         public TubeData()
