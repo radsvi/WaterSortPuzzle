@@ -267,7 +267,7 @@ namespace WaterSortPuzzle.ViewModels
             );
             var task = DrawTubesAsync(move.Source.X, move.Target.X);
 
-            //mainVM.RippleSurfaceAnimation(currentTubeReference);
+            RippleSurfaceAnimation(currentTubeReference);
             OnChangingGameState(move.Source.X, move.Target.X);
         }
         [RelayCommand(CanExecute = nameof(CanStepBack))]
@@ -568,7 +568,7 @@ namespace WaterSortPuzzle.ViewModels
         #region Moving Liquids
         //internal void OnTubeButtonClick(object obj)
         [RelayCommand]
-        public async void TubeButtonClick(object obj)
+        public async Task TubeButtonClick(object obj)
         {
             //await MainPage.DisplayAlert("Alert", $"Tube number [{tubeId}] was clicked", "OK");
 
@@ -612,7 +612,7 @@ namespace WaterSortPuzzle.ViewModels
                 //OnPropertyChanged(nameof(GameState.StepBackDisplay));
                 OnPropertyChanged(nameof(StepBackButtonText));
                 currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
-                //RippleSurfaceAnimation(currentTubeReference);
+                RippleSurfaceAnimation(currentTubeReference);
                 OnChangingGameState(SourceTube.TubeId, currentTubeReference.TubeId);
             }
             if (successAtLeastOnce == 0 && AppPreferences.UnselectTubeEvenOnIllegalMove == true)
@@ -919,6 +919,10 @@ namespace WaterSortPuzzle.ViewModels
 
         //    return (brush, gridElement);
         //}
+        internal void RippleSurfaceAnimation(TubeReference tubeReference)
+        {
+            tubeReference.TubeType.RippleEffectVisible = true;
+        }
         //internal void RippleSurfaceAnimation(TubeReference currentTubeReference)
         //{
         //    TubeControl tubeControl = (ContainerForTubes.Children[currentTubeReference.TubeId] as TubeControl)!;

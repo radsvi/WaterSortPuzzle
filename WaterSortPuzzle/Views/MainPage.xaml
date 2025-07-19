@@ -68,8 +68,8 @@
                         <GridItemsLayout Orientation="Vertical" Span="{Binding TubesPerLine}"/>
                     </CollectionView.ItemsLayout>
                     <!--<CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal" />
-                </CollectionView.ItemsLayout>-->
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>-->
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:TubeData">
                             <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0">
@@ -100,6 +100,13 @@
                                         <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
                                         <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
                                         <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
+
+                                        <BoxView
+                                            Grid.RowSpan="4"
+                                            Background="Red"
+                                            IsVisible="{Binding RippleEffectVisible}"
+                                            
+                                            />
                                     </Grid>
                                 </Border>
                                 <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center"
