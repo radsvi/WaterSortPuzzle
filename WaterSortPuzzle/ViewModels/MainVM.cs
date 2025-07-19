@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Threading.Channels;
 using System.Windows.Input;
 
@@ -908,30 +909,54 @@ namespace WaterSortPuzzle.ViewModels
                 });
             }
         }
-        internal void RippleSurfaceAnimation(TubeReference tubeReference)
+        internal async Task RippleSurfaceAnimation(TubeReference tubeReference)
         {
-            tubeReference.TubeType.RippleEffectVisible = true;
+            //tubeReference.TubeType.RippleEffectVisible = true;
 
             //var rippleElement = GetVisualTreeDescendantsByStyleId<Grid>(tubeReference.GridElement, Constants.rippleElementName);
             var rippleElement = GetVisualTreeDescendantsByStyleId<StackLayout>(tubeReference.GridElement, "RippleEffectElement");
             if (rippleElement is null)
                 return;
 
-            //int repeatCount = 2; // Adjust based on screen width
 
-            //for (int i = 0; i < repeatCount; i++)
-            //{
-            //    rippleElement.Children.Add(new Image
-            //    {
-            //        //Source = "tube_surface_ripple_tallest.png",
-            //        Source = "tube_surface_ripple_tall_non_transparent.png",
-            //    });
-            //}
+            for (int i = 0; i < tubeReference.NumberOfRepeatingLiquids * 4; i++)
+            {
+                rippleElement.Children.Add(new Image { Source = "tube_surface_ripple_tallest.png", TranslationY = 50 });
+            }
 
             //rippleElement.Children.Add(new Label { Text = "qwer" });
             //rippleElement.Children.Add(new Image { Source = "tube_surface_ripple_tall_non_transparent.png" });
 
-            rippleElement.Children.Add(RippleBackground);
+            //rippleElement.Children.Add(RippleBackground);
+
+            //await StartAnimatingSurface<StackLayout>(rippleElement);
+
+            // The actual animation part:
+
+            //StartAnimatingSurface(brush, container, gridElement, tubeReference.NumberOfRepeatingLiquids);
+            //private void StartAnimatingSurface(ImageBrush brush, Grid container, Grid gridElement, int numberOfLiquids)
+            uint duration = 800 * (uint)tubeReference.NumberOfRepeatingLiquids;
+
+            //await RippleBackground.TranslateTo(200, 0, duration, Easing.SinInOut);
+            //await RippleBackground.TranslateTo(1200, 0, duration);
+
+            //await rippleElement.TranslateTo(-200, -200, duration);
+            //await Task.WhenAll(
+            //    rippleElement.TranslateTo(-200, rippleElement.TranslationY, duration * 4), // X: 1 sec
+            //    rippleElement.TranslateTo(rippleElement.TranslationX, -200, duration)  // Y: 2 sec
+            //);
+
+            var xAnim = new Animation(v => rippleElement.TranslationX = v, 0, -200);
+            var yAnim = new Animation(v => rippleElement.TranslationY = v, 0, -200);
+
+            var parentAnim = new Animation();
+            parentAnim.Add(0, 1, xAnim);        // Full duration for X
+            parentAnim.Add(0, 0.5, yAnim);      // Y runs faster (ends halfway)
+
+            //parentAnim.Commit(this, "XYAnim", length: 2000, easing: Easing.SinInOut);
+
+            rippleElement.Children.Clear();
+            _ = rippleElement.TranslateTo(0, 0, 1);
 
 
             //tubeReference.GridElement.Children.Clear();
@@ -951,7 +976,7 @@ namespace WaterSortPuzzle.ViewModels
 
             //StartAnimatingSurface(brush, container, gridElement, tubeReference.NumberOfRepeatingLiquids);
         }
-        private static T? GetVisualTreeDescendantsByStyleId<T>(Element root, string styleId) where T : VisualElement
+        private static T? GetVisualTreeDescendantsByStyleId<T>(Element root, string styleId) where T : Layout
         {
             foreach (var child in root.GetVisualTreeDescendants())
             {
@@ -1029,10 +1054,10 @@ namespace WaterSortPuzzle.ViewModels
         //    viewportAnimation.Completed += new EventHandler((sender, e) => ViewportAnimation_Completed(sender, e, container, gridElement));
         //    brush.BeginAnimation(ImageBrush.ViewportProperty, viewportAnimation);
         //}
-        private void ViewportAnimation_Completed(object? sender, EventArgs e, Grid container, Grid gridElement)
-        {
-            container.Children.Remove(gridElement);
-        }
+        //private void ViewportAnimation_Completed(object? sender, EventArgs e, Grid container, Grid gridElement)
+        //{
+        //    container.Children.Remove(gridElement);
+        //}
 
         //private void MoveAndTiltTube(TubeReference tubeReference)
         //{

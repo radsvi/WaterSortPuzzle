@@ -115,10 +115,10 @@
                                                 />-->
                                         </StackLayout>
 
-                                        <!--<BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
+                                        <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
                                         <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
                                         <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
-                                        <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />-->
+                                        <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
 
 
                                     </Grid>
