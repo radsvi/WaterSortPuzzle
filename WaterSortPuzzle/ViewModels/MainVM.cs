@@ -23,6 +23,8 @@ namespace WaterSortPuzzle.ViewModels
             GameState.PropertyChanged += PropertyChangedHandler;
             AutoSolve.PropertyChanged += PropertyChangedHandler;
 
+            GenerateRippleBackground();
+
             //if (appPreferences.LastLevelBeforeClosing is null || appPreferences.LastLevelBeforeClosing.GameGrid.Length == 0)
             //{
             //    OnStart();
@@ -892,9 +894,51 @@ namespace WaterSortPuzzle.ViewModels
 
         //    StartAnimatingSurface(brush, container, gridElement, currentTubeReference.NumberOfRepeatingLiquids);
         //}
+        public StackLayout RippleBackground { get; set; } = new StackLayout { Orientation = StackOrientation.Horizontal };
+        private void GenerateRippleBackground()
+        {
+            //StackLayout stack = [];
+
+            for (int i = 0; i < 4; i++)
+            {
+                RippleBackground.Children.Add(new Image
+                {
+                    //Source = "tube_surface_ripple_tallest.png",
+                    Source = "tube_surface_ripple_tall_non_transparent.png",
+                });
+            }
+        }
         internal void RippleSurfaceAnimation(TubeReference tubeReference)
         {
             tubeReference.TubeType.RippleEffectVisible = true;
+
+            //var rippleElement = GetVisualTreeDescendantsByStyleId<Grid>(tubeReference.GridElement, Constants.rippleElementName);
+            var rippleElement = GetVisualTreeDescendantsByStyleId<StackLayout>(tubeReference.GridElement, "RippleEffectElement");
+            if (rippleElement is null)
+                return;
+
+            //int repeatCount = 2; // Adjust based on screen width
+
+            //for (int i = 0; i < repeatCount; i++)
+            //{
+            //    rippleElement.Children.Add(new Image
+            //    {
+            //        //Source = "tube_surface_ripple_tallest.png",
+            //        Source = "tube_surface_ripple_tall_non_transparent.png",
+            //    });
+            //}
+
+            //rippleElement.Children.Add(new Label { Text = "qwer" });
+            //rippleElement.Children.Add(new Image { Source = "tube_surface_ripple_tall_non_transparent.png" });
+
+            rippleElement.Children.Add(RippleBackground);
+
+
+            //tubeReference.GridElement.Children.Clear();
+            //tubeReference.GridElement.GetVisualTreeDescendants().Where(item => item.GetType() == typeof(Label)).First();
+            //var content = tubeReference.GridElement.GetVisualTreeDescendants();
+            //var content2 = tubeReference.GridElement.GetVisualTreeDescendants().Where(item => item.Sty ).First(); ;
+            //content[0].
 
             //(var brush, var gridElement) = CreateVerticalTubeAnimationBackground(tubeReference);
             ////container.Children.Add(gridElement);
@@ -906,6 +950,18 @@ namespace WaterSortPuzzle.ViewModels
             ////Grid.SetZIndex(borderElement, 4);
 
             //StartAnimatingSurface(brush, container, gridElement, tubeReference.NumberOfRepeatingLiquids);
+        }
+        private static T? GetVisualTreeDescendantsByStyleId<T>(Element root, string styleId) where T : VisualElement
+        {
+            foreach (var child in root.GetVisualTreeDescendants())
+            {
+                if (child is T vElem && vElem.StyleId == styleId)
+                {
+                    return vElem;
+                }
+            }
+
+            return null;
         }
         //private (ImageBrush, Grid) CreateVerticalTubeAnimationBackground(TubeReference currentTubeReference)
         //{
