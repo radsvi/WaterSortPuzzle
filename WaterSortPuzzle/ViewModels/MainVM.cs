@@ -608,12 +608,12 @@ namespace WaterSortPuzzle.ViewModels
             } while (success == true && SourceTube.TopMostLiquid is not null);
             if (successAtLeastOnce > 0)
             {
+                currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
                 DisplayChanges(currentTubeReference, currentLiquid);
 
 
                 //OnPropertyChanged(nameof(GameState.StepBackDisplay));
                 OnPropertyChanged(nameof(StepBackButtonText));
-                currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
                 OnChangingGameState(SourceTube.TubeId, currentTubeReference.TubeId);
             }
             if (successAtLeastOnce == 0 && AppPreferences.UnselectTubeEvenOnIllegalMove == true)
@@ -913,28 +913,21 @@ namespace WaterSortPuzzle.ViewModels
             if (rippleLayoutElement is null)
                 return;
 
-            var innerGrid = RippleSurfaceAnimationPrep(rippleLayoutElement);
-            //await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+            (var innerGrid, var image) = RippleSurfaceAnimationPrep(rippleLayoutElement, currentTubeReference, currentLiquid);
+            await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
 
-            //uint duration = 800 * (uint)currentTubeReference.NumberOfRepeatingLiquids;
-            //await innerGrid.TranslateTo(0, -200, 2000);
-            ////rippleLayoutElement.Children.Clear();
-            //rippleLayoutElement.Children.Remove(innerGrid);
+            uint duration = 800 * (uint)currentTubeReference.NumberOfRepeatingLiquids;
+            await image.TranslateTo(0, -50, 1000);
+            //rippleLayoutElement.Children.Clear();
+            rippleLayoutElement.Children.Remove(innerGrid);
         }
-        internal Grid? RippleSurfaceAnimationPrep<T>(T rippleLayoutElement) where T : Layout
+        internal (Grid, Image) RippleSurfaceAnimationPrep<T>(T rippleLayoutElement, TubeReference currentTubeReference, LiquidColor sourceLiquid) where T : Layout
         {
+            var innerGrid = new Grid { BackgroundColor = sourceLiquid.Brush, IsClippedToBounds = true, ZIndex = 1000 };
 
-            var innerGrid = new Grid { BackgroundColor = Colors.Red, IsClippedToBounds = true, ZIndex = 1000 };
+            Grid.SetRow(innerGrid, Constants.Layers - 1 - currentTubeReference.TargetEmptyRow);
+            Grid.SetRowSpan(innerGrid, currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
 
-            //Grid.SetRow(innerGrid, Constants.Layers - 1 - currentTubeReference.TargetEmptyRow - currentTubeReference.NumberOfRepeatingLiquids + 1);
-            //Grid.SetRowSpan(innerGrid, currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
-            Grid.SetRow(innerGrid, 3);
-            Grid.SetRowSpan(innerGrid, 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
-
-            //innerGrid.Children.Add(new BoxView { BackgroundColor = (Brush.LightBlue as SolidColorBrush).Color, HeightRequest = 200, Margin = new Thickness(0, 0, 0, 10) });
-            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_shallow.png", Aspect = Aspect.AspectFill, VerticalOptions = LayoutOptions.End });
-            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple_anim.gif", Aspect = Aspect.AspectFill, VerticalOptions = LayoutOptions.Start, IsAnimationPlaying = true });
-            //innerGrid.Children.Add(new Image { Source = "tube_surface_ripple.png", Aspect = Aspect.AspectFill, VerticalOptions = LayoutOptions.Start, TranslationY = 250 });
             var image = new Image {
                 Source = "tube_surface_ripple_anim.gif",
                 Aspect = Aspect.AspectFill,
@@ -943,13 +936,11 @@ namespace WaterSortPuzzle.ViewModels
                 WidthRequest = 46,
                 HeightRequest = 1200,
                 TranslationY = 30,
-                //TranslationY = -1000,
             };
             innerGrid.Children.Add(image);
-            //rippleElement.Children.Add(innerGrid);
             rippleLayoutElement.Children.Add(innerGrid);
 
-            return innerGrid;
+            return (innerGrid, image);
         }
         private static T? GetVisualTreeDescendantsByStyleId<T>(Element root, string styleId) where T : Layout
         {
