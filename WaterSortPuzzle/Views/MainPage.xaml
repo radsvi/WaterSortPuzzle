@@ -100,25 +100,29 @@
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
                                     <Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*" x:Name="RippleEffectElement">
-                                        <!--<Grid
-                                            Grid.RowSpan="4"
-                                            ZIndex="1000"
-                                            x:Name="RippleEffectElement"
-                                            >
-                                            <Image
-                                                Margin="0"
-                                                Source="tube_surface_ripple_tallest.png"
-                                                Aspect="AspectFill"
-                                                TranslationX="30"
-                                                />
-                                        </Grid>-->
-
                                         <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
                                         <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
                                         <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
                                         <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
 
-
+                                        <Grid
+                                            IsVisible="{Binding RippleGridVisible}"
+                                            ZIndex="1"
+                                            BackgroundColor="{Binding RippleBackgroundColor}"
+                                            IsClippedToBounds="True"
+                                            Grid.Row="{Binding RippleGridRow}"
+                                            Grid.RowSpan="{Binding RippleGridRowSpan}"
+                                            >
+                                            <Image
+                                                Source="tube_surface_ripple_anim.gif.png"
+                                                Aspect="AspectFill"
+                                                VerticalOptions="End"
+                                                IsAnimationPlaying="True"
+                                                WidthRequest="46"
+                                                HeightRequest="1200"
+                                                TranslationX="{x:Static models:Constants.TubeImageOffsetVisual}"
+                                                />
+                                        </Grid>
                                     </Grid>
                                 </Border>
                                 <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center"

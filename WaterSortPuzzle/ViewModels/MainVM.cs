@@ -901,11 +901,13 @@ namespace WaterSortPuzzle.ViewModels
             }
             else
             {
-                var rippleLayoutElement = GetVisualTreeDescendantsByStyleId<Grid>(currentTubeReference.GridElement, "RippleEffectElement");
-                if (rippleLayoutElement is null)
-                    return;
+                //var rippleLayoutElement = GetVisualTreeDescendantsByStyleId<Grid>(currentTubeReference.GridElement, "RippleEffectElement");
+                //if (rippleLayoutElement is null)
+                //    return;
 
-                (var innerGrid, var image) = RippleSurfaceBackgroundCreation(rippleLayoutElement, currentTubeReference, currentLiquid);
+                //(var innerGrid, var image) = RippleSurfaceBackgroundCreation(rippleLayoutElement, currentTubeReference, currentLiquid);
+
+                currentTubeReference.TubeType.RippleGridVisible = true;
 
                 await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
 
@@ -915,7 +917,8 @@ namespace WaterSortPuzzle.ViewModels
 
                 await image.TranslateTo(0, distance, duration);
                 //rippleLayoutElement.Children.Clear();
-                rippleLayoutElement.Children.Remove(innerGrid);
+                //rippleLayoutElement.Children.Remove(innerGrid);
+                currentTubeReference.TubeType.RippleGridVisible = false;
             }
         }
         internal (Grid, Image) RippleSurfaceBackgroundCreation<T>(T rippleLayoutElement, TubeReference currentTubeReference, LiquidColor sourceLiquid) where T : Layout
