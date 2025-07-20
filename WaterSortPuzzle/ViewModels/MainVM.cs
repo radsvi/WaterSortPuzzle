@@ -19,8 +19,6 @@ namespace WaterSortPuzzle.ViewModels
             GameState.PropertyChanged += PropertyChangedHandler;
             AutoSolve.PropertyChanged += PropertyChangedHandler;
 
-            GenerateRippleBackground();
-
             //if (appPreferences.LastLevelBeforeClosing is null || appPreferences.LastLevelBeforeClosing.GameGrid.Length == 0)
             //{
             //    OnStart();
@@ -242,11 +240,11 @@ namespace WaterSortPuzzle.ViewModels
             AutoSolveUsed = true;
         }
         [RelayCommand]
-        public void StepThrough()
+        public async Task StepThrough()
         {
-            MakeAMove(AutoSolve!.CompleteSolution[--AutoSolve.CurrentSolutionStep]);
+            await MakeAMove(AutoSolve!.CompleteSolution[--AutoSolve.CurrentSolutionStep]);
         }
-        private void MakeAMove(ValidMove move)
+        private async Task MakeAMove(ValidMove move)
         {
             //Debug.WriteLine($"# [{node.Source.X},{node.Source.Y}] => [{node.Target.X},{node.Target.Y}] {{{node.Source.ColorName}}} {{HowMany {node.Source.NumberOfRepeatingLiquids}}}");
 
@@ -263,9 +261,15 @@ namespace WaterSortPuzzle.ViewModels
                 move.Target.Y,
                 move.Source.NumberOfRepeatingLiquids
             );
-            var task = DrawTubesAsync(move.Source.X, move.Target.X);
+            //var task = DrawTubesAsync(move.Source.X, move.Target.X);
 
             //RippleSurfaceAnimationPrep(currentTubeReference, LiquidHelper.GetKey((LiquidColorName)move.Source.ColorName));
+
+            //currentTubeReference.GridElement
+            //VisualTreeElementExtensions.GetVisualTreeDescendants();
+
+            await DisplayChanges(currentTubeReference, LiquidHelper.GetKey((LiquidColorName)move.Source.ColorName!));
+
             OnChangingGameState(move.Source.X, move.Target.X);
         }
         [RelayCommand(CanExecute = nameof(CanStepBack))]
@@ -609,7 +613,7 @@ namespace WaterSortPuzzle.ViewModels
             if (successAtLeastOnce > 0)
             {
                 currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
-                DisplayChanges(currentTubeReference, currentLiquid);
+                await DisplayChanges(currentTubeReference, currentLiquid);
 
 
                 //OnPropertyChanged(nameof(GameState.StepBackDisplay));
@@ -889,20 +893,6 @@ namespace WaterSortPuzzle.ViewModels
 
         //    StartAnimatingSurface(brush, container, gridElement, currentTubeReference.NumberOfRepeatingLiquids);
         //}
-        public StackLayout RippleBackground { get; set; } = new StackLayout { Orientation = StackOrientation.Horizontal };
-        private void GenerateRippleBackground()
-        {
-            //StackLayout stack = [];
-
-            for (int i = 0; i < 4; i++)
-            {
-                RippleBackground.Children.Add(new Image
-                {
-                    //Source = "tube_surface_ripple_tallest.png",
-                    Source = "tube_surface_ripple_tall_non_transparent.png",
-                });
-            }
-        }
         async Task DisplayChanges(TubeReference currentTubeReference, LiquidColor currentLiquid)
         {
             if (AppPreferences.InstantAnimations)
@@ -919,8 +909,11 @@ namespace WaterSortPuzzle.ViewModels
 
                 await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
 
-                uint duration = 800 * (uint)currentTubeReference.NumberOfRepeatingLiquids;
-                await image.TranslateTo(0, -50, 1000);
+                uint duration = 500 * (uint)currentTubeReference.NumberOfRepeatingLiquids;
+                int distancePerLiquid = 40;
+                int distance = Constants.TubeImageOffset - (currentTubeReference.NumberOfRepeatingLiquids * distancePerLiquid);
+
+                await image.TranslateTo(0, distance, duration);
                 //rippleLayoutElement.Children.Clear();
                 rippleLayoutElement.Children.Remove(innerGrid);
             }
@@ -939,7 +932,7 @@ namespace WaterSortPuzzle.ViewModels
                 IsAnimationPlaying = true,
                 WidthRequest = 46,
                 HeightRequest = 1200,
-                TranslationY = 30,
+                TranslationY = Constants.TubeImageOffset,
             };
             innerGrid.Children.Add(image);
             rippleLayoutElement.Children.Add(innerGrid);

@@ -16,6 +16,7 @@ namespace WaterSortPuzzle.Models
         public const int MaximumNumberOfExtraTubesAllowedToBeAdded = 4;
         public const int MaxTubesPerLine = 9;
         public const int MaxStepBack = 5;
+        public const int TubeImageOffset = 30;
 
         public const string logFolderName = "log";
 

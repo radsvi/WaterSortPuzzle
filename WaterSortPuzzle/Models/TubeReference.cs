@@ -33,10 +33,12 @@
             {
                 if (value != targetEmptyRow)
                 {
-                    if (targetEmptyRow <= Constants.Layers)
-                        targetEmptyRow = value;
-                    else
-                        targetEmptyRow = Constants.Layers;
+                    //if (targetEmptyRow <= Constants.Layers)
+                    //    targetEmptyRow = value;
+                    //else
+                    //    targetEmptyRow = Constants.Layers;
+
+                    targetEmptyRow = value;
                 }
             }
         }
@@ -48,10 +50,12 @@
             {
                 if (value != numberOfRepeatingLiquids)
                 {
-                    if (TargetEmptyRow + value <= Constants.Layers)
-                        numberOfRepeatingLiquids = value;
-                    else
-                        numberOfRepeatingLiquids = Constants.Layers - TargetEmptyRow;
+                    //if (TargetEmptyRow + value <= Constants.Layers)
+                    //    numberOfRepeatingLiquids = value;
+                    //else
+                    //    numberOfRepeatingLiquids = Constants.Layers - TargetEmptyRow;
+
+                    numberOfRepeatingLiquids = value;
                 }
             }
         }
