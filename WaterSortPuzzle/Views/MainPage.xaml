@@ -76,11 +76,11 @@
                         <DataTemplate x:DataType="models:TubeData">
                             <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0">
                                 <Grid.Behaviors>
-                                    <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" />
+                                    <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" />
                                 </Grid.Behaviors>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}">
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}">
                                         <TapGestureRecognizer.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiValueConv}">
                                                 <MultiBinding.Bindings>

@@ -19,7 +19,7 @@ namespace WaterSortPuzzle.Behaviors
 
         //public double XTo { get; set; } = 0;
         //public double YTo { get; set; } = 30;
-        public uint Duration { get; set; } = 75;
+        public uint Duration { get; set; } = 750;
 
         private View? associatedView;
 
