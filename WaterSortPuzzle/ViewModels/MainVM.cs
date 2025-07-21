@@ -855,22 +855,38 @@ namespace WaterSortPuzzle.ViewModels
 
             TubesItemsSource[1].IsRaised = !TubesItemsSource[1].IsRaised;
         }
-        private static async void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
+        private static void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
         {
             if (tubeReference.VisualElement is null)
                 return;
 
-            uint speedMS = 75;
+            //uint speedMS = 75;
 
             if (verticalAnimation == VerticalAnimation.Raise)
             {
-                await tubeReference.GridElement.TranslateTo(0, -20, speedMS);
+                tubeReference.TubeData.IsRaised = true;
             }
             else
             {
-                await tubeReference.GridElement.TranslateTo(0, 0, speedMS);
+                tubeReference.TubeData.IsRaised = false;
             }
         }
+        //private static async void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
+        //{
+        //    if (tubeReference.VisualElement is null)
+        //        return;
+
+        //    uint speedMS = 75;
+
+        //    if (verticalAnimation == VerticalAnimation.Raise)
+        //    {
+        //        await tubeReference.GridElement.TranslateTo(0, -20, speedMS);
+        //    }
+        //    else
+        //    {
+        //        await tubeReference.GridElement.TranslateTo(0, 0, speedMS);
+        //    }
+        //}
         //private int GetFirstEmptyLayer(TubeReference lastClickedTube)
         //{
         //    for (int y = 0; y < GameState.Layers; y++)
@@ -915,7 +931,7 @@ namespace WaterSortPuzzle.ViewModels
 
                 //(var innerGrid, var image) = RippleSurfaceBackgroundCreation(rippleLayoutElement, currentTubeReference, currentLiquid);
 
-                currentTubeReference.TubeType.RippleGridVisible = true;
+                currentTubeReference.TubeData.RippleGridVisible = true;
 
                 await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
 
@@ -926,7 +942,7 @@ namespace WaterSortPuzzle.ViewModels
                 //await image.TranslateTo(0, distance, duration);
                 //rippleLayoutElement.Children.Clear();
                 //rippleLayoutElement.Children.Remove(innerGrid);
-                currentTubeReference.TubeType.RippleGridVisible = false;
+                currentTubeReference.TubeData.RippleGridVisible = false;
             }
         }
         internal (Grid, Image) RippleSurfaceBackgroundCreation<T>(T rippleLayoutElement, TubeReference currentTubeReference, LiquidColor sourceLiquid) where T : Layout

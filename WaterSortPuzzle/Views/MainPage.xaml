@@ -76,10 +76,7 @@
                         <DataTemplate x:DataType="models:TubeData">
                             <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0">
                                 <Grid.Behaviors>
-                                    <behaviors:TranslateOnBoolChangedBehavior 
-                                        Trigger="{Binding IsRaised}" 
-                                        XTo="150"
-                                        Duration="500" />
+                                    <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" />
                                 </Grid.Behaviors>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1"

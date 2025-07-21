@@ -5,7 +5,7 @@
         private int targetEmptyRow;
         public TubeReference(TubeData tube, TapGestureRecognizer visualElement, int tubeId, Grid gridElement)
         {
-            TubeType = tube;
+            TubeData = tube;
             VisualElement = visualElement;
             TubeId = tubeId;
             GridElement = gridElement;
@@ -22,7 +22,7 @@
         //public Tube Tube { get; set; }
         public TapGestureRecognizer VisualElement { get; private set; }
         public int TubeId { get; private set; }
-        public TubeData TubeType { get; private set; }
+        public TubeData TubeData { get; private set; }
         public Grid GridElement { get; private set; }
         public LiquidColor TopMostLiquid {  get; set; }
         public LiquidColor LastColorMoved { get; set; }

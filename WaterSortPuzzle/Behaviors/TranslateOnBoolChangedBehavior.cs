@@ -17,9 +17,9 @@ namespace WaterSortPuzzle.Behaviors
             set => SetValue(TriggerProperty, value);
         }
 
-        public double XTo { get; set; } = 100;
-        public double YTo { get; set; } = 0;
-        public uint Duration { get; set; } = 250;
+        //public double XTo { get; set; } = 0;
+        //public double YTo { get; set; } = 30;
+        public uint Duration { get; set; } = 75;
 
         private View? associatedView;
 
@@ -50,7 +50,11 @@ namespace WaterSortPuzzle.Behaviors
             {
                 if ((bool)newValue)
                 {
-                    await behavior.associatedView.TranslateTo(behavior.XTo, behavior.YTo, behavior.Duration);
+                    await behavior.associatedView.TranslateTo(0, -20, behavior.Duration);
+                }
+                else
+                {
+                    await behavior.associatedView.TranslateTo(0, 0, behavior.Duration);
                 }
             }
         }
