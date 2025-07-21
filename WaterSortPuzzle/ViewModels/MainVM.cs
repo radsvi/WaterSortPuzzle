@@ -261,6 +261,12 @@ namespace WaterSortPuzzle.ViewModels
                 move.Target.Y,
                 move.Source.NumberOfRepeatingLiquids
             );
+
+            var sourceTubeReference = new TubeReference(
+                move.Source.X,
+                move.GameState[move.Target.X, move.Target.Y],
+                move.Source.Y
+            );
             //var task = DrawTubesAsync(move.Source.X, move.Target.X);
 
             //RippleSurfaceAnimationPrep(currentTubeReference, LiquidHelper.GetKey((LiquidColorName)move.Source.ColorName));
@@ -268,7 +274,7 @@ namespace WaterSortPuzzle.ViewModels
             //currentTubeReference.GridElement
             //VisualTreeElementExtensions.GetVisualTreeDescendants();
 
-            await DisplayChanges(currentTubeReference, LiquidHelper.GetKey((LiquidColorName)move.Source.ColorName!));
+            await DisplayChanges(currentTubeReference, sourceTubeReference, LiquidHelper.GetKey((LiquidColorName)move.Source.ColorName!));
 
             OnChangingGameState(move.Source.X, move.Target.X);
         }
@@ -613,7 +619,7 @@ namespace WaterSortPuzzle.ViewModels
             if (successAtLeastOnce > 0)
             {
                 currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
-                await DisplayChanges(currentTubeReference, currentLiquid);
+                await DisplayChanges(currentTubeReference, SourceTube, currentLiquid);
 
 
                 //OnPropertyChanged(nameof(GameState.StepBackDisplay));
@@ -917,11 +923,11 @@ namespace WaterSortPuzzle.ViewModels
 
         //    StartAnimatingSurface(brush, container, gridElement, currentTubeReference.NumberOfRepeatingLiquids);
         //}
-        async Task DisplayChanges(TubeReference currentTubeReference, LiquidColor currentLiquid)
+        async Task DisplayChanges(TubeReference currentTubeReference, TubeReference sourceTube, LiquidColor currentLiquid)
         {
             if (AppPreferences.InstantAnimations)
             {
-                await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+                await DrawTubesAsync(sourceTube.TubeId, currentTubeReference.TubeId);
             }
             else
             {
@@ -932,8 +938,9 @@ namespace WaterSortPuzzle.ViewModels
                 //(var innerGrid, var image) = RippleSurfaceBackgroundCreation(rippleLayoutElement, currentTubeReference, currentLiquid);
 
                 currentTubeReference.TubeData.RippleGridVisible = true;
+                //currentTubeReference.TubeData.RippleBackgroundColor = sourceTube.
 
-                await DrawTubesAsync(SourceTube.TubeId, currentTubeReference.TubeId);
+                await DrawTubesAsync(sourceTube.TubeId, currentTubeReference.TubeId);
 
                 uint duration = 500 * (uint)currentTubeReference.NumberOfRepeatingLiquids;
                 int distancePerLiquid = 40;
@@ -966,18 +973,18 @@ namespace WaterSortPuzzle.ViewModels
 
             return (innerGrid, image);
         }
-        private static T? GetVisualTreeDescendantsByStyleId<T>(Element root, string styleId) where T : Layout
-        {
-            foreach (var child in root.GetVisualTreeDescendants())
-            {
-                if (child is T vElem && vElem.StyleId == styleId)
-                {
-                    return vElem;
-                }
-            }
+        //private static T? GetVisualTreeDescendantsByStyleId<T>(Element root, string styleId) where T : Layout
+        //{
+        //    foreach (var child in root.GetVisualTreeDescendants())
+        //    {
+        //        if (child is T vElem && vElem.StyleId == styleId)
+        //        {
+        //            return vElem;
+        //        }
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         //private void MoveAndTiltTube(TubeReference tubeReference)
         //{

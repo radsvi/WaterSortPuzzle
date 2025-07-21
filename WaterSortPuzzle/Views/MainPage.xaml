@@ -112,8 +112,10 @@
                                             BackgroundColor="{Binding RippleBackgroundColor}"
                                             IsClippedToBounds="True"
                                             Grid.Row="{Binding RippleGridRow}"
-                                            Grid.RowSpan="{Binding RippleGridRowSpan}"
-                                            >
+                                            Grid.RowSpan="{Binding RippleGridRowSpan}">
+                                            <!--<Grid.Behaviors>
+                                                <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" />
+                                            </Grid.Behaviors>-->
                                             <Image
                                                 Source="tube_surface_ripple_anim.gif.png"
                                                 Aspect="AspectFill"

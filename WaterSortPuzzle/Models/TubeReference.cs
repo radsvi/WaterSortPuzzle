@@ -17,6 +17,12 @@
             TargetEmptyRow = targetEmptyRow;
             NumberOfRepeatingLiquids = numberOfRepeatingLiquids;
         }
+        public TubeReference(int tubeId, LiquidColor lastColorMoved, int targetEmptyRow)
+        {
+            TubeId = tubeId;
+            LastColorMoved = lastColorMoved;
+            TargetEmptyRow = targetEmptyRow;
+        }
 
         //public List<object> Contents { get; set; } = new List<object>();
         //public Tube Tube { get; set; }
