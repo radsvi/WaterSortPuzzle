@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using System.Windows.Input;
 
 namespace WaterSortPuzzle.ViewModels
 {
@@ -847,6 +848,12 @@ namespace WaterSortPuzzle.ViewModels
         //}
         #endregion
         #region Animation
+        public event Func<Task> RequestMove;
+        public ICommand MoveCommand => new Command(async () =>
+        {
+            if (RequestMove != null)
+                await RequestMove.Invoke();
+        });
         private static async void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
         {
             if (tubeReference.VisualElement is null)
