@@ -18,10 +18,5 @@ namespace WaterSortPuzzle.Views
             //var mainVM = new MainVM(this);
             BindingContext = mainVM;
         }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            MyImage
-        }
     }
 }
