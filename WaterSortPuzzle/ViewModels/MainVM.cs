@@ -952,6 +952,7 @@ namespace WaterSortPuzzle.ViewModels
                 currentTubeReference.TubeData.RippleGridRow = Constants.Layers - 1 - currentTubeReference.TargetEmptyRow;
                 currentTubeReference.TubeData.RippleGridRowSpan = currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1; // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
 
+
                 //await image.TranslateTo(0, distance, duration);
                 //rippleLayoutElement.Children.Clear();
                 //rippleLayoutElement.Children.Remove(innerGrid);

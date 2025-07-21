@@ -76,7 +76,7 @@
                         <DataTemplate x:DataType="models:TubeData">
                             <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0">
                                 <Grid.Behaviors>
-                                    <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" />
+                                    <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" YTo="-20" />
                                 </Grid.Behaviors>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1"
@@ -107,15 +107,15 @@
                                         <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
 
                                         <StackLayout
-                                            IsVisible="True"
+                                            IsVisible="False"
                                             ZIndex="1"
-                                            BackgroundColor="{Binding RippleBackgroundColor}"
+                                            BackgroundColor="#7F000000"
                                             IsClippedToBounds="True"
                                             Grid.Row="{Binding RippleGridRow}"
                                             Grid.RowSpan="{Binding RippleGridRowSpan}"><!--BackgroundColor="{Binding RippleBackgroundColor}"-->
-                                            <!--<Grid.Behaviors>
-                                                <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" />
-                                            </Grid.Behaviors>-->
+                                            <StackLayout.Behaviors>
+                                                <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding RippleGridVisible}" Duration="1000" YTo="-40" DoRippleEffect="True"  />
+                                            </StackLayout.Behaviors>
                                             <Image
                                                 Source="tube_surface_ripple_anim.gif"
                                                 Aspect="AspectFill"

@@ -10,7 +10,7 @@
             get => isRaised;
             set { isRaised = value; OnPropertyChanged(); }
         }
-        private bool rippleEffectVisible = true;
+        private bool rippleEffectVisible = false;
         public bool RippleGridVisible
         {
             get => rippleEffectVisible;
