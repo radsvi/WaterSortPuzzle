@@ -860,6 +860,9 @@ namespace WaterSortPuzzle.ViewModels
             //ShouldAnimate = true;  // trigger animation
 
             TubesItemsSource[1].IsRaised = !TubesItemsSource[1].IsRaised;
+
+            //TubesItemsSource[1].RippleGridRow += 50;
+            //TubesItemsSource[2].RippleGridRow -= 50;
         }
         private static void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
         {
@@ -938,8 +941,7 @@ namespace WaterSortPuzzle.ViewModels
                 //(var innerGrid, var image) = RippleSurfaceBackgroundCreation(rippleLayoutElement, currentTubeReference, currentLiquid);
 
                 currentTubeReference.TubeData.RippleGridVisible = true;
-                //currentTubeReference.TubeData.RippleBackgroundColor = currentLiquid.Brush;
-                currentTubeReference.TubeData.RippleBackgroundColor = Colors.Red;
+                currentTubeReference.TubeData.RippleBackgroundColor = currentLiquid.Brush;
 
                 await DrawTubesAsync(sourceTube.TubeId, currentTubeReference.TubeId);
 

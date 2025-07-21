@@ -101,31 +101,38 @@
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
                                     <Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*" x:Name="RippleEffectElement">
-                                        <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
+                                        <!--<BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
                                         <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
                                         <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
-                                        <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
+                                        <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />-->
 
-                                        <Grid
-                                            IsVisible="{Binding RippleGridVisible}"
+                                        <StackLayout
+                                            IsVisible="True"
                                             ZIndex="1"
-                                            BackgroundColor="{Binding RippleBackgroundColor}"
+                                            
                                             IsClippedToBounds="True"
                                             Grid.Row="{Binding RippleGridRow}"
-                                            Grid.RowSpan="{Binding RippleGridRowSpan}">
+                                            Grid.RowSpan="{Binding RippleGridRowSpan}"><!--BackgroundColor="{Binding RippleBackgroundColor}"-->
                                             <!--<Grid.Behaviors>
                                                 <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" />
                                             </Grid.Behaviors>-->
                                             <Image
-                                                Source="tube_surface_ripple_anim.gif.png"
+                                                Source="tube_surface_ripple_narrow.png"
                                                 Aspect="AspectFill"
                                                 VerticalOptions="End"
-                                                IsAnimationPlaying="True"
-                                                WidthRequest="46"
-                                                HeightRequest="1200"
-                                                TranslationX="{x:Static models:Constants.TubeImageOffsetVisual}"
-                                                />
-                                        </Grid>
+                                                TranslationY="-100"
+                                                x:Name="MyImage"
+                                                
+                                                /> <!--TranslationX="{x:Static models:Constants.TubeImageOffsetVisual}"-->
+<!--
+Source="tube_surface_ripple_anim.gif"                                          
+Source="dotnet_bot.png"                                          
+IsAnimationPlaying="True"
+WidthRequest="46"
+HeightRequest="1200"
+TranslationY="30"
+-->
+                                        </StackLayout>
                                     </Grid>
                                 </Border>
                                 <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center"
@@ -161,8 +168,9 @@
                     <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
                 </Border>
 
-                <StackLayout x:Name="TestStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
+                <StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
                     <Button Text="Animate" Command="{Binding TriggerAnimationCommand}" />
+                    <Button Text="Animate codebehind" Clicked="Button_Clicked" />
                 </StackLayout>
             </Grid>
 
