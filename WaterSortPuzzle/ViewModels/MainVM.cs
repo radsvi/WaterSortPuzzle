@@ -1,5 +1,4 @@
 ﻿using System.Collections.Specialized;
-using System.Windows.Input;
 
 namespace WaterSortPuzzle.ViewModels
 {
@@ -848,12 +847,14 @@ namespace WaterSortPuzzle.ViewModels
         //}
         #endregion
         #region Animation
-        public event Func<Task> RequestMove;
-        public ICommand MoveCommand => new Command(async () =>
+        [RelayCommand]
+        private void TriggerAnimation()
         {
-            if (RequestMove != null)
-                await RequestMove.Invoke();
-        });
+            //ShouldAnimate = false; // reset if needed
+            //ShouldAnimate = true;  // trigger animation
+
+            TubesItemsSource[1].IsRaised = !TubesItemsSource[1].IsRaised;
+        }
         private static async void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
         {
             if (tubeReference.VisualElement is null)
@@ -922,7 +923,7 @@ namespace WaterSortPuzzle.ViewModels
                 int distancePerLiquid = 40;
                 int distance = Constants.TubeImageOffset - (currentTubeReference.NumberOfRepeatingLiquids * distancePerLiquid);
 
-                await image.TranslateTo(0, distance, duration);
+                //await image.TranslateTo(0, distance, duration);
                 //rippleLayoutElement.Children.Clear();
                 //rippleLayoutElement.Children.Remove(innerGrid);
                 currentTubeReference.TubeType.RippleGridVisible = false;

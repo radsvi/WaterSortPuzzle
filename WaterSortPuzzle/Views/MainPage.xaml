@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:WaterSortPuzzle.ViewModels"
+             xmlns:behaviors="clr-namespace:WaterSortPuzzle.Behaviors"
              xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
              xmlns:models="clr-namespace:WaterSortPuzzle.Models"
              xmlns:controls="clr-namespace:WaterSortPuzzle.Views.Controls"
@@ -52,9 +53,6 @@
         </ScrollView>-->
 
             <!-- // Grid for Tubes // -->
-            <!--<StackLayout x:Name="TestStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
-                <Image Source="tube_surface_ripple_tall_non_transparent.png" />
-            </StackLayout>-->
             
             <Grid Grid.Row="1" Margin="0,5,0,0">
                 <Grid.Style>
@@ -77,6 +75,12 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:TubeData">
                             <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0">
+                                <Grid.Behaviors>
+                                    <behaviors:TranslateOnBoolChangedBehavior 
+                                        Trigger="{Binding IsRaised}" 
+                                        XTo="150"
+                                        Duration="500" />
+                                </Grid.Behaviors>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1"
                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}">
@@ -157,6 +161,10 @@
                 <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
                     <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
                 </Border>
+
+                <StackLayout x:Name="TestStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
+                    <Button Text="Animate" Command="{Binding TriggerAnimationCommand}" />
+                </StackLayout>
             </Grid>
 
             <!--#region Bottom section -->

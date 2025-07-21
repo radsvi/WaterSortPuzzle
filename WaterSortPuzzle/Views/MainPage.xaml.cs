@@ -16,10 +16,6 @@ namespace WaterSortPuzzle.Views
             //BindingContext = new MainVM();
             //BindingContext = ServiceHelper.GetService<MainVM>();
             //var mainVM = new MainVM(this);
-            mainVM.RequestMove += async () =>
-            {
-                await MyLabel.TranslateTo(100, 0, 500); // x, y, duration
-            };
             BindingContext = mainVM;
         }
     }

@@ -15,11 +15,13 @@ global using Newtonsoft.Json;
 
 
 
+global using WaterSortPuzzle.Behaviors;
 global using WaterSortPuzzle.Converters;
 global using WaterSortPuzzle.Enums;
 global using WaterSortPuzzle.Helpers;
 global using WaterSortPuzzle.Models;
 global using WaterSortPuzzle.MVVM;
+//global using WaterSortPuzzle.Services;
 global using WaterSortPuzzle.ViewModels;
 global using WaterSortPuzzle.Views;
 global using WaterSortPuzzle.Views.Controls;

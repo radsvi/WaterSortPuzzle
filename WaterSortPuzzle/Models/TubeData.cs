@@ -4,6 +4,8 @@
     {
         public int TubeId { get; set; }
         private static int tubeIdCounter = 0;
+        private bool isRaised;
+        public bool IsRaised { get => isRaised; set { isRaised = value; OnPropertyChanged(); } }
         private bool rippleEffectVisible = true;
         public bool RippleGridVisible { get => rippleEffectVisible; set { rippleEffectVisible = value; OnPropertyChanged(); } }
         private Color rippleBackgroundColor = Colors.Transparent;
