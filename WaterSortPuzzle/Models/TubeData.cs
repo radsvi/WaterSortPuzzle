@@ -2,18 +2,38 @@
 {
     public partial class TubeData : ObservableObject
     {
-        public int TubeId { get; set; }
         private static int tubeIdCounter = 0;
+        public int TubeId { get; set; }
         private bool isRaised;
-        public bool IsRaised { get => isRaised; set { isRaised = value; OnPropertyChanged(); } }
+        public bool IsRaised
+        {
+            get => isRaised;
+            set { isRaised = value; OnPropertyChanged(); }
+        }
         private bool rippleEffectVisible = true;
-        public bool RippleGridVisible { get => rippleEffectVisible; set { rippleEffectVisible = value; OnPropertyChanged(); } }
+        public bool RippleGridVisible
+        {
+            get => rippleEffectVisible;
+            set { rippleEffectVisible = value; OnPropertyChanged(); }
+        }
         private Color rippleBackgroundColor = Colors.Transparent;
-        public Color RippleBackgroundColor { get => rippleBackgroundColor; set { rippleBackgroundColor = value; OnPropertyChanged(); } }
+        public Color RippleBackgroundColor
+        {
+            get => rippleBackgroundColor;
+            set { rippleBackgroundColor = value; OnPropertyChanged(); }
+        }
         private int rippleGridRow = 0;
-        public int RippleGridRow { get => rippleGridRow; set { rippleGridRow = value; OnPropertyChanged(); } }
+        public int RippleGridRow
+        {
+            get => rippleGridRow;
+            set { rippleGridRow = value; OnPropertyChanged(); }
+        }
         private int rippleGridRowSpan = 1;
-        public int RippleGridRowSpan { get => rippleGridRowSpan; set { rippleGridRowSpan = value; OnPropertyChanged(); } }
+        public int RippleGridRowSpan
+        {
+            get => rippleGridRowSpan;
+            set { rippleGridRowSpan = value; OnPropertyChanged(); }
+        }
         public ObservableCollection<LiquidColor?> Layers { get; set; } = new ObservableCollection<LiquidColor?>();
         public TubeData()
         {

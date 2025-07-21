@@ -264,7 +264,7 @@ namespace WaterSortPuzzle.ViewModels
 
             var sourceTubeReference = new TubeReference(
                 move.Source.X,
-                move.GameState[move.Target.X, move.Target.Y],
+                move.GameState[move.Source.X, move.Source.Y],
                 move.Source.Y
             );
             //var task = DrawTubesAsync(move.Source.X, move.Target.X);
@@ -938,7 +938,8 @@ namespace WaterSortPuzzle.ViewModels
                 //(var innerGrid, var image) = RippleSurfaceBackgroundCreation(rippleLayoutElement, currentTubeReference, currentLiquid);
 
                 currentTubeReference.TubeData.RippleGridVisible = true;
-                //currentTubeReference.TubeData.RippleBackgroundColor = sourceTube.
+                //currentTubeReference.TubeData.RippleBackgroundColor = currentLiquid.Brush;
+                currentTubeReference.TubeData.RippleBackgroundColor = Colors.Red;
 
                 await DrawTubesAsync(sourceTube.TubeId, currentTubeReference.TubeId);
 
@@ -946,10 +947,14 @@ namespace WaterSortPuzzle.ViewModels
                 int distancePerLiquid = 40;
                 int distance = Constants.TubeImageOffset - (currentTubeReference.NumberOfRepeatingLiquids * distancePerLiquid);
 
+                currentTubeReference.TubeData.RippleGridRow = Constants.Layers - 1 - currentTubeReference.TargetEmptyRow;
+                currentTubeReference.TubeData.RippleGridRowSpan = currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1; // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
+
                 //await image.TranslateTo(0, distance, duration);
                 //rippleLayoutElement.Children.Clear();
                 //rippleLayoutElement.Children.Remove(innerGrid);
-                currentTubeReference.TubeData.RippleGridVisible = false;
+
+                //currentTubeReference.TubeData.RippleGridVisible = false;
             }
         }
         internal (Grid, Image) RippleSurfaceBackgroundCreation<T>(T rippleLayoutElement, TubeReference currentTubeReference, LiquidColor sourceLiquid) where T : Layout
