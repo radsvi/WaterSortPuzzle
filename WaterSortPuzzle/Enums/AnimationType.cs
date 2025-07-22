@@ -8,6 +8,7 @@ namespace WaterSortPuzzle.Enums
 {
     public enum AnimationType
     {
+        None,
         RaiseNLower,
         RippleEffect,
         RepositionTube

@@ -10,8 +10,8 @@
             get => isRaised;
             set { isRaised = value; OnPropertyChanged(); }
         }
-        private int triggerRippleEffect = 0;
-        public int TriggerRippleEffect
+        private bool triggerRippleEffect;
+        public bool TriggerRippleEffect
         {
             get => triggerRippleEffect;
             set { triggerRippleEffect = value; OnPropertyChanged(); }

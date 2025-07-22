@@ -109,12 +109,12 @@
                                         <StackLayout
                                             IsVisible="False"
                                             ZIndex="1"
-                                            BackgroundColor="Transparent"
+                                            BackgroundColor="#7F000000"
                                             IsClippedToBounds="True"
                                             Grid.Row="{Binding RippleGridRow}"
                                             Grid.RowSpan="{Binding RippleGridRowSpan}"><!--BackgroundColor="{Binding RippleBackgroundColor}"-->
                                             <StackLayout.Behaviors>
-                                                <behaviors:TranslateOnChangedBehavior
+                                                <behaviors:TranslateOnBoolChangedBehavior
                                                     Trigger="{Binding TriggerRippleEffect}" Duration="1000"
                                                     YTo="-40" AnimationType="{x:Static enums:AnimationType.RippleEffect}" />
                                             </StackLayout.Behaviors>
@@ -124,6 +124,7 @@
                                                 IsAnimationPlaying="True"
                                                 VerticalOptions="End"
                                                 TranslationY="-380"
+                                                x:Name="MyImage"
                                                 />
                                         </StackLayout>
                                     </Grid>
