@@ -10,12 +10,24 @@
             get => isRaised;
             set { isRaised = value; OnPropertyChanged(); }
         }
-        private bool rippleEffectVisible = false;
-        public bool RippleGridVisible
+        private bool triggerRippleEffect;
+        public bool TriggerRippleEffect
         {
-            get => rippleEffectVisible;
-            set { rippleEffectVisible = value; OnPropertyChanged(); }
+            get => triggerRippleEffect;
+            set { triggerRippleEffect = value; OnPropertyChanged(); }
         }
+        private AnimationType animate;
+        public AnimationType Animate
+        {
+            get => animate;
+            set { animate = value; OnPropertyChanged(); }
+        }
+        //private bool rippleEffectVisible = false;
+        //public bool RippleGridVisible
+        //{
+        //    get => rippleEffectVisible;
+        //    set { rippleEffectVisible = value; OnPropertyChanged(); }
+        //}
         private Color rippleBackgroundColor = Colors.Transparent;
         public Color RippleBackgroundColor
         {

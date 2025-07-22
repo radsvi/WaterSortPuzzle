@@ -76,7 +76,7 @@
                         <DataTemplate x:DataType="models:TubeData">
                             <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0">
                                 <Grid.Behaviors>
-                                    <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" YTo="-20" />
+                                    <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" YTo="-20" AnimationType="{x:Static enums:AnimationType.RaiseNLower}" />
                                 </Grid.Behaviors>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1"
@@ -114,7 +114,9 @@
                                             Grid.Row="{Binding RippleGridRow}"
                                             Grid.RowSpan="{Binding RippleGridRowSpan}"><!--BackgroundColor="{Binding RippleBackgroundColor}"-->
                                             <StackLayout.Behaviors>
-                                                <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding RippleGridVisible}" Duration="1000" YTo="-40" DoRippleEffect="True"  />
+                                                <behaviors:TranslateOnBoolChangedBehavior
+                                                    Trigger="{Binding TriggerRippleEffect}" Duration="1000"
+                                                    YTo="-40" AnimationType="{x:Static enums:AnimationType.RippleEffect}" />
                                             </StackLayout.Behaviors>
                                             <Image
                                                 Source="tube_surface_ripple_anim.gif"

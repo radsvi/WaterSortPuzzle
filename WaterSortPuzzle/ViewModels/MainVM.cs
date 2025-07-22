@@ -940,7 +940,10 @@ namespace WaterSortPuzzle.ViewModels
 
                 //(var innerGrid, var image) = RippleSurfaceBackgroundCreation(rippleLayoutElement, currentTubeReference, currentLiquid);
 
-                currentTubeReference.TubeData.RippleGridVisible = true;
+                currentTubeReference.TubeData.TriggerRippleEffect = false;
+                currentTubeReference.TubeData.TriggerRippleEffect = true;
+                //currentTubeReference.TubeData.RippleGridVisible = true;
+                currentTubeReference.TubeData.Animate = AnimationType.RippleEffect;
                 currentTubeReference.TubeData.RippleBackgroundColor = currentLiquid.Brush;
 
                 await DrawTubesAsync(sourceTube.TubeId, currentTubeReference.TubeId);

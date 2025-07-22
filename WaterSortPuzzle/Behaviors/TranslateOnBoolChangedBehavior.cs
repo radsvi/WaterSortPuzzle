@@ -21,7 +21,7 @@ namespace WaterSortPuzzle.Behaviors
         public double YTo { get; set; } = 10;
         public uint Duration { get; set; } = 750;
 
-        public bool DoRippleEffect { get; set; } = false;
+        public AnimationType AnimationType { get; set; }
 
         private View? associatedView;
 
@@ -50,27 +50,26 @@ namespace WaterSortPuzzle.Behaviors
         {
             if (bindable is TranslateOnBoolChangedBehavior behavior && behavior.associatedView != null)
             {
-                bool decider = false;
-                if (behavior.DoRippleEffect)
+                if (behavior.AnimationType == Enums.AnimationType.RaiseNLower)
+                {
+                    if ((bool)newValue)
+                    {
+                        await behavior.associatedView.TranslateTo(0, behavior.YTo, behavior.Duration);
+                    }
+                    else
+                    {
+                        await behavior.associatedView.TranslateTo(0, 0, behavior.Duration);
+                    }
+                }
+                else if (behavior.AnimationType == Enums.AnimationType.RippleEffect)
                 {
                     behavior.associatedView.IsVisible = true;
-                    behavior.DoRippleEffect = false;
-                    decider = true;
-                }
 
-                if ((bool)newValue)
-                {
                     await behavior.associatedView.TranslateTo(0, behavior.YTo, behavior.Duration);
-                }
-                else
-                {
-                    await behavior.associatedView.TranslateTo(0, 0, behavior.Duration);
-                }
 
-                if (decider)
-                {
                     behavior.associatedView.IsVisible = false;
-                    behavior.associatedView.TranslationY = 0; // ## tohle je provizorni. Predelat!
+                    behavior.associatedView.TranslationY = 0;
+                    behavior.AnimationType = AnimationType.None;
                 }
             }
         }
