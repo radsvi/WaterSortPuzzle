@@ -53,18 +53,8 @@
         </ScrollView>-->
 
             <!-- // Grid for Tubes // -->
-            
+
             <Grid Grid.Row="1" Margin="0,5,0,0">
-                <Grid.Style>
-                    <Style TargetType="Grid">
-                        <Setter Property="BackgroundColor" Value="Transparent" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding UIEnabled}" Value="False" TargetType="Grid">
-                                <Setter Property="BackgroundColor" Value="#96000000" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Grid.Style>
                 <CollectionView SelectionMode="None" ItemsSource="{Binding TubesItemsSource}" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" VerticalOptions="Center">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" Span="{Binding TubesPerLine}"/>
@@ -165,6 +155,8 @@
                 <StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
                     <Button Text="Animate" Command="{Binding TriggerAnimationCommand}" />
                 </StackLayout>
+
+                <Grid IsVisible="{Binding UIDisabled}" BackgroundColor="#96000000" />
             </Grid>
 
             <!--#region Bottom section -->
