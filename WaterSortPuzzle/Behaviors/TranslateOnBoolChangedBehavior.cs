@@ -69,7 +69,7 @@ namespace WaterSortPuzzle.Behaviors
 
                     behavior.associatedView.IsVisible = false;
                     behavior.associatedView.TranslationY = 0;
-                    behavior.AnimationType = AnimationType.None;
+                    //behavior.AnimationType = AnimationType.None;
                 }
             }
         }

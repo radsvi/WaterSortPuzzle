@@ -109,7 +109,7 @@
                                         <StackLayout
                                             IsVisible="False"
                                             ZIndex="1"
-                                            BackgroundColor="#7F000000"
+                                            BackgroundColor="Transparent"
                                             IsClippedToBounds="True"
                                             Grid.Row="{Binding RippleGridRow}"
                                             Grid.RowSpan="{Binding RippleGridRowSpan}"><!--BackgroundColor="{Binding RippleBackgroundColor}"-->
