@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.Behaviors
 {
-    public class TranslateOnBoolChangedBehavior : Behavior<View>
+    public class TranslateOnChangedBehavior : Behavior<View>
     {
         public static readonly BindableProperty TriggerProperty =
-            BindableProperty.Create(nameof(Trigger), typeof(bool), typeof(TranslateOnBoolChangedBehavior), false, propertyChanged: OnTriggerChanged);
+            BindableProperty.Create(nameof(Trigger), typeof(int), typeof(TranslateOnChangedBehavior), 0, propertyChanged: OnTriggerChanged);
 
-        public bool Trigger
+        public int Trigger
         {
-            get => (bool)GetValue(TriggerProperty);
+            get => (int)GetValue(TriggerProperty);
             set => SetValue(TriggerProperty, value);
         }
 
@@ -48,20 +48,9 @@ namespace WaterSortPuzzle.Behaviors
 
         private static async void OnTriggerChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable is TranslateOnBoolChangedBehavior behavior && behavior.associatedView != null)
+            if (bindable is TranslateOnChangedBehavior behavior && behavior.associatedView != null)
             {
-                if (behavior.AnimationType == Enums.AnimationType.RaiseNLower)
-                {
-                    if ((bool)newValue)
-                    {
-                        await behavior.associatedView.TranslateTo(0, behavior.YTo, behavior.Duration);
-                    }
-                    else
-                    {
-                        await behavior.associatedView.TranslateTo(0, 0, behavior.Duration);
-                    }
-                }
-                else if (behavior.AnimationType == Enums.AnimationType.RippleEffect)
+                if (behavior.AnimationType == AnimationType.RippleEffect)
                 {
                     behavior.associatedView.IsVisible = true;
 
