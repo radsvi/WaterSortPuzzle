@@ -152,9 +152,9 @@
                     <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
                 </Border>
 
-                <StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
+                <!--<StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
                     <Button Text="Animate" Command="{Binding TriggerAnimationCommand}" />
-                </StackLayout>
+                </StackLayout>-->
 
                 <Grid IsVisible="{Binding UIDisabled}" BackgroundColor="#96000000" />
             </Grid>
