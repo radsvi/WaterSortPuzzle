@@ -183,7 +183,7 @@
             double xPos;
             double yPos;
 
-            xPos = (TubeId % TubesPerLine) * (Constants.TubeWidth + 4);
+            xPos = (TubeId % TubesPerLine) * (Constants.TubeWidth + 16);
             yPos = (int)(TubeId / TubesPerLine) * Constants.TubeHeight;
 
             return new Point(xPos, yPos);

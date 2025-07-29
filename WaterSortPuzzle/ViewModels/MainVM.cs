@@ -751,16 +751,21 @@ namespace WaterSortPuzzle.ViewModels
             if (source == -1 || target == -1)
             {
                 //TubesItemsSource.Clear(); // blbne v tomhle specifickym pripade
-                for (int i = TubesItemsSource.Count - 1; i >= 0; i--)
-                {
-                    TubesItemsSource.Remove(TubesItemsSource[i]);
-                }
+                //for (int i = TubesItemsSource.Count - 1; i >= 0; i--)
+                //{
+                //    TubesItemsSource.Remove(TubesItemsSource[i]);
+                //}
+                //MainThread.BeginInvokeOnMainThread(() => {
+                //    TubesItemsSource.Clear();
+                //});
                 TubeData.ResetCounter();
+                var newTubeItems = new ObservableCollection<TubeData>();
                 for (int x = 0; x < GameState.GetLength(0); x++)
                 {
                     //TubesItemsSource.Add(new TubeData(GameState[x, 0], GameState[x, 1], GameState[x, 2], GameState[x, 3]));
-                    TubesItemsSource.Add(new TubeData(GameState.gameGrid, x));
+                    newTubeItems.Add(new TubeData(GameState.gameGrid, x));
                 }
+                TubesItemsSource = newTubeItems;
                 OnPropertyChanged(nameof(TubesItemsSource));
             }
             else
