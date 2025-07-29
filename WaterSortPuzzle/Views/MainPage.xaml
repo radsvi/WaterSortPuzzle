@@ -71,23 +71,13 @@
                                         Trigger="{Binding IsRaised}" Duration="75" YTo="-20" AnimationType="{x:Static enums:AnimationType.RaiseNLower}"
                                         AdditionalAnimation="{Binding TriggerReposition}"
                                         />
-                                    <!--<toolkit:EventToCommandBehavior
-                                        EventName="Loaded"
-                                        BindingContext="{Binding Source={x:Reference RootGrid}, Path=BindingContext}"
-                                        Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonLoadedCommand}">
-                                        <toolkit:EventToCommandBehavior.CommandParameter>
-                                            <MultiBinding Converter="{StaticResource GridCommandParameterConv}">
-                                                <Binding Source="{x:Reference RootGrid}" />
-                                                <Binding />
-                                            </MultiBinding>
-                                        </toolkit:EventToCommandBehavior.CommandParameter>
-                                    </toolkit:EventToCommandBehavior>-->
                                     <behaviors:TranslateOnBoolChangedBehavior
                                         Trigger="{Binding TriggerReposition, Mode=TwoWay}" Duration="1000"
                                         XTo="{Binding TranslateX}" YTo="{Binding TranslateY}"
                                         ActualWidth="{Binding ActualWidth}"
                                         ActualHeight="{Binding ActualHeight}"
-                                        AnimationType="{x:Static enums:AnimationType.RepositionTube}" />
+                                        AnimationType="{x:Static enums:AnimationType.RepositionTube}"
+                                        DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}" />
                                 </Grid.Behaviors>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1"
@@ -104,6 +94,7 @@
                                     </TapGestureRecognizer>
                                 </Grid.GestureRecognizers>
 
+                                <!--IsVisible="{Binding TriggerRippleEffect}"-->
                                 <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" 
                                     Stroke="LightBlue" StrokeThickness="1" x:Name="InnerBorder"
                                     StrokeShape="RoundRectangle 0,0,28,28" >
@@ -119,31 +110,40 @@
                                             <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
 
                                             <StackLayout
-                                            IsVisible="False"
-                                            ZIndex="1"
-                                            BackgroundColor="Transparent"
-                                            IsClippedToBounds="True"
-                                            Grid.Row="{Binding RippleGridRow}"
-                                            Grid.RowSpan="{Binding RippleGridRowSpan}">
+                                                IsVisible="False"
+                                                ZIndex="1"
+                                                BackgroundColor="Transparent"
+                                                IsClippedToBounds="True"
+                                                Grid.Row="{Binding RippleGridRow}"
+                                                Grid.RowSpan="{Binding RippleGridRowSpan}">
                                                 <StackLayout.Behaviors>
                                                     <behaviors:TranslateOnBoolChangedBehavior
-                                                    Trigger="{Binding TriggerRippleEffect}" Duration="1000"
-                                                    YTo="-40" AnimationType="{x:Static enums:AnimationType.RippleEffect}" />
+                                                    Trigger="{Binding TriggerRippleEffect, Mode=TwoWay}" Duration="1000"
+                                                    YTo="-40" AnimationType="{x:Static enums:AnimationType.RippleEffect}"  /> <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->
                                                 </StackLayout.Behaviors>
                                                 <Image
-                                                Source="tube_surface_ripple_anim.gif"
-                                                Aspect="AspectFill"
-                                                IsAnimationPlaying="True"
-                                                VerticalOptions="End"
-                                                TranslationY="-380"
-                                                x:Name="MyImage"
-                                                />
+                                                    Source="tube_surface_ripple_anim.gif"
+                                                    Aspect="AspectFill"
+                                                    IsAnimationPlaying="True"
+                                                    VerticalOptions="End"
+                                                    TranslationY="-380"
+                                                    x:Name="MyImage"
+                                                    />
                                             </StackLayout>
                                         </Grid>
                                     </Grid>
                                 </Border>
                                 <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center" WidthRequest="48"
                                     Background="LightBlue" CornerRadius="0,0,5,5"/>
+
+                                <BoxView
+                                    IsVisible="{Binding DisplayPourEffect, Mode=TwoWay}"
+                                    WidthRequest="6"
+                                    HeightRequest="170"
+                                    TranslationY="-60"
+                                    BackgroundColor="{Binding PourBackgroundColor}"
+    
+                                    />
                             </Grid>
                         </DataTemplate>
                     </bl:BindableLayout.ItemTemplate>
@@ -167,19 +167,7 @@
                 <!--<Button Text="Animate" Command="{Binding TriggerAnimationCommand}" />-->
                 <!--<StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
                     
-                    <Button Text="Trigger event" 
-                       HorizontalOptions="Center"
-                       x:Name="MyButton">
 
-                        <Button.Behaviors>
-                            <toolkit:EventToCommandBehavior
-                                EventName="Clicked"
-                                BindingContext="{Binding Source={x:Reference HomePage}, Path=BindingContext}"
-                                Command="{Binding ButtonClickedCommand}"
-                                 />
-                        </Button.Behaviors>
-
-                    </Button>
                     <Label Text="{Binding Message}" TextColor="Black" />
                 </StackLayout>-->
 

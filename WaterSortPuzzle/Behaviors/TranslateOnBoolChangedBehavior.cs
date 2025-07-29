@@ -8,15 +8,13 @@ namespace WaterSortPuzzle.Behaviors
 {
     public class TranslateOnBoolChangedBehavior : Behavior<View>
     {
-        public static readonly BindableProperty TriggerProperty =
-            BindableProperty.Create(nameof(Trigger), typeof(bool), typeof(TranslateOnBoolChangedBehavior), false, propertyChanged: OnTriggerChanged);
-
         public bool Trigger
         {
             get => (bool)GetValue(TriggerProperty);
             set => SetValue(TriggerProperty, value);
         }
-
+        public static readonly BindableProperty TriggerProperty =
+            BindableProperty.Create(nameof(Trigger), typeof(bool), typeof(TranslateOnBoolChangedBehavior), false, propertyChanged: OnTriggerChanged);
 
 
         public double XTo
@@ -28,7 +26,6 @@ namespace WaterSortPuzzle.Behaviors
             BindableProperty.Create(nameof(XTo), typeof(double), typeof(TranslateOnBoolChangedBehavior), 0.0);
 
 
-
         public double YTo
         {
             get { return (double)GetValue(YToProperty); }
@@ -36,8 +33,6 @@ namespace WaterSortPuzzle.Behaviors
         }
         public static readonly BindableProperty YToProperty =
             BindableProperty.Create(nameof(YTo), typeof(double), typeof(TranslateOnBoolChangedBehavior), 0.0);
-
-
 
 
         public double ActualWidth
@@ -58,16 +53,22 @@ namespace WaterSortPuzzle.Behaviors
             BindableProperty.Create(nameof(ActualHeight), typeof(double), typeof(TranslateOnBoolChangedBehavior), 0.0);
 
 
-
         public bool AdditionalAnimation
         {
             get { return (bool)GetValue(AdditionalAnimationProperty); }
             set { SetValue(AdditionalAnimationProperty, value); }
         }
-
-        // Using a BindableProperty as the backing store for AdditionalAnimation.  This enables animation, styling, binding, etc...
         public static readonly BindableProperty AdditionalAnimationProperty =
             BindableProperty.Create(nameof(AdditionalAnimation), typeof(bool), typeof(TranslateOnBoolChangedBehavior), false);
+
+
+        public bool DelayedAction
+        {
+            get { return (bool)GetValue(DelayedActionProperty); }
+            set { SetValue(DelayedActionProperty, value); }
+        }
+        public static readonly BindableProperty DelayedActionProperty =
+            BindableProperty.Create(nameof(DelayedAction), typeof(bool), typeof(TranslateOnBoolChangedBehavior), false);
 
 
 
@@ -121,7 +122,7 @@ namespace WaterSortPuzzle.Behaviors
                         }
                     }
                 }
-                else if (behavior.AnimationType == Enums.AnimationType.RippleEffect)
+                else if (behavior.AnimationType == Enums.AnimationType.RippleEffect && behavior.Trigger == true)
                 {
                     behavior.associatedView.IsVisible = true;
 
@@ -130,6 +131,7 @@ namespace WaterSortPuzzle.Behaviors
                     behavior.associatedView.IsVisible = false;
                     behavior.associatedView.TranslationY = 0;
                     //behavior.AnimationType = AnimationType.None;
+                    behavior.Trigger = false;
                 }
                 else if (behavior.AnimationType == Enums.AnimationType.RepositionTube && behavior.Trigger == true)
                 {
@@ -157,7 +159,10 @@ namespace WaterSortPuzzle.Behaviors
                         innerElement.ScaleYTo(0.5, movementDuration),
                         innerElement.TranslateTo(0, 13, movementDuration /2)
                     );
+                    behavior.DelayedAction = true;
                     await Task.Delay((int)behavior.Duration);
+
+
 
                     //behavior.associatedView.IsVisible = false;
                     behavior.associatedView.TranslationX = 0;

@@ -23,6 +23,13 @@
             get => triggerRippleEffect;
             set { triggerRippleEffect = value; OnPropertyChanged(); }
         }
+        private bool displayPourEffect = false;
+        public bool DisplayPourEffect
+        {
+            get => displayPourEffect;
+            //set { SetProperty(ref displayPourEffect, value); OnPropertyChanged(); }
+            set { displayPourEffect = value; OnPropertyChanged(); }
+        }
         private AnimationType animate;
         public AnimationType Animate
         {
@@ -71,11 +78,11 @@
         //    get => rippleEffectVisible;
         //    set { rippleEffectVisible = value; OnPropertyChanged(); }
         //}
-        private Color rippleBackgroundColor = Colors.Transparent;
-        public Color RippleBackgroundColor
+        private Color pourBackgroundColor = Colors.Transparent;
+        public Color PourBackgroundColor
         {
-            get => rippleBackgroundColor;
-            set { rippleBackgroundColor = value; OnPropertyChanged(); }
+            get => pourBackgroundColor;
+            set { pourBackgroundColor = value; OnPropertyChanged(); }
         }
         private int rippleGridRow = 0;
         public int RippleGridRow
