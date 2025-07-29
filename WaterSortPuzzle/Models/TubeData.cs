@@ -4,6 +4,7 @@
     {
         private static int tubeIdCounter = 0;
         public int TubeId { get; set; }
+        public static int TubesPerLine { get; set; }
         private bool isVisible = true;
         public bool IsVisible
         {
@@ -27,6 +28,42 @@
         {
             get => animate;
             set { animate = value; OnPropertyChanged(); }
+        }
+        private bool triggerReposition;
+        public bool TriggerReposition
+        {
+            get => triggerReposition;
+            set { triggerReposition = value; OnPropertyChanged(); }
+        }
+        private Rect coordinates = new Rect(0, 10, 46, 194);
+        public Rect Coordinates
+        {
+            get => coordinates;
+            set { coordinates = value; OnPropertyChanged(); }
+        }
+        private double translateX;
+        public double TranslateX
+        {
+            get => translateX;
+            set { translateX = value; OnPropertyChanged(); }
+        }
+        private double translateY;
+        public double TranslateY
+        {
+            get => translateY;
+            set { translateY = value; OnPropertyChanged(); }
+        }
+        private double actualWidth;
+        public double ActualWidth
+        {
+            get => actualWidth;
+            set { actualWidth = value; OnPropertyChanged(); }
+        }
+        private double actualHeight;
+        public double ActualHeight
+        {
+            get => actualHeight;
+            set { actualHeight = value; OnPropertyChanged(); }
         }
         //private bool rippleEffectVisible = false;
         //public bool RippleGridVisible
@@ -85,7 +122,21 @@
                 Layers.Add(new NullLiquidColor());
             }
             CopyValuesFrom(gameGrid, tubeId);
+
+            RecalculateTubesPerLine(gameGrid);
+
+            
+            Point position = CalculateTubePosition();
+
+            Coordinates = new Rect(
+                position.X,
+                position.Y,
+                Constants.TubeWidth,
+                Constants.TubeHeight
+            );
         }
+
+        
 
         public static void ResetCounter()
         {
@@ -113,6 +164,29 @@
                     this.Layers[y]?.CopyFrom(gameGrid[tubeId, y].Name);
                     //this.Layers[y] = gameGrid[tubeId, y].Clone();
             }
+        }
+        private static void RecalculateTubesPerLine(LiquidColor[,] gameGrid)
+        {
+            int tubeCount = gameGrid.GetLength(0);
+
+            if (tubeCount > Constants.MaxTubesPerLine * 2)
+            {
+                TubesPerLine = (int)Math.Ceiling((decimal)tubeCount / 3);
+            }
+            else
+            {
+                TubesPerLine = (int)Math.Ceiling((decimal)tubeCount / 2);
+            }
+        }
+        private Point CalculateTubePosition()
+        {
+            double xPos;
+            double yPos;
+
+            xPos = (TubeId % TubesPerLine) * (Constants.TubeWidth + 4);
+            yPos = (int)(TubeId / TubesPerLine) * Constants.TubeHeight;
+
+            return new Point(xPos, yPos);
         }
     }
 }

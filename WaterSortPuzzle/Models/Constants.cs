@@ -17,6 +17,9 @@ namespace WaterSortPuzzle.Models
         public const int MaxTubesPerLine = 9;
         public const int MaxStepBack = 5;
         public const int TubeImageOffset = 30;
+        public const int PouringAnimationDuration = 500;
+        public const int TubeWidth = 46;
+        public const int TubeHeight = 194;
 
         public const string logFolderName = "log";
 

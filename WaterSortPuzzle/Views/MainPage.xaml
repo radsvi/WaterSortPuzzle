@@ -9,6 +9,8 @@
              xmlns:converters="clr-namespace:WaterSortPuzzle.Converters"
              xmlns:fontAwesome="clr-namespace:FontAwesome"
              xmlns:fonts="clr-namespace:FontAwesome"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:bl="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
              x:Class="WaterSortPuzzle.Views.MainPage"
              x:DataType="viewModels:MainVM">
     <ContentPage.Resources>
@@ -55,25 +57,17 @@
             <!-- // Grid for Tubes // -->
 
             <Grid Grid.Row="1" Margin="0,5,0,0">
-                <CollectionView SelectionMode="None" ItemsSource="{Binding TubesItemsSource}" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" VerticalOptions="Center">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="{Binding TubesPerLine}"/>
-                    </CollectionView.ItemsLayout>
-                    <!--<CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" />
-                    </CollectionView.ItemsLayout>-->
-                    <CollectionView.ItemTemplate>
+                <AbsoluteLayout bl:BindableLayout.ItemsSource="{Binding TubesItemsSource}"
+                                VerticalOptions="Center" HorizontalOptions="Center">
+                    <bl:BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="models:TubeData">
-                            <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0" x:Name="RootGrid" IsVisible="{Binding IsVisible}">
+                            <!--AbsoluteLayout.LayoutBounds="0, 10, 46, 194"-->
+                            <Grid
+                                AbsoluteLayout.LayoutBounds="{Binding Coordinates}"
+                                Style="{StaticResource TubeGrid}" Padding="0,20,0,0" x:Name="RootGrid" IsVisible="{Binding IsVisible}">
                                 <Grid.Behaviors>
                                     <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" YTo="-20" AnimationType="{x:Static enums:AnimationType.RaiseNLower}" />
                                     <!--<toolkit:EventToCommandBehavior
-                                        EventName="Loaded"
-                                        BindingContext="{Binding Source={x:Reference RootGrid}, Path=BindingContext}"
-                                        Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.LabelLoadedCommand}"
-                                        EventArgsConverter="{StaticResource PassSenderConverter}" />-->
-                                    <!--Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, Path=LabelLoadedCommand}"-->
-                                    <toolkit:EventToCommandBehavior
                                         EventName="Loaded"
                                         BindingContext="{Binding Source={x:Reference RootGrid}, Path=BindingContext}"
                                         Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonLoadedCommand}">
@@ -83,19 +77,13 @@
                                                 <Binding />
                                             </MultiBinding>
                                         </toolkit:EventToCommandBehavior.CommandParameter>
-                                    </toolkit:EventToCommandBehavior>
+                                    </toolkit:EventToCommandBehavior>-->
                                     <behaviors:TranslateOnBoolChangedBehavior
                                         Trigger="{Binding TriggerReposition}" Duration="1000"
                                         XTo="{Binding TranslateX}" YTo="{Binding TranslateY}"
                                         ActualWidth="{Binding ActualWidth}"
                                         ActualHeight="{Binding ActualHeight}"
                                         AnimationType="{x:Static enums:AnimationType.RepositionTube}" />
-                                    <!--BindingContext="{Binding Source={x:Reference RootGrid}, Path=BindingContext}"
-Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonLoadedCommand}"
-                                    CommandParameter="{Binding .}"-->
-                                    <!--Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonLoadedCommand}"-->
-                                    <!--BindingContext="{Binding Source={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=BindingContext}"
-Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonLoadedCommand}"-->
                                 </Grid.Behaviors>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1"
@@ -106,16 +94,13 @@ Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonL
                                                     <Binding/>
                                                     <Binding Source="{RelativeSource Mode=Self}"/>
                                                     <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" />
-                                                    <!--<Binding Source="{RelativeSource Mode=FindAncestor,AncestorType=Grid}"/>-->
                                                 </MultiBinding.Bindings>
                                             </MultiBinding>
                                         </TapGestureRecognizer.CommandParameter>
                                     </TapGestureRecognizer>
                                 </Grid.GestureRecognizers>
-                                <!--<BoxView Margin="8,10,8,10" WidthRequest="64" HeightRequest="10" VerticalOptions="Start"
-                                CornerRadius="0,0,5,5" Background="LightBlue"/>-->
 
-                                <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" VerticalOptions="Start"
+                                <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" 
                                     Stroke="LightBlue" StrokeThickness="1"
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
@@ -131,7 +116,7 @@ Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonL
                                             BackgroundColor="Transparent"
                                             IsClippedToBounds="True"
                                             Grid.Row="{Binding RippleGridRow}"
-                                            Grid.RowSpan="{Binding RippleGridRowSpan}"><!--BackgroundColor="{Binding RippleBackgroundColor}"-->
+                                            Grid.RowSpan="{Binding RippleGridRowSpan}">
                                             <StackLayout.Behaviors>
                                                 <behaviors:TranslateOnBoolChangedBehavior
                                                     Trigger="{Binding TriggerRippleEffect}" Duration="1000"
@@ -148,23 +133,12 @@ Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonL
                                         </StackLayout>
                                     </Grid>
                                 </Border>
-                                <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center"
+                                <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center" WidthRequest="48"
                                     Background="LightBlue" CornerRadius="0,0,5,5"/>
-
-                                <!--<Border Margin="8,4,8,0" WidthRequest="38" HeightRequest="10" VerticalOptions="Start"
-                                    Background="LightBlue">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="0,0,5,5" />
-                                </Border.StrokeShape>
-                            </Border>-->
-
-                                <!--<Button Text="Test" x:DataType="viewModel:MainVM" Command="{Binding Path=TubeButtonClickCommand}" />-->
                             </Grid>
-                            <!--<Button Text="Test" x:DataType="viewModels:MainVM"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, x:DataType=viewModels:MainVM, Path=TubeButtonClickCommand}"/>-->
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                    </bl:BindableLayout.ItemTemplate>
+                </AbsoluteLayout>
 
                 <AbsoluteLayout x:Name="Overlay" InputTransparent="True" />
 
