@@ -30,6 +30,12 @@
             //set { SetProperty(ref displayPourEffect, value); OnPropertyChanged(); }
             set { displayPourEffect = value; OnPropertyChanged(); }
         }
+        private TubeData targetTube;
+        public TubeData TargetTube
+        {
+            get => targetTube;
+            set { targetTube = value; OnPropertyChanged(); }
+        }
         private AnimationType animate;
         public AnimationType Animate
         {
@@ -190,7 +196,7 @@
             double xPos;
             double yPos;
 
-            xPos = (TubeId % TubesPerLine) * (Constants.TubeWidth + 16);
+            xPos = (TubeId % TubesPerLine) * (Constants.TubeWidth + 6);
             yPos = (int)(TubeId / TubesPerLine) * Constants.TubeHeight;
 
             return new Point(xPos, yPos);

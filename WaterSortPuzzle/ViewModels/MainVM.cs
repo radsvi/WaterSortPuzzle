@@ -981,6 +981,7 @@ namespace WaterSortPuzzle.ViewModels
             //var rect2 = ElementCoordinates.GetCoordinates(targetGrid);
             var rect1 = sourceTube.TubeData.Coordinates;
             var rect2 = targetTube.TubeData.Coordinates;
+            sourceTube.TubeData.TargetTube = targetTube.TubeData;
 
             Rect diff = new Rect(
                 rect2.X - rect1.X,

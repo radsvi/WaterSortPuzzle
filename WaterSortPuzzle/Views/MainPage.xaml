@@ -77,7 +77,8 @@
                                         ActualWidth="{Binding ActualWidth}"
                                         ActualHeight="{Binding ActualHeight}"
                                         AnimationType="{x:Static enums:AnimationType.RepositionTube}"
-                                        DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}" />
+                                        DelayedAction="{Binding TargetTube.DisplayPourEffect, Mode=TwoWay}"
+                                         /> <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->
                                 </Grid.Behaviors>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1"
@@ -119,7 +120,8 @@
                                                 <StackLayout.Behaviors>
                                                     <behaviors:TranslateOnBoolChangedBehavior
                                                     Trigger="{Binding TriggerRippleEffect, Mode=TwoWay}" Duration="1000"
-                                                    YTo="-40" AnimationType="{x:Static enums:AnimationType.RippleEffect}"  /> <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->
+                                                    YTo="-40" AnimationType="{x:Static enums:AnimationType.RippleEffect}"
+                                                    /> <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->
                                                 </StackLayout.Behaviors>
                                                 <Image
                                                     Source="tube_surface_ripple_anim.gif"
@@ -139,10 +141,10 @@
                                 <BoxView
                                     IsVisible="{Binding DisplayPourEffect, Mode=TwoWay}"
                                     WidthRequest="6"
-                                    HeightRequest="170"
-                                    TranslationY="-60"
+                                    HeightRequest="223"
+                                    TranslationY="-4"
                                     BackgroundColor="{Binding PourBackgroundColor}"
-    
+                                    VerticalOptions="End"
                                     />
                             </Grid>
                         </DataTemplate>

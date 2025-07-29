@@ -125,7 +125,7 @@ namespace WaterSortPuzzle.Behaviors
                 else if (behavior.AnimationType == Enums.AnimationType.RippleEffect && behavior.Trigger == true)
                 {
                     behavior.associatedView.IsVisible = true;
-
+                    //behavior.DelayedAction = true;
                     await behavior.associatedView.TranslateTo(0, behavior.YTo, behavior.Duration);
 
                     behavior.associatedView.IsVisible = false;
@@ -160,18 +160,31 @@ namespace WaterSortPuzzle.Behaviors
                         innerElement.TranslateTo(0, 13, movementDuration /2)
                     );
                     behavior.DelayedAction = true;
+                    
+
                     await Task.Delay((int)behavior.Duration);
 
-
+                    behavior.DelayedAction = false;
 
                     //behavior.associatedView.IsVisible = false;
-                    behavior.associatedView.TranslationX = 0;
-                    behavior.associatedView.TranslationY = 0;
-                    behavior.associatedView.Rotation = 0;
-                    behavior.associatedView.ZIndex = 0;
-                    innerElement.Rotation = 0;
-                    innerElement.ScaleY = 1;
-                    innerElement.TranslationY = 0;
+
+                    //behavior.associatedView.TranslationX = 0;
+                    //behavior.associatedView.TranslationY = 0;
+                    //behavior.associatedView.Rotation = 0;
+                    //behavior.associatedView.ZIndex = 0;
+                    //innerElement.Rotation = 0;
+                    //innerElement.ScaleY = 1;
+                    //innerElement.TranslationY = 0;
+
+                    uint moveBackDuration = movementDuration / 2;
+                    await Task.WhenAll(
+                        behavior.associatedView.TranslateTo(0, 0, moveBackDuration),
+                        behavior.associatedView.RotateTo(0, moveBackDuration),
+                        innerElement.RotateTo(0, moveBackDuration),
+                        innerElement.ScaleYTo(1, moveBackDuration),
+                        innerElement.TranslateTo(0, 0, moveBackDuration / 2)
+                    );
+
                     behavior.Trigger = false;
                     //behavior.AnimationType = AnimationType.None;
                 }
