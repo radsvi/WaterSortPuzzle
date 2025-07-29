@@ -59,6 +59,18 @@ namespace WaterSortPuzzle.Behaviors
 
 
 
+        public bool AdditionalAnimation
+        {
+            get { return (bool)GetValue(AdditionalAnimationProperty); }
+            set { SetValue(AdditionalAnimationProperty, value); }
+        }
+
+        // Using a BindableProperty as the backing store for AdditionalAnimation.  This enables animation, styling, binding, etc...
+        public static readonly BindableProperty AdditionalAnimationProperty =
+            BindableProperty.Create(nameof(AdditionalAnimation), typeof(bool), typeof(TranslateOnBoolChangedBehavior), false);
+
+
+
 
 
 
@@ -101,10 +113,13 @@ namespace WaterSortPuzzle.Behaviors
                     {
                         await behavior.associatedView.TranslateTo(0, behavior.YTo, behavior.Duration);
                     }
-                    //else
-                    //{
-                    //    await behavior.associatedView.TranslateTo(0, 0, behavior.Duration);
-                    //}
+                    else
+                    {
+                        if (behavior.AdditionalAnimation == false)
+                        {
+                            await behavior.associatedView.TranslateTo(0, 0, behavior.Duration);
+                        }
+                    }
                 }
                 else if (behavior.AnimationType == Enums.AnimationType.RippleEffect)
                 {
@@ -116,7 +131,7 @@ namespace WaterSortPuzzle.Behaviors
                     behavior.associatedView.TranslationY = 0;
                     //behavior.AnimationType = AnimationType.None;
                 }
-                else if (behavior.AnimationType == Enums.AnimationType.RepositionTube)
+                else if (behavior.AnimationType == Enums.AnimationType.RepositionTube && behavior.Trigger == true)
                 {
                     //behavior.associatedView.IsVisible = true;
                     //behavior.associatedView.IsVisible = false;
@@ -152,6 +167,7 @@ namespace WaterSortPuzzle.Behaviors
                     innerElement.Rotation = 0;
                     innerElement.ScaleY = 1;
                     innerElement.TranslationY = 0;
+                    behavior.Trigger = false;
                     //behavior.AnimationType = AnimationType.None;
                 }
             }

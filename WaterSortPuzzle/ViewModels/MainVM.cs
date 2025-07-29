@@ -999,7 +999,8 @@ namespace WaterSortPuzzle.ViewModels
 
 
 
-            sourceTube.TubeData.TriggerReposition = !sourceTube.TubeData.TriggerReposition;
+            sourceTube.TubeData.TriggerReposition = true;
+            //sourceTube.TubeData.TriggerReposition = false;
 
         }
 

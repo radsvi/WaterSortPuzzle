@@ -67,7 +67,10 @@
                                 Style="{StaticResource TubeGrid}" Padding="0,20,0,0" x:Name="RootGrid" IsVisible="{Binding IsVisible}"
                                 >
                                 <Grid.Behaviors>
-                                    <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" YTo="-20" AnimationType="{x:Static enums:AnimationType.RaiseNLower}" />
+                                    <behaviors:TranslateOnBoolChangedBehavior
+                                        Trigger="{Binding IsRaised}" Duration="75" YTo="-20" AnimationType="{x:Static enums:AnimationType.RaiseNLower}"
+                                        AdditionalAnimation="{Binding TriggerReposition}"
+                                        />
                                     <!--<toolkit:EventToCommandBehavior
                                         EventName="Loaded"
                                         BindingContext="{Binding Source={x:Reference RootGrid}, Path=BindingContext}"
@@ -80,7 +83,7 @@
                                         </toolkit:EventToCommandBehavior.CommandParameter>
                                     </toolkit:EventToCommandBehavior>-->
                                     <behaviors:TranslateOnBoolChangedBehavior
-                                        Trigger="{Binding TriggerReposition}" Duration="1000"
+                                        Trigger="{Binding TriggerReposition, Mode=TwoWay}" Duration="1000"
                                         XTo="{Binding TranslateX}" YTo="{Binding TranslateY}"
                                         ActualWidth="{Binding ActualWidth}"
                                         ActualHeight="{Binding ActualHeight}"
@@ -145,8 +148,6 @@
                         </DataTemplate>
                     </bl:BindableLayout.ItemTemplate>
                 </AbsoluteLayout>
-
-                <AbsoluteLayout x:Name="Overlay" InputTransparent="True" />
 
                 <!-- // AutoSolve box // -->
                 <Border VerticalOptions="End" Background="White" IsVisible="{Binding AutoSolve.Started}" HorizontalOptions="Start" Margin="5,0" >
