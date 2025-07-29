@@ -64,7 +64,8 @@
                             <!--AbsoluteLayout.LayoutBounds="0, 10, 46, 194"-->
                             <Grid
                                 AbsoluteLayout.LayoutBounds="{Binding Coordinates}"
-                                Style="{StaticResource TubeGrid}" Padding="0,20,0,0" x:Name="RootGrid" IsVisible="{Binding IsVisible}">
+                                Style="{StaticResource TubeGrid}" Padding="0,20,0,0" x:Name="RootGrid" IsVisible="{Binding IsVisible}"
+                                IsClippedToBounds="True">
                                 <Grid.Behaviors>
                                     <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" YTo="-20" AnimationType="{x:Static enums:AnimationType.RaiseNLower}" />
                                     <!--<toolkit:EventToCommandBehavior
@@ -101,7 +102,8 @@
                                 </Grid.GestureRecognizers>
 
                                 <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" 
-                                    Stroke="LightBlue" StrokeThickness="1"
+                                    Stroke="LightBlue" StrokeThickness="1" x:Name="InnerBorder"
+                                    WidthRequest="200"
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
                                     <Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*" x:Name="RippleEffectElement">
