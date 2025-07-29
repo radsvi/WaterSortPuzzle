@@ -134,13 +134,15 @@ namespace WaterSortPuzzle.Behaviors
 
                     double rotateDegree = 66.0;
 
+
                     await Task.WhenAll(
                         behavior.associatedView.TranslateTo(XOffset, YOffset, movementDuration),
                         behavior.associatedView.RotateTo(rotateDegree, movementDuration),
-                        innerElement.RotateTo(-rotateDegree, movementDuration)
+                        innerElement.RotateTo(-rotateDegree, movementDuration),
+                        innerElement.ScaleYTo(0.5, movementDuration),
+                        innerElement.TranslateTo(0, 13, movementDuration /2)
                     );
                     await Task.Delay((int)behavior.Duration);
-
 
                     //behavior.associatedView.IsVisible = false;
                     behavior.associatedView.TranslationX = 0;
@@ -148,6 +150,8 @@ namespace WaterSortPuzzle.Behaviors
                     behavior.associatedView.Rotation = 0;
                     behavior.associatedView.ZIndex = 0;
                     innerElement.Rotation = 0;
+                    innerElement.ScaleY = 1;
+                    innerElement.TranslationY = 0;
                     //behavior.AnimationType = AnimationType.None;
                 }
             }
@@ -158,19 +162,18 @@ namespace WaterSortPuzzle.Behaviors
             {
                 if (child is Border border && child.StyleId == "InnerBorder")
                 {
-                    if (border.Content?.GetType() == typeof(Grid) && border.Content.StyleId == "RippleEffectElement")
+                    if (border.Content is Grid middleGrid)
                     {
-                        return (Grid)border.Content;
+                        foreach (View middleChild in middleGrid.Cast<View>())
+                        {
+                            if (middleChild is Grid innerGrid && middleChild.StyleId == "RippleEffectElement")
+                            {
+                                return innerGrid;
+                            }
+                        }
                     }
                 }
             }
-            //foreach (View child in grid.Children.Cast<View>())
-            //{
-            //    if (child.GetType() == typeof(Grid) && child.StyleId == "RippleEffectElement")
-            //    {
-            //        return (Grid)child;
-            //    }
-            //}
             throw new NullReferenceException();
         }
     }

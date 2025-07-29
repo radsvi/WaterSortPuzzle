@@ -65,7 +65,7 @@
                             <Grid
                                 AbsoluteLayout.LayoutBounds="{Binding Coordinates}"
                                 Style="{StaticResource TubeGrid}" Padding="0,20,0,0" x:Name="RootGrid" IsVisible="{Binding IsVisible}"
-                                IsClippedToBounds="True">
+                                >
                                 <Grid.Behaviors>
                                     <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" YTo="-20" AnimationType="{x:Static enums:AnimationType.RaiseNLower}" />
                                     <!--<toolkit:EventToCommandBehavior
@@ -103,28 +103,31 @@
 
                                 <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" 
                                     Stroke="LightBlue" StrokeThickness="1" x:Name="InnerBorder"
-                                    WidthRequest="200"
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
-                                    <Grid Margin="0,21,0,0" RowDefinitions="*,*,*,*" x:Name="RippleEffectElement">
-                                        <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
-                                        <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
-                                        <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
-                                        <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
+                                    <Grid Margin="0,21,0,0" IsClippedToBounds="True">
+                                        <Grid RowDefinitions="*,*,*,*" x:Name="RippleEffectElement"
+                                          Margin="0"
+                                          WidthRequest="200" HorizontalOptions="Center"
+                                          InputTransparent="True">
+                                            <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
+                                            <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
+                                            <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
+                                            <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
 
-                                        <StackLayout
+                                            <StackLayout
                                             IsVisible="False"
                                             ZIndex="1"
                                             BackgroundColor="Transparent"
                                             IsClippedToBounds="True"
                                             Grid.Row="{Binding RippleGridRow}"
                                             Grid.RowSpan="{Binding RippleGridRowSpan}">
-                                            <StackLayout.Behaviors>
-                                                <behaviors:TranslateOnBoolChangedBehavior
+                                                <StackLayout.Behaviors>
+                                                    <behaviors:TranslateOnBoolChangedBehavior
                                                     Trigger="{Binding TriggerRippleEffect}" Duration="1000"
                                                     YTo="-40" AnimationType="{x:Static enums:AnimationType.RippleEffect}" />
-                                            </StackLayout.Behaviors>
-                                            <Image
+                                                </StackLayout.Behaviors>
+                                                <Image
                                                 Source="tube_surface_ripple_anim.gif"
                                                 Aspect="AspectFill"
                                                 IsAnimationPlaying="True"
@@ -132,7 +135,8 @@
                                                 TranslationY="-380"
                                                 x:Name="MyImage"
                                                 />
-                                        </StackLayout>
+                                            </StackLayout>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                                 <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center" WidthRequest="48"
