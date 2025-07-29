@@ -971,14 +971,16 @@ namespace WaterSortPuzzle.ViewModels
         }
         private void RepositionSourceTube(TubeReference sourceTube, TubeReference targetTube)
         {
-            var sourceGrid = sourceTube.GridElement;
-            var targetGrid = targetTube.GridElement;
+            //var sourceGrid = sourceTube.GridElement;
+            //var targetGrid = targetTube.GridElement;
 
 
             //var bounds = sourceGrid.GetBoundsRelativeTo((IView)targetGrid);
             //var bounds = sourceGrid.GetBoundsRelativeTo(targetGrid);
-            var rect1 = ElementCoordinates.GetCoordinates(sourceGrid);
-            var rect2 = ElementCoordinates.GetCoordinates(targetGrid);
+            //var rect1 = ElementCoordinates.GetCoordinates(sourceGrid);
+            //var rect2 = ElementCoordinates.GetCoordinates(targetGrid);
+            var rect1 = sourceTube.TubeData.Coordinates;
+            var rect2 = targetTube.TubeData.Coordinates;
 
             Rect diff = new Rect(
                 rect2.X - rect1.X,
