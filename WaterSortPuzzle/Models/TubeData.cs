@@ -4,6 +4,12 @@
     {
         private static int tubeIdCounter = 0;
         public int TubeId { get; set; }
+        private bool isVisible = true;
+        public bool IsVisible
+        {
+            get => isVisible;
+            set { isVisible = value; OnPropertyChanged(); }
+        }
         private bool isRaised;
         public bool IsRaised
         {

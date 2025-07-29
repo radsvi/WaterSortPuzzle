@@ -866,8 +866,8 @@ namespace WaterSortPuzzle.ViewModels
         }
         private static void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
         {
-            if (tubeReference.VisualElement is null)
-                return;
+            //if (tubeReference.VisualElement is null)
+            //    return;
 
             //uint speedMS = 75;
 
@@ -940,6 +940,8 @@ namespace WaterSortPuzzle.ViewModels
 
                 //(var innerGrid, var image) = RippleSurfaceBackgroundCreation(rippleLayoutElement, currentTubeReference, currentLiquid);
 
+                RepositionSourceTube(sourceTube, currentTubeReference);
+
                 currentTubeReference.TubeData.TriggerRippleEffect = !currentTubeReference.TubeData.TriggerRippleEffect;
                 //currentTubeReference.TubeData.RippleGridVisible = true;
                 currentTubeReference.TubeData.Animate = AnimationType.RippleEffect;
@@ -947,7 +949,7 @@ namespace WaterSortPuzzle.ViewModels
 
                 await DrawTubesAsync(sourceTube.TubeId, currentTubeReference.TubeId);
 
-                uint duration = 500 * (uint)currentTubeReference.NumberOfRepeatingLiquids;
+                uint duration = Constants.PouringAnimationDuration * (uint)currentTubeReference.NumberOfRepeatingLiquids;
                 int distancePerLiquid = 40;
                 int distance = Constants.TubeImageOffset - (currentTubeReference.NumberOfRepeatingLiquids * distancePerLiquid);
 
@@ -962,6 +964,38 @@ namespace WaterSortPuzzle.ViewModels
                 //currentTubeReference.TubeData.RippleGridVisible = false;
             }
         }
+        private void RepositionSourceTube(TubeReference sourceTube, TubeReference targetTube)
+        {
+            var sourceGrid = sourceTube.GridElement;
+            var targetGrid = targetTube.GridElement;
+
+
+            //var bounds = sourceGrid.GetBoundsRelativeTo((IView)targetGrid);
+            //var bounds = sourceGrid.GetBoundsRelativeTo(targetGrid);
+            var rect1 = ElementCoordinates.GetCoordinates(sourceGrid);
+            var rect2 = ElementCoordinates.GetCoordinates(targetGrid);
+
+            Rect diff = new Rect(
+                rect2.X - rect1.X,
+                rect2.Y - rect1.Y,
+                rect1.Width,
+                rect1.Height
+            );
+
+            //sourceTube.TubeData.Coordinates = new Rect(diff.X, diff.Y, -1, -1);
+            sourceTube.TubeData.TranslateX = diff.X;
+            sourceTube.TubeData.TranslateY = diff.Y;
+            sourceTube.TubeData.ActualWidth = rect1.Width;
+            sourceTube.TubeData.ActualHeight = rect1.Height;
+            
+            //sourceTube.TubeData.IsVisible = false;
+
+
+
+            sourceTube.TubeData.TriggerReposition = !sourceTube.TubeData.TriggerReposition;
+
+        }
+
         internal (Grid, Image) RippleSurfaceBackgroundCreation<T>(T rippleLayoutElement, TubeReference currentTubeReference, LiquidColor sourceLiquid) where T : Layout
         {
             var innerGrid = new Grid { BackgroundColor = sourceLiquid.Brush, IsClippedToBounds = true, ZIndex = 1000 };

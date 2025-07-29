@@ -64,9 +64,38 @@
                     </CollectionView.ItemsLayout>-->
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:TubeData">
-                            <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0">
+                            <Grid Style="{StaticResource TubeGrid}" Padding="0,20,0,0" x:Name="RootGrid" IsVisible="{Binding IsVisible}">
                                 <Grid.Behaviors>
                                     <behaviors:TranslateOnBoolChangedBehavior Trigger="{Binding IsRaised}" Duration="75" YTo="-20" AnimationType="{x:Static enums:AnimationType.RaiseNLower}" />
+                                    <!--<toolkit:EventToCommandBehavior
+                                        EventName="Loaded"
+                                        BindingContext="{Binding Source={x:Reference RootGrid}, Path=BindingContext}"
+                                        Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.LabelLoadedCommand}"
+                                        EventArgsConverter="{StaticResource PassSenderConverter}" />-->
+                                    <!--Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainVM}}, Path=LabelLoadedCommand}"-->
+                                    <toolkit:EventToCommandBehavior
+                                        EventName="Loaded"
+                                        BindingContext="{Binding Source={x:Reference RootGrid}, Path=BindingContext}"
+                                        Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonLoadedCommand}">
+                                        <toolkit:EventToCommandBehavior.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource GridCommandParameterConv}">
+                                                <Binding Source="{x:Reference RootGrid}" />
+                                                <Binding />
+                                            </MultiBinding>
+                                        </toolkit:EventToCommandBehavior.CommandParameter>
+                                    </toolkit:EventToCommandBehavior>
+                                    <behaviors:TranslateOnBoolChangedBehavior
+                                        Trigger="{Binding TriggerReposition}" Duration="1000"
+                                        XTo="{Binding TranslateX}" YTo="{Binding TranslateY}"
+                                        ActualWidth="{Binding ActualWidth}"
+                                        ActualHeight="{Binding ActualHeight}"
+                                        AnimationType="{x:Static enums:AnimationType.RepositionTube}" />
+                                    <!--BindingContext="{Binding Source={x:Reference RootGrid}, Path=BindingContext}"
+Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonLoadedCommand}"
+                                    CommandParameter="{Binding .}"-->
+                                    <!--Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonLoadedCommand}"-->
+                                    <!--BindingContext="{Binding Source={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=BindingContext}"
+Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TubeButtonLoadedCommand}"-->
                                 </Grid.Behaviors>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1"
@@ -76,8 +105,8 @@
                                                 <MultiBinding.Bindings>
                                                     <Binding/>
                                                     <Binding Source="{RelativeSource Mode=Self}"/>
-                                                    <!--<Binding Source="{RelativeSource Mode=FindAncestor,AncestorType=Grid}"/>-->
                                                     <Binding Source="{RelativeSource AncestorType={x:Type Grid}}" />
+                                                    <!--<Binding Source="{RelativeSource Mode=FindAncestor,AncestorType=Grid}"/>-->
                                                 </MultiBinding.Bindings>
                                             </MultiBinding>
                                         </TapGestureRecognizer.CommandParameter>
@@ -137,6 +166,8 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
+                <AbsoluteLayout x:Name="Overlay" InputTransparent="True" />
+
                 <!-- // AutoSolve box // -->
                 <Border VerticalOptions="End" Background="White" IsVisible="{Binding AutoSolve.Started}" HorizontalOptions="Start" Margin="5,0" >
                     <Label Text="{Binding AutoSolve.Iterations}" HeightRequest="40" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="Black"/>
@@ -152,8 +183,23 @@
                     <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
                 </Border>
 
+                <!--<Button Text="Animate" Command="{Binding TriggerAnimationCommand}" />-->
                 <!--<StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
-                    <Button Text="Animate" Command="{Binding TriggerAnimationCommand}" />
+                    
+                    <Button Text="Trigger event" 
+                       HorizontalOptions="Center"
+                       x:Name="MyButton">
+
+                        <Button.Behaviors>
+                            <toolkit:EventToCommandBehavior
+                                EventName="Clicked"
+                                BindingContext="{Binding Source={x:Reference HomePage}, Path=BindingContext}"
+                                Command="{Binding ButtonClickedCommand}"
+                                 />
+                        </Button.Behaviors>
+
+                    </Button>
+                    <Label Text="{Binding Message}" TextColor="Black" />
                 </StackLayout>-->
 
                 <Grid IsVisible="{Binding UIDisabled}" BackgroundColor="#96000000" />
