@@ -112,7 +112,7 @@
                                             <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
 
                                             <StackLayout
-                                                IsVisible="True"
+                                                IsVisible="False"
                                                 ZIndex="1"
                                                 BackgroundColor="Transparent"
                                                 IsClippedToBounds="True"
@@ -125,13 +125,12 @@
                                                     /> <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->
                                                 </StackLayout.Behaviors>
                                                 <Image
-                                                    Source="sample.png"
+                                                    Source="tube_surface_ripple_anim.gif"
                                                     Aspect="Center"
                                                     IsAnimationPlaying="True"
                                                     HorizontalOptions="Center"
                                                     VerticalOptions="End"
-                                                    TranslationX="{Binding GifXPos}"
-                                                    TranslationY="{Binding GifYPos}"
+                                                    TranslationY="-1145"
                                                     x:Name="MyImage"
                                                     />
                                             </StackLayout>
@@ -170,14 +169,14 @@
                 </Border>
 
                 
-                <StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
+                <!--<StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
                     <Button Text="←" Command="{Binding MoveGifLeftCommand}" />
                     <Button Text="→" Command="{Binding MoveGifRightCommand}" />
                     <Button Text="↑" Command="{Binding MoveGifUpCommand}" />
                     <Button Text="↓" Command="{Binding MoveGifDownCommand}" />
                     <Label Text="{Binding TubesItemsSource[11].GifXPos, StringFormat=' x: {0}'}" TextColor="Black" />
                     <Label Text="{Binding TubesItemsSource[11].GifYPos, StringFormat=' y: {0}'}" TextColor="Black" />
-                </StackLayout>
+                </StackLayout>-->
 
                 <Grid IsVisible="{Binding UIDisabled}" BackgroundColor="#96000000" />
             </Grid>

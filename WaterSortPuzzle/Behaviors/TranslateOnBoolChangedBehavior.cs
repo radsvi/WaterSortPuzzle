@@ -136,6 +136,18 @@ namespace WaterSortPuzzle.Behaviors
                 {
                     behavior.associatedView.IsVisible = true;
                     //behavior.DelayedAction = true;
+
+                    //if (behavior.associatedView is StackLayout stackLayout)
+                    //{
+                    //    if (stackLayout.Children.Count > 1)
+                    //        throw new InvalidOperationException();
+
+                    //    if (stackLayout.Children[0] is Image image)
+                    //    {
+                    //        await image.TranslateTo(0, -1000, behavior.Duration *4);
+                    //    }
+                    //}
+                    
                     await behavior.associatedView.TranslateTo(0, behavior.YTo, behavior.Duration);
 
                     behavior.associatedView.IsVisible = false;
