@@ -136,8 +136,8 @@ namespace WaterSortPuzzle.Behaviors
                 {
                     behavior.associatedView.IsVisible = true;
                     //behavior.DelayedAction = true;
-                    double cellHeight = 39;
-                    double yOffset = -cellHeight;
+                    double yOffset = -Constants.CellHeight;
+                    uint realDuration = behavior.Duration;
 
                     //if (behavior.TubeData.RippleGridRowSpan > 1)
                     //{
@@ -156,11 +156,12 @@ namespace WaterSortPuzzle.Behaviors
                     var image = GetImageElement(behavior);
                     if (image is not null)
                     {
-                        yOffset = -cellHeight * behavior.TubeData!.RippleGridRowSpan;
-                        image.TranslationY = Constants.RippleEffectOffset - cellHeight - yOffset;
+                        yOffset = -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
+                        image.TranslationY = Constants.RippleEffectOffset - Constants.CellHeight - yOffset;
+                        realDuration = behavior.Duration * (uint)behavior.TubeData!.RippleGridRowSpan;
                     }
 
-                    await behavior.associatedView.TranslateTo(0, yOffset, behavior.Duration *2);
+                    await behavior.associatedView.TranslateTo(0, yOffset, realDuration);
 
                     behavior.associatedView.IsVisible = false;
                     behavior.associatedView.TranslationY = 0;
@@ -199,7 +200,7 @@ namespace WaterSortPuzzle.Behaviors
                     );
                     
                     behavior.DelayedAction = true;
-                    await Task.Delay((int)behavior.Duration);
+                    await Task.Delay((int)behavior.Duration * behavior.TubeData!.RippleGridRowSpan);
                     behavior.DelayedAction = false;
 
                     //behavior.associatedView.IsVisible = false;

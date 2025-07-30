@@ -23,6 +23,8 @@ namespace WaterSortPuzzle.Models
         public const double RippleEffectOffset = -1145;
         public const string InnerBorderElementName = "InnerBorder";
         public const string RippleElementName = "RippleEffectElement";
+        public const double PourEffectHeight = 106;
+        public const double CellHeight = 39;
 
         public const string logFolderName = "log";
 

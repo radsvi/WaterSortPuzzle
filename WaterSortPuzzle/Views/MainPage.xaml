@@ -144,10 +144,10 @@
                                 <BoxView
                                     IsVisible="{Binding DisplayPourEffect, Mode=TwoWay}"
                                     WidthRequest="6"
-                                    HeightRequest="223"
-                                    TranslationY="-4"
+                                    HeightRequest="{Binding PourEffectHeight}"
+                                    TranslationY="-52"
                                     BackgroundColor="{Binding PourBackgroundColor}"
-                                    VerticalOptions="End"
+                                    VerticalOptions="Start"
                                     />
                             </Grid>
                         </DataTemplate>

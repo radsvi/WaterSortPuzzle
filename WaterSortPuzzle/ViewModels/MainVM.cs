@@ -950,10 +950,12 @@ namespace WaterSortPuzzle.ViewModels
 
                 //(var innerGrid, var image) = RippleSurfaceBackgroundCreation(rippleLayoutElement, currentTubeReference, currentLiquid);
 
-                RepositionSourceTube(sourceTube, currentTubeReference);
+                
 
                 currentTubeReference.TubeData.RippleGridRow = Constants.Layers - 1 - currentTubeReference.TargetEmptyRow;
                 currentTubeReference.TubeData.RippleGridRowSpan = currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1; // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
+
+                RepositionSourceTube(sourceTube, currentTubeReference);
 
                 currentTubeReference.TubeData.TriggerRippleEffect = true;
                 //currentTubeReference.TubeData.RippleGridVisible = true;

@@ -31,6 +31,25 @@
             //set { SetProperty(ref displayPourEffect, value); OnPropertyChanged(); }
             set { displayPourEffect = value; OnPropertyChanged(); }
         }
+        public double PourEffectHeight
+        {
+            get
+            {
+                //if (RippleGridRow < Constants.Layers - 1)
+                //{
+                //    return (Constants.PourEffectHeight + (RippleGridRow - Constants.Layers + 1) * Constants.CellHeight);
+                //}
+
+                //return Constants.PourEffectHeight;
+                //return (Constants.PourEffectHeight + (RippleGridRow - Constants.Layers + 1) * Constants.CellHeight);
+                //return (Constants.PourEffectHeight + (RippleGridRow - Constants.Layers + 1) * Constants.CellHeight) + (RippleGridRow - 1) * Constants.CellHeight;
+                //return (Constants.PourEffectHeight + (RippleGridRow - Constants.Layers + 1 + RippleGridRowSpan - 1) * Constants.CellHeight);
+
+                var bottomCell = RippleGridRow + RippleGridRowSpan - 1;
+                var height = (Constants.PourEffectHeight + (bottomCell) * Constants.CellHeight);
+                return height;
+            }
+        }
         private TubeData targetTube;
         public TubeData TargetTube
         {
@@ -95,13 +114,13 @@
         public int RippleGridRow
         {
             get => rippleGridRow;
-            set { rippleGridRow = value; OnPropertyChanged(); }
+            set { rippleGridRow = value; OnPropertyChanged(); OnPropertyChanged(nameof(PourEffectHeight)); }
         }
         private int rippleGridRowSpan = 1;
         public int RippleGridRowSpan
         {
             get => rippleGridRowSpan;
-            set { rippleGridRowSpan = value; OnPropertyChanged(); }
+            set { rippleGridRowSpan = value; OnPropertyChanged(); OnPropertyChanged(nameof(PourEffectHeight)); }
         }
         public ObservableCollection<LiquidColor?> Layers { get; set; } = new ObservableCollection<LiquidColor?>();
         public TubeData()
