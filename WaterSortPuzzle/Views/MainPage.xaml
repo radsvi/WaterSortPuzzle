@@ -112,7 +112,7 @@
                                             <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
 
                                             <StackLayout
-                                                IsVisible="False"
+                                                IsVisible="True"
                                                 ZIndex="1"
                                                 BackgroundColor="Transparent"
                                                 IsClippedToBounds="True"
@@ -125,11 +125,13 @@
                                                     /> <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->
                                                 </StackLayout.Behaviors>
                                                 <Image
-                                                    Source="tube_surface_ripple_anim.gif"
-                                                    Aspect="AspectFill"
+                                                    Source="sample.png"
+                                                    Aspect="Center"
                                                     IsAnimationPlaying="True"
+                                                    HorizontalOptions="Center"
                                                     VerticalOptions="End"
-                                                    TranslationY="-380"
+                                                    TranslationX="{Binding GifXPos}"
+                                                    TranslationY="{Binding GifYPos}"
                                                     x:Name="MyImage"
                                                     />
                                             </StackLayout>
@@ -167,12 +169,15 @@
                     <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
                 </Border>
 
-                <!--<Button Text="Animate" Command="{Binding TriggerAnimationCommand}" />-->
-                <!--<StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
-                    
-
-                    <Label Text="{Binding Message}" TextColor="Black" />
-                </StackLayout>-->
+                
+                <StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
+                    <Button Text="←" Command="{Binding MoveGifLeftCommand}" />
+                    <Button Text="→" Command="{Binding MoveGifRightCommand}" />
+                    <Button Text="↑" Command="{Binding MoveGifUpCommand}" />
+                    <Button Text="↓" Command="{Binding MoveGifDownCommand}" />
+                    <Label Text="{Binding TubesItemsSource[11].GifXPos, StringFormat=' x: {0}'}" TextColor="Black" />
+                    <Label Text="{Binding TubesItemsSource[11].GifYPos, StringFormat=' y: {0}'}" TextColor="Black" />
+                </StackLayout>
 
                 <Grid IsVisible="{Binding UIDisabled}" BackgroundColor="#96000000" />
             </Grid>

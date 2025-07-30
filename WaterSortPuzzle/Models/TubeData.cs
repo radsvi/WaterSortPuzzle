@@ -2,6 +2,22 @@
 {
     public partial class TubeData : ObservableObject
     {
+        private int gifYPos = -1830;
+        public int GifYPos
+        {
+            get => gifYPos;
+            set { gifYPos = value; OnPropertyChanged(); }
+        }
+        private int gifXPos;
+        public int GifXPos
+        {
+            get => gifXPos;
+            set { gifXPos = value; OnPropertyChanged(); }
+        }
+
+
+
+
         private static int tubeIdCounter = 0;
         public int TubeId { get; set; }
         public static int TubesPerLine { get; set; }

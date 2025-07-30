@@ -1031,79 +1031,6 @@ namespace WaterSortPuzzle.ViewModels
 
             return (innerGrid, image);
         }
-        //private static T? GetVisualTreeDescendantsByStyleId<T>(Element root, string styleId) where T : Layout
-        //{
-        //    foreach (var child in root.GetVisualTreeDescendants())
-        //    {
-        //        if (child is T vElem && vElem.StyleId == styleId)
-        //        {
-        //            return vElem;
-        //        }
-        //    }
-
-        //    return null;
-        //}
-
-        //private void MoveAndTiltTube(TubeReference tubeReference)
-        //{
-        //    if (tubeReference.ButtonElement is null)
-        //    {
-        //        return;
-        //    }
-
-        //    //tubeReference.ButtonElement.RenderTransform = new RotateTransform();
-
-        //    //Storyboard storyboard = new Storyboard();
-        //    //storyboard.Duration = new Duration(TimeSpan.FromSeconds(10.0));
-
-        //    //DoubleAnimation rotateAnimation = new DoubleAnimation()
-        //    //{
-        //    //    From = 0,
-        //    //    To = 60,
-        //    //    Duration = TimeSpan.FromSeconds(2)
-        //    //};
-        //    //Storyboard.SetTarget(rotateAnimation, tubeReference.ButtonElement);
-        //    //Storyboard.SetTargetProperty(rotateAnimation, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
-
-        //    //storyboard.Children.Add(rotateAnimation);
-        //    //MainPage.Resources.Add("Storyboard", storyboard);
-
-        //    //storyboard.Begin();
-
-
-
-        //    //var HeightAnimation = new ThicknessAnimation() { To = new Thickness(0, 0, 0, 15), Duration = TimeSpan.FromSeconds(0.1) };
-        //    //tubeReference.ButtonElement.BeginAnimation(Button.MarginProperty, HeightAnimation);
-
-        //    //tubeReference.ButtonElement.RenderTransform = new RotateTransform();
-        //    //var bodymove = new TranslateTransform();
-
-
-        //    //DoubleAnimation rotateAnimation = new DoubleAnimation()
-        //    //{
-        //    //    From = 0,
-        //    //    To = 60,
-        //    //    Duration = TimeSpan.FromSeconds(2)
-        //    //};
-        //    ////var propertypath = new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)");
-
-        //    //tubeReference.ButtonElement.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
-
-
-
-        //    RotateTransform rotateTransform = new RotateTransform();
-        //    DoubleAnimation doubleAnimation = new DoubleAnimation()
-        //    {
-        //        From = 0,
-        //        To = 60,
-        //        Duration = TimeSpan.FromSeconds(1)
-        //    };
-        //    //doubleAnimation.RepeatBehavior = RepeatBehavior.Forever;
-        //    //tubeReference.ButtonElement.RenderTransformOrigin = new Point(x, y);
-        //    tubeReference.ButtonElement.RenderTransform = rotateTransform;
-        //    rotateTransform.BeginAnimation(RotateTransform.AngleProperty, doubleAnimation);
-
-        //}
         #endregion
         #region Other Methods
         //private void Tubes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -1128,6 +1055,27 @@ namespace WaterSortPuzzle.ViewModels
         //{
         //    var qwer = UIEnabled;
         //}
+
+        [RelayCommand]
+        void MoveGifUp()
+        {
+            TubesItemsSource[11].GifYPos -= 10;
+        }
+        [RelayCommand]
+        void MoveGifDown()
+        {
+            TubesItemsSource[11].GifYPos += 10;
+        }
+        [RelayCommand]
+        void MoveGifLeft()
+        {
+            TubesItemsSource[11].GifXPos -= 10;
+        }
+        [RelayCommand]
+        void MoveGifRight()
+        {
+            TubesItemsSource[11].GifXPos += 10;
+        }
         #endregion
     }
 }
