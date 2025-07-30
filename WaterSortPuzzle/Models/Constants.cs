@@ -20,6 +20,9 @@ namespace WaterSortPuzzle.Models
         public const int PouringAnimationDuration = 500;
         public const int TubeWidth = 46;
         public const int TubeHeight = 194;
+        public const double RippleEffectOffset = -1145;
+        public const string InnerBorderElementName = "InnerBorder";
+        public const string RippleElementName = "RippleEffectElement";
 
         public const string logFolderName = "log";
 

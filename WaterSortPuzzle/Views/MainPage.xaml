@@ -98,11 +98,11 @@
 
                                 <!--IsVisible="{Binding TriggerRippleEffect}"-->
                                 <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" 
-                                    Stroke="LightBlue" StrokeThickness="1" x:Name="InnerBorder"
+                                    Stroke="LightBlue" StrokeThickness="1" StyleId="{x:Static models:Constants.InnerBorderElementName}"
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
                                     <Grid Margin="0,21,0,0" IsClippedToBounds="True">
-                                        <Grid RowDefinitions="*,*,*,*" x:Name="RippleEffectElement"
+                                        <Grid RowDefinitions="*,*,*,*" StyleId="{x:Static models:Constants.RippleElementName}"
                                           Margin="0"
                                           WidthRequest="200" HorizontalOptions="Center"
                                           InputTransparent="True">
@@ -120,9 +120,10 @@
                                                 Grid.RowSpan="{Binding RippleGridRowSpan}">
                                                 <StackLayout.Behaviors>
                                                     <behaviors:TranslateOnBoolChangedBehavior
-                                                    Trigger="{Binding TriggerRippleEffect, Mode=TwoWay}" Duration="1000"
-                                                    YTo="-40" AnimationType="{x:Static enums:AnimationType.RippleEffect}"
-                                                    /> <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->
+                                                        Trigger="{Binding TriggerRippleEffect, Mode=TwoWay}" Duration="1000"
+                                                        AnimationType="{x:Static enums:AnimationType.RippleEffect}"
+                                                        TubeData="{Binding .}"
+                                                        /> <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->
                                                 </StackLayout.Behaviors>
                                                 <Image
                                                     Source="tube_surface_ripple_anim.gif"
@@ -130,7 +131,7 @@
                                                     IsAnimationPlaying="True"
                                                     HorizontalOptions="Center"
                                                     VerticalOptions="End"
-                                                    TranslationY="-1145"
+                                                    TranslationY="{x:Static models:Constants.RippleEffectOffset}"
                                                     x:Name="MyImage"
                                                     />
                                             </StackLayout>

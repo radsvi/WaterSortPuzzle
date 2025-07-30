@@ -952,6 +952,9 @@ namespace WaterSortPuzzle.ViewModels
 
                 RepositionSourceTube(sourceTube, currentTubeReference);
 
+                currentTubeReference.TubeData.RippleGridRow = Constants.Layers - 1 - currentTubeReference.TargetEmptyRow;
+                currentTubeReference.TubeData.RippleGridRowSpan = currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1; // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
+
                 currentTubeReference.TubeData.TriggerRippleEffect = true;
                 //currentTubeReference.TubeData.RippleGridVisible = true;
                 currentTubeReference.TubeData.Animate = AnimationType.RippleEffect;
@@ -963,8 +966,7 @@ namespace WaterSortPuzzle.ViewModels
                 //int distancePerLiquid = 40;
                 //int distance = Constants.TubeImageOffset - (currentTubeReference.NumberOfRepeatingLiquids * distancePerLiquid);
 
-                currentTubeReference.TubeData.RippleGridRow = Constants.Layers - 1 - currentTubeReference.TargetEmptyRow;
-                currentTubeReference.TubeData.RippleGridRowSpan = currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1; // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
+
 
 
                 //await image.TranslateTo(0, distance, duration);
