@@ -88,7 +88,7 @@ namespace WaterSortPuzzle.Behaviors
 
         //public double XTo { get; set; } = 0;
         //public double YTo { get; set; } = 10;
-        public uint Duration { get; set; } = 750;
+        //public uint Duration { get; set; } = 750;
 
         public AnimationType AnimationType { get; set; }
         private View? associatedView;
@@ -122,13 +122,13 @@ namespace WaterSortPuzzle.Behaviors
                 {
                     if ((bool)newValue)
                     {
-                        await behavior.associatedView.TranslateTo(0, behavior.YTo, behavior.Duration);
+                        await behavior.associatedView.TranslateTo(0, behavior.YTo, Constants.RaiseTubeDuration);
                     }
                     else
                     {
                         if (behavior.AdditionalAnimation == false)
                         {
-                            await behavior.associatedView.TranslateTo(0, 0, behavior.Duration);
+                            await behavior.associatedView.TranslateTo(0, 0, Constants.RaiseTubeDuration);
                         }
                     }
                 }
@@ -137,7 +137,7 @@ namespace WaterSortPuzzle.Behaviors
                     behavior.associatedView.IsVisible = true;
                     //behavior.DelayedAction = true;
                     double yOffset = -Constants.CellHeight;
-                    uint realDuration = behavior.Duration;
+                    uint realDuration = Constants.PouringDuration;
 
                     //if (behavior.TubeData.RippleGridRowSpan > 1)
                     //{
@@ -158,7 +158,7 @@ namespace WaterSortPuzzle.Behaviors
                     {
                         yOffset = -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
                         image.TranslationY = Constants.RippleEffectOffset - Constants.CellHeight - yOffset;
-                        realDuration = behavior.Duration * (uint)behavior.TubeData!.RippleGridRowSpan;
+                        realDuration = Constants.PouringDuration * (uint)behavior.TubeData!.RippleGridRowSpan;
                     }
 
                     await behavior.associatedView.TranslateTo(0, yOffset, realDuration);
@@ -176,7 +176,6 @@ namespace WaterSortPuzzle.Behaviors
                     behavior.TubeData!.IsBusy = true;
                     //behavior.associatedView.IsVisible = true;
                     //behavior.associatedView.IsVisible = false;
-                    uint movementDuration = 250;
                     behavior.associatedView.ZIndex = 10;
                     double XOffset = behavior.XTo - (behavior.ActualHeight / 2) + (behavior.ActualWidth / 2); // Using Height, because we are rotating it almost 90 degrees. The second part of the equasion is so that it is in the middle of the target tube instead of at the edge
                     double YOffset = behavior.YTo - (behavior.ActualHeight / 2) - (behavior.ActualWidth / 2);
@@ -192,15 +191,15 @@ namespace WaterSortPuzzle.Behaviors
 
 
                     await Task.WhenAll(
-                        behavior.associatedView.TranslateTo(XOffset, YOffset, movementDuration),
-                        behavior.associatedView.RotateTo(rotateDegree, movementDuration),
-                        innerElement.RotateTo(-rotateDegree, movementDuration),
-                        innerElement.ScaleYTo(0.5, movementDuration),
-                        innerElement.TranslateTo(0, 13, movementDuration /2)
+                        behavior.associatedView.TranslateTo(XOffset, YOffset, Constants.RepositionDuration),
+                        behavior.associatedView.RotateTo(rotateDegree, Constants.RepositionDuration),
+                        innerElement.RotateTo(-rotateDegree, Constants.RepositionDuration),
+                        innerElement.ScaleYTo(0.5, Constants.RepositionDuration),
+                        innerElement.TranslateTo(0, 13, Constants.RepositionDuration / 2)
                     );
                     
                     behavior.DelayedAction = true;
-                    await Task.Delay((int)behavior.Duration * behavior.TubeData!.NumberOfRepeatingLiquids);
+                    await Task.Delay((int)Constants.PouringDuration * behavior.TubeData!.NumberOfRepeatingLiquids);
                     behavior.DelayedAction = false;
 
                     //behavior.associatedView.IsVisible = false;
@@ -213,7 +212,7 @@ namespace WaterSortPuzzle.Behaviors
                     //innerElement.ScaleY = 1;
                     //innerElement.TranslationY = 0;
 
-                    uint moveBackDuration = movementDuration / 2;
+                    uint moveBackDuration = Constants.RepositionDuration / 2;
                     await Task.WhenAll(
                         behavior.associatedView.TranslateTo(0, 0, moveBackDuration),
                         behavior.associatedView.RotateTo(0, moveBackDuration),

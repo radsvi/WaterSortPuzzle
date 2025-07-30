@@ -68,11 +68,11 @@
                                 >
                                 <Grid.Behaviors>
                                     <behaviors:TranslateOnBoolChangedBehavior
-                                        Trigger="{Binding IsRaised}" Duration="75" YTo="-20" AnimationType="{x:Static enums:AnimationType.RaiseNLower}"
+                                        Trigger="{Binding IsRaised}" YTo="-20" AnimationType="{x:Static enums:AnimationType.RaiseNLower}"
                                         AdditionalAnimation="{Binding TriggerReposition}"
                                         />
                                     <behaviors:TranslateOnBoolChangedBehavior
-                                        Trigger="{Binding TriggerReposition, Mode=TwoWay}" Duration="1000"
+                                        Trigger="{Binding TriggerReposition, Mode=TwoWay}"
                                         XTo="{Binding TranslateX}" YTo="{Binding TranslateY}"
                                         ActualWidth="{Binding ActualWidth}"
                                         ActualHeight="{Binding ActualHeight}"
@@ -120,7 +120,7 @@
                                                 Grid.RowSpan="{Binding RippleGridRowSpan}">
                                                 <StackLayout.Behaviors>
                                                     <behaviors:TranslateOnBoolChangedBehavior
-                                                        Trigger="{Binding TriggerRippleEffect, Mode=TwoWay}" Duration="1000"
+                                                        Trigger="{Binding TriggerRippleEffect, Mode=TwoWay}"
                                                         AnimationType="{x:Static enums:AnimationType.RippleEffect}"
                                                         TubeData="{Binding .}"
                                                         /> <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->

@@ -16,6 +16,8 @@ namespace WaterSortPuzzle.Models
         public const int MaximumNumberOfExtraTubesAllowedToBeAdded = 4;
         public const int MaxTubesPerLine = 9;
         public const int MaxStepBack = 5;
+
+        #region Visual constants
         public const int TubeImageOffset = 30;
         public const int PouringAnimationDuration = 500;
         public const int TubeWidth = 46;
@@ -25,6 +27,11 @@ namespace WaterSortPuzzle.Models
         public const string RippleElementName = "RippleEffectElement";
         public const double PourEffectHeight = 106;
         public const double CellHeight = 39;
+        public const uint RepositionDuration = 250;
+        public const uint RaiseTubeDuration = 75;
+        //public const uint PouringDuration = 1000;
+        public const uint PouringDuration = 300;
+        #endregion
 
         public const string logFolderName = "log";
 
