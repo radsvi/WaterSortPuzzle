@@ -284,6 +284,8 @@ namespace WaterSortPuzzle.ViewModels
             if (CanStepBack() == false)
                 return;
 
+            DeselectTube(AnimationSpeed.Animation);
+
             GameState.StepBackPressesCounter++;
 
             SavedGameState lastGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 1];
@@ -676,7 +678,7 @@ namespace WaterSortPuzzle.ViewModels
                     if (LastClickedTube != sourceTube)
                         LastClickedTube = sourceTube;
                     sourceTube.TopMostLiquid = GameState[sourceTube.TubeId, i];
-                    MainVM.MoveTubeVertically(sourceTube, VerticalAnimation.Raise);
+                    MoveTubeVertically(sourceTube, VerticalAnimation.Raise);
                     //MoveAndTiltTube(sourceTube);
                     return;
                 }
@@ -729,7 +731,7 @@ namespace WaterSortPuzzle.ViewModels
             if (LastClickedTube is not null)
             {
                 if (SourceTube is not null)
-                    MainVM.MoveTubeVertically(SourceTube, VerticalAnimation.Lower, type);
+                    MoveTubeVertically(SourceTube, VerticalAnimation.Lower, type);
                 LastClickedTube = null;
             }
         }
