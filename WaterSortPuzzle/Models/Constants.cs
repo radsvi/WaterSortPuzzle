@@ -25,7 +25,8 @@ namespace WaterSortPuzzle.Models
 
         //public readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
         //public static readonly int MaxTubes = LiquidColor.ColorKeys.Count - 1;
-        public static readonly int ColorCount = Enum.GetNames(typeof(LiquidColorName)).Length - 1; // minus one, because Blank isn't a valid color
+        //public static readonly int ColorCount = Enum.GetNames<LiquidColorName>().Length - 1; // minus one, because Blank isn't a valid color
+        public static readonly int ColorCount = 12; // temporary before I fix flask visual scaling
 
         public static readonly double TubeImageOffsetVisual = TubeImageOffset;
     }
