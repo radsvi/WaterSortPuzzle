@@ -200,7 +200,7 @@ namespace WaterSortPuzzle.Behaviors
                     );
                     
                     behavior.DelayedAction = true;
-                    await Task.Delay((int)behavior.Duration * behavior.TubeData!.RippleGridRowSpan);
+                    await Task.Delay((int)behavior.Duration * behavior.TubeData!.NumberOfRepeatingLiquids);
                     behavior.DelayedAction = false;
 
                     //behavior.associatedView.IsVisible = false;

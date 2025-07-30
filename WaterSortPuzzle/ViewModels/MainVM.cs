@@ -624,6 +624,7 @@ namespace WaterSortPuzzle.ViewModels
             if (successAtLeastOnce > 0)
             {
                 currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
+                currentTubeReference.TubeData.NumberOfRepeatingLiquids = successAtLeastOnce;
                 await DisplayChanges(currentTubeReference, SourceTube, currentLiquid);
 
 
@@ -980,6 +981,9 @@ namespace WaterSortPuzzle.ViewModels
         }
         private void RepositionSourceTube(TubeReference sourceTube, TubeReference targetTube)
         {
+            // this is used to determine how long the tube should wait until it returns:
+            sourceTube.TubeData.NumberOfRepeatingLiquids = targetTube.NumberOfRepeatingLiquids;
+
             //var sourceGrid = sourceTube.GridElement;
             //var targetGrid = targetTube.GridElement;
 
@@ -1014,27 +1018,27 @@ namespace WaterSortPuzzle.ViewModels
 
         }
 
-        internal (Grid, Image) RippleSurfaceBackgroundCreation<T>(T rippleLayoutElement, TubeReference currentTubeReference, LiquidColor sourceLiquid) where T : Layout
-        {
-            var innerGrid = new Grid { BackgroundColor = sourceLiquid.Brush, IsClippedToBounds = true, ZIndex = 1000 };
+        //internal (Grid, Image) RippleSurfaceBackgroundCreation<T>(T rippleLayoutElement, TubeReference currentTubeReference, LiquidColor sourceLiquid) where T : Layout
+        //{
+        //    var innerGrid = new Grid { BackgroundColor = sourceLiquid.Brush, IsClippedToBounds = true, ZIndex = 1000 };
 
-            Grid.SetRow(innerGrid, Constants.Layers - 1 - currentTubeReference.TargetEmptyRow);
-            Grid.SetRowSpan(innerGrid, currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
+        //    Grid.SetRow(innerGrid, Constants.Layers - 1 - currentTubeReference.TargetEmptyRow);
+        //    Grid.SetRowSpan(innerGrid, currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1); // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
 
-            var image = new Image {
-                Source = "tube_surface_ripple_anim.gif",
-                Aspect = Aspect.AspectFill,
-                VerticalOptions = LayoutOptions.End,
-                IsAnimationPlaying = true,
-                WidthRequest = 46,
-                HeightRequest = 1200,
-                TranslationY = Constants.TubeImageOffset,
-            };
-            innerGrid.Children.Add(image);
-            rippleLayoutElement.Children.Add(innerGrid);
+        //    var image = new Image {
+        //        Source = "tube_surface_ripple_anim.gif",
+        //        Aspect = Aspect.AspectFill,
+        //        VerticalOptions = LayoutOptions.End,
+        //        IsAnimationPlaying = true,
+        //        WidthRequest = 46,
+        //        HeightRequest = 1200,
+        //        TranslationY = Constants.TubeImageOffset,
+        //    };
+        //    innerGrid.Children.Add(image);
+        //    rippleLayoutElement.Children.Add(innerGrid);
 
-            return (innerGrid, image);
-        }
+        //    return (innerGrid, image);
+        //}
         #endregion
         #region Other Methods
         //private void Tubes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

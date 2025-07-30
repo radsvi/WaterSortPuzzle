@@ -156,6 +156,7 @@ namespace WaterSortPuzzle.Models
             AddTube(i++, new int[] { 2, 3, 1 });
             AddTube(i++, new int[] { 2, 2, 2 });
             AddTube(i++, new int[] { 3, 3 });
+            AddTube(i++, new int[] { 4, 4, 4, 4 });
 
 
 

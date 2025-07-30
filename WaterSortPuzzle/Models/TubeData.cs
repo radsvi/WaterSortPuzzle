@@ -122,6 +122,13 @@
             get => rippleGridRowSpan;
             set { rippleGridRowSpan = value; OnPropertyChanged(); OnPropertyChanged(nameof(PourEffectHeight)); }
         }
+        private int numberOfRepeatingLiquids;
+        public int NumberOfRepeatingLiquids
+        {
+            get => numberOfRepeatingLiquids;
+            set { numberOfRepeatingLiquids = value; OnPropertyChanged(); }
+        }
+
         public ObservableCollection<LiquidColor?> Layers { get; set; } = new ObservableCollection<LiquidColor?>();
         public TubeData()
         {
