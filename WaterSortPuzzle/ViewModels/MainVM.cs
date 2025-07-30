@@ -588,6 +588,9 @@ namespace WaterSortPuzzle.ViewModels
             if (obj is not TubeReference currentTubeReference)
                 return;
 
+            if (currentTubeReference.TubeData.IsBusy == true)
+                return;
+
             if (LastClickedTube == null)
             {
                 SourceTube = currentTubeReference;

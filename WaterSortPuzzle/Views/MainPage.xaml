@@ -78,6 +78,7 @@
                                         ActualHeight="{Binding ActualHeight}"
                                         AnimationType="{x:Static enums:AnimationType.RepositionTube}"
                                         DelayedAction="{Binding TargetTube.DisplayPourEffect, Mode=TwoWay}"
+                                        TubeData="{Binding .}"
                                          /> <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->
                                 </Grid.Behaviors>
                                 <Grid.GestureRecognizers>

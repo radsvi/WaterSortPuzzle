@@ -71,6 +71,17 @@ namespace WaterSortPuzzle.Behaviors
             BindableProperty.Create(nameof(DelayedAction), typeof(bool), typeof(TranslateOnBoolChangedBehavior), false);
 
 
+        public TubeData? TubeData
+        {
+            get { return (TubeData)GetValue(TubeDataProperty); }
+            set { SetValue(TubeDataProperty, value); }
+        }
+        public static readonly BindableProperty TubeDataProperty =
+            BindableProperty.Create(nameof(TubeData), typeof(TubeData), typeof(TranslateOnBoolChangedBehavior), null);
+
+
+
+
 
 
 
@@ -80,7 +91,6 @@ namespace WaterSortPuzzle.Behaviors
         public uint Duration { get; set; } = 750;
 
         public AnimationType AnimationType { get; set; }
-
         private View? associatedView;
 
         protected override void OnAttachedTo(View bindable)
@@ -135,6 +145,7 @@ namespace WaterSortPuzzle.Behaviors
                 }
                 else if (behavior.AnimationType == Enums.AnimationType.RepositionTube && behavior.Trigger == true)
                 {
+                    behavior.TubeData!.IsBusy = true;
                     //behavior.associatedView.IsVisible = true;
                     //behavior.associatedView.IsVisible = false;
                     uint movementDuration = 250;
@@ -159,11 +170,9 @@ namespace WaterSortPuzzle.Behaviors
                         innerElement.ScaleYTo(0.5, movementDuration),
                         innerElement.TranslateTo(0, 13, movementDuration /2)
                     );
-                    behavior.DelayedAction = true;
                     
-
+                    behavior.DelayedAction = true;
                     await Task.Delay((int)behavior.Duration);
-
                     behavior.DelayedAction = false;
 
                     //behavior.associatedView.IsVisible = false;
@@ -186,6 +195,7 @@ namespace WaterSortPuzzle.Behaviors
                     );
 
                     behavior.Trigger = false;
+                    behavior.TubeData!.IsBusy = false;
                     //behavior.AnimationType = AnimationType.None;
                 }
             }

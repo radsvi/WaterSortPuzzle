@@ -5,6 +5,7 @@
         private static int tubeIdCounter = 0;
         public int TubeId { get; set; }
         public static int TubesPerLine { get; set; }
+        public bool IsBusy { get; set; } = false;
         private bool isVisible = true;
         public bool IsVisible
         {
