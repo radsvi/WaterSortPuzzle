@@ -140,14 +140,14 @@ namespace WaterSortPuzzle.Behaviors
 
                     var innerElement = GetChildElement<Grid>(behavior.associatedView, Constants.InnerGridElementName);
 
-                    await AnimateHeight(innerElement, 30, 60, 1000);
-
+                    //await AnimateHeight(innerElement, 30, Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan, realDuration);
+                    await AnimateHeight(innerElement, Constants.RippleImageHeight, Constants.RippleImageHeight * (behavior.TubeData!.RippleGridRowSpan + 1), realDuration);
 
                     behavior.associatedView.IsVisible = false;
                     behavior.Trigger = false;
 
-                    behavior.TubeData.RippleGridRow = 0;
-                    behavior.TubeData.RippleGridRowSpan = 1;
+                    //behavior.TubeData.RippleGridRow = 0;
+                    //behavior.TubeData.RippleGridRowSpan = 1;
                 }
                 else if (behavior.AnimationType == Enums.AnimationType.RepositionTube && behavior.Trigger == true)
                 {
