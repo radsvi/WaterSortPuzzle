@@ -115,7 +115,7 @@
 
                                             <AbsoluteLayout
                                                 HorizontalOptions="Center"
-                                                BackgroundColor="Yellow">
+                                                BackgroundColor="LightBlue">
                                                 <AbsoluteLayout.Behaviors>
                                                     <behaviors:TranslateOnBoolChangedBehavior
                                                         Trigger="{Binding TriggerRippleEffect, Mode=TwoWay}"
@@ -124,7 +124,11 @@
                                                         />
                                                     <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->
                                                 </AbsoluteLayout.Behaviors>
-                                                <Grid AbsoluteLayout.LayoutBounds="0.5,1,129,30" AbsoluteLayout.LayoutFlags="PositionProportional" BackgroundColor="Red">
+                                                <Grid
+                                                    AbsoluteLayout.LayoutBounds="0.5,1,129,30"
+                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    BackgroundColor="Red"
+                                                    StyleId="{x:Static models:Constants.InnerGridElementName}">
                                                     <!--<BoxView
                                                         BackgroundColor="{Binding PourBackgroundColor}" HeightRequest="30" WidthRequest="129" Margin="0" />-->
                                                     <Image

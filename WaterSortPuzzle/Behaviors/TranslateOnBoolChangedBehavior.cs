@@ -136,23 +136,25 @@ namespace WaterSortPuzzle.Behaviors
                 {
                     behavior.associatedView.IsVisible = true;
                     //behavior.DelayedAction = true;
-                    double yOffset = -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
+                    //double yOffset = -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
                     uint realDuration = Constants.PouringDuration * (uint)behavior.TubeData!.RippleGridRowSpan;
 
-                    //var image = GetImageElement(behavior);
-                    //if (image is not null)
+                    var innerGrid = GetOutsideImageElement(behavior);
+                    //if (innerGrid is not null)
                     //{
                     //    //yOffset = -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
                     //    //realDuration = Constants.PouringDuration * (uint)behavior.TubeData!.RippleGridRowSpan;
 
-                    //    image.TranslationY = Constants.RippleEffectOffset - Constants.CellHeight - yOffset;
+                    //    innerGrid.TranslationY = Constants.RippleEffectOffset - Constants.CellHeight - yOffset;
                     //}
+                    //innerGrid.TranslationY = - Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
 
-                    await behavior.associatedView.TranslateTo(0, yOffset, realDuration);
-                    behavior.associatedView.TranslationY = 0;
+                    await innerGrid.TranslateTo(0, -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan, realDuration);
+                    innerGrid.TranslationY = 0;
 
-                    //if (image is not null)
-                    //    image.TranslationY = Constants.RippleEffectOffset;
+                    //if (innerGrid is not null)
+                    //    innerGrid.TranslationY = Constants.RippleEffectOffset;
+                    //innerGrid.TranslationY = Constants.RippleEffectOffset;
 
                     behavior.associatedView.IsVisible = false;
                     behavior.Trigger = false;
@@ -240,20 +242,20 @@ namespace WaterSortPuzzle.Behaviors
             }
             throw new NullReferenceException();
         }
-        private static Image? GetImageElement(TranslateOnBoolChangedBehavior behavior)
+        private static Grid GetOutsideImageElement(TranslateOnBoolChangedBehavior behavior)
         {
             if (behavior.TubeData?.RippleGridRowSpan > 0)
             {
-                if (behavior.associatedView is StackLayout stackLayout)
+                if (behavior.associatedView is AbsoluteLayout stackLayout)
                 {
                     if (stackLayout.Children.Count > 1)
                         throw new InvalidOperationException();
 
-                    if (stackLayout.Children[0] is Image image)
-                        return image;
+                    if (stackLayout.Children[0] is Grid element && element.StyleId == Constants.InnerGridElementName)
+                        return element;
                 }
             }
-            return null;
+            throw new NullReferenceException();
         }
     }
 }
