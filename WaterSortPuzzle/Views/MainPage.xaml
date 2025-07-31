@@ -150,8 +150,6 @@
                                                         IsAnimationPlaying="True"
                                                         HorizontalOptions="Center"
                                                         VerticalOptions="Start"
-                                                        TranslationX="{Binding XPos}"
-                                                        TranslationY="{Binding YPos}"
                                                         x:Name="MyImage"
                                                         />
                                                 </Grid>
@@ -192,14 +190,14 @@
                 </Border>
 
                 
-                <StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
+                <!--<StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
                     <Button Text="←" Command="{Binding MoveGifLeftCommand}" />
                     <Button Text="→" Command="{Binding MoveGifRightCommand}" />
                     <Button Text="↑" Command="{Binding MoveGifUpCommand}" />
                     <Button Text="↓" Command="{Binding MoveGifDownCommand}" />
                     <Label Text="{Binding TubesItemsSource[1].XPos, StringFormat=' x: {0}'}" TextColor="Black" />
                     <Label Text="{Binding TubesItemsSource[1].YPos, StringFormat=' y: {0}'}" TextColor="Black" />
-                </StackLayout>
+                </StackLayout>-->
 
                 <Grid IsVisible="{Binding UIDisabled}" BackgroundColor="#96000000" />
             </Grid>

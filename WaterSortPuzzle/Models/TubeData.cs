@@ -2,21 +2,6 @@
 {
     public partial class TubeData : ObservableObject
     {
-        private double yPos;
-        public double YPos
-        {
-            get => yPos;
-            set { yPos = value; OnPropertyChanged(); }
-        }
-        private double xPos = 0;
-        public double XPos
-        {
-            get => xPos;
-            set { xPos = value; OnPropertyChanged(); }
-        }
-
-
-
         private static int tubeIdCounter = 0;
         public int TubeId { get; set; }
         public static int TubesPerLine { get; set; }

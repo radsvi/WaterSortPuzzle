@@ -1066,26 +1066,26 @@ namespace WaterSortPuzzle.ViewModels
         //{
         //    var qwer = UIEnabled;
         //}
-        [RelayCommand]
-        void MoveGifUp()
-        {
-            TubesItemsSource[1].YPos -= 10;
-        }
-        [RelayCommand]
-        void MoveGifDown()
-        {
-            TubesItemsSource[1].YPos += 10;
-        }
-        [RelayCommand]
-        void MoveGifLeft()
-        {
-            TubesItemsSource[1].XPos -= 10;
-        }
-        [RelayCommand]
-        void MoveGifRight()
-        {
-            TubesItemsSource[1].XPos += 10;
-        }
+        //[RelayCommand]
+        //void MoveGifUp()
+        //{
+        //    TubesItemsSource[1].YPos -= 10;
+        //}
+        //[RelayCommand]
+        //void MoveGifDown()
+        //{
+        //    TubesItemsSource[1].YPos += 10;
+        //}
+        //[RelayCommand]
+        //void MoveGifLeft()
+        //{
+        //    TubesItemsSource[1].XPos -= 10;
+        //}
+        //[RelayCommand]
+        //void MoveGifRight()
+        //{
+        //    TubesItemsSource[1].XPos += 10;
+        //}
         #endregion
     }
 }
