@@ -161,12 +161,17 @@ namespace WaterSortPuzzle.Behaviors
                     //await AnimateHeight(innerGrid, 60, 1000);
                     //await AnimateHeight(innerGrid, 35, 10);
 
-                    Rect origSize = new Rect(innerGrid.X, innerGrid.Y, innerGrid.Width, innerGrid.Height);
-                    Rect newSize = new Rect(innerGrid.X, innerGrid.Y, innerGrid.Width, 90);
-                    await innerGrid.LayoutTo(newSize, 1000, Easing.SinInOut);
+                    //Rect origSize = new Rect(innerGrid.X, innerGrid.Y, innerGrid.Width, innerGrid.Height);
+                    //Rect newSize = new Rect(innerGrid.X, innerGrid.Y, innerGrid.Width, 90);
+                    //await innerGrid.LayoutTo(newSize, 1000, Easing.SinInOut);
                     //await innerGrid.ScaleYTo(2, 1000, Easing.SinInOut);
                     //await innerGrid.LayoutTo();
                     //innerGrid.HeightRequest = 35;
+
+
+                    await AnimateHeight(innerGrid, 35, 5, 1000);
+                    //await Task.Delay(1000);
+
 
 
                     //var animation = new Animation(v => innerGrid.Scale = v, 1, 2);
@@ -286,10 +291,9 @@ namespace WaterSortPuzzle.Behaviors
             
             throw new NullReferenceException();
         }
-        private static Task<bool> AnimateHeight(View view, double toHeight, uint duration)
+        private static Task<bool> AnimateHeight(View view, double fromHeight, double toHeight, uint duration)
         {
             var tcs = new TaskCompletionSource<bool>();
-            double fromHeight = view.Height;
 
             var animation = new Animation(v => view.HeightRequest = v, fromHeight, toHeight);
             animation.Commit(view, "HeightAnim", length: duration, easing: Easing.SinInOut,

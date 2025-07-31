@@ -118,7 +118,8 @@
                                                 HorizontalOptions="Center"
                                                 VerticalOptions="End"
                                                 IsClippedToBounds="True"
-                                                BackgroundColor="Green">
+                                                BackgroundColor="Green"
+                                                StyleId="{x:Static models:Constants.InnerGridElementName}">
                                                 <AbsoluteLayout.Behaviors>
                                                     <behaviors:TranslateOnBoolChangedBehavior
                                                         Trigger="{Binding TriggerRippleEffect, Mode=TwoWay}"
@@ -133,7 +134,7 @@
                                                     HeightRequest="35"
                                                     
                                                     BackgroundColor="Red"
-                                                    StyleId="{x:Static models:Constants.InnerGridElementName}">
+                                                    >
                                                     <!--<BoxView
                                                         BackgroundColor="{Binding PourBackgroundColor}" HeightRequest="30" WidthRequest="129" Margin="0" />-->
                                                     <Image
