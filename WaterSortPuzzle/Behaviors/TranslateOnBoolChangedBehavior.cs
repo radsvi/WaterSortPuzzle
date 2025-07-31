@@ -174,6 +174,8 @@ namespace WaterSortPuzzle.Behaviors
                 else if (behavior.AnimationType == Enums.AnimationType.RepositionTube && behavior.Trigger == true)
                 {
                     behavior.TubeData!.IsBusy = true;
+                    behavior.associatedView.InputTransparent = true;
+
                     //behavior.associatedView.IsVisible = true;
                     //behavior.associatedView.IsVisible = false;
                     behavior.associatedView.ZIndex = 10;
@@ -223,6 +225,7 @@ namespace WaterSortPuzzle.Behaviors
 
                     behavior.Trigger = false;
                     behavior.TubeData!.IsBusy = false;
+                    behavior.associatedView.InputTransparent = false;
                     //behavior.AnimationType = AnimationType.None;
                 }
             }
