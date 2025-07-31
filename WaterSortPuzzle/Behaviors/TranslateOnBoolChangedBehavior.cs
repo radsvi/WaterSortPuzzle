@@ -136,25 +136,29 @@ namespace WaterSortPuzzle.Behaviors
                 {
                     behavior.associatedView.IsVisible = true;
                     //behavior.DelayedAction = true;
-                    double yOffset = -Constants.CellHeight;
-                    uint realDuration = Constants.PouringDuration;
+                    double yOffset = -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
+                    uint realDuration = Constants.PouringDuration * (uint)behavior.TubeData!.RippleGridRowSpan;
 
-                    var image = GetImageElement(behavior);
-                    if (image is not null)
-                    {
-                        yOffset = -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
-                        image.TranslationY = Constants.RippleEffectOffset - Constants.CellHeight - yOffset;
-                        realDuration = Constants.PouringDuration * (uint)behavior.TubeData!.RippleGridRowSpan;
-                    }
+                    //var image = GetImageElement(behavior);
+                    //if (image is not null)
+                    //{
+                    //    //yOffset = -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
+                    //    //realDuration = Constants.PouringDuration * (uint)behavior.TubeData!.RippleGridRowSpan;
+
+                    //    image.TranslationY = Constants.RippleEffectOffset - Constants.CellHeight - yOffset;
+                    //}
 
                     await behavior.associatedView.TranslateTo(0, yOffset, realDuration);
                     behavior.associatedView.TranslationY = 0;
 
-                    if (image is not null)
-                        image.TranslationY = Constants.RippleEffectOffset;
+                    //if (image is not null)
+                    //    image.TranslationY = Constants.RippleEffectOffset;
 
                     behavior.associatedView.IsVisible = false;
                     behavior.Trigger = false;
+
+                    behavior.TubeData.RippleGridRow = 0;
+                    behavior.TubeData.RippleGridRowSpan = 1;
                 }
                 else if (behavior.AnimationType == Enums.AnimationType.RepositionTube && behavior.Trigger == true)
                 {

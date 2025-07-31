@@ -105,36 +105,48 @@
                                         <Grid RowDefinitions="*,*,*,*" StyleId="{x:Static models:Constants.RippleElementName}"
                                           Margin="0"
                                           WidthRequest="200" HorizontalOptions="Center"
-                                          InputTransparent="True">
+                                        InputTransparent="True"
+                                          >
                                             <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
                                             <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
                                             <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
                                             <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
 
-                                            <StackLayout
-                                                IsVisible="False"
+                                            <AbsoluteLayout
+                                                IsVisible="True"
                                                 ZIndex="1"
-                                                BackgroundColor="Transparent"
                                                 IsClippedToBounds="True"
                                                 Grid.Row="{Binding RippleGridRow}"
-                                                Grid.RowSpan="{Binding RippleGridRowSpan}">
-                                                <StackLayout.Behaviors>
+                                                Grid.RowSpan="{Binding RippleGridRowSpan}"
+                                                HorizontalOptions="Center"
+                                                Margin="0"
+                                                Padding="0"
+                                                BackgroundColor="LightBlue">
+                                                <AbsoluteLayout.Behaviors>
                                                     <behaviors:TranslateOnBoolChangedBehavior
                                                         Trigger="{Binding TriggerRippleEffect, Mode=TwoWay}"
                                                         AnimationType="{x:Static enums:AnimationType.RippleEffect}"
                                                         TubeData="{Binding .}"
                                                         /> <!--DelayedAction="{Binding DisplayPourEffect, Mode=TwoWay}"-->
-                                                </StackLayout.Behaviors>
+                                                </AbsoluteLayout.Behaviors>
+                                                <BoxView
+                                                    AbsoluteLayout.LayoutBounds="0.5,1"
+                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    BackgroundColor="{Binding PourBackgroundColor}" HeightRequest="30" WidthRequest="129" Margin="0" />
                                                 <Image
-                                                    Source="tube_surface_ripple_anim.gif"
+                                                    AbsoluteLayout.LayoutBounds="0,1"
+                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    Source="tube_surface_ripple_short.png"
                                                     Aspect="Center"
                                                     IsAnimationPlaying="True"
                                                     HorizontalOptions="Center"
-                                                    VerticalOptions="End"
-                                                    TranslationY="{x:Static models:Constants.RippleEffectOffset}"
+                                                    VerticalOptions="Start"
+                                                    TranslationX="{Binding XPos}"
+                                                    TranslationY="{Binding YPos}"
                                                     x:Name="MyImage"
                                                     />
-                                            </StackLayout>
+                                                <!--TranslationY="{x:Static models:Constants.RippleEffectOffset}"-->
+                                            </AbsoluteLayout>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -170,14 +182,14 @@
                 </Border>
 
                 
-                <!--<StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
+                <StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
                     <Button Text="←" Command="{Binding MoveGifLeftCommand}" />
                     <Button Text="→" Command="{Binding MoveGifRightCommand}" />
                     <Button Text="↑" Command="{Binding MoveGifUpCommand}" />
                     <Button Text="↓" Command="{Binding MoveGifDownCommand}" />
-                    <Label Text="{Binding TubesItemsSource[11].GifXPos, StringFormat=' x: {0}'}" TextColor="Black" />
-                    <Label Text="{Binding TubesItemsSource[11].GifYPos, StringFormat=' y: {0}'}" TextColor="Black" />
-                </StackLayout>-->
+                    <Label Text="{Binding TubesItemsSource[1].XPos, StringFormat=' x: {0}'}" TextColor="Black" />
+                    <Label Text="{Binding TubesItemsSource[1].YPos, StringFormat=' y: {0}'}" TextColor="Black" />
+                </StackLayout>
 
                 <Grid IsVisible="{Binding UIDisabled}" BackgroundColor="#96000000" />
             </Grid>

@@ -965,6 +965,9 @@ namespace WaterSortPuzzle.ViewModels
 
                 await DrawTubesAsync(sourceTube.TubeId, currentTubeReference.TubeId);
 
+                //currentTubeReference.TubeData.RippleGridRow = 0;
+                //currentTubeReference.TubeData.RippleGridRowSpan = 1;
+
                 //uint duration = Constants.PouringAnimationDuration * (uint)currentTubeReference.NumberOfRepeatingLiquids;
                 //int distancePerLiquid = 40;
                 //int distance = Constants.TubeImageOffset - (currentTubeReference.NumberOfRepeatingLiquids * distancePerLiquid);
@@ -1063,6 +1066,26 @@ namespace WaterSortPuzzle.ViewModels
         //{
         //    var qwer = UIEnabled;
         //}
+        [RelayCommand]
+        void MoveGifUp()
+        {
+            TubesItemsSource[1].YPos -= 10;
+        }
+        [RelayCommand]
+        void MoveGifDown()
+        {
+            TubesItemsSource[1].YPos += 10;
+        }
+        [RelayCommand]
+        void MoveGifLeft()
+        {
+            TubesItemsSource[1].XPos -= 10;
+        }
+        [RelayCommand]
+        void MoveGifRight()
+        {
+            TubesItemsSource[1].XPos += 10;
+        }
         #endregion
     }
 }
