@@ -139,7 +139,7 @@ namespace WaterSortPuzzle.Behaviors
                     uint realDuration = Constants.PouringDuration * (uint)behavior.TubeData!.RippleGridRowSpan;
 
                     //var innerGrid = GetOutsideImageElement(behavior);
-                    var innerGrid = GetChildElement<AbsoluteLayout>(behavior.associatedView, Constants.InnerGridElementName);
+                    var innerElement = GetChildElement<Grid>(behavior.associatedView, Constants.InnerGridElementName);
                     //if (innerGrid is not null)
                     //{
                     //    //yOffset = -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
@@ -169,7 +169,7 @@ namespace WaterSortPuzzle.Behaviors
                     //innerGrid.HeightRequest = 35;
 
 
-                    await AnimateHeight(innerGrid, 30, 60, 1000);
+                    await AnimateHeight(innerElement, 30, 60, 1000);
                     //await Task.Delay(1000);
 
 
@@ -285,7 +285,7 @@ namespace WaterSortPuzzle.Behaviors
             {
                 foreach (View child in layout.Children.Cast<View>())
                 {
-                    GetChildElement<T>(child, styleId);
+                    return GetChildElement<T>(child, styleId);
                 }
             }
             
