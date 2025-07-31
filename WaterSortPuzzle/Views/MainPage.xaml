@@ -116,9 +116,9 @@
                                                 Grid.Row="{Binding RippleGridRow}"
                                                 Grid.RowSpan="{Binding RippleGridRowSpan}"
                                                 HorizontalOptions="Center"
-                                                VerticalOptions="Start"
+                                                VerticalOptions="End"
                                                 IsClippedToBounds="True"
-                                                
+                                                BackgroundColor="LightBlue"
                                                 StyleId="{x:Static models:Constants.InnerGridElementName}">
                                                 <AbsoluteLayout.Behaviors>
                                                     <behaviors:TranslateOnBoolChangedBehavior
@@ -131,14 +131,14 @@
                                                 <Grid
                                                     AbsoluteLayout.LayoutBounds="0.5,1"
                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                    HeightRequest="35"
+                                                    HeightRequest="30"
                                                     
-                                                    
+                                                    BackgroundColor="Red"
                                                     >
                                                     <!--<BoxView
                                                         BackgroundColor="{Binding PourBackgroundColor}" HeightRequest="30" WidthRequest="129" Margin="0" />-->
                                                     <Image
-                                                        
+                                                        BackgroundColor="{Binding PourBackgroundColor}"
                                                         AbsoluteLayout.LayoutBounds="0,1"
                                                         AbsoluteLayout.LayoutFlags="PositionProportional"
                                                         Source="tube_surface_ripple_short.png"
