@@ -97,7 +97,7 @@
                                 </Grid.GestureRecognizers>
 
                                 <!--IsVisible="{Binding TriggerRippleEffect}"-->
-                                <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" 
+                                <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" InputTransparent="True"
                                     Stroke="LightBlue" StrokeThickness="1" StyleId="{x:Static models:Constants.InnerBorderElementName}"
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
@@ -106,7 +106,9 @@
                                             RowDefinitions="*,*,*,*" StyleId="{x:Static models:Constants.RippleElementName}"
                                             
                                             VerticalOptions="Fill"
-                                            
+                                            WidthRequest="200"
+                                            HorizontalOptions="Center"
+                                            IsClippedToBounds="True"
                                             ><!--InputTransparent="True"-->
                                             <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
                                             <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />

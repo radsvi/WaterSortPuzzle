@@ -138,53 +138,10 @@ namespace WaterSortPuzzle.Behaviors
 
                     uint realDuration = Constants.PouringDuration * (uint)behavior.TubeData!.RippleGridRowSpan;
 
-                    //var innerGrid = GetOutsideImageElement(behavior);
                     var innerElement = GetChildElement<Grid>(behavior.associatedView, Constants.InnerGridElementName);
-                    //if (innerGrid is not null)
-                    //{
-                    //    //yOffset = -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
-                    //    //realDuration = Constants.PouringDuration * (uint)behavior.TubeData!.RippleGridRowSpan;
-
-                    //    innerGrid.TranslationY = Constants.RippleEffectOffset - Constants.CellHeight - yOffset;
-                    //}
-                    //innerGrid.TranslationY = - Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
-
-                    //await innerGrid.TranslateTo(0, -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan, realDuration * 2);
-
-
-
-
-                    //var animation = new Animation(v => innerGrid.HeightRequest = v, 10, Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan);
-                    //animation.Commit(innerGrid, "ExpandHeight", realDuration);
-                    //var animation = new Animation(v => innerGrid.TranslationY = v, 0, -60);
-                    //animation.Commit(innerGrid, "TranslateY", 16, 1000);
-                    //await AnimateHeight(innerGrid, 60, 1000);
-                    //await AnimateHeight(innerGrid, 35, 10);
-
-                    //Rect origSize = new Rect(innerGrid.X, innerGrid.Y, innerGrid.Width, innerGrid.Height);
-                    //Rect newSize = new Rect(innerGrid.X, innerGrid.Y, innerGrid.Width, 90);
-                    //await innerGrid.LayoutTo(newSize, 1000, Easing.SinInOut);
-                    //await innerGrid.ScaleYTo(2, 1000, Easing.SinInOut);
-                    //await innerGrid.LayoutTo();
-                    //innerGrid.HeightRequest = 35;
-
 
                     await AnimateHeight(innerElement, 30, 60, 1000);
-                    //await Task.Delay(1000);
 
-
-
-                    //var animation = new Animation(v => innerGrid.Scale = v, 1, 2);
-                    //animation.Commit(behavior.associatedView, "SimpleAnimation", 16, 2000, Easing.Linear, (v, c) => innerGrid.Scale = 1, () => true);
-
-
-
-
-                    //innerGrid.TranslationY = 0;
-
-                    //if (innerGrid is not null)
-                    //    innerGrid.TranslationY = Constants.RippleEffectOffset;
-                    //innerGrid.TranslationY = Constants.RippleEffectOffset;
 
                     behavior.associatedView.IsVisible = false;
                     behavior.Trigger = false;
