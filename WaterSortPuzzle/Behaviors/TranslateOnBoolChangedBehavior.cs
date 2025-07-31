@@ -135,8 +135,7 @@ namespace WaterSortPuzzle.Behaviors
                 else if (behavior.AnimationType == Enums.AnimationType.RippleEffect && behavior.Trigger == true)
                 {
                     behavior.associatedView.IsVisible = true;
-                    //behavior.DelayedAction = true;
-                    //double yOffset = -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
+
                     uint realDuration = Constants.PouringDuration * (uint)behavior.TubeData!.RippleGridRowSpan;
 
                     var innerGrid = GetOutsideImageElement(behavior);
@@ -149,8 +148,11 @@ namespace WaterSortPuzzle.Behaviors
                     //}
                     //innerGrid.TranslationY = - Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan;
 
-                    await innerGrid.TranslateTo(0, -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan, realDuration);
-                    innerGrid.TranslationY = 0;
+                    //await innerGrid.TranslateTo(0, -Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan, realDuration *2);
+
+                    var animation = new Animation(v => innerGrid.HeightRequest = v, 10, Constants.CellHeight * behavior.TubeData!.RippleGridRowSpan);
+                    animation.Commit(innerGrid, "ExpandHeight", realDuration);
+                    //innerGrid.TranslationY = 0;
 
                     //if (innerGrid is not null)
                     //    innerGrid.TranslationY = Constants.RippleEffectOffset;
@@ -167,9 +169,7 @@ namespace WaterSortPuzzle.Behaviors
                     if (behavior.associatedView is not Grid grid)
                         return;
 
-                    Grid? innerElement = GetInnerElement(grid);
-                    if (innerElement is null)
-                        return;
+                    Grid innerElement = GetInnerElement(grid);
 
                     behavior.TubeData!.IsBusy = true;
                     behavior.associatedView.InputTransparent = true;
@@ -195,16 +195,6 @@ namespace WaterSortPuzzle.Behaviors
                     await Task.Delay((int)Constants.PouringDuration * behavior.TubeData!.NumberOfRepeatingLiquids);
                     behavior.DelayedAction = false;
 
-                    //behavior.associatedView.IsVisible = false;
-
-                    //behavior.associatedView.TranslationX = 0;
-                    //behavior.associatedView.TranslationY = 0;
-                    //behavior.associatedView.Rotation = 0;
-                    //behavior.associatedView.ZIndex = 0;
-                    //innerElement.Rotation = 0;
-                    //innerElement.ScaleY = 1;
-                    //innerElement.TranslationY = 0;
-
                     uint moveBackDuration = Constants.RepositionDuration / 2;
                     await Task.WhenAll(
                         behavior.associatedView.TranslateTo(0, 0, moveBackDuration),
@@ -218,11 +208,10 @@ namespace WaterSortPuzzle.Behaviors
                     behavior.Trigger = false;
                     behavior.TubeData!.IsBusy = false;
                     behavior.associatedView.InputTransparent = false;
-                    //behavior.AnimationType = AnimationType.None;
                 }
             }
         }
-        private static Grid? GetInnerElement(Grid grid)
+        private static Grid GetInnerElement(Grid grid)
         {
             foreach (View child in grid.Children.Cast<View>())
             {

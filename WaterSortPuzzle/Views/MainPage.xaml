@@ -102,20 +102,21 @@
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
                                     <Grid Margin="0,21,0,0" IsClippedToBounds="True">
-                                        <Grid RowDefinitions="*,*,*,*" StyleId="{x:Static models:Constants.RippleElementName}"
-                                          
-                                           HorizontalOptions="Center"
-                                              
-                                        
-                                          ><!--InputTransparent="True"-->
+                                        <Grid
+                                            RowDefinitions="*,*,*,*" StyleId="{x:Static models:Constants.RippleElementName}"
+                                            HorizontalOptions="Center"
+                                            InputTransparent="True"
+                                            ><!--InputTransparent="True"-->
                                             <BoxView Grid.Row="0" Background="{Binding Layers[3].Brush}" />
                                             <BoxView Grid.Row="1" Background="{Binding Layers[2].Brush}" />
                                             <BoxView Grid.Row="2" Background="{Binding Layers[1].Brush}" />
                                             <BoxView Grid.Row="3" Background="{Binding Layers[0].Brush}" />
 
                                             <AbsoluteLayout
+                                                Grid.Row="{Binding RippleGridRow}"
+                                                Grid.RowSpan="{Binding RippleGridRowSpan}"
                                                 HorizontalOptions="Center"
-                                                BackgroundColor="LightBlue">
+                                                BackgroundColor="Green">
                                                 <AbsoluteLayout.Behaviors>
                                                     <behaviors:TranslateOnBoolChangedBehavior
                                                         Trigger="{Binding TriggerRippleEffect, Mode=TwoWay}"
@@ -127,11 +128,13 @@
                                                 <Grid
                                                     AbsoluteLayout.LayoutBounds="0.5,1,129,30"
                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    
                                                     BackgroundColor="Red"
                                                     StyleId="{x:Static models:Constants.InnerGridElementName}">
                                                     <!--<BoxView
                                                         BackgroundColor="{Binding PourBackgroundColor}" HeightRequest="30" WidthRequest="129" Margin="0" />-->
                                                     <Image
+                                                        BackgroundColor="{Binding PourBackgroundColor}"
                                                         AbsoluteLayout.LayoutBounds="0,1"
                                                         AbsoluteLayout.LayoutFlags="PositionProportional"
                                                         Source="tube_surface_ripple_short.png"
