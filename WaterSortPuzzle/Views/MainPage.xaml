@@ -116,9 +116,9 @@
                                                 Grid.Row="{Binding RippleGridRow}"
                                                 Grid.RowSpan="{Binding RippleGridRowSpan}"
                                                 HorizontalOptions="Center"
-                                                VerticalOptions="End"
+                                                VerticalOptions="Start"
                                                 IsClippedToBounds="True"
-                                                BackgroundColor="Green"
+                                                
                                                 StyleId="{x:Static models:Constants.InnerGridElementName}">
                                                 <AbsoluteLayout.Behaviors>
                                                     <behaviors:TranslateOnBoolChangedBehavior
@@ -133,12 +133,12 @@
                                                     AbsoluteLayout.LayoutFlags="PositionProportional"
                                                     HeightRequest="35"
                                                     
-                                                    BackgroundColor="Red"
+                                                    
                                                     >
                                                     <!--<BoxView
                                                         BackgroundColor="{Binding PourBackgroundColor}" HeightRequest="30" WidthRequest="129" Margin="0" />-->
                                                     <Image
-                                                        BackgroundColor="Blue"
+                                                        
                                                         AbsoluteLayout.LayoutBounds="0,1"
                                                         AbsoluteLayout.LayoutFlags="PositionProportional"
                                                         Source="tube_surface_ripple_short.png"
