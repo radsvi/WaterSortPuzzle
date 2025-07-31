@@ -139,20 +139,6 @@ namespace WaterSortPuzzle.Behaviors
                     double yOffset = -Constants.CellHeight;
                     uint realDuration = Constants.PouringDuration;
 
-                    //if (behavior.TubeData.RippleGridRowSpan > 1)
-                    //{
-                    //    if (behavior.associatedView is StackLayout stackLayout)
-                    //    {
-                    //        if (stackLayout.Children.Count > 1)
-                    //            throw new InvalidOperationException();
-
-                    //        if (stackLayout.Children[0] is Image image)
-                    //        {
-                    //            //await image.TranslateTo(0, -1000, behavior.Duration * 4);
-                    //            image.TranslationY = cellHeight * -behavior.TubeData.RippleGridRowSpan;
-                    //        }
-                    //    }
-                    //}
                     var image = GetImageElement(behavior);
                     if (image is not null)
                     {
@@ -162,17 +148,23 @@ namespace WaterSortPuzzle.Behaviors
                     }
 
                     await behavior.associatedView.TranslateTo(0, yOffset, realDuration);
-
-                    behavior.associatedView.IsVisible = false;
                     behavior.associatedView.TranslationY = 0;
-                    //behavior.AnimationType = AnimationType.None;
-                    behavior.Trigger = false;
 
                     if (image is not null)
                         image.TranslationY = Constants.RippleEffectOffset;
+
+                    behavior.associatedView.IsVisible = false;
+                    behavior.Trigger = false;
                 }
                 else if (behavior.AnimationType == Enums.AnimationType.RepositionTube && behavior.Trigger == true)
                 {
+                    if (behavior.associatedView is not Grid grid)
+                        return;
+
+                    Grid? innerElement = GetInnerElement(grid);
+                    if (innerElement is null)
+                        return;
+
                     behavior.TubeData!.IsBusy = true;
                     behavior.associatedView.InputTransparent = true;
 
@@ -181,13 +173,6 @@ namespace WaterSortPuzzle.Behaviors
                     behavior.associatedView.ZIndex = 10;
                     double XOffset = behavior.XTo - (behavior.ActualHeight / 2) + (behavior.ActualWidth / 2); // Using Height, because we are rotating it almost 90 degrees. The second part of the equasion is so that it is in the middle of the target tube instead of at the edge
                     double YOffset = behavior.YTo - (behavior.ActualHeight / 2) - (behavior.ActualWidth / 2);
-
-                    if (behavior.associatedView is not Grid grid)
-                        return;
-
-                    Grid? innerElement = GetInnerElement(grid);
-                    if (innerElement is null)
-                        return;
 
                     double rotateDegree = 66.0;
 
@@ -223,6 +208,7 @@ namespace WaterSortPuzzle.Behaviors
                         innerElement.TranslateTo(0, 0, moveBackDuration / 2)
                     );
 
+                    behavior.associatedView.ZIndex = 0;
                     behavior.Trigger = false;
                     behavior.TubeData!.IsBusy = false;
                     behavior.associatedView.InputTransparent = false;
@@ -252,7 +238,7 @@ namespace WaterSortPuzzle.Behaviors
         }
         private static Image? GetImageElement(TranslateOnBoolChangedBehavior behavior)
         {
-            if (behavior.TubeData?.RippleGridRowSpan > 1)
+            if (behavior.TubeData?.RippleGridRowSpan > 0)
             {
                 if (behavior.associatedView is StackLayout stackLayout)
                 {
