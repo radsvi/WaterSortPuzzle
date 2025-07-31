@@ -145,7 +145,7 @@
                                                         
                                                         AbsoluteLayout.LayoutBounds="0,1"
                                                         AbsoluteLayout.LayoutFlags="PositionProportional"
-                                                        Source="tube_surface_ripple_short.png"
+                                                        Source="tube_surface_ripple_300.gif"
                                                         Aspect="Center"
                                                         IsAnimationPlaying="True"
                                                         HorizontalOptions="Center"
