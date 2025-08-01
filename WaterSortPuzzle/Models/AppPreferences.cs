@@ -232,5 +232,24 @@
                 //    break;
             }
         }
+        public int LevelNumber
+        {
+            get => Preferences.Default.Get(nameof(LevelNumber), 0);
+            set => Preferences.Set(nameof(LevelNumber), value);
+        }
+        public int Score
+        {
+            get => Preferences.Default.Get(nameof(Score), 0);
+            set => Preferences.Set(nameof(Score), value);
+        }
+        public bool LevelingEnabled
+        {
+            get => Preferences.Default.Get(nameof(LevelingEnabled), true);
+            set
+            {
+                Preferences.Set(nameof(LevelingEnabled), value);
+                OnPropertyChanged();
+            }
+        }
     }
 }

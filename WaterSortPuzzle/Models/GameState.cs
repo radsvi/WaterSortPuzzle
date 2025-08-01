@@ -23,6 +23,7 @@ namespace WaterSortPuzzle.Models
                 GenerateNewLevel();
             }
         }
+        public bool SolvedAtLeastOnce { get; set; } = false;
         private string readableGameState;
         public string ReadableGameState
         {
@@ -140,6 +141,7 @@ namespace WaterSortPuzzle.Models
             }
 
             StoreStartingGrid();
+            SolvedAtLeastOnce = false;
         }
         private void GenerateDebugLevel()
         {

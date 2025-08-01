@@ -5,12 +5,13 @@ namespace WaterSortPuzzle.ViewModels
     public partial class MainVM : ViewModelBase
     {
         #region Constructor
-        public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve)
+        public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve, Leveling leveling)
         {
             AppPreferences = appPreferences;
             GameState = gameState;
             Notification = notification;
             AutoSolve = autoSolve;
+            Leveling = leveling;
 
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
@@ -75,10 +76,10 @@ namespace WaterSortPuzzle.ViewModels
         //}
 
         //public IWindowService WindowService { get; }
+        
+        // Using these in MainPage.xaml so they need to be public and should remain properties
         public AppPreferences AppPreferences { get; }
-        //public MainPage MainPage { get; }
         public Notification Notification { get; }
-        //public AutoSolve AutoSolve { get; set; }
         private AutoSolve? autoSolve;
         public AutoSolve? AutoSolve
         {
@@ -106,7 +107,12 @@ namespace WaterSortPuzzle.ViewModels
                 }
             }
         }
-        //private Grid ContainerForTubes;
+        private Leveling leveling;
+        public Leveling Leveling
+        {
+            get => leveling;
+            set { leveling = value; OnPropertyChanged(); }
+        }
 
         private ViewModelBase? selectedViewModel;
         public ViewModelBase? SelectedViewModel
@@ -118,45 +124,6 @@ namespace WaterSortPuzzle.ViewModels
                 OnPropertyChanged();
             }
         }
-
-
-        //public ICommand PopupWindow { get; set; }
-
-        //private LiquidColorNew[] selectedTube;
-        //public LiquidColorNew[] SelectedTube
-        //{
-        //    get { return selectedTube; }
-        //    set
-        //    {
-        //        if (selectedTube is null)
-        //        {
-        //            selectedTube = value;
-        //            //selectedTube.Margin = "0,0,0,30";
-        //            //selectedTube.Selected = true;
-        //            //OnPropertyChanged();
-        //            return;
-        //        }
-        //        if (selectedTube == value) // pokud clicknu na stejnou zkumavku znova
-        //        {
-        //            //Debug.WriteLine("test");
-        //            //selectedTube.Margin = "0,30,0,0";
-        //            //selectedTube.Selected = false;
-        //            selectedTube = null;
-        //            //OnPropertyChanged();
-        //            return;
-        //        }
-        //        if (selectedTube is not null && selectedTube != value)
-        //        {
-        //            //selectedTube.Selected = false;
-        //            //selectedTube.Margin = "0,30,0,0";
-        //            selectedTube = value;
-        //            selectedTube = null;
-        //            //OnPropertyChanged();
-        //            return;
-        //        }
-
-        //    }
-        //}
         public TubeReference? LastClickedTube { get; set; }
         public TubeReference? SourceTube { get; set; }
 
@@ -744,6 +711,11 @@ namespace WaterSortPuzzle.ViewModels
                     UIEnabled = false;
                 //PopupWindow.Execute(PopupParams.LevelComplete);
                 var task = NavigationMenuPopup(PopupParams.LevelComplete);
+                if (AppPreferences.LevelingEnabled && GameState.SolvedAtLeastOnce == false)
+                {
+                    Leveling.IncreaseLevel();
+                }
+                GameState.SolvedAtLeastOnce = true;
                 //Task.Run(() => NavigationMenuPopup(PopupParams.LevelComplete));
                 //Task.Run(() => NavigationMenuPopup(PopupParams.LevelComplete)).GetAwaiter().GetResult();
             }
@@ -796,12 +768,12 @@ namespace WaterSortPuzzle.ViewModels
                 TubesPerLine = (int)Math.Ceiling((decimal)GameState.TubeCount / 2);
             }
         }
-        /// <summary>
-        /// Draws border that is filled with an image that will later be animated.
-        /// Surface as in water surface
-        /// </summary>
-        /// <param name="container"></param>
-        /// <returns></returns>
+        ///// <summary>
+        ///// Draws border that is filled with an image that will later be animated.
+        ///// Surface as in water surface
+        ///// </summary>
+        ///// <param name="container"></param>
+        ///// <returns></returns>
         //public static VisualElement GetDescendantByTypeAndName(VisualElement element, Type type, string layerName)
         //{
         //    if (element == null)
