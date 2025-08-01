@@ -27,8 +27,9 @@
 		<ApplicationId>com.companyname.watersortpuzzle</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<Version>0.7.3</Version>
+		<ApplicationDisplayVersion>0.7.3</ApplicationDisplayVersion>
+		<ApplicationVersion>3</ApplicationVersion>
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
@@ -47,110 +48,110 @@
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|ARM64'">
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|ARM64'">
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='ReleaseForAndroid|net9.0-android|AnyCPU'">
 	  <AndroidUseAapt2>False</AndroidUseAapt2>
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='ReleaseForAndroid|net9.0-android|ARM64'">
 	  <AndroidUseAapt2>False</AndroidUseAapt2>
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|AnyCPU'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|ARM64'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|ARM64'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.19041.0|ARM64'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-maccatalyst|AnyCPU'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|ARM64'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-maccatalyst|ARM64'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|ARM64'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='ReleaseForAndroid|net9.0-ios|AnyCPU'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='ReleaseForAndroid|net9.0-maccatalyst|AnyCPU'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='ReleaseForAndroid|net9.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='ReleaseForAndroid|net9.0-ios|ARM64'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='ReleaseForAndroid|net9.0-maccatalyst|ARM64'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='ReleaseForAndroid|net9.0-windows10.0.19041.0|ARM64'">
-	  <ApplicationDisplayVersion>0.7.2</ApplicationDisplayVersion>
+	  
 	</PropertyGroup>
 
 	<ItemGroup>
