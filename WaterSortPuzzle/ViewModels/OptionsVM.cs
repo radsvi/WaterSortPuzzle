@@ -17,38 +17,38 @@
         //[ObservableProperty]
         //RadioButton selectedTheme;
         //public RadioButton SelectedTheme { get; set; }
-        private AppTheme selectedTheme;
-        public AppTheme SelectedTheme
-        {
-            get { return selectedTheme; }
-            set
-            {
-                if (value != selectedTheme)
-                {
-                    selectedTheme = value;
-                    App.Current!.UserAppTheme = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        //private AppTheme selectedTheme;
+        //public AppTheme SelectedTheme
+        //{
+        //    get { return selectedTheme; }
+        //    set
+        //    {
+        //        if (value != selectedTheme)
+        //        {
+        //            selectedTheme = value;
+        //            App.Current!.UserAppTheme = value;
+        //            OnPropertyChanged();
+        //        }
+        //    }
+        //}
 
 
-        [RelayCommand]
-        private void SwitchTheme()
-        {
-            //App.Current.UserAppTheme = AppTheme.Dark; // for testing
-            if (App.Current!.UserAppTheme == AppTheme.Unspecified)
-                App.Current.UserAppTheme = AppTheme.Dark;
-            else if (App.Current.UserAppTheme == AppTheme.Dark)
-                App.Current.UserAppTheme = AppTheme.Light;
-            else
-            {
-                App.Current.UserAppTheme = AppTheme.Unspecified;
-                //await MainPage.DisplayAlert("Theme", $"Theme set to {App.Current.UserAppTheme}", "OK");
-            }
+        //[RelayCommand]
+        //private void SwitchTheme()
+        //{
+        //    //App.Current.UserAppTheme = AppTheme.Dark; // for testing
+        //    if (App.Current!.UserAppTheme == AppTheme.Unspecified)
+        //        App.Current.UserAppTheme = AppTheme.Dark;
+        //    else if (App.Current.UserAppTheme == AppTheme.Dark)
+        //        App.Current.UserAppTheme = AppTheme.Light;
+        //    else
+        //    {
+        //        App.Current.UserAppTheme = AppTheme.Unspecified;
+        //        //await MainPage.DisplayAlert("Theme", $"Theme set to {App.Current.UserAppTheme}", "OK");
+        //    }
 
-            AppPreferences.ThemeUserSetting = App.Current.UserAppTheme;
-        }
+        //    AppPreferences.ThemeUserSetting = App.Current.UserAppTheme;
+        //}
 
     }
 }

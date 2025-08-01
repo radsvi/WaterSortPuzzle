@@ -179,15 +179,30 @@
         {
             get
             {
-                var text = Preferences.Default.Get(nameof(ThemeUserSetting) + "_string", AppTheme.Unspecified.ToString());
-                Enum.TryParse(text, out AppTheme result);
-                return result;
+                var text = Preferences.Default.Get(nameof(ThemeUserSetting), AppTheme.Unspecified.ToString());
+                if (Enum.TryParse(text, out AppTheme result))
+                    return result;
+
+                throw new InvalidOperationException();
             }
             set
             {
-                Preferences.Set(nameof(ThemeUserSetting) + "_string", value.ToString());
-                OnPropertyChanged();
+                Preferences.Set(nameof(ThemeUserSetting), value.ToString());
+                App.Current!.UserAppTheme = value;
+                //OnPropertyChanged();
             }
+        }
+        public AnimationSpeed AnimationSpeed
+        {
+            get
+            {
+                var text = Preferences.Default.Get(nameof(AnimationSpeed), AnimationSpeed.Standard.ToString());
+                if (Enum.TryParse(text, out AnimationSpeed result))
+                    return result;
+                
+                throw new InvalidOperationException();
+            }
+            set => Preferences.Set(nameof(AnimationSpeed), value.ToString());
         }
     }
 }

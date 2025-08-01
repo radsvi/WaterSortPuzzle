@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.Enums
 {
-    public enum AnimationSpeed
+    internal enum AnimationStatus
     {
-        Standard,
-        Fast,
-        Fastest,
+        Animation,
         Instant
     }
 }

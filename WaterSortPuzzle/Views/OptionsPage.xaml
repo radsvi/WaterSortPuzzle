@@ -72,10 +72,21 @@
                         <CheckBox IsChecked="{Binding AppPreferences.UnselectTubeEvenOnIllegalMove}"/>
                         <Label Text="Unselect flask even when using illegal move" VerticalOptions="Center"/>
                     </FlexLayout>
-                    <FlexLayout>
+                    <!--<FlexLayout>
                         <CheckBox IsChecked="{Binding AppPreferences.InstantAnimations}"/>
                         <Label Text="Disable animations (Actions performed instantly)" VerticalOptions="Center"/>
-                    </FlexLayout>
+                    </FlexLayout>-->
+
+                    <Label Text="Animation Speed:" />
+                    <Grid
+                        ColumnDefinitions="*,*,*,*"
+                        RadioButtonGroup.GroupName="AnimationSpeed"
+                        RadioButtonGroup.SelectedValue="{Binding AppPreferences.AnimationSpeed, Mode=TwoWay}">
+                        <RadioButton Content="{x:Static enums:AnimationSpeed.Standard}" Value="{x:Static enums:AnimationSpeed.Standard }" Grid.Column="0" />
+                        <RadioButton Content="{x:Static enums:AnimationSpeed.Fast}" Value="{x:Static enums:AnimationSpeed.Fast }" Grid.Column="1" />
+                        <RadioButton Content="{x:Static enums:AnimationSpeed.Fastest}" Value="{x:Static enums:AnimationSpeed.Fastest }" Grid.Column="2" />
+                        <RadioButton Content="{x:Static enums:AnimationSpeed.Instant}" Value="{x:Static enums:AnimationSpeed.Instant }" Grid.Column="3" />
+                    </Grid>
                 </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Help">
@@ -144,7 +155,7 @@
                     <Grid
                         ColumnDefinitions="*,*,*"
                         RadioButtonGroup.GroupName="ThemeSelection"
-                        RadioButtonGroup.SelectedValue="{Binding SelectedTheme, Mode=TwoWay}">
+                        RadioButtonGroup.SelectedValue="{Binding AppPreferences.ThemeUserSetting, Mode=TwoWay}">
                         <RadioButton Content="{x:Static appTheme:AppTheme.Unspecified}" Value="{x:Static appTheme:AppTheme.Unspecified}" />
                         <RadioButton Content="{x:Static appTheme:AppTheme.Light}" Value="{x:Static appTheme:AppTheme.Light}" Grid.Column="1" />
                         <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" Grid.Column="2" />

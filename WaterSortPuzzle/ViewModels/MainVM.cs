@@ -284,7 +284,7 @@ namespace WaterSortPuzzle.ViewModels
             if (CanStepBack() == false)
                 return;
 
-            DeselectTube(AnimationSpeed.Animation);
+            DeselectTube(AnimationStatus.Animation);
 
             GameState.StepBackPressesCounter++;
 
@@ -601,7 +601,7 @@ namespace WaterSortPuzzle.ViewModels
             }
             if (LastClickedTube.TubeId == currentTubeReference.TubeId)
             {
-                DeselectTube(AnimationSpeed.Animation);
+                DeselectTube(AnimationStatus.Animation);
                 return;
             }
 
@@ -634,12 +634,12 @@ namespace WaterSortPuzzle.ViewModels
             }
             if (successAtLeastOnce == 0 && AppPreferences.UnselectTubeEvenOnIllegalMove == true)
             {
-                DeselectTube(AnimationSpeed.Animation);
+                DeselectTube(AnimationStatus.Animation);
             }
         }
         public void OnChangingGameState(int source, int target)
         {
-            DeselectTube(AnimationSpeed.Instant);
+            DeselectTube(AnimationStatus.Instant);
 
             IsLevelCompleted();
             GameState.SaveGameState(source, target);
@@ -657,7 +657,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             GameState.ResetStepBackCounter();
             UIEnabled = true;
-            DeselectTube(AnimationSpeed.Animation);
+            DeselectTube(AnimationStatus.Animation);
             GameState.SavedGameStates.Clear();
             GameState.LastGameState = null;
             GameState.SaveGameState(-1, -1);
@@ -727,7 +727,7 @@ namespace WaterSortPuzzle.ViewModels
                 }
             }
         }
-        private void DeselectTube(AnimationSpeed type = AnimationSpeed.Animation)
+        private void DeselectTube(AnimationStatus type = AnimationStatus.Animation)
         {
             if (LastClickedTube is not null)
             {
@@ -875,7 +875,7 @@ namespace WaterSortPuzzle.ViewModels
             //TubesItemsSource[1].RippleGridRow += 50;
             //TubesItemsSource[2].RippleGridRow -= 50;
         }
-        private static void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationSpeed speed = AnimationSpeed.Animation)
+        private static void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationStatus speed = AnimationStatus.Animation)
         {
             //if (tubeReference.VisualElement is null)
             //    return;
