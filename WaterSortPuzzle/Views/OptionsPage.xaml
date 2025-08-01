@@ -46,10 +46,9 @@
                     </Grid>
                     <Label Text="Recommended to leave at just 1. Raising it any higher make the game too easy." FontSize="12"/>
 
-                    <FlexLayout>
-                        <CheckBox IsChecked="{Binding AppPreferences.RandomNumberOfTubes}" HorizontalOptions="Start"/>
-                        <Label Text="Randomize number of colors." VerticalOptions="Center"/>
-                    </FlexLayout>
+                    <controls:CheckBoxControl
+                            IsChecked="{Binding AppPreferences.RandomNumberOfTubes, Mode=TwoWay}"
+                            Text="Randomize number of colors." />
                     <Grid ColumnDefinitions="auto,*" IsEnabled="{Binding AppPreferences.SetSpecificNumberOfTubes}">
                         <Label
                             Text="{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[Colors: {0}]'}"
@@ -68,10 +67,9 @@
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Controls">
                 <StackLayout Orientation="Vertical">
-                    <FlexLayout>
-                        <CheckBox IsChecked="{Binding AppPreferences.UnselectTubeEvenOnIllegalMove}"/>
-                        <Label Text="Unselect flask even when using illegal move" VerticalOptions="Center"/>
-                    </FlexLayout>
+                    <controls:CheckBoxControl
+                            IsChecked="{Binding AppPreferences.UnselectTubeEvenOnIllegalMove, Mode=TwoWay}"
+                            Text="Unselect flask even when using illegal move" />
                     <!--<FlexLayout>
                         <CheckBox IsChecked="{Binding AppPreferences.InstantAnimations}"/>
                         <Label Text="Disable animations (Actions performed instantly)" VerticalOptions="Center"/>
@@ -135,45 +133,32 @@
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Help">
                 <StackLayout Orientation="Vertical">
-                    <FlexLayout>
-                        <CheckBox IsChecked="{Binding AppPreferences.DontShowHelpScreenAtStart}"/>
-                        <Label Text="Don't show help at startup" VerticalOptions="Center"/>
-                    </FlexLayout>
+                    <controls:CheckBoxControl
+                            IsChecked="{Binding AppPreferences.DontShowHelpScreenAtStart, Mode=TwoWay}"
+                            Text="Don't show help at startup" />
 
                     <Button Text="Open Help" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.Help}" />
                 </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Advanced options" IsClippedToBounds="True">
                 <StackLayout Orientation="Vertical">
-                    <FlexLayout>
-                        <CheckBox IsChecked="{Binding AppPreferences.AdvancedOptionsVisible}"/>
-                        <Label Text="Enable Advanced options" VerticalOptions="Center"/>
-                    </FlexLayout>
+                    <controls:CheckBoxControl
+                            IsChecked="{Binding AppPreferences.AdvancedOptionsVisible, Mode=TwoWay}"
+                            Text="Enable Advanced options" />
 
                     <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}">
                         <!--<Button Text="Add couple presets to saved levels for testing" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.LoadLevelVM.AddPresetLevelsCommand}"/>-->
 
-                        <FlexLayout>
-                            <CheckBox FlexLayout.Shrink="0" IsChecked="{Binding AppPreferences.LoadDebugLevel}"/>
-                            <Label FlexLayout.Shrink="1" Text="Generate preset debug level instead of random one" VerticalOptions="Center"/>
-                        </FlexLayout>
+                        <controls:CheckBoxControl
+                            IsChecked="{Binding AppPreferences.LoadDebugLevel, Mode=TwoWay}"
+                            Text="Generate preset debug level instead of random one" />
 
                         <!--<Button Text="Export all steps taken so far (StepBack)" Style="{StaticResource OptionsButton}" Command="{Binding GameState.WriteToFileStepBackCommand}"/>-->
-
-                        <FlexLayout>
-                            <CheckBox IsChecked="{Binding AppPreferences.UnlimitedStepBack}"/>
-                            <Label Text="{Binding Source={x:Static models:Constants.MaxStepBack}, StringFormat='Unlimited Step Back (otherwise maximum {0} per level)'}"/>
-                        </FlexLayout>
-
-                        <controls:CheckBoxControl Text="zkouska textu" IsChecked="True" />
-
-                        <!--<CheckBox x:Name="myCheckBox" />
-                        <Label Text="I agree to the terms and conditions"
-                               VerticalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={x:Reference linkedCheckBox}, Path=IsChecked, Mode=TwoWay}"/>
-                            </Label.GestureRecognizers>
-                        </Label>-->
+                        
+                        <controls:CheckBoxControl
+                            IsChecked="{Binding AppPreferences.UnlimitedStepBack, Mode=TwoWay}"
+                            Text="{Binding Source={x:Static models:Constants.MaxStepBack}, StringFormat='Unlimited Step Back (otherwise maximum {0} per level)'}" />
+                        
                     </StackLayout>
                 </StackLayout>
             </controls:GroupBoxControl>

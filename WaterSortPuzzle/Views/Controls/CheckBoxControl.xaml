@@ -6,10 +6,13 @@
         <ControlTemplate>
             <FlexLayout>
                 <CheckBox
+                    FlexLayout.Shrink="0"
                     IsChecked="{TemplateBinding IsChecked}"
                     x:Name="LinkedCheckBox" />
                 <Label
+                    FlexLayout.Shrink="1"
                     x:Name="LinkedLabel"
+                    VerticalOptions="Center"
                     Text="{TemplateBinding Text}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer />
