@@ -139,12 +139,12 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Frame">
+    <!--<Style TargetType="Frame">
         <Setter Property="HasShadow" Value="False" />
         <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
-    </Style>
+    </Style>-->
 
     <Style TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />
@@ -249,6 +249,68 @@
         </Setter>
     </Style>
 
+    <!-- // Radio button // -->
+
+    <ControlTemplate x:Key="RadioButtonTemplate">
+        <Border Stroke="#F3F2F1"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 10"
+                    BackgroundColor="#F3F2F1"
+                    HeightRequest="90"
+                    WidthRequest="70"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CheckedStates">
+                        <VisualState x:Name="Checked">
+                            <VisualState.Setters>
+                                <Setter Property="Stroke"
+                                            Value="#FF3300" />
+                                <Setter TargetName="check"
+                                            Property="Opacity"
+                                            Value="1" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Unchecked">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                            Value="#F3F2F1" />
+                                <Setter Property="Stroke"
+                                            Value="#F3F2F1" />
+                                <Setter TargetName="check"
+                                            Property="Opacity"
+                                            Value="0" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+            <Grid Margin="4"
+                      WidthRequest="90">
+                <Grid Margin="0,0,4,0"
+                          WidthRequest="18"
+                          HeightRequest="18"
+                          HorizontalOptions="End"
+                          VerticalOptions="Start">
+                    <Ellipse Stroke="Blue"
+                                 Fill="White"
+                                 WidthRequest="16"
+                                 HeightRequest="16"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center" />
+                    <Ellipse x:Name="check"
+                                 Fill="Blue"
+                                 WidthRequest="8"
+                                 HeightRequest="8"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center" />
+                </Grid>
+                <ContentPresenter />
+            </Grid>
+        </Border>
+    </ControlTemplate>
+
     <Style TargetType="RadioButton">
         <Setter Property="BackgroundColor" Value="Transparent"/>
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
@@ -268,6 +330,8 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+        <Setter Property="ControlTemplate"
+            Value="{StaticResource RadioButtonTemplate}" />
     </Style>
 
     <Style TargetType="RefreshView">
@@ -616,7 +680,7 @@
     </Style>-->
 
     <!-- // Options menu // -->
-    
+
     <Style x:Key="OptionsButton" TargetType="Button">
         <Setter Property="Padding" Value="20,1" />
         <Setter Property="HorizontalOptions" Value="Start" />
