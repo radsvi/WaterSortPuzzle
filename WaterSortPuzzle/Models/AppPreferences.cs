@@ -170,11 +170,6 @@
             get => Preferences.Default.Get(nameof(UnlimitedStepBack), false);
             set { Preferences.Set(nameof(UnlimitedStepBack), value); OnPropertyChanged(); }
         }
-        public bool InstantAnimations
-        {
-            get => Preferences.Default.Get(nameof(InstantAnimations), false);
-            set => Preferences.Set(nameof(InstantAnimations), value);
-        }
         public AppTheme ThemeUserSetting
         {
             get

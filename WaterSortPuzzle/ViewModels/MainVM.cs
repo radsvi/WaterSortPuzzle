@@ -284,7 +284,7 @@ namespace WaterSortPuzzle.ViewModels
             if (CanStepBack() == false)
                 return;
 
-            DeselectTube(AnimationStatus.Animation);
+            DeselectTube();
 
             GameState.StepBackPressesCounter++;
 
@@ -601,7 +601,7 @@ namespace WaterSortPuzzle.ViewModels
             }
             if (LastClickedTube.TubeId == currentTubeReference.TubeId)
             {
-                DeselectTube(AnimationStatus.Animation);
+                DeselectTube();
                 return;
             }
 
@@ -634,12 +634,12 @@ namespace WaterSortPuzzle.ViewModels
             }
             if (successAtLeastOnce == 0 && AppPreferences.UnselectTubeEvenOnIllegalMove == true)
             {
-                DeselectTube(AnimationStatus.Animation);
+                DeselectTube();
             }
         }
         public void OnChangingGameState(int source, int target)
         {
-            DeselectTube(AnimationStatus.Instant);
+            DeselectTube();
 
             IsLevelCompleted();
             GameState.SaveGameState(source, target);
@@ -657,7 +657,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             GameState.ResetStepBackCounter();
             UIEnabled = true;
-            DeselectTube(AnimationStatus.Animation);
+            DeselectTube();
             GameState.SavedGameStates.Clear();
             GameState.LastGameState = null;
             GameState.SaveGameState(-1, -1);
@@ -727,12 +727,12 @@ namespace WaterSortPuzzle.ViewModels
                 }
             }
         }
-        private void DeselectTube(AnimationStatus type = AnimationStatus.Animation)
+        private void DeselectTube()
         {
             if (LastClickedTube is not null)
             {
                 if (SourceTube is not null)
-                    MoveTubeVertically(SourceTube, VerticalAnimation.Lower, type);
+                    MoveTubeVertically(SourceTube, VerticalAnimation.Lower);
                 LastClickedTube = null;
             }
         }
@@ -875,7 +875,7 @@ namespace WaterSortPuzzle.ViewModels
             //TubesItemsSource[1].RippleGridRow += 50;
             //TubesItemsSource[2].RippleGridRow -= 50;
         }
-        private static void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation, AnimationStatus speed = AnimationStatus.Animation)
+        private static void MoveTubeVertically(TubeReference tubeReference, VerticalAnimation verticalAnimation)
         {
             //if (tubeReference.VisualElement is null)
             //    return;
@@ -939,7 +939,7 @@ namespace WaterSortPuzzle.ViewModels
         //}
         async Task DisplayChanges(TubeReference currentTubeReference, TubeReference sourceTube, LiquidColor currentLiquid)
         {
-            if (AppPreferences.InstantAnimations)
+            if (AppPreferences.AnimationSpeed == AnimationSpeed.Instant)
             {
                 await DrawTubesAsync(sourceTube.TubeId, currentTubeReference.TubeId);
             }
