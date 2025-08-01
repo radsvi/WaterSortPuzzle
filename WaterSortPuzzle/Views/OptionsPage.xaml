@@ -75,17 +75,22 @@
                         <Label Text="Disable animations (Actions performed instantly)" VerticalOptions="Center"/>
                     </FlexLayout>-->
 
-                    <Label Text="Animation Speed:" />
-                    <Grid
-                        ColumnDefinitions="*,*,*,*"
-                        RadioButtonGroup.GroupName="AnimationSpeed"
-                        RadioButtonGroup.SelectedValue="{Binding AppPreferences.AnimationSpeed, Mode=TwoWay}">
-                        <RadioButton Content="{x:Static enums:AnimationSpeed.Standard}" Value="{x:Static enums:AnimationSpeed.Standard }" Grid.Column="0" />
-                        <RadioButton Content="{x:Static enums:AnimationSpeed.Fast}" Value="{x:Static enums:AnimationSpeed.Fast }" Grid.Column="1" />
-                        <RadioButton Content="{x:Static enums:AnimationSpeed.Fastest}" Value="{x:Static enums:AnimationSpeed.Fastest }" Grid.Column="2" />
-                        <RadioButton Content="{x:Static enums:AnimationSpeed.Instant}" Value="{x:Static enums:AnimationSpeed.Instant }" Grid.Column="3" />
-                    </Grid>
-                    <Label Text="Fastest animation doesn't increase pouring duration when pouring multiple liquids" />
+                    <controls:GroupBoxControl Header="Animation Speed">
+                        <StackLayout>
+                            <Grid
+                            ColumnDefinitions="*,*"
+                            RowDefinitions="*,*"
+                            RadioButtonGroup.GroupName="AnimationSpeed"
+                            RadioButtonGroup.SelectedValue="{Binding AppPreferences.AnimationSpeed, Mode=TwoWay}">
+                                <RadioButton Content="{x:Static enums:AnimationSpeed.Standard}" Value="{x:Static enums:AnimationSpeed.Standard }" Grid.Column="0" />
+                                <RadioButton Content="{x:Static enums:AnimationSpeed.Fast}" Value="{x:Static enums:AnimationSpeed.Fast }" Grid.Column="1" />
+                                <RadioButton Content="{x:Static enums:AnimationSpeed.Fastest}" Value="{x:Static enums:AnimationSpeed.Fastest }" Grid.Column="0" Grid.Row="1" />
+                                <RadioButton Content="{x:Static enums:AnimationSpeed.Instant}" Value="{x:Static enums:AnimationSpeed.Instant }" Grid.Column="1" Grid.Row="1" />
+                            </Grid>
+                            <Label Text="Fastest animation doesn't increase pouring duration when pouring multiple liquids" />
+                        </StackLayout>
+                    </controls:GroupBoxControl>
+                    
                 </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Theme">
