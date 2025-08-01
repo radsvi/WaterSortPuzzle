@@ -87,6 +87,50 @@
                         <RadioButton Content="{x:Static enums:AnimationSpeed.Fastest}" Value="{x:Static enums:AnimationSpeed.Fastest }" Grid.Column="2" />
                         <RadioButton Content="{x:Static enums:AnimationSpeed.Instant}" Value="{x:Static enums:AnimationSpeed.Instant }" Grid.Column="3" />
                     </Grid>
+                    <Label Text="Fastest animation doesn't increase pouring duration when pouring multiple liquids" />
+                </StackLayout>
+            </controls:GroupBoxControl>
+            <controls:GroupBoxControl Header="Theme">
+                <StackLayout Orientation="Vertical">
+                    <!--<FlexLayout>
+                        <RadioButton Content="Default" GroupName="Theme" />
+                        <RadioButton Content="Light theme" GroupName="Theme" />
+                        <RadioButton Content="Dark theme" GroupName="Theme" />
+                        
+                        <Label Text="Don't show help at startup" VerticalOptions="Center"/>
+                    </FlexLayout>-->
+
+                    <!--<Button Text="Switch Theme" Style="{StaticResource OptionsButton}" Command="{Binding SwitchThemeCommand}" />
+                    <Label Text="{Binding AppPreferences.ThemeUserSetting}" />-->
+
+                    <!--<StackLayout
+                        Orientation="Horizontal"
+                        RadioButtonGroup.GroupName="ThemeSelection"
+                        RadioButtonGroup.SelectedValue="{Binding SelectedTheme, Mode=TwoWay}">
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" />
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Light}" Value="{x:Static appTheme:AppTheme.Light}" />
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Unspecified}" Value="{x:Static appTheme:AppTheme.Unspecified}" />
+                    </StackLayout>-->
+                    <Grid
+                        ColumnDefinitions="*,*,*"
+                        RadioButtonGroup.GroupName="ThemeSelection"
+                        RadioButtonGroup.SelectedValue="{Binding AppPreferences.ThemeUserSetting, Mode=TwoWay}">
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Unspecified}" Value="{x:Static appTheme:AppTheme.Unspecified}" />
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Light}" Value="{x:Static appTheme:AppTheme.Light}" Grid.Column="1" />
+                        <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" Grid.Column="2" />
+                    </Grid>
+                    <!--<StackLayout
+                        Orientation="Vertical"
+                        RadioButtonGroup.GroupName="subscriptions"
+                        BindableLayout.ItemsSource="{ Binding Subscriptions }">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <local:CustomRadioButton />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>-->
+
+
                 </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Help">
@@ -130,50 +174,6 @@
                     <Label Text="Generates step-by-step solution of current level" />
                 </StackLayout>
             </controls:GroupBoxControl>-->
-
-            <controls:GroupBoxControl Header="Theme" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}">
-                <StackLayout Orientation="Vertical">
-                    <!--<FlexLayout>
-                        <RadioButton Content="Default" GroupName="Theme" />
-                        <RadioButton Content="Light theme" GroupName="Theme" />
-                        <RadioButton Content="Dark theme" GroupName="Theme" />
-                        
-                        <Label Text="Don't show help at startup" VerticalOptions="Center"/>
-                    </FlexLayout>-->
-
-                    <!--<Button Text="Switch Theme" Style="{StaticResource OptionsButton}" Command="{Binding SwitchThemeCommand}" />
-                    <Label Text="{Binding AppPreferences.ThemeUserSetting}" />-->
-
-                    <!--<StackLayout
-                        Orientation="Horizontal"
-                        RadioButtonGroup.GroupName="ThemeSelection"
-                        RadioButtonGroup.SelectedValue="{Binding SelectedTheme, Mode=TwoWay}">
-                        <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" />
-                        <RadioButton Content="{x:Static appTheme:AppTheme.Light}" Value="{x:Static appTheme:AppTheme.Light}" />
-                        <RadioButton Content="{x:Static appTheme:AppTheme.Unspecified}" Value="{x:Static appTheme:AppTheme.Unspecified}" />
-                    </StackLayout>-->
-                    <Grid
-                        ColumnDefinitions="*,*,*"
-                        RadioButtonGroup.GroupName="ThemeSelection"
-                        RadioButtonGroup.SelectedValue="{Binding AppPreferences.ThemeUserSetting, Mode=TwoWay}">
-                        <RadioButton Content="{x:Static appTheme:AppTheme.Unspecified}" Value="{x:Static appTheme:AppTheme.Unspecified}" />
-                        <RadioButton Content="{x:Static appTheme:AppTheme.Light}" Value="{x:Static appTheme:AppTheme.Light}" Grid.Column="1" />
-                        <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" Grid.Column="2" />
-                    </Grid>
-                    <!--<StackLayout
-                        Orientation="Vertical"
-                        RadioButtonGroup.GroupName="subscriptions"
-                        BindableLayout.ItemsSource="{ Binding Subscriptions }">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <local:CustomRadioButton />
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </StackLayout>-->
-
-
-                </StackLayout>
-            </controls:GroupBoxControl>
             <Button Text="Back" Command="{Binding MainVM.NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.MainPage}" Margin="0,20,0,0" ImageSource="{StaticResource BackNavigationIcon}"/>
         </StackLayout>
     </ScrollView>

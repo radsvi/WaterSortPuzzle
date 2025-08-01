@@ -29,11 +29,10 @@ namespace WaterSortPuzzle.Models
         public const double PourEffectHeight = 106;
         public const double CellHeight = 39;
         public const double RippleImageHeight = 30;
-        public const uint RepositionDuration = 250;
+        //public const uint RepositionDuration = 250;
         public const uint RaiseTubeDuration = 75;
         //public const uint PouringDuration = 1000;
         //public const uint PouringDuration = 300;
-        public const uint PouringDuration = 1000;
         #endregion
 
         public const string logFolderName = "log";

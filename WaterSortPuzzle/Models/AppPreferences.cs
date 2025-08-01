@@ -2,7 +2,9 @@
 {
     public partial class AppPreferences : ObservableObject
     {
-        public AppPreferences() {}
+        public AppPreferences() {
+            LoadAnimationDuration();
+        }
 
         public bool LoadDebugLevel
         {
@@ -51,7 +53,6 @@
         {
             get => !RandomNumberOfTubes;
         }
-        
         public int MaximumExtraTubes
         {
             get => Preferences.Default.Get(nameof(MaximumExtraTubes), 1);
@@ -187,6 +188,9 @@
                 //OnPropertyChanged();
             }
         }
+        public static uint RepositionDuration { get; private set; } = 0;
+        public static uint PouringDuration { get; private set; } = 0;
+        public static double AnimationDurationMultiplier { get; private set; } = 0;
         public AnimationSpeed AnimationSpeed
         {
             get
@@ -197,7 +201,36 @@
                 
                 throw new InvalidOperationException();
             }
-            set => Preferences.Set(nameof(AnimationSpeed), value.ToString());
+            set
+            {
+                Preferences.Set(nameof(AnimationSpeed), value.ToString());
+
+                LoadAnimationDuration();
+            }
+        }
+        void LoadAnimationDuration()
+        {
+            switch (AnimationSpeed)
+            {
+                case AnimationSpeed.Standard:
+                    RepositionDuration = 250;
+                    PouringDuration = 600;
+                    AnimationDurationMultiplier = 1;
+                    break;
+                case AnimationSpeed.Fast:
+                    RepositionDuration = 100;
+                    PouringDuration = 300;
+                    AnimationDurationMultiplier = 1;
+                    break;
+                case AnimationSpeed.Fastest:
+                    RepositionDuration = 100;
+                    PouringDuration = 300;
+                    AnimationDurationMultiplier = 0;
+                    break;
+                //case AnimationSpeed.Instant:
+                //    // this option ignores other values and follows different logic
+                //    break;
+            }
         }
     }
 }

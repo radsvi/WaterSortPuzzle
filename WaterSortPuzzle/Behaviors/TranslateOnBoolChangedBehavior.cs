@@ -8,6 +8,7 @@ namespace WaterSortPuzzle.Behaviors
 {
     public class TranslateOnBoolChangedBehavior : Behavior<View>
     {
+        public TranslateOnBoolChangedBehavior() {}
         public bool Trigger
         {
             get => (bool)GetValue(TriggerProperty);
@@ -136,7 +137,7 @@ namespace WaterSortPuzzle.Behaviors
                 {
                     behavior.associatedView.IsVisible = true;
 
-                    uint realDuration = Constants.PouringDuration * (uint)behavior.TubeData!.RippleGridRowSpan;
+                    uint realDuration = AppPreferences.PouringDuration * (uint)Math.Pow(behavior.TubeData!.RippleGridRowSpan, AppPreferences.AnimationDurationMultiplier);
 
                     var innerElement = GetChildElement<Grid>(behavior.associatedView, Constants.InnerGridElementName);
 
@@ -169,18 +170,18 @@ namespace WaterSortPuzzle.Behaviors
 
 
                     await Task.WhenAll(
-                        behavior.associatedView.TranslateTo(XOffset, YOffset, Constants.RepositionDuration),
-                        behavior.associatedView.RotateTo(rotateDegree, Constants.RepositionDuration),
-                        innerElement.RotateTo(-rotateDegree, Constants.RepositionDuration),
-                        innerElement.ScaleYTo(0.5, Constants.RepositionDuration),
-                        innerElement.TranslateTo(0, 13, Constants.RepositionDuration / 2)
+                        behavior.associatedView.TranslateTo(XOffset, YOffset, AppPreferences.RepositionDuration),
+                        behavior.associatedView.RotateTo(rotateDegree, AppPreferences.RepositionDuration),
+                        innerElement.RotateTo(-rotateDegree, AppPreferences.RepositionDuration),
+                        innerElement.ScaleYTo(0.5, AppPreferences.RepositionDuration),
+                        innerElement.TranslateTo(0, 13, AppPreferences.RepositionDuration / 2)
                     );
                     
                     behavior.DelayedAction = true;
-                    await Task.Delay((int)Constants.PouringDuration * behavior.TubeData!.NumberOfRepeatingLiquids);
+                    await Task.Delay((int)AppPreferences.PouringDuration * (int)Math.Pow(behavior.TubeData!.NumberOfRepeatingLiquids, AppPreferences.AnimationDurationMultiplier));
                     behavior.DelayedAction = false;
 
-                    uint moveBackDuration = Constants.RepositionDuration / 2;
+                    uint moveBackDuration = AppPreferences.RepositionDuration / 2;
                     await Task.WhenAll(
                         behavior.associatedView.TranslateTo(0, 0, moveBackDuration),
                         behavior.associatedView.RotateTo(0, moveBackDuration),
