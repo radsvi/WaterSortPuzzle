@@ -7,10 +7,9 @@ public partial class GroupBoxControl : ContentView
 	{
 		InitializeComponent();
 	}
-    private string header = string.Empty;
     public string Header
     {
-        get => GetValue(HeaderProperty) as string;
+        get => (string)GetValue(HeaderProperty);
         set => SetValue(HeaderProperty, value);
     }
     public static readonly BindableProperty HeaderProperty = BindableProperty.Create(nameof(Header), typeof(string), typeof(GroupBoxControl), string.Empty);

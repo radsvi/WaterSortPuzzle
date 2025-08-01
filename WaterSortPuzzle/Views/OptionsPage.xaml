@@ -164,6 +164,16 @@
                             <CheckBox IsChecked="{Binding AppPreferences.UnlimitedStepBack}"/>
                             <Label Text="{Binding Source={x:Static models:Constants.MaxStepBack}, StringFormat='Unlimited Step Back (otherwise maximum {0} per level)'}"/>
                         </FlexLayout>
+
+                        <controls:CheckBoxControl Text="zkouska textu" IsChecked="True" />
+
+                        <!--<CheckBox x:Name="myCheckBox" />
+                        <Label Text="I agree to the terms and conditions"
+                               VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference linkedCheckBox}, Path=IsChecked, Mode=TwoWay}"/>
+                            </Label.GestureRecognizers>
+                        </Label>-->
                     </StackLayout>
                 </StackLayout>
             </controls:GroupBoxControl>
