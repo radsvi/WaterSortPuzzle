@@ -26,45 +26,6 @@
     </ContentPage.BindingContext>-->
     <ScrollView >
         <StackLayout Orientation="Vertical" Margin="10">
-            <controls:GroupBoxControl Header="Flasks">
-                <StackLayout>
-                    <Label Text="Limit &quot;Add empty flask&quot; to maximum of:"/>
-                    <Grid ColumnDefinitions="auto,*">
-                        <Label
-                            Text="{Binding AppPreferences.MaximumExtraTubes, StringFormat='[{0}]'}"
-                            FontAttributes="Bold"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Center"
-                            Margin="0,0,10,0"/>
-                        <Slider
-                            Grid.Column="1"
-                            Minimum="{Binding Source={x:Static models:Constants.MinimumNumberOfExtraTubesAllowedToBeAdded}}"
-                            Maximum="{Binding Source={x:Static models:Constants.MaximumNumberOfExtraTubesAllowedToBeAdded}}"
-                            Value="{Binding AppPreferences.MaximumExtraTubes}"
-                            VerticalOptions="Center"
-                            />
-                    </Grid>
-                    <Label Text="Recommended to leave at just 1. Raising it any higher make the game too easy." FontSize="12"/>
-
-                    <controls:CheckBoxControl
-                            IsChecked="{Binding AppPreferences.RandomNumberOfTubes, Mode=TwoWay}"
-                            Text="Randomize number of colors." />
-                    <Grid ColumnDefinitions="auto,*" IsEnabled="{Binding AppPreferences.SetSpecificNumberOfTubes}">
-                        <Label
-                            Text="{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[Colors: {0}]'}"
-                            FontAttributes="Bold"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Center"
-                            Margin="0,0,10,0"/>
-                        <Slider
-                            Grid.Column="1"
-                            Minimum="{Binding Source={x:Static models:Constants.MinColors}}" Maximum="{Binding Source={x:Static models:Constants.ColorCount}}"
-                            Value="{Binding AppPreferences.NumberOfColorsToGenerate}"
-                            VerticalOptions="Center"
-                            />
-                    </Grid>
-                </StackLayout>
-            </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Controls">
                 <StackLayout Orientation="Vertical">
                     <controls:CheckBoxControl
@@ -74,23 +35,21 @@
                         <CheckBox IsChecked="{Binding AppPreferences.InstantAnimations}"/>
                         <Label Text="Disable animations (Actions performed instantly)" VerticalOptions="Center"/>
                     </FlexLayout>-->
-
-                    <controls:GroupBoxControl Header="Animation Speed">
-                        <StackLayout>
-                            <Grid
-                            ColumnDefinitions="*,*"
-                            RowDefinitions="*,*"
-                            RadioButtonGroup.GroupName="AnimationSpeed"
-                            RadioButtonGroup.SelectedValue="{Binding AppPreferences.AnimationSpeed, Mode=TwoWay}">
-                                <RadioButton Content="{x:Static enums:AnimationSpeed.Standard}" Value="{x:Static enums:AnimationSpeed.Standard }" Grid.Column="0" />
-                                <RadioButton Content="{x:Static enums:AnimationSpeed.Fast}" Value="{x:Static enums:AnimationSpeed.Fast }" Grid.Column="1" />
-                                <RadioButton Content="{x:Static enums:AnimationSpeed.Fastest}" Value="{x:Static enums:AnimationSpeed.Fastest }" Grid.Column="0" Grid.Row="1" />
-                                <RadioButton Content="{x:Static enums:AnimationSpeed.Instant}" Value="{x:Static enums:AnimationSpeed.Instant }" Grid.Column="1" Grid.Row="1" />
-                            </Grid>
-                            <Label Text="Fastest animation doesn't increase pouring duration when pouring multiple liquids" />
-                        </StackLayout>
-                    </controls:GroupBoxControl>
-                    
+                </StackLayout>
+            </controls:GroupBoxControl>
+            <controls:GroupBoxControl Header="Animation Speed">
+                <StackLayout>
+                    <Grid
+                        ColumnDefinitions="*,*"
+                        RowDefinitions="*,*"
+                        RadioButtonGroup.GroupName="AnimationSpeed"
+                        RadioButtonGroup.SelectedValue="{Binding AppPreferences.AnimationSpeed, Mode=TwoWay}">
+                        <RadioButton Content="{x:Static enums:AnimationSpeed.Standard}" Value="{x:Static enums:AnimationSpeed.Standard }" Grid.Column="0" />
+                        <RadioButton Content="{x:Static enums:AnimationSpeed.Fast}" Value="{x:Static enums:AnimationSpeed.Fast }" Grid.Column="1" />
+                        <RadioButton Content="{x:Static enums:AnimationSpeed.Fastest}" Value="{x:Static enums:AnimationSpeed.Fastest }" Grid.Column="0" Grid.Row="1" />
+                        <RadioButton Content="{x:Static enums:AnimationSpeed.Instant}" Value="{x:Static enums:AnimationSpeed.Instant }" Grid.Column="1" Grid.Row="1" />
+                    </Grid>
+                    <Label Text="Fastest animation doesn't increase pouring duration when pouring multiple liquids" />
                 </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Theme">
@@ -145,7 +104,53 @@
                     <Button Text="Open Help" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.Help}" />
                 </StackLayout>
             </controls:GroupBoxControl>
-            <controls:GroupBoxControl Header="Advanced options" IsClippedToBounds="True">
+            <controls:GroupBoxControl Header="Developer mode" IsClippedToBounds="True">
+                <StackLayout Orientation="Vertical">
+                    <controls:CheckBoxControl
+                        IsChecked="{Binding AppPreferences.DeveloperMode, Mode=TwoWay}"
+                        Text="Enable Developer mode" />
+                </StackLayout>
+            </controls:GroupBoxControl>
+            <controls:GroupBoxControl Header="Flasks" IsVisible="{Binding AppPreferences.DeveloperMode}">
+                <StackLayout>
+                    <Label Text="Limit &quot;Add empty flask&quot; to maximum of:"/>
+                    <Grid ColumnDefinitions="auto,*">
+                        <Label
+                Text="{Binding AppPreferences.MaximumExtraTubes, StringFormat='[{0}]'}"
+                FontAttributes="Bold"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Margin="0,0,10,0"/>
+                        <Slider
+                Grid.Column="1"
+                Minimum="{Binding Source={x:Static models:Constants.MinimumNumberOfExtraTubesAllowedToBeAdded}}"
+                Maximum="{Binding Source={x:Static models:Constants.MaximumNumberOfExtraTubesAllowedToBeAdded}}"
+                Value="{Binding AppPreferences.MaximumExtraTubes}"
+                VerticalOptions="Center"
+                />
+                    </Grid>
+                    <Label Text="Recommended to leave at just 1. Raising it any higher make the game too easy." FontSize="12"/>
+
+                    <controls:CheckBoxControl
+                IsChecked="{Binding AppPreferences.RandomNumberOfTubes, Mode=TwoWay}"
+                Text="Randomize number of colors." />
+                    <Grid ColumnDefinitions="auto,*" IsEnabled="{Binding AppPreferences.SetSpecificNumberOfTubes}">
+                        <Label
+                Text="{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[Colors: {0}]'}"
+                FontAttributes="Bold"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Margin="0,0,10,0"/>
+                        <Slider
+                Grid.Column="1"
+                Minimum="{Binding Source={x:Static models:Constants.MinColors}}" Maximum="{Binding Source={x:Static models:Constants.ColorCount}}"
+                Value="{Binding AppPreferences.NumberOfColorsToGenerate}"
+                VerticalOptions="Center"
+                />
+                    </Grid>
+                </StackLayout>
+            </controls:GroupBoxControl>
+            <controls:GroupBoxControl Header="Advanced options" IsClippedToBounds="True" IsVisible="{Binding AppPreferences.DeveloperMode}">
                 <StackLayout Orientation="Vertical">
                     <controls:CheckBoxControl
                             IsChecked="{Binding AppPreferences.AdvancedOptionsVisible, Mode=TwoWay}"

@@ -195,7 +195,7 @@
         {
             get
             {
-                var text = Preferences.Default.Get(nameof(AnimationSpeed), AnimationSpeed.Standard.ToString());
+                var text = Preferences.Default.Get(nameof(AnimationSpeed), AnimationSpeed.Fastest.ToString());
                 if (Enum.TryParse(text, out AnimationSpeed result))
                     return result;
                 
@@ -242,12 +242,12 @@
             get => Preferences.Default.Get(nameof(Score), 0);
             set => Preferences.Set(nameof(Score), value);
         }
-        public bool LevelingEnabled
+        public bool DeveloperMode
         {
-            get => Preferences.Default.Get(nameof(LevelingEnabled), true);
+            get => Preferences.Default.Get(nameof(DeveloperMode), true);
             set
             {
-                Preferences.Set(nameof(LevelingEnabled), value);
+                Preferences.Set(nameof(DeveloperMode), value);
                 OnPropertyChanged();
             }
         }
