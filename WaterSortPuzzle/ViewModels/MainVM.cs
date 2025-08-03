@@ -243,7 +243,7 @@ namespace WaterSortPuzzle.ViewModels
             //currentTubeReference.GridElement
             //VisualTreeElementExtensions.GetVisualTreeDescendants();
 
-            await DisplayChanges(currentTubeReference, sourceTubeReference, LiquidHelper.GetKey((LiquidColorName)move.Source.ColorName!), AnimationSpeed.Instant);
+            await DisplayChanges(currentTubeReference, sourceTubeReference, LiquidHelper.GetKey((LiquidColorName)move.Source.ColorName!), true);
 
             OnChangingGameState(move.Source.X, move.Target.X);
         }
@@ -911,9 +911,9 @@ namespace WaterSortPuzzle.ViewModels
 
         //    StartAnimatingSurface(brush, container, gridElement, currentTubeReference.NumberOfRepeatingLiquids);
         //}
-        async Task DisplayChanges(TubeReference currentTubeReference, TubeReference sourceTube, LiquidColor currentLiquid, AnimationSpeed animationSpeed = AnimationSpeed.Instant)
+        async Task DisplayChanges(TubeReference currentTubeReference, TubeReference sourceTube, LiquidColor currentLiquid, bool disabledAnimation = false)
         {
-            if (AppPreferences.AnimationSpeed == AnimationSpeed.Instant || animationSpeed == AnimationSpeed.Instant)
+            if (AppPreferences.AnimationSpeed == AnimationSpeed.Instant || disabledAnimation == true)
             {
                 await DrawTubesAsync(sourceTube.TubeId, currentTubeReference.TubeId);
             }
