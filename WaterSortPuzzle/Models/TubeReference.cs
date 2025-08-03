@@ -10,18 +10,20 @@
             TubeId = tubeId;
             GridElement = gridElement;
         }
-        public TubeReference(int tubeId, LiquidColor lastColorMoved, int targetEmptyRow, int numberOfRepeatingLiquids)
+        public TubeReference(int tubeId, LiquidColor lastColorMoved, int targetEmptyRow, int numberOfRepeatingLiquids, TubeData tubeData)
         {
             TubeId = tubeId;
             LastColorMoved = lastColorMoved;
             TargetEmptyRow = targetEmptyRow;
             NumberOfRepeatingLiquids = numberOfRepeatingLiquids;
+            TubeData = tubeData;
         }
-        public TubeReference(int tubeId, LiquidColor lastColorMoved, int targetEmptyRow)
+        public TubeReference(int tubeId, LiquidColor lastColorMoved, int targetEmptyRow, TubeData tubeData)
         {
             TubeId = tubeId;
             LastColorMoved = lastColorMoved;
             TargetEmptyRow = targetEmptyRow;
+            TubeData = tubeData;
         }
 
         //public List<object> Contents { get; set; } = new List<object>();

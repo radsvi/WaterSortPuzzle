@@ -226,13 +226,15 @@ namespace WaterSortPuzzle.ViewModels
                 move.Target.X,
                 move.GameState[move.Target.X, move.Target.Y],
                 move.Target.Y,
-                move.Source.NumberOfRepeatingLiquids
+                move.Source.NumberOfRepeatingLiquids,
+                TubesItemsSource[move.Target.X]
             );
 
             var sourceTubeReference = new TubeReference(
                 move.Source.X,
                 move.GameState[move.Source.X, move.Source.Y],
-                move.Source.Y
+                move.Source.Y,
+                TubesItemsSource[move.Source.X]
             );
             //var task = DrawTubesAsync(move.Source.X, move.Target.X);
 
@@ -241,7 +243,7 @@ namespace WaterSortPuzzle.ViewModels
             //currentTubeReference.GridElement
             //VisualTreeElementExtensions.GetVisualTreeDescendants();
 
-            await DisplayChanges(currentTubeReference, sourceTubeReference, LiquidHelper.GetKey((LiquidColorName)move.Source.ColorName!));
+            await DisplayChanges(currentTubeReference, sourceTubeReference, LiquidHelper.GetKey((LiquidColorName)move.Source.ColorName!), AnimationSpeed.Instant);
 
             OnChangingGameState(move.Source.X, move.Target.X);
         }
@@ -909,9 +911,9 @@ namespace WaterSortPuzzle.ViewModels
 
         //    StartAnimatingSurface(brush, container, gridElement, currentTubeReference.NumberOfRepeatingLiquids);
         //}
-        async Task DisplayChanges(TubeReference currentTubeReference, TubeReference sourceTube, LiquidColor currentLiquid)
+        async Task DisplayChanges(TubeReference currentTubeReference, TubeReference sourceTube, LiquidColor currentLiquid, AnimationSpeed animationSpeed = AnimationSpeed.Instant)
         {
-            if (AppPreferences.AnimationSpeed == AnimationSpeed.Instant)
+            if (AppPreferences.AnimationSpeed == AnimationSpeed.Instant || animationSpeed == AnimationSpeed.Instant)
             {
                 await DrawTubesAsync(sourceTube.TubeId, currentTubeReference.TubeId);
             }
