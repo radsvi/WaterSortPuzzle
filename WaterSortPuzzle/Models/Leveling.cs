@@ -18,7 +18,32 @@ namespace WaterSortPuzzle.Models
             CalculateNextLevelParameters();
         }
 
-        public int NumberOfColorsToGenerate { get; private set; } = 3;
+        //public int NumberOfColorsToGenerate { get; private set; } = 3;
+        private int numberOfColorsToGenerate = 3;
+        public int NumberOfColorsToGenerate
+        {
+            get => numberOfColorsToGenerate;
+            set 
+            {
+                if (numberOfColorsToGenerate != value)
+                {
+                    if (value < 3)
+                    {
+                        numberOfColorsToGenerate = Constants.MinColors;
+                    }
+                    else if (value > Constants.ColorCount)
+                    {
+                        numberOfColorsToGenerate = Constants.ColorCount;
+                    }
+                    else
+                    {
+                        numberOfColorsToGenerate = value;
+                    }
+
+                    OnPropertyChanged();
+                }
+            }
+        }
         //public int Difficulty
         //{
         //    get => Preferences.Default.Get(nameof(Difficulty), 0);
