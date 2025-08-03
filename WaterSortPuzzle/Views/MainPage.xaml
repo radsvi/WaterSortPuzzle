@@ -40,7 +40,7 @@
             <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.StandardMode}" HorizontalOptions="Center">
                 <Label 
                     Text="{Binding Leveling.Level, StringFormat='Level {0}'}"
-                    TextColor="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}"
+                    TextColor="White"
                     FontSize="35"
                     VerticalTextAlignment="Center"
                     Margin="0,10,0,0"
@@ -54,7 +54,7 @@
                 </Label>
                 <Label
                     Text="{Binding Leveling.Score, StringFormat='Score: {0}'}"
-                    TextColor="{AppThemeBinding Light={StaticResource ButtonText}, Dark={StaticResource ButtonTextDark}}"
+                    TextColor="White"
                     HorizontalTextAlignment="Center"
                     />
             </StackLayout>

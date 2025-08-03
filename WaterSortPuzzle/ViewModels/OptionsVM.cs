@@ -4,12 +4,14 @@
     {
         public MainVM MainVM { get; }
         public AppPreferences AppPreferences { get; }
+        public Leveling Leveling { get; }
         public GameState GameState { get; }
-        public OptionsVM(MainVM mainVM, AppPreferences appPreferences, GameState gameState)
+        public OptionsVM(MainVM mainVM, AppPreferences appPreferences, GameState gameState, Leveling leveling)
         {
             MainVM = mainVM;
             AppPreferences = appPreferences;
             GameState = gameState;
+            Leveling = leveling;
         }
         //[RelayCommand]
         //public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);

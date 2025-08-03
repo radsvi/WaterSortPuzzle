@@ -77,7 +77,7 @@
                         ColumnDefinitions="*,*,*"
                         RadioButtonGroup.GroupName="ThemeSelection"
                         RadioButtonGroup.SelectedValue="{Binding AppPreferences.ThemeUserSetting, Mode=TwoWay}">
-                        <RadioButton Content="{x:Static appTheme:AppTheme.Unspecified}" Value="{x:Static appTheme:AppTheme.Unspecified}" />
+                        <RadioButton Content="System default" Value="{x:Static appTheme:AppTheme.Unspecified}" />
                         <RadioButton Content="{x:Static appTheme:AppTheme.Light}" Value="{x:Static appTheme:AppTheme.Light}" Grid.Column="1" />
                         <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" Grid.Column="2" />
                     </Grid>
@@ -152,6 +152,24 @@
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Advanced options" IsClippedToBounds="True" IsVisible="{Binding AppPreferences.DeveloperMode}">
                 <StackLayout Orientation="Vertical">
+
+
+
+                    <FlexLayout>
+                        <Label
+                            FlexLayout.Shrink="0"
+                            VerticalOptions="Center"
+                            Text="Force Level change">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Entry
+                            Text="{Binding Leveling.Level}"
+                            />
+                    </FlexLayout>
+
+
                     <controls:CheckBoxControl
                             IsChecked="{Binding AppPreferences.AdvancedOptionsVisible, Mode=TwoWay}"
                             Text="Enable Advanced options" />

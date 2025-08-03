@@ -27,7 +27,11 @@ namespace WaterSortPuzzle.Models
         public int Level
         {
             get => Preferences.Default.Get(nameof(Level), 1);
-            set { Preferences.Set(nameof(Level), value); OnPropertyChanged(); }
+            set {
+                Preferences.Set(nameof(Level), value);
+                OnPropertyChanged();
+                CalculateNextLevelParameters();
+            }
         }
         public int Score
         {
@@ -39,7 +43,6 @@ namespace WaterSortPuzzle.Models
         {
             Level++;
             IncreaseScore();
-            CalculateNextLevelParameters();
         }
         
         void IncreaseScore()
@@ -55,8 +58,8 @@ namespace WaterSortPuzzle.Models
         void CalculateNextLevelParameters()
         {
             var difficulty = GetDifficulty();
+            int rand = new Random().Next(-2, 0);
 
-            int rand = new Random().Next(-1, 1);
             NumberOfColorsToGenerate = difficulty + Constants.MinColors + rand;
         }
         int GetDifficulty()

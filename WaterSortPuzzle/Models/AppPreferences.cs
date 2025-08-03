@@ -231,7 +231,7 @@
         }
         public bool DeveloperMode
         {
-            get => Preferences.Default.Get(nameof(DeveloperMode), true);
+            get => Preferences.Default.Get(nameof(DeveloperMode), false);
             set
             {
                 Preferences.Set(nameof(DeveloperMode), value);
