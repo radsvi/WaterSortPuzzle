@@ -13,7 +13,9 @@ namespace WaterSortPuzzle.Models
         {
             this.appPreferences = appPreferences;
         }
-        
+
+        public int NumberOfColorsToGenerate { get; private set; } = 3;
+
         public void IncreaseLevel()
         {
             appPreferences.LevelNumber++;
@@ -25,6 +27,7 @@ namespace WaterSortPuzzle.Models
             var scoreMultiplier = Constants.DefaultScoreMultiplier;
 
             //
+
 
             appPreferences.Score++;
 

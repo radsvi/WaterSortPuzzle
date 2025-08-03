@@ -8,11 +8,13 @@ namespace WaterSortPuzzle.Models
     {
         readonly AppPreferences appPreferences;
         readonly Notification notification;
+        readonly Leveling leveling;
         public GameState() { }
-        public GameState(AppPreferences appPreferences, Notification notification)
+        public GameState(AppPreferences appPreferences, Notification notification, Leveling leveling)
         {
             this.appPreferences = appPreferences;
             this.notification = notification;
+            this.leveling = leveling;
             
             if (appPreferences.LastLevelBeforeClosing is not null && appPreferences.LastLevelBeforeClosing.GameGrid.Length > 0)
             {
@@ -133,11 +135,24 @@ namespace WaterSortPuzzle.Models
         }
         public void GenerateNewLevel()
         {
-            if (appPreferences.LoadDebugLevel is true)
+            if (appPreferences.DeveloperMode == false)
+            {
+                GenerateStandardLevel(leveling.NumberOfColorsToGenerate);
+            }
+            else if (appPreferences.LoadDebugLevel == true)
+            {
                 GenerateDebugLevel();
+            }
             else
             {
-                GenerateStandardLevel();
+                if (appPreferences.RandomNumberOfTubes)
+                {
+                    GenerateStandardLevel(new Random().Next(Constants.MinColors, Constants.ColorCount - 1));
+                }
+                else
+                {
+                    GenerateStandardLevel(appPreferences.NumberOfColorsToGenerate);
+                }
             }
 
             StoreStartingGrid();
@@ -409,17 +424,13 @@ namespace WaterSortPuzzle.Models
         {
             gameGrid = CloneGrid(StartingPosition);
         }
-        private void GenerateStandardLevel()
+        private void GenerateStandardLevel(int numberOfColorsToGenerate)
         {
             Random rnd = new Random();
 
             List<LiquidColor> colorsList = new List<LiquidColor>();
-            if (appPreferences.RandomNumberOfTubes)
-            {
-                appPreferences.NumberOfColorsToGenerate = rnd.Next(Constants.MinColors, Constants.ColorCount - 1);
-            }
 
-            gameGrid = new LiquidColor[appPreferences.NumberOfColorsToGenerate + 2, Constants.Layers];
+            gameGrid = new LiquidColor[numberOfColorsToGenerate + 2, Constants.Layers];
             //Tube.ResetCounter();
 
             List<int> selectedColors = new List<int>();
@@ -428,7 +439,7 @@ namespace WaterSortPuzzle.Models
                 selectedColors.Add(i);
             }
 
-            for (int i = 0; i < Constants.ColorCount - appPreferences.NumberOfColorsToGenerate; i++) // now remove some random colors. 
+            for (int i = 0; i < Constants.ColorCount - numberOfColorsToGenerate; i++) // now remove some random colors. 
             {
                 //selectedColors.Remove(selectedColors[NumberOfColorsToGenerate]); // this always keeps the same colors
                 selectedColors.Remove(selectedColors[rnd.Next(0, selectedColors.Count)]);
@@ -443,7 +454,7 @@ namespace WaterSortPuzzle.Models
             }
 
             // add colors randomly to the grid
-            for (int x = 0; x < appPreferences.NumberOfColorsToGenerate; x++)
+            for (int x = 0; x < numberOfColorsToGenerate; x++)
             {
                 for (int y = 0; y < Constants.Layers; y++)
                 {

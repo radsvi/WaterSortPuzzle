@@ -40,7 +40,7 @@ namespace WaterSortPuzzle.ViewModels
             {
                 OnPropertyChanged(nameof(NextStepButtonText));
             }
-            else if (e.PropertyName == nameof(AppPreferences.LoadDebugLevel))
+            else if (e.PropertyName == nameof(AppPreferences.LoadDebugLevel) || e.PropertyName == nameof(AppPreferences.DeveloperMode))
             {
                 OnPropertyChanged(nameof(NewLevelButtonText));
             }
@@ -196,7 +196,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             get
             {
-                if (AppPreferences.LoadDebugLevel) return $"[DEBUG]{Environment.NewLine}level";
+                if (AppPreferences.LoadDebugLevel && AppPreferences.DeveloperMode) return $"[DEBUG]{Environment.NewLine}level";
                 else return $"New{Environment.NewLine}level";
             }
         }

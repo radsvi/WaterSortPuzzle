@@ -46,13 +46,13 @@
             set
             {
                 Preferences.Set(nameof(RandomNumberOfTubes), value);
-                OnPropertyChanged(nameof(SetSpecificNumberOfTubes));
+                //OnPropertyChanged(nameof(SetSpecificNumberOfTubes));
             }
         }
-        public bool SetSpecificNumberOfTubes
-        {
-            get => !RandomNumberOfTubes;
-        }
+        //public bool SetSpecificNumberOfTubes
+        //{
+        //    get => !RandomNumberOfTubes;
+        //}
         public int MaximumExtraTubes
         {
             get => Preferences.Default.Get(nameof(MaximumExtraTubes), 1);
