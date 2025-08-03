@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.Models
 {
-    public class Leveling
+    public partial class Leveling : ObservableObject
     {
         //readonly AppPreferences appPreferences;
         //public Leveling(AppPreferences appPreferences)
@@ -27,12 +27,12 @@ namespace WaterSortPuzzle.Models
         public int Level
         {
             get => Preferences.Default.Get(nameof(Level), 1);
-            set => Preferences.Set(nameof(Level), value);
+            set { Preferences.Set(nameof(Level), value); OnPropertyChanged(); }
         }
         public int Score
         {
             get => Preferences.Default.Get(nameof(Score), 0);
-            set => Preferences.Set(nameof(Score), value);
+            set { Preferences.Set(nameof(Score), value); OnPropertyChanged(); }
         }
 
         public void LevelFinished()

@@ -49,10 +49,7 @@
                 OnPropertyChanged(nameof(SetSpecificNumberOfTubes));
             }
         }
-        public bool SetSpecificNumberOfTubes // for XAML
-        {
-            get => !RandomNumberOfTubes;
-        }
+        public bool SetSpecificNumberOfTubes { get => !RandomNumberOfTubes; } // for XAML
         public int MaximumExtraTubes
         {
             get => Preferences.Default.Get(nameof(MaximumExtraTubes), 1);
@@ -239,7 +236,9 @@
             {
                 Preferences.Set(nameof(DeveloperMode), value);
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(StandardMode));
             }
         }
+        public bool StandardMode { get => !DeveloperMode; }
     }
 }
