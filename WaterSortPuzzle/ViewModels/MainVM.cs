@@ -715,7 +715,7 @@ namespace WaterSortPuzzle.ViewModels
                 var task = NavigationMenuPopup(PopupParams.LevelComplete);
                 if (AppPreferences.DeveloperMode == false && GameState.SolvedAtLeastOnce == false)
                 {
-                    Leveling.IncreaseLevel();
+                    Leveling.LevelFinished();
                 }
                 GameState.SolvedAtLeastOnce = true;
                 //Task.Run(() => NavigationMenuPopup(PopupParams.LevelComplete));

@@ -11,7 +11,7 @@ namespace WaterSortPuzzle.Models
     {
         public const int MaximumExtraTubesUpperLimit = 20;
         public const int Layers = 4;
-        public const int MinColors = 2;
+        public const int MinColors = 3;
         public const int MinimumNumberOfExtraTubesAllowedToBeAdded = 0;
         public const int MaximumNumberOfExtraTubesAllowedToBeAdded = 4;
         public const int MaxTubesPerLine = 9;

@@ -46,13 +46,13 @@
             set
             {
                 Preferences.Set(nameof(RandomNumberOfTubes), value);
-                //OnPropertyChanged(nameof(SetSpecificNumberOfTubes));
+                OnPropertyChanged(nameof(SetSpecificNumberOfTubes));
             }
         }
-        //public bool SetSpecificNumberOfTubes
-        //{
-        //    get => !RandomNumberOfTubes;
-        //}
+        public bool SetSpecificNumberOfTubes // for XAML
+        {
+            get => !RandomNumberOfTubes;
+        }
         public int MaximumExtraTubes
         {
             get => Preferences.Default.Get(nameof(MaximumExtraTubes), 1);
@@ -231,16 +231,6 @@
                 //    // this option ignores other values and follows different logic
                 //    break;
             }
-        }
-        public int LevelNumber
-        {
-            get => Preferences.Default.Get(nameof(LevelNumber), 0);
-            set => Preferences.Set(nameof(LevelNumber), value);
-        }
-        public int Score
-        {
-            get => Preferences.Default.Get(nameof(Score), 0);
-            set => Preferences.Set(nameof(Score), value);
         }
         public bool DeveloperMode
         {
