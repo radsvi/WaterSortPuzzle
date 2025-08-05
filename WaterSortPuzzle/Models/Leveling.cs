@@ -64,61 +64,63 @@ namespace WaterSortPuzzle.Models
             set { Preferences.Set(nameof(Score), value); OnPropertyChanged(); }
         }
 
-        public void LevelFinished()
+        public void LevelFinished(int colorCount)
         {
             Level++;
-            IncreaseScore();
+            IncreaseScore(colorCount);
         }
         
-        void IncreaseScore()
+        void IncreaseScore(int colorCount)
         {
-            var scoreMultiplier = Constants.DefaultScoreMultiplier;
-
-            
-
+            double difficultyMultiplier = colorCount / Constants.ColorCount;
+            var scoreMultiplier = (int)(Constants.DefaultScoreMultiplier * difficultyMultiplier);
 
             Score += scoreMultiplier;
-
         }
         void CalculateNextLevelParameters()
         {
             var difficulty = GetDifficulty();
-            int rand = new Random().Next(-2, 0);
+
+            int rand;
+            if (difficulty > 11)
+                rand = (-(int)(new Random().Next(0, 4) / 3));
+            else if (difficulty == 11)
+                rand = new Random().Next(-1, 0);
+            else
+                rand = new Random().Next(-2, 0);
 
             NumberOfColorsToGenerate = difficulty + Constants.MinColors + rand;
         }
         int GetDifficulty()
         {
-            //int difficulty = 0;
-            //if (Level <= 10)
-            //    difficulty += (int)Level / 2 + Constants.MinColors;
-            //else if (Level <= 40)
-            //    difficulty += (int)Level / 2 + Constants.MinColors;
-
             int difficulty;
-            if (Level <= 2)
-                difficulty = 0;
-            else if (Level <= 4)
-                difficulty = 1;
-            else if (Level <= 6)
-                difficulty = 2;
-            else if (Level <= 8)
-                difficulty = 3;
-            else if (Level <= 12)
-                difficulty = 4;
-            else if (Level <= 16)
-                difficulty = 5;
-            else if (Level <= 20)
-                difficulty = 6;
-            else if (Level <= 30)
-                difficulty = 7;
-            else if (Level <= 40)
-                difficulty = 8;
-            else
+
+            if (Score >= 2892)
+                difficulty = 11;
+            else if (Score >= 2082)
+                difficulty = 10;
+            else if (Score >= 1332)
                 difficulty = 9;
+            else if (Score >= 892)
+                difficulty = 8;
+            else if (Score >= 492)
+                difficulty = 7;
+            else if (Score >= 312)
+                difficulty = 6;
+            else if (Score >= 152)
+                difficulty = 5;
+            else if (Score >= 96)
+                difficulty = 4;
+            else if (Score >= 48)
+                difficulty = 3;
+            else if (Score >= 28)
+                difficulty = 2;
+            else if (Score >= 12)
+                difficulty = 1;
+            else
+                difficulty = 0;
 
             return difficulty;
         }
-
     }
 }
