@@ -77,7 +77,7 @@
                         ColumnDefinitions="*,*,*"
                         RadioButtonGroup.GroupName="ThemeSelection"
                         RadioButtonGroup.SelectedValue="{Binding AppPreferences.ThemeUserSetting, Mode=TwoWay}">
-                        <RadioButton Content="System default" Value="{x:Static appTheme:AppTheme.Unspecified}" />
+                        <RadioButton Content="System setting" Value="{x:Static appTheme:AppTheme.Unspecified}" />
                         <RadioButton Content="{x:Static appTheme:AppTheme.Light}" Value="{x:Static appTheme:AppTheme.Light}" Grid.Column="1" />
                         <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" Grid.Column="2" />
                     </Grid>
@@ -104,53 +104,61 @@
                     <Button Text="Open Help" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.Help}" />
                 </StackLayout>
             </controls:GroupBoxControl>
-            <controls:GroupBoxControl Header="Developer mode" IsClippedToBounds="True">
+            <controls:GroupBoxControl Header="Developer options" IsClippedToBounds="True">
                 <StackLayout Orientation="Vertical">
                     <controls:CheckBoxControl
-                        IsChecked="{Binding AppPreferences.DeveloperMode, Mode=TwoWay}"
-                        Text="Enable Developer mode" />
+                        IsChecked="{Binding AppPreferences.DeveloperOptions, Mode=TwoWay}"
+                        Text="Enable Developer options" />
+
+                    <Grid
+                        ColumnDefinitions="*,*"
+                        RadioButtonGroup.GroupName="GameModeSelection"
+                        RadioButtonGroup.SelectedValue="{Binding AppPreferences.SingleLevelMode, Mode=TwoWay}">
+                        <RadioButton Content="Leveling Mode" Value="false" Grid.Column="0" IsChecked="{Binding AppPreferences.LevelingMode, Mode=TwoWay}" />
+                        <RadioButton Content="Single Level Mode" Value="true" Grid.Column="1" IsChecked="{Binding AppPreferences.SingleLevelMode, Mode=TwoWay}" />
+                    </Grid>
                 </StackLayout>
             </controls:GroupBoxControl>
-            <controls:GroupBoxControl Header="Flasks" IsVisible="{Binding AppPreferences.DeveloperMode}">
+            <controls:GroupBoxControl Header="Flasks" IsVisible="{Binding AppPreferences.DeveloperOptions}">
                 <StackLayout>
                     <Label Text="Limit &quot;Add empty flask&quot; to maximum of:"/>
                     <Grid ColumnDefinitions="auto,*">
                         <Label
-                Text="{Binding AppPreferences.MaximumExtraTubes, StringFormat='[{0}]'}"
-                FontAttributes="Bold"
-                HorizontalOptions="Start"
-                VerticalOptions="Center"
-                Margin="0,0,10,0"/>
+                            Text="{Binding AppPreferences.MaximumExtraTubes, StringFormat='[{0}]'}"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            Margin="0,0,10,0"/>
                         <Slider
-                Grid.Column="1"
-                Minimum="{Binding Source={x:Static models:Constants.MinimumNumberOfExtraTubesAllowedToBeAdded}}"
-                Maximum="{Binding Source={x:Static models:Constants.MaximumNumberOfExtraTubesAllowedToBeAdded}}"
-                Value="{Binding AppPreferences.MaximumExtraTubes}"
-                VerticalOptions="Center"
-                />
+                            Grid.Column="1"
+                            Minimum="{Binding Source={x:Static models:Constants.MinimumNumberOfExtraTubesAllowedToBeAdded}}"
+                            Maximum="{Binding Source={x:Static models:Constants.MaximumNumberOfExtraTubesAllowedToBeAdded}}"
+                            Value="{Binding AppPreferences.MaximumExtraTubes}"
+                            VerticalOptions="Center"
+                            />
                     </Grid>
                     <Label Text="Recommended to leave at just 1. Raising it any higher make the game too easy." FontSize="12"/>
 
                     <controls:CheckBoxControl
-                IsChecked="{Binding AppPreferences.RandomNumberOfTubes, Mode=TwoWay}"
-                Text="Randomize number of colors." />
+                        IsChecked="{Binding AppPreferences.RandomNumberOfTubes, Mode=TwoWay}"
+                        Text="Randomize number of colors." />
                     <Grid ColumnDefinitions="auto,*" IsEnabled="{Binding AppPreferences.SetSpecificNumberOfTubes}">
                         <Label
-                Text="{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[Colors: {0}]'}"
-                FontAttributes="Bold"
-                HorizontalOptions="Start"
-                VerticalOptions="Center"
-                Margin="0,0,10,0"/>
+                            Text="{Binding AppPreferences.NumberOfColorsToGenerate, StringFormat='[Colors: {0}]'}"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            Margin="0,0,10,0"/>
                         <Slider
-                Grid.Column="1"
-                Minimum="{Binding Source={x:Static models:Constants.MinColors}}" Maximum="{Binding Source={x:Static models:Constants.ColorCount}}"
-                Value="{Binding AppPreferences.NumberOfColorsToGenerate}"
-                VerticalOptions="Center"
-                />
+                            Grid.Column="1"
+                            Minimum="{Binding Source={x:Static models:Constants.MinColors}}" Maximum="{Binding Source={x:Static models:Constants.ColorCount}}"
+                            Value="{Binding AppPreferences.NumberOfColorsToGenerate}"
+                            VerticalOptions="Center"
+                            />
                     </Grid>
                 </StackLayout>
             </controls:GroupBoxControl>
-            <controls:GroupBoxControl Header="Advanced options" IsClippedToBounds="True" IsVisible="{Binding AppPreferences.DeveloperMode}">
+            <controls:GroupBoxControl Header="Advanced options" IsClippedToBounds="True" IsVisible="{Binding AppPreferences.DeveloperOptions}">
                 <StackLayout Orientation="Vertical">
 
 

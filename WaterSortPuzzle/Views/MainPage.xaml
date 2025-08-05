@@ -37,7 +37,7 @@
             <!-- // Top Bar // -->
 
 
-            <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.StandardMode}" HorizontalOptions="Center">
+            <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.LevelingMode}" HorizontalOptions="Center">
                 <Label 
                     Text="{Binding Leveling.Level, StringFormat='Level {0}'}"
                     TextColor="White"
@@ -59,15 +59,15 @@
                     />
             </StackLayout>
             <StackLayout Orientation="Vertical" Margin="5">
-                <Grid ColumnDefinitions="*,*,auto" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.StandardMode}">
+                <Grid ColumnDefinitions="*,*,auto" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.LevelingMode}">
                     <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
 
                     <Button Text="Restart&#10;level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}" ImageSource="{StaticResource RestartIcon}" Grid.Column="2"/>
                 </Grid>
 
-                <Grid ColumnDefinitions="*,auto,auto,auto" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.DeveloperMode}">
+                <Grid ColumnDefinitions="*,auto,auto,auto" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.SingleLevelMode}">
                     <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
-                    <Button Text="{Binding NewLevelButtonText}" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.NewLevel}" ImageSource="{StaticResource NewLevelIcon}" Grid.Column="1" IsVisible="{Binding AppPreferences.DeveloperMode}"/>
+                    <Button Text="{Binding NewLevelButtonText}" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.NewLevel}" ImageSource="{StaticResource NewLevelIcon}" Grid.Column="1"/>
                     <Button Text="Restart&#10;level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}" ImageSource="{StaticResource RestartIcon}" Grid.Column="2"/>
                     <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}" ImageSource="{StaticResource SettingsIcon}" Grid.Column="3"/>
                 </Grid>

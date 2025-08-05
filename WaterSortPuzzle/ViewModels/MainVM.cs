@@ -40,7 +40,7 @@ namespace WaterSortPuzzle.ViewModels
             {
                 OnPropertyChanged(nameof(NextStepButtonText));
             }
-            else if (e.PropertyName == nameof(AppPreferences.LoadDebugLevel) || e.PropertyName == nameof(AppPreferences.DeveloperMode))
+            else if (e.PropertyName == nameof(AppPreferences.LoadDebugLevel) || e.PropertyName == nameof(AppPreferences.SingleLevelMode))
             {
                 OnPropertyChanged(nameof(NewLevelButtonText));
             }
@@ -196,7 +196,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             get
             {
-                if (AppPreferences.LoadDebugLevel && AppPreferences.DeveloperMode) return $"[DEBUG]{Environment.NewLine}level";
+                if (AppPreferences.LoadDebugLevel && AppPreferences.SingleLevelMode) return $"[DEBUG]{Environment.NewLine}level";
                 else return $"New{Environment.NewLine}level";
             }
         }
@@ -713,7 +713,7 @@ namespace WaterSortPuzzle.ViewModels
                     UIEnabled = false;
                 //PopupWindow.Execute(PopupParams.LevelComplete);
                 var task = NavigationMenuPopup(PopupParams.LevelComplete);
-                if (AppPreferences.DeveloperMode == false && GameState.SolvedAtLeastOnce == false)
+                if (AppPreferences.SingleLevelMode == false && GameState.SolvedAtLeastOnce == false)
                 {
                     Leveling.LevelFinished();
                 }

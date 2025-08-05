@@ -117,7 +117,8 @@
     </Style>
 
     <Style TargetType="Entry">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+        <!--<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />-->
+        <Setter Property="TextColor" Value="Black" />
         <!--<Setter Property="BackgroundColor" Value="Transparent" />-->
         <Setter Property="BackgroundColor" Value="White" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>

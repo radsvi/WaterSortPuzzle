@@ -229,16 +229,26 @@
                 //    break;
             }
         }
-        public bool DeveloperMode
+        public bool DeveloperOptions
         {
-            get => Preferences.Default.Get(nameof(DeveloperMode), false);
-            set
-            {
-                Preferences.Set(nameof(DeveloperMode), value);
+            get => Preferences.Default.Get(nameof(DeveloperOptions), false);
+            set {
+                Preferences.Set(nameof(DeveloperOptions), value);
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(StandardMode));
+                if (value == false)
+                    SingleLevelMode = false;
             }
         }
-        public bool StandardMode { get => !DeveloperMode; }
+        public bool SingleLevelMode
+        {
+            get => Preferences.Default.Get(nameof(SingleLevelMode), false);
+            set
+            {
+                Preferences.Set(nameof(SingleLevelMode), value);
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(LevelingMode));
+            }
+        }
+        public bool LevelingMode { get => !SingleLevelMode; }
     }
 }

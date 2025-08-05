@@ -135,7 +135,7 @@ namespace WaterSortPuzzle.Models
         }
         public void GenerateNewLevel()
         {
-            if (appPreferences.DeveloperMode == false)
+            if (appPreferences.SingleLevelMode == false)
             {
                 GenerateStandardLevel(leveling.NumberOfColorsToGenerate);
             }
