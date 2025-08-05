@@ -14,22 +14,13 @@ namespace WaterSortPuzzle.Models
             //this.levelPreferences = (LevelPreferences)levelPreferences;
             this.levelPreferences = levelPreferences;
 
-            //this.levelPreferences.PropertyChanged += PropertyChangedHandler;
-
             CalculateNextLevelParameters();
-        }
-        private void PropertyChangedHandler(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(levelPreferences.Level))
-            {
-                CalculateNextLevelParameters();
-            }
         }
 
         public int Level
         {
             get => levelPreferences.Level;
-            set { levelPreferences.Level = value; OnPropertyChanged(); }
+            set { levelPreferences.Level = value; OnPropertyChanged(); CalculateNextLevelParameters(); }
         }
         public int Score
         {
@@ -101,12 +92,13 @@ namespace WaterSortPuzzle.Models
             var difficulty = GetDifficulty();
 
             int rand;
-            if (difficulty > 11)
-                rand = (-(int)(new Random().Next(0, 4) / 3));
-            else if (difficulty == 11)
-                rand = new Random().Next(-1, 0);
-            else
-                rand = new Random().Next(-2, 0);
+            rand = 0;
+            //if (difficulty > 11)
+            //    rand = (-(int)(new Random().Next(0, 4) / 3));
+            //else if (difficulty == 11)
+            //    rand = new Random().Next(-1, 0);
+            //else
+            //    rand = new Random().Next(-2, 0);
 
             NumberOfColorsToGenerate = difficulty + Constants.MinColors + rand;
         }

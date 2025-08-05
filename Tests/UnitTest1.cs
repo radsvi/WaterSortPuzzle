@@ -1,4 +1,5 @@
 ﻿using WaterSortPuzzle.Models;
+using FluentAssertions;
 
 namespace Tests
 {
@@ -9,32 +10,32 @@ namespace Tests
     }
     public class UnitTest1
     {
+        //[Fact]
+        //public void Test1()
+        //{
+        //    if (Sum(1, 3) != 4)
+        //        throw new Exception();
+        //}
+        //int Sum(int left, int right)
+        //{
+        //    return left + right;
+        //}
         [Fact]
-        public void Test1()
-        {
-            if (Sum(1, 3) != 4)
-                throw new Exception();
-        }
-        int Sum(int left, int right)
-        {
-            return left + right;
-        }
-        [Fact]
-        public void Test2()
+        public void Score_500_should_return_NumberOfColors_7()
         {
             var prefs = new TestLevelPreferences();
-            var leveling = new Leveling(prefs);
+            var leveling = new Leveling(prefs)
+            {
+                Score = 500
+            };
 
-            var qwer = leveling.NumberOfColorsToGenerate;
-            leveling.Score = 500;
             leveling.CalculateNextLevelParameters();
 
-            var asdf = leveling.NumberOfColorsToGenerate;
-            Console.WriteLine(asdf);
+            int resultLow = 7;
+            int resultHigh = resultLow + Constants.MinColors;
 
-            //throw new Exception();
-
-
+            leveling.NumberOfColorsToGenerate.Should().BeGreaterThanOrEqualTo(resultLow);
+            leveling.NumberOfColorsToGenerate.Should().BeLessThanOrEqualTo(resultHigh);
         }
     }
 }
