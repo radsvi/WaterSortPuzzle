@@ -1,10 +1,13 @@
 ﻿namespace WaterSortPuzzle.Models
 {
-    public partial class AppPreferences : ObservableObject
+     public partial class AppPreferences : ObservableObject
     {
-        public AppPreferences() {
-            LoadAnimationDuration();
-        }
+        //readonly Leveling leveling;
+        //public AppPreferences(Leveling leveling) {
+        //    LoadAnimationDuration();
+
+        //    this.leveling = leveling;
+        //}
 
         public bool LoadDebugLevel
         {

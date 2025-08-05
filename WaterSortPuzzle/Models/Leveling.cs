@@ -8,16 +8,34 @@ namespace WaterSortPuzzle.Models
 {
     public partial class Leveling : ObservableObject
     {
-        //readonly AppPreferences appPreferences;
-        //public Leveling(AppPreferences appPreferences)
-        //{
-        //    this.appPreferences = appPreferences;
-        //}
-        public Leveling()
+        readonly ILevelPreferences levelPreferences;
+        public Leveling(ILevelPreferences levelPreferences)
         {
+            //this.levelPreferences = (LevelPreferences)levelPreferences;
+            this.levelPreferences = levelPreferences;
+
+            //this.levelPreferences.PropertyChanged += PropertyChangedHandler;
+
             CalculateNextLevelParameters();
         }
+        private void PropertyChangedHandler(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(levelPreferences.Level))
+            {
+                CalculateNextLevelParameters();
+            }
+        }
 
+        public int Level
+        {
+            get => levelPreferences.Level;
+            set { levelPreferences.Level = value; OnPropertyChanged(); }
+        }
+        public int Score
+        {
+            get => levelPreferences.Score;
+            set { levelPreferences.Score = value; OnPropertyChanged(); }
+        }
         //public int NumberOfColorsToGenerate { get; private set; } = 3;
         private int numberOfColorsToGenerate = 3;
         public int NumberOfColorsToGenerate
@@ -49,20 +67,21 @@ namespace WaterSortPuzzle.Models
         //    get => Preferences.Default.Get(nameof(Difficulty), 0);
         //    set => Preferences.Set(nameof(Difficulty), value);
         //}
-        public int Level
-        {
-            get => Preferences.Default.Get(nameof(Level), 1);
-            set {
-                Preferences.Set(nameof(Level), value);
-                OnPropertyChanged();
-                CalculateNextLevelParameters();
-            }
-        }
-        public int Score
-        {
-            get => Preferences.Default.Get(nameof(Score), 0);
-            set { Preferences.Set(nameof(Score), value); OnPropertyChanged(); }
-        }
+
+        //private int score = 5;
+        //public int Score
+        //{
+        //    get => score;
+        //    set => score = value;
+        //    //set { Preferences.Set(nameof(Score), value); OnPropertyChanged(); }
+        //}
+        //public int Score
+        //{
+        //    get => Preferences.Default.Get(nameof(Score), 0);
+        //    set { Preferences.Set(nameof(Score), value); OnPropertyChanged(); }
+        //}
+
+
 
         public void LevelFinished(int colorCount)
         {
@@ -77,7 +96,7 @@ namespace WaterSortPuzzle.Models
 
             Score += scoreMultiplier;
         }
-        void CalculateNextLevelParameters()
+        public void CalculateNextLevelParameters()
         {
             var difficulty = GetDifficulty();
 

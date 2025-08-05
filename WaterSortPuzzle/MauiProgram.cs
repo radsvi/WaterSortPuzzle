@@ -76,6 +76,7 @@ namespace WaterSortPuzzle
             builder.Services.AddSingleton<GameState>();
             builder.Services.AddSingleton<AutoSolve>();
             builder.Services.AddSingleton<Leveling>();
+            builder.Services.AddSingleton<ILevelPreferences, LevelPreferences>();
 
 
 #if DEBUG
