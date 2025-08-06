@@ -91,16 +91,25 @@ namespace WaterSortPuzzle.Models
         {
             var difficulty = GetDifficulty();
 
-            int rand;
-            rand = 0;
+            //rand = 0;
             //if (difficulty > 11)
             //    rand = (-(int)(new Random().Next(0, 4) / 3));
             //else if (difficulty == 11)
             //    rand = new Random().Next(-1, 0);
             //else
             //    rand = new Random().Next(-2, 0);
-
-            NumberOfColorsToGenerate = difficulty + Constants.MinColors + rand;
+            if (difficulty > (Constants.ColorCount - Constants.MinColors + 1)) // diff 11+
+            {
+                NumberOfColorsToGenerate = Constants.ColorCount + (-(int)(new Random().Next(0, 4) / 3));
+            }
+            else if (difficulty > (Constants.ColorCount - Constants.MinColors)) // diff 10
+            {
+                NumberOfColorsToGenerate = Constants.ColorCount + new Random().Next(-1, 0);
+            }
+            else // diff 0~9
+            {
+                NumberOfColorsToGenerate = difficulty + Constants.MinColors + new Random().Next(-2, 0);
+            }
         }
         int GetDifficulty()
         {
