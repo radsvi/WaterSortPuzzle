@@ -2,12 +2,10 @@
 {
      public partial class AppPreferences : ObservableObject
     {
-        //readonly Leveling leveling;
-        //public AppPreferences(Leveling leveling) {
-        //    LoadAnimationDuration();
-
-        //    this.leveling = leveling;
-        //}
+        public AppPreferences()
+        {
+            LoadAnimationDuration();
+        }
 
         public bool LoadDebugLevel
         {
