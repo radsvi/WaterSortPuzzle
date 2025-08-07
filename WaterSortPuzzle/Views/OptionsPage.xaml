@@ -86,7 +86,7 @@
                         ColumnDefinitions="*,*,*"
                         RadioButtonGroup.GroupName="ThemeSelection"
                         RadioButtonGroup.SelectedValue="{Binding AppPreferences.ThemeUserSetting, Mode=TwoWay}">
-                        <RadioButton Content="System setting" Value="{x:Static appTheme:AppTheme.Unspecified}" />
+                        <RadioButton Content="System preset" Value="{x:Static appTheme:AppTheme.Unspecified}" />
                         <RadioButton Content="{x:Static appTheme:AppTheme.Light}" Value="{x:Static appTheme:AppTheme.Light}" Grid.Column="1" />
                         <RadioButton Content="{x:Static appTheme:AppTheme.Dark}" Value="{x:Static appTheme:AppTheme.Dark}" Grid.Column="2" />
                     </Grid>

@@ -205,20 +205,6 @@
                     </bl:BindableLayout.ItemTemplate>
                 </AbsoluteLayout>
 
-                <!-- // AutoSolve box // -->
-                <Border VerticalOptions="End" Background="White" IsVisible="{Binding AutoSolve.Started}" HorizontalOptions="Start" Margin="5,0" >
-                    <Label Text="{Binding AutoSolve.Iterations}" HeightRequest="40" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="Black"/>
-                </Border>
-
-                <!--<Grid VerticalOptions="Start" HorizontalOptions="Center" x:Name="GridForTubes">
-                <usercontrols:TubeControl TubeItem="{Binding Tubes[0]}"/>
-            </Grid>-->
-                <!--<Button Text="Get Solution" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding AutoSolve.StartCommand}" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}" />-->
-
-
-                <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
-                    <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
-                </Border>
 
                 
                 <!--<StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
@@ -231,6 +217,21 @@
                 </StackLayout>-->
 
                 <Grid IsVisible="{Binding UIDisabled}" BackgroundColor="#96000000" />
+
+                <!-- // AutoSolve box // -->
+                <Border VerticalOptions="End" Background="White" IsVisible="{Binding AutoSolve.Started}" HorizontalOptions="Start" Margin="5,0" >
+                    <Label Text="{Binding AutoSolve.Iterations}" HeightRequest="40" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="Black"/>
+                </Border>
+
+                <!--<Grid VerticalOptions="Start" HorizontalOptions="Center" x:Name="GridForTubes">
+                    <usercontrols:TubeControl TubeItem="{Binding Tubes[0]}"/>
+                </Grid>-->
+                <!--<Button Text="Get Solution" Style="{StaticResource NavigationButtonAdvancedSettings}" Command="{Binding AutoSolve.StartCommand}" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}" />-->
+
+
+                <Border Stroke="White" StrokeThickness="1" VerticalOptions="End" Margin="0,0,0,5" HorizontalOptions="End" IsVisible="{Binding AutoSolve.InProgress}">
+                    <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
+                </Border>
             </Grid>
 
             <!--#region Bottom section -->
