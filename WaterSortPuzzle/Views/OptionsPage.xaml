@@ -111,6 +111,7 @@
                         Text="Enable Developer options" />
 
                     <Grid
+                        IsVisible="{Binding AppPreferences.DeveloperOptions}"
                         ColumnDefinitions="*,*"
                         RadioButtonGroup.GroupName="GameModeSelection"
                         RadioButtonGroup.SelectedValue="{Binding AppPreferences.SingleLevelMode, Mode=TwoWay}">
