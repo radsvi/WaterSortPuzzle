@@ -41,7 +41,7 @@ namespace WaterSortPuzzle.Models
             {
                 if (numberOfColorsToGenerate != value)
                 {
-                    if (value < 3)
+                    if (value < Constants.MinColors)
                     {
                         numberOfColorsToGenerate = Constants.MinColors;
                     }

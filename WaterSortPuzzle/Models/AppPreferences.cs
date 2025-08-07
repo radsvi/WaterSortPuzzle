@@ -23,7 +23,7 @@
             {
                 if (Preferences.Default.Get(nameof(NumberOfColorsToGenerate), 10) != value)
                 {
-                    if (value < 3)
+                    if (value < Constants.MinColors)
                     {
                         Preferences.Set(nameof(NumberOfColorsToGenerate), Constants.MinColors);
                     }
