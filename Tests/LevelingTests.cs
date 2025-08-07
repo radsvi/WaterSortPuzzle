@@ -7,6 +7,7 @@ namespace Tests
     {
         public int Score { get; set; } = 50;
         public int Level { get; set; } = 2;
+        public bool BoostDifficulty { get; set; } = false;
     }
     public class LevelingTests
     {
@@ -98,6 +99,32 @@ namespace Tests
             }
             counter.Should().BeGreaterThan(7400);
             counter.Should().BeLessThan(7600);
+        }
+        [Fact]
+        public void Score_2892_should_have_NumberOfColors_12_100_percent_of_the_time_when_BoostDifficulty_true()
+        {
+            var prefs = new TestLevelPreferences();
+            prefs.BoostDifficulty = true;
+
+            var leveling = new Leveling(prefs)
+            {
+                Score = 2892
+            };
+
+            //int resultHigh = Constants.ColorCount;
+            int resultHigh = 12;
+            //int resultLow = resultHigh - 1;
+            int iterations = 10000;
+            int counter = 0;
+
+            for (int i = 0; i < iterations; i++)
+            {
+                leveling.CalculateNextLevelParameters();
+
+                if (leveling.NumberOfColorsToGenerate == resultHigh)
+                    counter++;
+            }
+            counter.Should().Be(iterations);
         }
     }
 }

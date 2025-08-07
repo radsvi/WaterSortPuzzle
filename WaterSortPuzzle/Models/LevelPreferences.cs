@@ -10,6 +10,7 @@ namespace WaterSortPuzzle.Models
     {
         int Level { get; set; }
         int Score { get; set; }
+        bool BoostDifficulty { get; set; }
     }
     public partial class LevelPreferences : ObservableObject, ILevelPreferences
     {
@@ -22,6 +23,11 @@ namespace WaterSortPuzzle.Models
         {
             get => Preferences.Default.Get(nameof(Score), 0);
             set => Preferences.Set(nameof(Score), value);
+        }
+        public bool BoostDifficulty
+        {
+            get => Preferences.Default.Get(nameof(BoostDifficulty), false);
+            set => Preferences.Set(nameof(BoostDifficulty), value);
         }
     }
 }

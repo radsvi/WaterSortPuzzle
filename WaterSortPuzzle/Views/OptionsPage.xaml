@@ -37,6 +37,15 @@
                     </FlexLayout>-->
                 </StackLayout>
             </controls:GroupBoxControl>
+            <controls:GroupBoxControl Header="Difficulty">
+                <StackLayout Orientation="Vertical">
+                    <Label Text="{Binding Leveling.Level, StringFormat='Level: {0}'}" />
+                    <Label Text="{Binding Leveling.Score, StringFormat='Score: {0}'}" />
+                    <controls:CheckBoxControl
+                            IsChecked="{Binding Leveling.BoostDifficulty, Mode=TwoWay}"
+                            Text="Higher difficulty" />
+                </StackLayout>
+            </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Animation Speed">
                 <StackLayout>
                     <Grid
@@ -168,13 +177,13 @@
                         <Label
                             FlexLayout.Shrink="0"
                             VerticalOptions="Center"
-                            Text="Force Level change">
+                            Text="Force difficulty change by boosting Score">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer />
                             </Label.GestureRecognizers>
                         </Label>
                         <Entry
-                            Text="{Binding Leveling.Level}"
+                            Text="{Binding Leveling.Score}"
                             />
                     </FlexLayout>
 

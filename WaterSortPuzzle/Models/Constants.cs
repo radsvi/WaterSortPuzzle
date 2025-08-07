@@ -34,6 +34,7 @@ namespace WaterSortPuzzle.Models
         public const uint RaiseTubeDuration = 75;
         //public const uint PouringDuration = 1000;
         //public const uint PouringDuration = 300;
+        public const double PouringAngle = 66.0;
         #endregion
 
         public const string logFolderName = "log";

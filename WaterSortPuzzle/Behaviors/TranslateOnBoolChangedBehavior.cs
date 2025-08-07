@@ -166,7 +166,7 @@ namespace WaterSortPuzzle.Behaviors
                     double XOffset = behavior.XTo - (behavior.ActualHeight / 2) + (behavior.ActualWidth / 2); // Using Height, because we are rotating it almost 90 degrees. The second part of the equasion is so that it is in the middle of the target tube instead of at the edge
                     double YOffset = behavior.YTo - (behavior.ActualHeight / 2) - (behavior.ActualWidth / 2);
 
-                    double rotateDegree = 66.0;
+                    double rotateDegree = Constants.PouringAngle;
 
 
                     await Task.WhenAll(

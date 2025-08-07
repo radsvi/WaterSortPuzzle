@@ -27,6 +27,11 @@ namespace WaterSortPuzzle.Models
             get => levelPreferences.Score;
             set { levelPreferences.Score = value; OnPropertyChanged(); }
         }
+        public bool BoostDifficulty
+        {
+            get => levelPreferences.BoostDifficulty;
+            set { levelPreferences.BoostDifficulty = value; OnPropertyChanged(); }
+        }
         //public int NumberOfColorsToGenerate { get; private set; } = 3;
         private int numberOfColorsToGenerate = 3;
         public int NumberOfColorsToGenerate
@@ -98,17 +103,27 @@ namespace WaterSortPuzzle.Models
             //    rand = new Random().Next(-1, 0);
             //else
             //    rand = new Random().Next(-2, 0);
-            if (difficulty > (Constants.ColorCount - Constants.MinColors + 1)) // diff 11+
+            if (BoostDifficulty == true)
             {
-                NumberOfColorsToGenerate = Constants.ColorCount + (-(int)(new Random().Next(0, 4) / 3));
+                if (difficulty + Constants.MinColors > Constants.ColorCount)
+                    NumberOfColorsToGenerate = Constants.ColorCount;
+                else
+                    NumberOfColorsToGenerate = difficulty + Constants.MinColors;
             }
-            else if (difficulty > (Constants.ColorCount - Constants.MinColors)) // diff 10
+            else
             {
-                NumberOfColorsToGenerate = Constants.ColorCount + new Random().Next(-1, 0);
-            }
-            else // diff 0~9
-            {
-                NumberOfColorsToGenerate = difficulty + Constants.MinColors + new Random().Next(-2, 0);
+                if (difficulty > (Constants.ColorCount - Constants.MinColors + 1)) // diff 11+
+                {
+                    NumberOfColorsToGenerate = Constants.ColorCount + (-(int)(new Random().Next(0, 4) / 3));
+                }
+                else if (difficulty > (Constants.ColorCount - Constants.MinColors)) // diff 10
+                {
+                    NumberOfColorsToGenerate = Constants.ColorCount + new Random().Next(-1, 0);
+                }
+                else // diff 0~9
+                {
+                    NumberOfColorsToGenerate = difficulty + Constants.MinColors + new Random().Next(-2, 0);
+                }
             }
         }
         int GetDifficulty()

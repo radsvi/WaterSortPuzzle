@@ -219,12 +219,12 @@
                     break;
                 case AnimationSpeed.Fast:
                     RepositionDuration = 100;
-                    PouringDuration = 300;
+                    PouringDuration = 220;
                     AnimationDurationMultiplier = 1;
                     break;
                 case AnimationSpeed.Fastest:
                     RepositionDuration = 100;
-                    PouringDuration = 300;
+                    PouringDuration = 220;
                     AnimationDurationMultiplier = 0;
                     break;
                 //case AnimationSpeed.Instant:
