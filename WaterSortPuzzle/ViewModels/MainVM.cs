@@ -306,7 +306,7 @@ namespace WaterSortPuzzle.ViewModels
             string route;
             if (menuItem == PopupParams.MainPage)
             {
-                route = "///MainPage";
+                route = "///" + menuItem.ToString();
             }
             else
             {

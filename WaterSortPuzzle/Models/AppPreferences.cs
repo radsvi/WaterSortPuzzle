@@ -1,6 +1,6 @@
 ﻿namespace WaterSortPuzzle.Models
 {
-     public partial class AppPreferences : ObservableObject
+    public partial class AppPreferences : ObservableObject
     {
         public AppPreferences()
         {
