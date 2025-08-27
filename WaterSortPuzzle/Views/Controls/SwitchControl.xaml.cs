@@ -1,8 +1,8 @@
 namespace WaterSortPuzzle.Views.Controls;
 
-public partial class CheckBoxControl : ContentView
+public partial class SwitchControl : ContentView
 {
-	public CheckBoxControl()
+	public SwitchControl()
 	{
 		InitializeComponent();
 
@@ -16,7 +16,7 @@ public partial class CheckBoxControl : ContentView
 		set { SetValue(IsCheckedProperty, value); }
 	}
 	public static readonly BindableProperty IsCheckedProperty =
-		BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBoxControl), false);
+		BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(SwitchControl), false);
 
 	public string Text
 	{
@@ -24,7 +24,7 @@ public partial class CheckBoxControl : ContentView
 		set { SetValue(TextProperty, value); }
 	}
 	public static readonly BindableProperty TextProperty =
-		BindableProperty.Create(nameof(Text), typeof(string), typeof(CheckBoxControl), string.Empty);
+		BindableProperty.Create(nameof(Text), typeof(string), typeof(SwitchControl), string.Empty);
 
     private void OnControlLoaded(object sender, EventArgs e)
     {

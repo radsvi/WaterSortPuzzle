@@ -28,7 +28,7 @@
         <StackLayout Orientation="Vertical" Margin="10">
             <controls:GroupBoxControl Header="Controls">
                 <StackLayout Orientation="Vertical">
-                    <controls:CheckBoxControl
+                    <controls:SwitchControl
                             IsChecked="{Binding AppPreferences.UnselectTubeEvenOnIllegalMove, Mode=TwoWay}"
                             Text="Unselect flask even when using illegal move" />
                     <!--<FlexLayout>
@@ -41,7 +41,7 @@
                 <StackLayout Orientation="Vertical">
                     <Label Text="{Binding Leveling.Level, StringFormat='Level: {0}'}" />
                     <Label Text="{Binding Leveling.Score, StringFormat='Score: {0}'}" />
-                    <controls:CheckBoxControl
+                    <controls:SwitchControl
                             IsChecked="{Binding Leveling.BoostDifficulty, Mode=TwoWay}"
                             Text="Higher difficulty" />
                 </StackLayout>
@@ -106,7 +106,7 @@
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Help">
                 <StackLayout Orientation="Vertical">
-                    <controls:CheckBoxControl
+                    <controls:SwitchControl
                             IsChecked="{Binding AppPreferences.DontShowHelpScreenAtStart, Mode=TwoWay}"
                             Text="Don't show help at startup" />
 
@@ -115,7 +115,7 @@
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Developer options" IsClippedToBounds="True">
                 <StackLayout Orientation="Vertical">
-                    <controls:CheckBoxControl
+                    <controls:SwitchControl
                         IsChecked="{Binding AppPreferences.DeveloperOptions, Mode=TwoWay}"
                         Text="Enable Developer options" />
 
@@ -149,7 +149,7 @@
                     </Grid>
                     <Label Text="Recommended to leave at just 1. Raising it any higher make the game too easy." FontSize="12"/>
 
-                    <controls:CheckBoxControl
+                    <controls:SwitchControl
                         IsChecked="{Binding AppPreferences.RandomNumberOfTubes, Mode=TwoWay}"
                         Text="Randomize number of colors." />
                     <Grid ColumnDefinitions="auto,*" IsEnabled="{Binding AppPreferences.SetSpecificNumberOfTubes}">
@@ -188,20 +188,20 @@
                     </FlexLayout>
 
 
-                    <controls:CheckBoxControl
+                    <controls:SwitchControl
                             IsChecked="{Binding AppPreferences.AdvancedOptionsVisible, Mode=TwoWay}"
                             Text="Enable Advanced options" />
 
                     <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}">
                         <!--<Button Text="Add couple presets to saved levels for testing" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.LoadLevelVM.AddPresetLevelsCommand}"/>-->
 
-                        <controls:CheckBoxControl
+                        <controls:SwitchControl
                             IsChecked="{Binding AppPreferences.LoadDebugLevel, Mode=TwoWay}"
                             Text="Generate preset debug level instead of random one" />
 
                         <!--<Button Text="Export all steps taken so far (StepBack)" Style="{StaticResource OptionsButton}" Command="{Binding GameState.WriteToFileStepBackCommand}"/>-->
                         
-                        <controls:CheckBoxControl
+                        <controls:SwitchControl
                             IsChecked="{Binding AppPreferences.UnlimitedStepBack, Mode=TwoWay}"
                             Text="{Binding Source={x:Static models:Constants.MaxStepBack}, StringFormat='Unlimited Step Back (otherwise maximum {0} per level)'}" />
                         

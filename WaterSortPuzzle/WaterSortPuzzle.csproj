@@ -197,7 +197,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\Controls\CheckBoxControl.xaml">
+	  <Compile Update="Views\Controls\SwitchControl.xaml.cs">
+	    <DependentUpon>SwitchControl.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\Controls\SwitchControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Controls\GroupBoxControl.xaml">
