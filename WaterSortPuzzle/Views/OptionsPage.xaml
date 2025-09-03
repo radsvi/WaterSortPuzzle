@@ -29,7 +29,7 @@
             <controls:GroupBoxControl Header="Controls">
                 <StackLayout Orientation="Vertical">
                     <controls:SwitchControl
-                            IsChecked="{Binding AppPreferences.UnselectTubeEvenOnIllegalMove, Mode=TwoWay}"
+                            IsToggled="{Binding AppPreferences.UnselectTubeEvenOnIllegalMove, Mode=TwoWay}"
                             Text="Unselect flask even when using illegal move" />
                     <!--<FlexLayout>
                         <CheckBox IsChecked="{Binding AppPreferences.InstantAnimations}"/>
@@ -42,7 +42,7 @@
                     <Label Text="{Binding Leveling.Level, StringFormat='Level: {0}'}" />
                     <Label Text="{Binding Leveling.Score, StringFormat='Score: {0}'}" />
                     <controls:SwitchControl
-                            IsChecked="{Binding Leveling.BoostDifficulty, Mode=TwoWay}"
+                            IsToggled="{Binding Leveling.BoostDifficulty, Mode=TwoWay}"
                             Text="Higher difficulty" />
                 </StackLayout>
             </controls:GroupBoxControl>
@@ -107,7 +107,7 @@
             <controls:GroupBoxControl Header="Help">
                 <StackLayout Orientation="Vertical">
                     <controls:SwitchControl
-                            IsChecked="{Binding AppPreferences.DontShowHelpScreenAtStart, Mode=TwoWay}"
+                            IsToggled="{Binding AppPreferences.DontShowHelpScreenAtStart, Mode=TwoWay}"
                             Text="Don't show help at startup" />
 
                     <Button Text="Open Help" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.Help}" />
@@ -116,7 +116,7 @@
             <controls:GroupBoxControl Header="Developer options" IsClippedToBounds="True">
                 <StackLayout Orientation="Vertical">
                     <controls:SwitchControl
-                        IsChecked="{Binding AppPreferences.DeveloperOptions, Mode=TwoWay}"
+                        IsToggled="{Binding AppPreferences.DeveloperOptions, Mode=TwoWay}"
                         Text="Enable Developer options" />
 
                     <Grid
@@ -150,7 +150,7 @@
                     <Label Text="Recommended to leave at just 1. Raising it any higher make the game too easy." FontSize="12"/>
 
                     <controls:SwitchControl
-                        IsChecked="{Binding AppPreferences.RandomNumberOfTubes, Mode=TwoWay}"
+                        IsToggled="{Binding AppPreferences.RandomNumberOfTubes, Mode=TwoWay}"
                         Text="Randomize number of colors." />
                     <Grid ColumnDefinitions="auto,*" IsEnabled="{Binding AppPreferences.SetSpecificNumberOfTubes}">
                         <Label
@@ -189,20 +189,20 @@
 
 
                     <controls:SwitchControl
-                            IsChecked="{Binding AppPreferences.AdvancedOptionsVisible, Mode=TwoWay}"
+                            IsToggled="{Binding AppPreferences.AdvancedOptionsVisible, Mode=TwoWay}"
                             Text="Enable Advanced options" />
 
                     <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.AdvancedOptionsVisible}">
                         <!--<Button Text="Add couple presets to saved levels for testing" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.LoadLevelVM.AddPresetLevelsCommand}"/>-->
 
                         <controls:SwitchControl
-                            IsChecked="{Binding AppPreferences.LoadDebugLevel, Mode=TwoWay}"
+                            IsToggled="{Binding AppPreferences.LoadDebugLevel, Mode=TwoWay}"
                             Text="Generate preset debug level instead of random one" />
 
                         <!--<Button Text="Export all steps taken so far (StepBack)" Style="{StaticResource OptionsButton}" Command="{Binding GameState.WriteToFileStepBackCommand}"/>-->
                         
                         <controls:SwitchControl
-                            IsChecked="{Binding AppPreferences.UnlimitedStepBack, Mode=TwoWay}"
+                            IsToggled="{Binding AppPreferences.UnlimitedStepBack, Mode=TwoWay}"
                             Text="{Binding Source={x:Static models:Constants.MaxStepBack}, StringFormat='Unlimited Step Back (otherwise maximum {0} per level)'}" />
                         
                     </StackLayout>
