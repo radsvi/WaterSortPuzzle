@@ -215,7 +215,13 @@
                     <Label Text="Generates step-by-step solution of current level" />
                 </StackLayout>
             </controls:GroupBoxControl>-->
-            <Button Text="Back" Command="{Binding MainVM.NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.MainPage}" Margin="0,20,0,0" ImageSource="{StaticResource BackNavigationIcon}"/>
+            
+            
+            
+            
+            
+            
+            <!--<Button Text="Back" Command="{Binding MainVM.NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.MainPage}" Margin="0,20,0,0" ImageSource="{StaticResource BackNavigationIcon}"/>-->
         </StackLayout>
     </ScrollView>
 </ContentPage>

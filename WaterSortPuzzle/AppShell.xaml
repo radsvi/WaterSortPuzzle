@@ -9,7 +9,7 @@
     xmlns:fontAwesome="clr-namespace:FontAwesome"
     x:DataType="viewmodels:MainVM"
     Shell.FlyoutBehavior="Flyout"
-    Shell.NavBarIsVisible="False"
+    
     Shell.BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
     FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
     
