@@ -4,13 +4,14 @@
              x:Class="WaterSortPuzzle.Views.Controls.CheckBoxControl">
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <FlexLayout>
+            <FlexLayout
+                Direction="Row" AlignItems="Stretch" JustifyContent="SpaceBetween">
                 <CheckBox
                     FlexLayout.Shrink="0"
                     IsChecked="{TemplateBinding IsChecked}"
                     x:Name="LinkedCheckBox" />
                 <Label
-                    FlexLayout.Shrink="1"
+                    FlexLayout.Grow="1"
                     x:Name="LinkedLabel"
                     VerticalOptions="Center"
                     Text="{TemplateBinding Text}">
