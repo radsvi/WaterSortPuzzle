@@ -160,6 +160,10 @@ namespace WaterSortPuzzle.Behaviors
                     behavior.TubeData!.IsBusy = true;
                     behavior.associatedView.InputTransparent = true;
 
+                    // Remove gesture recognizers
+                    var gestureRecognizers = behavior.associatedView.GestureRecognizers.ToList();
+                    behavior.associatedView.GestureRecognizers.Clear();
+
                     //behavior.associatedView.IsVisible = true;
                     //behavior.associatedView.IsVisible = false;
                     behavior.associatedView.ZIndex = 10;
@@ -193,6 +197,10 @@ namespace WaterSortPuzzle.Behaviors
                     behavior.associatedView.ZIndex = 0;
                     behavior.Trigger = false;
                     behavior.TubeData!.IsBusy = false;
+
+                    // Restore gesture recognizers
+                    foreach (var r in gestureRecognizers)
+                        behavior.associatedView.GestureRecognizers.Add(r);
                     behavior.associatedView.InputTransparent = false;
                 }
             }
