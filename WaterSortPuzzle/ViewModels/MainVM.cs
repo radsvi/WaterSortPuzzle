@@ -271,6 +271,7 @@ namespace WaterSortPuzzle.ViewModels
                 autoSolve.CurrentSolutionStep++;
 
             RecalculateTubesPerLine();
+            autoSolve?.SoftReset();
             await DrawTubesAsync(lastGameStatus.Source, lastGameStatus.Target);
         }
         private bool CanStepBack()
@@ -554,7 +555,7 @@ namespace WaterSortPuzzle.ViewModels
             if (TubesClickable == false)
                 return;
 
-            AutoSolve?.Reset(); // Disable autosolve when changing the game grid manually
+            AutoSolve?.SoftReset(); // Disable autosolve when changing the game grid manually
 
             if (obj is not TubeReference currentTubeReference)
                 return;

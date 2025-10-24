@@ -10,6 +10,8 @@
         private int iterations = 0;
         private bool solved = false;
         private bool started = false;
+
+
         //TreeNode<ValidMove> SolvingSteps;
         //TreeNode<ValidMove> FirstStep;
 
@@ -39,6 +41,7 @@
                 }
             }
         }
+        internal CollisionDictionary<int, TreeNode<ValidMove>> HashedSteps { get; private set; } = new CollisionDictionary<int, TreeNode<ValidMove>>();
         public int Iterations
         {
             get { return iterations; }
@@ -51,7 +54,6 @@
                 }
             }
         }
-
 
         public int CurrentSolutionStep { get => currentSolutionStep; set { currentSolutionStep = value; OnPropertyChanged(); } }
         //[ObservableProperty]
@@ -71,7 +73,7 @@
             treeNode.Data.UpdateHash();
             bool canceledByUser = false;
             //Dictionary<int, LinkedList<TreeNode<ValidMove>>> hashedSteps = new Dictionary<int, LinkedList<TreeNode<ValidMove>>>();
-            CollisionDictionary<int, TreeNode<ValidMove>> hashedSteps = new CollisionDictionary<int, TreeNode<ValidMove>>();
+            //CollisionDictionary<int, TreeNode<ValidMove>> hashedSteps = new CollisionDictionary<int, TreeNode<ValidMove>>();
 #if DEBUG            
             List<TreeNode<ValidMove>> debugList = new List<TreeNode<ValidMove>>();
 #endif
@@ -95,7 +97,7 @@
 #if DEBUG
                 debugList.Add(treeNode);
 #endif
-                Debug_WriteToFileAutoSolveSteps(treeNode, $"[{hashedSteps.DebugData.Count}] Visiting node");
+                Debug_WriteToFileAutoSolveSteps(treeNode, $"[{HashedSteps.DebugData.Count}] Visiting node");
                 Iterations++;
                 
 #if DEBUG
@@ -177,7 +179,7 @@
                     RemoveSolvedTubesFromMoves(treeNode.Data.GameState, validMoves);
 
                     // Pro kazdy validMove vytvorim sibling ve strome:
-                    CreateAllPossibleFutureStates(hashedSteps, treeNode, validMoves); // also checks for repeating moves
+                    CreateAllPossibleFutureStates(HashedSteps, treeNode, validMoves); // also checks for repeating moves
 
                     if (UnvisitedChildrenExist(treeNode) == false)
                     {
@@ -218,9 +220,9 @@
             if (canceledByUser == false)
             {
                 if (CompleteSolution.Count > 0)
-                    await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve finished", $"Total states explored: {Iterations}.\nSteps required to solve the puzzle: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds", "Close");
+                    await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve - Finished", $"Total states explored: {Iterations}.\nSteps required to solve the puzzle: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds", "Close");
                 else
-                    await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve finished - No Solution found", $"Total states explored: {Iterations}.\nSteps generated: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds\nNo solution found", "Close");
+                    await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve - No Solution found", $"Total states explored: {Iterations}.\nSteps generated: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds\nNo solution found", "Close");
             }
 
             IsBusy = false;
@@ -421,10 +423,16 @@
         //}
         private void CreateListOfSteps(TreeNode<ValidMove> treeNode)
         {
+            // when AutoSolve doesn't find a solution it returns treeNode that is the parent node and it doesn't have any further Parent of its own, therefore following loop doesn't generate anything.
+            // As we are creating the steps, we are also marking the nodes as unvisited. If not done and user decides to do some experimenting and presses StepBack and then runs the AutoSolve again it would ignore the successful branch.
+            treeNode.Data.Visited = false;
+            treeNode.Data.FullyVisited = false;
             while (treeNode.Parent is not null)
             {
                 CompleteSolution.Add(treeNode.Data);
                 treeNode = treeNode.Parent;
+                treeNode.Data.Visited = false;
+                treeNode.Data.FullyVisited = false;
             }
             CurrentSolutionStep = CompleteSolution.Count;
         }
@@ -856,7 +864,7 @@
         //        await WaitForButtonPress();
         //    }
         //}
-        public void Reset()
+        public void SoftReset()
         {
             exportLogFilename = Constants.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
             CompleteSolution.Clear();
@@ -866,6 +874,11 @@
             Solved = false;
             Iterations = 0;
             CurrentSolutionStep = 0;
+        }
+        public void Reset()
+        {
+            SoftReset();
+            HashedSteps = new CollisionDictionary<int, TreeNode<ValidMove>>();
         }
         #endregion
         #region debug
