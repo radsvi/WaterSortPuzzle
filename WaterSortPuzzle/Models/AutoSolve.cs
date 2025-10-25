@@ -84,7 +84,7 @@
 
             while (true)
             {
-                await Task.Delay(1);
+                await Task.Yield();
                 if (Iterations % 10000 == 0 && Iterations > 0)
                 {
                     bool answer = await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve", $"Reached {Iterations} visited states.{Environment.NewLine}Do you want to continue?", "Stop", "Continue");
