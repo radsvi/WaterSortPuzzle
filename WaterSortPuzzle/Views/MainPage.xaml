@@ -217,7 +217,35 @@
                     <Label Text="{Binding TubesItemsSource[1].YPos, StringFormat=' y: {0}'}" TextColor="Black" />
                 </StackLayout>-->
 
-                <Grid IsVisible="{Binding UIDisabled}" BackgroundColor="#96000000" />
+                
+                <!--<Border
+                    Padding="10"
+                    StrokeShape="RoundRectangle 30"
+                    StrokeThickness="0"
+                    BackgroundColor="#70000000"
+                    Margin="10"
+                    >
+                    <Border.Shadow>
+                        <Shadow Brush="#40000000"
+                            Offset="0,0"
+                            Radius="10"
+                             />
+                    </Border.Shadow>
+                </Border>-->
+                <!-- Semi transparent overlay when autosolve is in progress -->
+                <Border
+                    IsVisible="{Binding UIDisabled}"
+                    StrokeThickness="0"
+                    BackgroundColor="#70000000">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#00FF0000" Offset="0"/>
+                            <GradientStop Color="#80000000" Offset="0.1"/>
+                            <GradientStop Color="#80000000" Offset="0.9"/>
+                            <GradientStop Color="#00FF0000" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
 
                 <!-- // AutoSolve box // -->
                 <Border VerticalOptions="End" Background="White" IsVisible="{Binding AutoSolve.Started}" HorizontalOptions="Start" Margin="5,0" >
