@@ -65,7 +65,8 @@
 	  <AndroidPackageFormat>aab</AndroidPackageFormat>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <AndroidKeyStore>True</AndroidKeyStore>
-	  
+	  <AndroidEnableProguard>false</AndroidEnableProguard>
+	  <AndroidEnableR8>false</AndroidEnableR8>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|ARM64'">
