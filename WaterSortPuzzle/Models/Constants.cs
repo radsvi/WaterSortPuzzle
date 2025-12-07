@@ -21,7 +21,7 @@ namespace WaterSortPuzzle.Models
         #region Visual constants
         public const int TubeImageOffset = 30;
         public const int PouringAnimationDuration = 500;
-        public const int TubeWidth = 46;
+        public const int TubeWidth = 52;
         public const int TubeHeight = 194;
         public const double RippleEffectOffset = -1145;
         public const string InnerBorderElementName = "InnerBorder";

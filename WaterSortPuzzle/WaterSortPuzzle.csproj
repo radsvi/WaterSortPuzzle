@@ -24,7 +24,7 @@
 		<ApplicationTitle>WaterSortPuzzle</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.watersortpuzzle</ApplicationId>
+		<ApplicationId>com.svira.watersortpuzzle</ApplicationId>
 
 		<!-- Versions -->
 		<Version>0.7.3</Version>

@@ -96,7 +96,7 @@
                             <!--AbsoluteLayout.LayoutBounds="0, 10, 46, 194"-->
                             <Grid
                                 AbsoluteLayout.LayoutBounds="{Binding Coordinates}"
-                                Style="{StaticResource TubeGrid}" Padding="0,20,0,0" x:Name="RootGrid" IsVisible="{Binding IsVisible}"
+                                Style="{StaticResource TubeGrid}" Padding="3,20,3,0" x:Name="RootGrid" IsVisible="{Binding IsVisible}"
                                 >
                                 <Grid.Behaviors>
                                     <behaviors:TranslateOnBoolChangedBehavior
