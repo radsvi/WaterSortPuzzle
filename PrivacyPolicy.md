@@ -1,6 +1,6 @@
 Last updated: 10/12/2025
 
-Water Sort Puzzle (ìthe Appî) is provided by YellowNightOwl.
+Water Sort Puzzle (‚Äúthe App‚Äù) is provided by YellowNightOwl.
 This Privacy Policy explains how we handle user information when you use the App.
 
 1. Information We Do Not Collect
@@ -8,21 +8,21 @@ This Privacy Policy explains how we handle user information when you use the App
 We do not collect, store, or share any personal data or sensitive information.
 Specifically, the App does not collect:
 
-Personal information (such as name, email, address, phone number)
+- Personal information (such as name, email, address, phone number)
 
-Usage data or analytics
+- Usage data or analytics
 
-Device identifiers
+- Device identifiers
 
-Location data
+- Location data
 
-Photos, media, or files
+- Photos, media, or files
 
 2. No Third-Party Services
 
 The App does not use any third-party services, SDKs, analytics tools, or advertising networks.
 
-3. Childrenís Privacy
+3. Children‚Äôs Privacy
 
 The App is not specifically directed toward children under 13, and since we collect no data, it does not knowingly collect information from children.
 
@@ -34,7 +34,7 @@ We still strive to ensure the App operates securely and reliably.
 5. Changes to This Privacy Policy
 
 We may update this Privacy Policy from time to time.
-Any changes will be posted within the App or on the appís store listing.
+Any changes will be posted within the App or on the app‚Äôs store listing.
 
 6. Contact Us
 
