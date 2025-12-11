@@ -491,10 +491,10 @@ namespace WaterSortPuzzle.Models
             {
                 return true;
             }
-            //if (LastGameState.Length != gameGrid.Length) // pokud jen pridavam extra prazdnou zkumavku tak to neukladat!
-            //{
-            //    return false;
-            //}
+            if (LastGameState.GameGrid.Length != gameGrid.Length) // pokud jen pridavam extra prazdnou zkumavku tak to neukladat!
+            {
+                return true;
+            }
 
             for (int x = 0; x < gameGrid.GetLength(0); x++)
             {
