@@ -81,13 +81,13 @@ namespace WaterSortPuzzle.Models
 
         public void LevelFinished(int colorCount)
         {
-            Level++;
             IncreaseScore(colorCount);
+            Level++; // V setteru mam rovnou kalkulovani obtiznosti dalsiho levelu. blbej design pro priste...
         }
         
         void IncreaseScore(int colorCount)
         {
-            double difficultyMultiplier = colorCount / Constants.ColorCount;
+            double difficultyMultiplier = (double)colorCount / Constants.ColorCount;
             var scoreMultiplier = (int)(Constants.DefaultScoreMultiplier * difficultyMultiplier);
 
             Score += scoreMultiplier;
@@ -122,36 +122,30 @@ namespace WaterSortPuzzle.Models
                 }
                 else // diff 0~9
                 {
-                    NumberOfColorsToGenerate = difficulty + Constants.MinColors + new Random().Next(-2, 0);
+                    NumberOfColorsToGenerate = difficulty + Constants.MinColors;
                 }
             }
         }
-        int GetDifficulty()
+        private int GetDifficulty()
         {
             int difficulty;
 
             if (Score >= 2892)
                 difficulty = 11;
-            else if (Score >= 2082)
+            else if (Score >= 1040)
                 difficulty = 10;
-            else if (Score >= 1332)
+            else if (Score >= 540)
                 difficulty = 9;
-            else if (Score >= 892)
+            else if (Score >= 320)
                 difficulty = 8;
-            else if (Score >= 492)
+            else if (Score >= 120)
                 difficulty = 7;
-            else if (Score >= 312)
+            else if (Score >= 30)
                 difficulty = 6;
-            else if (Score >= 152)
-                difficulty = 5;
-            else if (Score >= 96)
+            else if (Score >= 16)
                 difficulty = 4;
-            else if (Score >= 48)
-                difficulty = 3;
-            else if (Score >= 28)
+            else if (Score >= 6)
                 difficulty = 2;
-            else if (Score >= 12)
-                difficulty = 1;
             else
                 difficulty = 0;
 
