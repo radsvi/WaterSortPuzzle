@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Handlers.Items;
+using CommunityToolkit.Maui;
 #if ANDROID
 using Android.Views;
 using AndroidX.RecyclerView.Widget;
@@ -15,6 +16,7 @@ namespace WaterSortPuzzle
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     //fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
