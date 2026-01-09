@@ -336,19 +336,19 @@ namespace WaterSortPuzzle.ViewModels
                         GenerateNewLevel();
                     break;
                 case PopupParams.RestartLevel:
-                    //answer = await popupService.ShowPopupAsync<CustomPopupVM>("Restart level", "Do you want to restart current level?", "OK", "Cancel");
-                    answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("Level complete", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
+                    answer = await popupService.ShowPopupAsync<CustomPopupVM>("Restart level", "Do you want to restart current level?", "OK", "Cancel");
+                    //answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("YOU WIN", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
                     if (answer)
                         RestartLevel();
                     break;
                 case PopupParams.LevelComplete:
                     if (AutoSolveUsed)
                     {
-                        answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("Level complete", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
+                        answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("YOU WIN", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
                     }
                     else
                     {
-                        answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("Level complete", "Congratulation! You won!", "Next level", "Restart level");
+                        answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("YOU WIN", "Congratulation! You won!", "Next level", "Restart level");
                     }
                     
                     if (answer)

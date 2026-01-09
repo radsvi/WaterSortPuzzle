@@ -5,7 +5,7 @@
              x:Class="WaterSortPuzzle.Views.Controls.FullscreenPopup"
              HorizontalOptions="Fill"
              VerticalOptions="Fill"
-             BackgroundColor="#50000000"
+             BackgroundColor="#30000000"
              WidthRequest="{Binding DeviceWidth}"
              HeightRequest="{Binding DeviceHeight}"
              Margin="0"
@@ -41,7 +41,13 @@
         </Style>
     </ContentView.Resources>
     <Grid Padding="25,50" RowDefinitions="auto,10*,auto,2*">
-        <Label Text="{Binding Title}" Style="{StaticResource Title}" />
+        <Grid Margin="0,50,0,0">
+            <Image Source="ribbon_small.png" Margin="0,69,0,0" />
+            <Label Text="{Binding Title}" Style="{StaticResource Title}" />
+        </Grid>
+
+
+
         <Label Text="{Binding Message}" Style="{StaticResource Message}" Grid.Row="1" VerticalTextAlignment="End" />
 
         <Grid ColumnDefinitions="*,*" ColumnSpacing="25" Grid.Row="2">
