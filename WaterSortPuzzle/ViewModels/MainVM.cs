@@ -330,26 +330,10 @@ namespace WaterSortPuzzle.ViewModels
             switch (menuItem)
             {
                 case PopupParams.NewLevel:
-                    //answer = await App.Current!.Windows[0].Page!.DisplayAlert("New level", "Do you want to start a new level?", "OK", "Cancel");
-                    //if (answer)
-                    //    GenerateNewLevel();
-
-
-                    //this.popupService.ShowPopup<CustomPopupVM>(Shell.Current);
-                    var queryAttributes = new Dictionary<string, object>
-                    {
-                        [nameof(CustomPopupVM.Title)] = "New level",
-                        [nameof(CustomPopupVM.Message)] = "Do you want to start a new level?",
-                        [nameof(CustomPopupVM.Accept)] = "OK",
-                        [nameof(CustomPopupVM.Cancel)] = "Cancel"
-                    };
-
-                    var AnswerB = await this.popupService.ShowPopupAsync<CustomPopupVM>(
-                        Shell.Current,
-                        options: PopupOptions.Empty,
-                        shellParameters: queryAttributes);
-
-
+                    answer = await ShowCustomPopup("New level", "Do you want to start a new level?", "OK", "Cancel");
+                    //answer = await App.Current!.Windows[0].Page!.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
+                    if (answer)
+                        GenerateNewLevel();
                     break;
                 case PopupParams.RestartLevel:
                     answer = await App.Current!.Windows[0].Page!.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
@@ -380,6 +364,30 @@ namespace WaterSortPuzzle.ViewModels
                 case PopupParams.SaveLevel:
                     await App.Current!.Windows[0].Page!.DisplayAlert("Save Level", "## Dodelat text ##", "OK");
                     break;
+            }
+        }
+        private async Task<bool> ShowCustomPopup(string title, string message, string accept, string cancel)
+        {
+            var queryAttributes = new Dictionary<string, object>
+            {
+                [nameof(CustomPopupVM.Title)] = title,
+                [nameof(CustomPopupVM.Message)] = message,
+                [nameof(CustomPopupVM.Accept)] = accept,
+                [nameof(CustomPopupVM.Cancel)] = cancel
+            };
+
+            CommunityToolkit.Maui.Core.IPopupResult<bool> result = await this.popupService.ShowPopupAsync<CustomPopupVM, bool>(
+                Shell.Current,
+                options: PopupOptions.Empty,
+                shellParameters: queryAttributes);
+
+            if (!result.WasDismissedByTappingOutsideOfPopup)
+            {
+                return result.Result;
+            }
+            else
+            {
+                return false;
             }
         }
 

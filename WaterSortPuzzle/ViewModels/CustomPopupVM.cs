@@ -27,17 +27,17 @@ namespace WaterSortPuzzle.ViewModels
         [RelayCommand]
         private async Task OnCancel()
         {
-            await popupService.ClosePopupAsync(Shell.Current);
+            await popupService.ClosePopupAsync(Shell.Current, false);
         }
 
-        [RelayCommand(CanExecute = nameof(CanSave))]
+        //[RelayCommand(CanExecute = nameof(CanSave))]
+        [RelayCommand]
         private async Task OnSave()
         {
-            await popupService.ClosePopupAsync(Shell.Current, Title);
+            await popupService.ClosePopupAsync(Shell.Current, true);
         }
 
         //bool CanSave() => string.IsNullOrWhiteSpace(Title) is false;
-        bool CanSave() => true;
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
