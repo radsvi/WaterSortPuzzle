@@ -336,18 +336,18 @@ namespace WaterSortPuzzle.ViewModels
                         GenerateNewLevel();
                     break;
                 case PopupParams.RestartLevel:
-                    answer = await App.Current!.Windows[0].Page!.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
+                    answer = await ShowCustomPopup("Restart level", "Do you want to restart current level?", "OK", "Cancel");
                     if (answer)
                         RestartLevel();
                     break;
                 case PopupParams.LevelComplete:
                     if (AutoSolveUsed)
                     {
-                        answer = await App.Current!.Windows[0].Page!.DisplayAlert("Level complete", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
+                        answer = await ShowCustomPopup("Level complete", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
                     }
                     else
                     {
-                        answer = await App.Current!.Windows[0].Page!.DisplayAlert("Level complete", "Congratulation! You won!", "Next level", "Restart level");
+                        answer = await ShowCustomPopup("Level complete", "Congratulation! You won!", "Next level", "Restart level");
                     }
                     
                     if (answer)
@@ -361,9 +361,9 @@ namespace WaterSortPuzzle.ViewModels
                 //case PopupParams.LoadLevel:
                     
                 //    break;
-                case PopupParams.SaveLevel:
-                    await App.Current!.Windows[0].Page!.DisplayAlert("Save Level", "## Dodelat text ##", "OK");
-                    break;
+                //case PopupParams.SaveLevel:
+                //    await ShowCustomPopup("Save Level", "## Dodelat text ##", "OK");
+                //    break;
             }
         }
         private async Task<bool> ShowCustomPopup(string title, string message, string accept, string cancel)
