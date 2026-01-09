@@ -14,9 +14,27 @@ namespace WaterSortPuzzle
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+#pragma warning disable CA1416
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkit(options =>
+                {
+                    options.SetPopupDefaults(new DefaultPopupSettings
+                    {
+                        Margin = 0,
+                        Padding = 0,
+                        BackgroundColor = Colors.Red
+                    });
+                    options.SetPopupOptionsDefaults(new DefaultPopupOptionsSettings
+                    {
+                        Shadow = null,
+                        Shape = new Microsoft.Maui.Controls.Shapes.RoundRectangle
+                        {
+                            CornerRadius = new CornerRadius(0, 0, 0, 0),
+                            StrokeThickness = 0
+                        }
+                    });
+                })
                 .ConfigureFonts(fonts =>
                 {
                     //fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -24,6 +42,7 @@ namespace WaterSortPuzzle
                     //fonts.AddFont("fa-brands-400.ttf", "FontAwesomeBrands");
                     fonts.AddFont("fa-regular-400.ttf", "FontAwesomeRegular");
                     fonts.AddFont("fa-solid-900.ttf", "FontAwesomeSolid");
+#pragma warning restore CA1416
 
 #if WINDOWS
                     // Remap font alias to actual Windows font file URI
