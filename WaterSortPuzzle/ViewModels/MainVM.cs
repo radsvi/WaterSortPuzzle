@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui;
+﻿//using CommunityToolkit.Maui;
 using System.Collections.Specialized;
 
 namespace WaterSortPuzzle.ViewModels
@@ -6,7 +6,7 @@ namespace WaterSortPuzzle.ViewModels
     public partial class MainVM : ViewModelBase
     {
         #region Constructor
-        public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve, Leveling leveling, IPopupService popupService)
+        public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve, Leveling leveling, IConfirmationPopupService popupService)
         {
             AppPreferences = appPreferences;
             GameState = gameState;
@@ -171,7 +171,7 @@ namespace WaterSortPuzzle.ViewModels
             }
         }
         private bool uiEnabled = true; // also used to mean that level is completed
-        private readonly IPopupService popupService;
+        private readonly IConfirmationPopupService popupService;
 
         public bool UIEnabled
         {
@@ -330,24 +330,24 @@ namespace WaterSortPuzzle.ViewModels
             switch (menuItem)
             {
                 case PopupParams.NewLevel:
-                    answer = await ShowCustomPopup("New level", "Do you want to start a new level?", "OK", "Cancel");
+                    answer = await popupService.ShowPopupAsync("New level", "Do you want to start a new level?", "OK", "Cancel");
                     //answer = await App.Current!.Windows[0].Page!.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
                     if (answer)
                         GenerateNewLevel();
                     break;
                 case PopupParams.RestartLevel:
-                    answer = await ShowCustomPopup("Restart level", "Do you want to restart current level?", "OK", "Cancel");
+                    answer = await popupService.ShowPopupAsync("Restart level", "Do you want to restart current level?", "OK", "Cancel");
                     if (answer)
                         RestartLevel();
                     break;
                 case PopupParams.LevelComplete:
                     if (AutoSolveUsed)
                     {
-                        answer = await ShowCustomPopup("Level complete", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
+                        answer = await popupService.ShowPopupAsync("Level complete", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
                     }
                     else
                     {
-                        answer = await ShowCustomPopup("Level complete", "Congratulation! You won!", "Next level", "Restart level");
+                        answer = await popupService.ShowPopupAsync("Level complete", "Congratulation! You won!", "Next level", "Restart level");
                     }
                     
                     if (answer)
@@ -366,30 +366,7 @@ namespace WaterSortPuzzle.ViewModels
                 //    break;
             }
         }
-        private async Task<bool> ShowCustomPopup(string title, string message, string accept, string cancel)
-        {
-            var queryAttributes = new Dictionary<string, object>
-            {
-                [nameof(CustomPopupVM.Title)] = title,
-                [nameof(CustomPopupVM.Message)] = message,
-                [nameof(CustomPopupVM.Accept)] = accept,
-                [nameof(CustomPopupVM.Cancel)] = cancel
-            };
-
-            CommunityToolkit.Maui.Core.IPopupResult<bool> result = await this.popupService.ShowPopupAsync<CustomPopupVM, bool>(
-                Shell.Current,
-                options: PopupOptions.Empty,
-                shellParameters: queryAttributes);
-
-            if (!result.WasDismissedByTappingOutsideOfPopup)
-            {
-                return result.Result;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        
 
         //private void DisplayStartupPopup() // predelat, tohle je hrozny to takhle mit dvakrat
         //{
