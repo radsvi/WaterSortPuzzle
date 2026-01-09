@@ -19,16 +19,10 @@ namespace WaterSortPuzzle.ViewModels
         public string cancel = string.Empty;
 
         readonly IPopupService popupService;
-        public double DeviceWidth { get; set; }
-        public double DeviceHeight { get; set; }
 
         public CustomPopupVM(IPopupService popupService)
         {
             this.popupService = popupService;
-
-            var displayInfo = DeviceDisplay.MainDisplayInfo;
-            DeviceWidth = displayInfo.Width / displayInfo.Density;
-            DeviceHeight = displayInfo.Height / displayInfo.Density;
         }
         [RelayCommand]
         private async Task OnCancel()

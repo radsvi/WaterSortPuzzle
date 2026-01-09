@@ -120,6 +120,9 @@
 	  <MauiXaml Update="Views\Controls\CustomPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Controls\FullscreenPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Controls\StyledPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

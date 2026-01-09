@@ -85,6 +85,7 @@ namespace WaterSortPuzzle
 
             //builder.Services.AddTransientPopup<StyledPopup, StyledPopupViewModel>();
             builder.Services.AddTransientPopup<CustomPopup, CustomPopupVM>();
+            builder.Services.AddTransientPopup<FullscreenPopup, FullscreenPopupVM>();
 
 #if DEBUG
             builder.Logging.AddDebug();

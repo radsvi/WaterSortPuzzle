@@ -9,7 +9,9 @@ namespace WaterSortPuzzle.Models
 {
     public interface IConfirmationPopupService
     {
-        Task<bool> ShowPopupAsync(string title, string message, string accept, string cancel);
+        //Task<bool> ShowPopupAsync(string title, string message, string accept, string cancel);
+        //Task<bool> ShowFullscreenPopupAsync(string title, string message, string accept, string cancel);
+        Task<bool> ShowPopupAsync<T>(string title, string message, string accept, string cancel) where T : CustomPopupVM;
     }
 
     public class ConfirmationPopupService : IConfirmationPopupService
@@ -20,7 +22,15 @@ namespace WaterSortPuzzle.Models
         {
             this.popupService = popupService;
         }
-        public async Task<bool> ShowPopupAsync(string title, string message, string accept, string cancel)
+        //public async Task<bool> ShowPopupAsync(string title, string message, string accept, string cancel)
+        //{
+        //    return await ShowPopupAsyncBase<CustomPopupVM>(title, message, accept, cancel);
+        //}
+        //public async Task<bool> ShowFullscreenPopupAsync(string title, string message, string accept, string cancel)
+        //{
+        //    return await ShowPopupAsyncBase<FullScreenPopupVM>(title, message, accept, cancel);
+        //}
+        public async Task<bool> ShowPopupAsync<T>(string title, string message, string accept, string cancel) where T : CustomPopupVM
         {
             var queryAttributes = new Dictionary<string, object>
             {
@@ -30,7 +40,7 @@ namespace WaterSortPuzzle.Models
                 [nameof(CustomPopupVM.Cancel)] = cancel
             };
 
-            CommunityToolkit.Maui.Core.IPopupResult<bool> result = await this.popupService.ShowPopupAsync<CustomPopupVM, bool>(
+            CommunityToolkit.Maui.Core.IPopupResult<bool> result = await this.popupService.ShowPopupAsync<T, bool>(
                 Shell.Current,
                 options: PopupOptions.Empty,
                 shellParameters: queryAttributes);

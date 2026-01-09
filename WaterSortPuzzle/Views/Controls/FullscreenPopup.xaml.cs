@@ -1,8 +1,8 @@
 namespace WaterSortPuzzle.Views.Controls;
 
-public partial class CustomPopup : ContentView
+public partial class FullscreenPopup : ContentView
 {
-    public CustomPopup(CustomPopupVM popupViewModel)
+	public FullscreenPopup(FullscreenPopupVM popupViewModel)
     {
         InitializeComponent();
         BindingContext = popupViewModel;

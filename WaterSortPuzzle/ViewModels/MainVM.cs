@@ -330,24 +330,25 @@ namespace WaterSortPuzzle.ViewModels
             switch (menuItem)
             {
                 case PopupParams.NewLevel:
-                    answer = await popupService.ShowPopupAsync("New level", "Do you want to start a new level?", "OK", "Cancel");
+                    answer = await popupService.ShowPopupAsync<CustomPopupVM>("New level", "Do you want to start a new level?", "OK", "Cancel");
                     //answer = await App.Current!.Windows[0].Page!.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");
                     if (answer)
                         GenerateNewLevel();
                     break;
                 case PopupParams.RestartLevel:
-                    answer = await popupService.ShowPopupAsync("Restart level", "Do you want to restart current level?", "OK", "Cancel");
+                    //answer = await popupService.ShowPopupAsync<CustomPopupVM>("Restart level", "Do you want to restart current level?", "OK", "Cancel");
+                    answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("Level complete", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
                     if (answer)
                         RestartLevel();
                     break;
                 case PopupParams.LevelComplete:
                     if (AutoSolveUsed)
                     {
-                        answer = await popupService.ShowPopupAsync("Level complete", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
+                        answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("Level complete", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
                     }
                     else
                     {
-                        answer = await popupService.ShowPopupAsync("Level complete", "Congratulation! You won!", "Next level", "Restart level");
+                        answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("Level complete", "Congratulation! You won!", "Next level", "Restart level");
                     }
                     
                     if (answer)
