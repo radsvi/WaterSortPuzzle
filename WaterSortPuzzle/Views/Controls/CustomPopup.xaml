@@ -5,13 +5,24 @@
              x:Class="WaterSortPuzzle.Views.Controls.CustomPopup"
              HorizontalOptions="Center"
              VerticalOptions="Center"
-             Padding="10"
+             Padding="10,0"
              x:DataType="viewModels:CustomPopupVM">
+    <ContentView.Resources>
+        <Style TargetType="Label" x:Key="Title">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Margin" Value="0,0,0,15" />
+        </Style>
+        <Style TargetType="Label" x:Key="Message">
+            <Setter Property="Margin" Value="0,0,0,20" />
+        </Style>
+    </ContentView.Resources>
     <VerticalStackLayout>
-        <Label Text="What is your name?" />
-        <Entry Text="{Binding Name}" />
+        <Label Text="{Binding Title}" Style="{StaticResource Title}" />
+        <Label Text="{Binding Message}" Style="{StaticResource Message}" />
 
-        <Button Text="Save" Command="{Binding SaveCommand}" />
-        <Button Text="Cancel" Command="{Binding CancelCommand}" />
+        <Grid ColumnDefinitions="*,*">
+            <Button Text="{Binding Accept}" Command="{Binding SaveCommand}" />
+            <Button Text="{Binding Cancel}" Command="{Binding CancelCommand}" Grid.Column="1" />
+        </Grid>
     </VerticalStackLayout>
 </ContentView>

@@ -338,7 +338,10 @@ namespace WaterSortPuzzle.ViewModels
                     //this.popupService.ShowPopup<CustomPopupVM>(Shell.Current);
                     var queryAttributes = new Dictionary<string, object>
                     {
-                        [nameof(CustomPopupVM.Name)] = "Shaun"
+                        [nameof(CustomPopupVM.Title)] = "New level",
+                        [nameof(CustomPopupVM.Message)] = "Do you want to start a new level?",
+                        [nameof(CustomPopupVM.Accept)] = "OK",
+                        [nameof(CustomPopupVM.Cancel)] = "Cancel"
                     };
 
                     var AnswerB = await this.popupService.ShowPopupAsync<CustomPopupVM>(
@@ -378,8 +381,6 @@ namespace WaterSortPuzzle.ViewModels
                     await App.Current!.Windows[0].Page!.DisplayAlert("Save Level", "## Dodelat text ##", "OK");
                     break;
             }
-            
-            
         }
 
         //private void DisplayStartupPopup() // predelat, tohle je hrozny to takhle mit dvakrat

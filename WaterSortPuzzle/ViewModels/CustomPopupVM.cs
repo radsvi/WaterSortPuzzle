@@ -10,7 +10,13 @@ namespace WaterSortPuzzle.ViewModels
     public partial class CustomPopupVM : ObservableObject, IQueryAttributable
     {
         [ObservableProperty]
-        public string name = string.Empty;
+        public string title = string.Empty;
+        [ObservableProperty]
+        public string message = string.Empty;
+        [ObservableProperty]
+        public string accept = string.Empty;
+        [ObservableProperty]
+        public string cancel = string.Empty;
 
         readonly IPopupService popupService;
 
@@ -27,14 +33,18 @@ namespace WaterSortPuzzle.ViewModels
         [RelayCommand(CanExecute = nameof(CanSave))]
         private async Task OnSave()
         {
-            await popupService.ClosePopupAsync(Shell.Current, Name);
+            await popupService.ClosePopupAsync(Shell.Current, Title);
         }
 
-        bool CanSave() => string.IsNullOrWhiteSpace(Name) is false;
+        //bool CanSave() => string.IsNullOrWhiteSpace(Title) is false;
+        bool CanSave() => true;
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            Name = (string)query[nameof(CustomPopupVM.Name)];
+            Title = (string)query[nameof(CustomPopupVM.Title)];
+            Message = (string)query[nameof(CustomPopupVM.Message)];
+            Accept = (string)query[nameof(CustomPopupVM.Accept)];
+            Cancel = (string)query[nameof(CustomPopupVM.Cancel)];
         }
     }
 }
