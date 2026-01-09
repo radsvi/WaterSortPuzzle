@@ -1,18 +1,19 @@
-﻿using System.Collections.Specialized;
+﻿using CommunityToolkit.Maui;
+using System.Collections.Specialized;
 
 namespace WaterSortPuzzle.ViewModels
 {
     public partial class MainVM : ViewModelBase
     {
         #region Constructor
-        public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve, Leveling leveling)
+        public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve, Leveling leveling, IPopupService popupService)
         {
             AppPreferences = appPreferences;
             GameState = gameState;
             Notification = notification;
             AutoSolve = autoSolve;
             Leveling = leveling;
-
+            this.popupService = popupService;
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
             GameState.SavedGameStates.CollectionChanged += CollectionChangedHandler;
@@ -170,6 +171,8 @@ namespace WaterSortPuzzle.ViewModels
             }
         }
         private bool uiEnabled = true; // also used to mean that level is completed
+        private readonly IPopupService popupService;
+
         public bool UIEnabled
         {
             get { return uiEnabled; }
@@ -327,9 +330,14 @@ namespace WaterSortPuzzle.ViewModels
             switch (menuItem)
             {
                 case PopupParams.NewLevel:
-                    answer = await App.Current!.Windows[0].Page!.DisplayAlert("New level", "Do you want to start a new level?", "OK", "Cancel");
-                    if (answer)
-                        GenerateNewLevel();
+                    //answer = await App.Current!.Windows[0].Page!.DisplayAlert("New level", "Do you want to start a new level?", "OK", "Cancel");
+                    //if (answer)
+                    //    GenerateNewLevel();
+
+
+                    this.popupService.ShowPopup<CustomPopupViewModel>(Shell.Current);
+
+
                     break;
                 case PopupParams.RestartLevel:
                     answer = await App.Current!.Windows[0].Page!.DisplayAlert("Restart level", "Do you want to restart current level?", "OK", "Cancel");

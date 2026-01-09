@@ -1,18 +1,10 @@
-using CommunityToolkit.Maui.Views;
-
 namespace WaterSortPuzzle.Views.Controls;
 
-public partial class CustomPopup : CommunityToolkit.Maui.Views.Popup
+public partial class CustomPopup : ContentView
 {
-    public CustomPopup()
+    public CustomPopup(CustomPopupViewModel namePopupViewModel)
     {
         InitializeComponent();
-    }
-
-    private async void OnOkClicked(object sender, EventArgs e)
-    {
-#pragma warning disable CA1416
-        await CloseAsync();
-#pragma warning restore CA1416
+        BindingContext = namePopupViewModel;
     }
 }
