@@ -234,7 +234,7 @@
                 </Border>-->
                 <!-- Semi transparent overlay when autosolve is in progress -->
                 <Border
-                    IsVisible="{Binding UIDisabled}"
+                    IsVisible="{Binding GrayOutMiddleOfTheScreen}"
                     StrokeThickness="0"
                     BackgroundColor="#70000000">
                     <Border.Background>

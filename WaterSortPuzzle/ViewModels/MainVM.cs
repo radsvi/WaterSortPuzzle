@@ -47,7 +47,7 @@ namespace WaterSortPuzzle.ViewModels
             }
             else if (e.PropertyName == nameof(AutoSolve.InProgress))
             {
-                UIEnabled = !AutoSolve!.InProgress;
+                GrayOutMiddleOfTheScreen = AutoSolve!.InProgress;
             }
         }
         private void CollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e)
@@ -184,6 +184,19 @@ namespace WaterSortPuzzle.ViewModels
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(UIDisabled));
                     OnPropertyChanged(nameof(TubesClickable));
+                }
+            }
+        }
+        private bool grayOutMiddleOfTheScreen;
+        public bool GrayOutMiddleOfTheScreen
+        {
+            get { return grayOutMiddleOfTheScreen; }
+            private set
+            {
+                if (value != grayOutMiddleOfTheScreen)
+                {
+                    grayOutMiddleOfTheScreen = value;
+                    OnPropertyChanged();
                 }
             }
         }
