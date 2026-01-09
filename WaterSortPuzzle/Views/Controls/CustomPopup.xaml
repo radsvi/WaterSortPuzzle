@@ -11,7 +11,7 @@
              x:DataType="viewModels:CustomPopupVM">
     <ContentView.Resources>
         <Style TargetType="Label" BasedOn="{StaticResource BasicLabelStyle}">
-            <!--<Setter Property="TextColor" Value="Black" />-->
+            <Setter Property="TextColor" Value="Black" />
         </Style>
         
         <Style TargetType="Label" x:Key="Title">
