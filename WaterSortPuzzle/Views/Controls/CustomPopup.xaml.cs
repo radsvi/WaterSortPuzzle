@@ -2,7 +2,7 @@ namespace WaterSortPuzzle.Views.Controls;
 
 public partial class CustomPopup : ContentView
 {
-    public CustomPopup(CustomPopupViewModel namePopupViewModel)
+    public CustomPopup(CustomPopupVM namePopupViewModel)
     {
         InitializeComponent();
         BindingContext = namePopupViewModel;

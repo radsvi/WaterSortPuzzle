@@ -7,27 +7,34 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.ViewModels
 {
-    public partial class CustomPopupViewModel : ObservableObject
+    public partial class CustomPopupVM : ObservableObject, IQueryAttributable
     {
         [ObservableProperty]
         public string name = string.Empty;
 
         readonly IPopupService popupService;
 
-        public CustomPopupViewModel(IPopupService popupService)
+        public CustomPopupVM(IPopupService popupService)
         {
             this.popupService = popupService;
         }
-
-        void OnCancel()
+        [RelayCommand]
+        private async Task OnCancel()
         {
+            await popupService.ClosePopupAsync(Shell.Current);
         }
 
         [RelayCommand(CanExecute = nameof(CanSave))]
-        void OnSave()
+        private async Task OnSave()
         {
+            await popupService.ClosePopupAsync(Shell.Current, Name);
         }
 
         bool CanSave() => string.IsNullOrWhiteSpace(Name) is false;
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            Name = (string)query[nameof(CustomPopupVM.Name)];
+        }
     }
 }

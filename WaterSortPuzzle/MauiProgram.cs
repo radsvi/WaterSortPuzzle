@@ -80,7 +80,7 @@ namespace WaterSortPuzzle
             builder.Services.AddSingleton<Leveling>();
             builder.Services.AddSingleton<ILevelPreferences, LevelPreferences>();
             //builder.Services.AddTransientPopup<StyledPopup, StyledPopupViewModel>();
-            builder.Services.AddTransientPopup<CustomPopup, CustomPopupViewModel>();
+            builder.Services.AddTransientPopup<CustomPopup, CustomPopupVM>();
 
 
 #if DEBUG

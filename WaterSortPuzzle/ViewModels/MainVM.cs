@@ -335,7 +335,16 @@ namespace WaterSortPuzzle.ViewModels
                     //    GenerateNewLevel();
 
 
-                    this.popupService.ShowPopup<CustomPopupViewModel>(Shell.Current);
+                    //this.popupService.ShowPopup<CustomPopupVM>(Shell.Current);
+                    var queryAttributes = new Dictionary<string, object>
+                    {
+                        [nameof(CustomPopupVM.Name)] = "Shaun"
+                    };
+
+                    var AnswerB = await this.popupService.ShowPopupAsync<CustomPopupVM>(
+                        Shell.Current,
+                        options: PopupOptions.Empty,
+                        shellParameters: queryAttributes);
 
 
                     break;
