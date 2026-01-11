@@ -491,28 +491,28 @@
 
     <!-- // Top Buttons // -->
 
-    <Style x:Key="NavigationButtonPrimary" TargetType="Button">
-        <Setter Property="Margin" Value="0,0,5,0" />
-        <Setter Property="LineBreakMode" Value="WordWrap" />
+    <Style x:Key="NavigationImageButton" TargetType="ImageButton">
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HeightRequest" Value="66" />
+        <Setter Property="WidthRequest" Value="66" />
+    </Style>
+    <Style x:Key="NavigationButton" TargetType="Button">
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <!--<Setter Property="HeightRequest" Value="66" />-->
+        <Setter Property="HeightRequest" Value="80" />
+        <!--<Setter Property="WidthRequest" Value="66" />-->
+        <Setter Property="WidthRequest" Value="56" />
+        <Setter Property="ContentLayout" Value="Top, 0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="TextColor" Value="White" />
     </Style>
 
-    <!-- // Bottom Buttons // -->
-
-    <Style x:Key="NavigationButtonBottom" TargetType="Button">
-        <Setter Property="Margin" Value="0,0,5,0" />
-        <!--<Setter Property="Padding" Value="14,10"/>-->
-        <Setter Property="Padding" Value="5"/>
-        <Setter Property="HorizontalOptions" Value="End" />
-        <!--<Setter Property="MinimumHeightRequest" Value="12"/>-->
-        <!--<Setter Property="MinimumWidthRequest" Value="10"/>-->
-        <!--<Setter Property="HeightRequest" Value="46" />-->
-        <Setter Property="HeightRequest" Value="66" />
-        <Setter Property="HorizontalOptions" Value="Fill" />
-        <!--<Setter Property="WidthRequest" Value="55" />-->
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="LineBreakMode" Value="WordWrap" />
-    </Style>
     <Style x:Key="NavigationButtonAdvancedSettings" TargetType="Button">
         <Setter Property="HorizontalOptions" Value="Start" />
         <Setter Property="HeightRequest" Value="-1" />

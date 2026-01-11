@@ -60,17 +60,37 @@
                     />
             </StackLayout>
             <StackLayout Orientation="Vertical" Margin="5">
-                <Grid ColumnDefinitions="*,*,auto" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.LevelingMode}">
+                <Grid ColumnDefinitions="*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.LevelingMode}">
                     <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
 
-                    <Button Text="Restart&#10;level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}" ImageSource="{StaticResource RestartIcon}" Grid.Column="2"/>
+                    <ImageButton
+                        Source="button_restart.png"
+                        Style="{StaticResource NavigationImageButton}"
+                        Command="{Binding NavigationMenuPopupCommand}"
+                        CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
+                        Grid.Column="2"/>
                 </Grid>
 
-                <Grid ColumnDefinitions="*,auto,auto,auto" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.SingleLevelMode}">
+                <Grid ColumnDefinitions="*,*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.SingleLevelMode}">
                     <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
-                    <Button Text="{Binding NewLevelButtonText}" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.NewLevel}" ImageSource="{StaticResource NewLevelIcon}" Grid.Column="1"/>
-                    <Button Text="Restart&#10;level" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.RestartLevel}" ImageSource="{StaticResource RestartIcon}" Grid.Column="2"/>
-                    <Button Text="Options" Style="{StaticResource NavigationButtonPrimary}" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}" ImageSource="{StaticResource SettingsIcon}" Grid.Column="3"/>
+                    <ImageButton
+                        Source="button_next_level.png"
+                        Style="{StaticResource NavigationImageButton}"
+                        Command="{Binding NavigationMenuPopupCommand}"
+                        CommandParameter="{x:Static enums:PopupParams.NewLevel}"
+                        Grid.Column="1"/>
+                    <ImageButton
+                        Source="button_restart.png"
+                        Style="{StaticResource NavigationImageButton}"
+                        Command="{Binding NavigationMenuPopupCommand}"
+                        CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
+                        Grid.Column="2"/>
+                    <ImageButton
+                        Source="button_options.png"
+                        Style="{StaticResource NavigationImageButton}"
+                        Command="{Binding NavigateToPageCommand}"
+                        CommandParameter="{x:Static enums:PopupParams.OptionsPage}"
+                        Grid.Column="3"/>
                 </Grid>
 
                 <BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>
@@ -272,9 +292,25 @@
 
                 <Grid>
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
-                        <Button Text="{Binding NextStepButtonText}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepThroughCommand}" IsVisible="{Binding AutoSolve.Solved}" ImageSource="{StaticResource NextStepIcon}"/>
-                        <Button Text="Add&#10;Empty&#10;Flask" Style="{StaticResource NavigationButtonBottom}" Command="{Binding AddExtraTubeCommand}" Grid.Column="1" ImageSource="{StaticResource AddFlaskIcon}"/>
-                        <Button Text="{Binding StepBackButtonText}" Style="{StaticResource NavigationButtonBottom}" Command="{Binding StepBackCommand}" Grid.Column="2" ImageSource="{StaticResource PreviousStepIcon}"/>
+                        <Button
+                            IsVisible="{Binding AutoSolve.Solved}"
+                            ImageSource="button_next.png"
+                            Style="{StaticResource NavigationButton}"
+                            Command="{Binding StepThroughCommand}"
+                            Text="{Binding NextStepButtonText}"
+                            Grid.Column="0"/>
+                        <Button
+                            ImageSource="button_plus_one.png"
+                            Style="{StaticResource NavigationButton}"
+                            Command="{Binding AddExtraTubeCommand}"
+                            Text=" "
+                            Grid.Column="1"/>
+                        <Button
+                            ImageSource="button_back.png"
+                            Style="{StaticResource NavigationButton}"
+                            Command="{Binding StepBackCommand}"
+                            Text="{Binding StepBackButtonText}"
+                            Grid.Column="2"/>
                     </Grid>
                 </Grid>
 
