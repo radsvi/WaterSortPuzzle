@@ -93,7 +93,7 @@
                         Grid.Column="3"/>
                 </Grid>
 
-                <BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>
+                <!--<BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>-->
             </StackLayout>
 
             <!--#endregion-->
@@ -288,7 +288,7 @@
             <!-- // Bottom Bar // -->
 
             <StackLayout Orientation="Vertical" Grid.Row="2" Margin="5">
-                <BoxView Style="{StaticResource Separator}" Margin="0,0,0,4"/>
+                <!--<BoxView Style="{StaticResource Separator}" Margin="0,0,0,4"/>-->
 
                 <Grid>
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
