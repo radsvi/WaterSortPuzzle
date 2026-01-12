@@ -311,10 +311,6 @@
                             Command="{Binding StepBackCommand}"
                             Text="{Binding StepBackButtonText}"
                             Grid.Column="2"/>
-                        <!--<Button
-                            Command="{Binding StepBackCommand}"
-                            Text="{Binding StepBackButtonText}"
-                            Grid.Column="2"/>-->
                     </Grid>
                 </Grid>
 

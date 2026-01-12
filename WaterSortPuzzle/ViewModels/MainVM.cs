@@ -37,8 +37,7 @@ namespace WaterSortPuzzle.ViewModels
                 || e.PropertyName == nameof(GameState.SavedGameStates)
                 || e.PropertyName == nameof(GameState.StepBackPressesCounter))
             {
-                //UpdateCanStepBack();
-                StepBackCommand.NotifyCanExecuteChanged();
+                RefreshStepBackState();
             }
             else if (e.PropertyName == nameof(AutoSolve.CurrentSolutionStep))
             {
@@ -57,10 +56,15 @@ namespace WaterSortPuzzle.ViewModels
         {
             if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove)
             {
-                this.StepBackCommand.NotifyCanExecuteChanged();
-                //OnPropertyChanged(nameof(GameState.StepBackDisplay));
-                OnPropertyChanged(nameof(StepBackButtonText));
+                RefreshStepBackState();
             }
+        }
+        private void RefreshStepBackState()
+        {
+            OnPropertyChanged(nameof(CanStepBack));
+            OnPropertyChanged(nameof(StepBackImage));
+            OnPropertyChanged(nameof(StepBackButtonText));
+            StepBackCommand.NotifyCanExecuteChanged();
         }
         #endregion
         #region Properties
@@ -293,83 +297,22 @@ namespace WaterSortPuzzle.ViewModels
             autoSolve?.SoftReset();
             await DrawTubesAsync(lastGameStatus.Source, lastGameStatus.Target);
         }
-        //        private bool CanStepBack
-        //        {
-        //            get
-        //            {
-        //                //return SavedGameStates.Count > 0 && autoSolve.LimitToOneStep is false;
-        //                //return SavedGameStates.Count > 0;
-        //#warning sjednotit ify
-        //                if (GameState.SavedGameStates.Count == 0)
-        //                {
-        //                    //OnPropertyChanged(nameof(StepBackImage));
-        //                    return false;
-        //                }
-
-        //                if (AppPreferences.UnlimitedStepBack == false && Constants.MaxStepBack <= GameState.StepBackPressesCounter)
-        //                {
-        //                    //OnPropertyChanged(nameof(StepBackImage));
-        //                    return false;
-        //                }
-
-        //                //OnPropertyChanged(nameof(StepBackImage));
-        //                return true;
-        //            }
-        //        }
-
-        //[ObservableProperty]
-        //[NotifyCanExecuteChangedFor(nameof(StepBackCommand))]
-        //private bool canStepBack;
-        //public bool CanStepBack
-        //{
-        //    get
-        //    {
-        //        if (GameState.SavedGameStates.Count == 0)
-        //            return false;
-
-        //        if (!AppPreferences.UnlimitedStepBack &&
-        //            Constants.MaxStepBack <= GameState.StepBackPressesCounter)
-        //            return false;
-
-        //        return true;
-        //    }
-        //}
-
-
         private bool CanStepBack
         {
             get
             {
                 if (GameState.SavedGameStates.Count == 0
                     || (AppPreferences.UnlimitedStepBack == false && Constants.MaxStepBack <= GameState.StepBackPressesCounter))
-                {
-                    //OnPropertyChanged(nameof(StepBackImage));
-                    StepBackImage = "button_gray_back.png";
                     return false;
-                }
 
-                StepBackImage = "button_back.png";
-                //OnPropertyChanged(nameof(StepBackImage));
                 return true;
             }
         }
 
         //public string StepBackImage =>
         //    CanStepBack ? "button_back.png" : "button_gray_back.png";
-        private string stepBackImage = "button_gray_back.png";
-        public string StepBackImage
-        {
-            get
-            {
-                return stepBackImage;
-            }
-            set
-            {
-                //return CanStepBack ? "button_back.png" : "button_gray_back.png";
-                stepBackImage = value;
-                OnPropertyChanged();
-            }
-        }
+        public string StepBackImage =>
+            CanStepBack ? "button_back.png" : "button_gray_back.png";
 
         //private void UpdateCanStepBack()
         //{
@@ -713,7 +656,7 @@ namespace WaterSortPuzzle.ViewModels
             GameState.SaveGameState(-1, -1);
             RecalculateTubesPerLine();
             AddExtraTubeCommand.NotifyCanExecuteChanged();
-            StepBackCommand.NotifyCanExecuteChanged();
+            RefreshStepBackState();
             OnPropertyChanged(nameof(StepBackButtonText));
             var task = DrawTubesAsync();
         }
@@ -730,7 +673,7 @@ namespace WaterSortPuzzle.ViewModels
             AutoSolveUsed = false;
             RecalculateTubesPerLine();
             AddExtraTubeCommand.NotifyCanExecuteChanged();
-            StepBackCommand.NotifyCanExecuteChanged();
+            RefreshStepBackState();
             OnPropertyChanged(nameof(StepBackButtonText));
             var task = DrawTubesAsync();
         }
