@@ -416,9 +416,14 @@ namespace WaterSortPuzzle.Models
                     SavedGameStates.Add(LastGameState);
                 }
 
-                LastGameState = new SavedGameState(BoardState.Clone().Grid, source, target, ColorsCounter, BoardState.ExtraTubesCounter);
+                //LastGameState = new SavedGameState(BoardState.Clone(), source, target);
+                LastGameState = BoardState.Clone(, source, target);
                 return;
             }
+        }
+        public void RestoreGameState(int source, int target)
+        {
+            ...//pouzit pro obnoveni ze LastGameState
         }
         private bool DidGameStateChange()
         {
