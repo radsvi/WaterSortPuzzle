@@ -9,26 +9,8 @@ namespace WaterSortPuzzle.Models
     public partial class BoardState : ObservableObject
     {
         private readonly AppPreferences appPreferences;
-        public string ReadableState
-        {
-            get
-            {
-                return BoardStateToString(Grid, StringFormat.Numbers);
-            }
-        }
-
+        public string ReadableState => BoardStateToString(Grid, StringFormat.Numbers);
         public LiquidColor[,] Grid { get; set; }
-        public LiquidColor this[int tubes, int layers]
-        {
-            get => Grid[tubes, layers];
-            set
-            {
-                Grid[tubes, layers] = value;
-                //OnLiquidMoving();
-            }
-        }
-
-
         private int extraTubesCounter;
         public int ExtraTubesCounter
         {
@@ -50,6 +32,23 @@ namespace WaterSortPuzzle.Models
         public BoardState(AppPreferences appPreferences)
         {
             this.appPreferences = appPreferences;
+        }
+        private BoardState(BoardState source)
+        {
+            appPreferences = source.appPreferences;
+            ExtraTubesCounter = source.ExtraTubesCounter;
+            Grid = CloneGrid(source.Grid);
+        }
+
+
+        public LiquidColor this[int tubes, int layers]
+        {
+            get => Grid[tubes, layers];
+            set
+            {
+                Grid[tubes, layers] = value;
+                //OnLiquidMoving();
+            }
         }
 
 
@@ -97,14 +96,14 @@ namespace WaterSortPuzzle.Models
         {
             return Grid.GetLength(dimension);
         }
-        public void AddTube(int tubeNumber, int[] layers)
+        public void AddStartingTube(int tubeNumber, int[] layers)
         {
             for (int i = 0; i < layers.Length; i++)
             {
                 Grid[tubeNumber, i] = new LiquidColor(layers[i]);
             }
         }
-        public void AddTube(int tubeNumber, LiquidColorName[] liquids)
+        public void AddStartingTube(int tubeNumber, LiquidColorName[] liquids)
         {
             for (int i = 0; i < liquids.Length; i++)
             {
@@ -116,7 +115,7 @@ namespace WaterSortPuzzle.Models
         /// </summary>
         public void AddExtraTube()
         {
-            IncrementCounter();
+            IncrementExtraTubesCounter();
             Grid = CloneGrid(Grid, Grid.GetLength(0) + 1);
         }
         private static LiquidColor[,] CloneGrid(LiquidColor[,] grid)
@@ -140,15 +139,15 @@ namespace WaterSortPuzzle.Models
         }
         public BoardState Clone()
         {
-            var board = new BoardState();
+            return new BoardState(this);
         }
         public int GetTubeCount() => Grid.GetLength(0);
 
-        public void IncrementCounter()
+        public void IncrementExtraTubesCounter()
         {
             ExtraTubesCounter++;
         }
-        public void ResetCounter()
+        public void ResetExtraTubesCounter()
         {
             ExtraTubesCounter = 0;
         }

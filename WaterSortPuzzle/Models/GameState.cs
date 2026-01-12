@@ -113,7 +113,7 @@ namespace WaterSortPuzzle.Models
 
         public void GenerateNewLevel()
         {
-            BoardState.ResetCounter();
+            BoardState.ResetExtraTubesCounter();
             if (appPreferences.SingleLevelMode == false)
             {
                 GenerateStandardLevel(leveling.NumberOfColorsToGenerate);
@@ -147,12 +147,12 @@ namespace WaterSortPuzzle.Models
             BoardState.Grid = new LiquidColor[20, Constants.Layers];
 
             // Almost solved:
-            BoardState.AddTube(i++, new int[] { });
-            BoardState.AddTube(i++, new int[] { 1, 1, 1, 3 });
-            BoardState.AddTube(i++, new int[] { 2, 3, 1 });
-            BoardState.AddTube(i++, new int[] { 2, 2, 2 });
-            BoardState.AddTube(i++, new int[] { 3, 3 });
-            BoardState.AddTube(i++, new int[] { 4, 4, 4, 4 });
+            BoardState.AddStartingTube(i++, new int[] { });
+            BoardState.AddStartingTube(i++, new int[] { 1, 1, 1, 3 });
+            BoardState.AddStartingTube(i++, new int[] { 2, 3, 1 });
+            BoardState.AddStartingTube(i++, new int[] { 2, 2, 2 });
+            BoardState.AddStartingTube(i++, new int[] { 3, 3 });
+            BoardState.AddStartingTube(i++, new int[] { 4, 4, 4, 4 });
 
 
 
@@ -355,7 +355,7 @@ namespace WaterSortPuzzle.Models
         }
         public void RestartLevel()
         {
-            BoardState.ResetCounter();
+            BoardState.ResetExtraTubesCounter();
             BoardState.Grid = BoardState.CloneGrid(StartingPosition);
         }
         private void GenerateStandardLevel(int numberOfColorsToGenerate)
