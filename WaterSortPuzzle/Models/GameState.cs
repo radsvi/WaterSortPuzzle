@@ -324,7 +324,7 @@ namespace WaterSortPuzzle.Models
             CheckCorrectColorNumber(BoardState.Grid);
 
             //gameGrid = CloneGrid(gameGrid, i + 2);
-            BoardState.Grid = BoardState.CloneGrid(BoardState.Grid, i + 2);
+            BoardState.IncrementTubeNumberBy(2);
         }
         private void CheckCorrectColorNumber(LiquidColor[,] gameGrid)
         {
@@ -349,14 +349,15 @@ namespace WaterSortPuzzle.Models
         //    return CountColors() + appPreferences.MaximumExtraTubes + 2 - gameGrid.GetLength(0) > 0;
         //}
 
-        public void SetGameState(LiquidColor[,] newGameState)
-        {
-            BoardState.Grid = BoardState.CloneGrid(newGameState);
-        }
+        //public void SetGameState(LiquidColor[,] newGameState) //smazat. presunul jsem to BoardState
+        //{
+        //    BoardState.Grid = BoardState.CloneGrid(newGameState);
+            
+        //}
         public void RestartLevel()
         {
             BoardState.ResetExtraTubesCounter();
-            BoardState.Grid = BoardState.CloneGrid(StartingPosition);
+            BoardState.SetBoardState(StartingPosition);
         }
         private void GenerateStandardLevel(int numberOfColorsToGenerate)
         {
@@ -415,7 +416,7 @@ namespace WaterSortPuzzle.Models
                     SavedGameStates.Add(LastGameState);
                 }
 
-                LastGameState = new SavedGameState(BoardState.CloneGrid(BoardState.Grid), source, target, ColorsCounter, BoardState.ExtraTubesCounter);
+                LastGameState = new SavedGameState(BoardState.Clone().Grid, source, target, ColorsCounter, BoardState.ExtraTubesCounter);
                 return;
             }
         }
@@ -549,6 +550,7 @@ namespace WaterSortPuzzle.Models
         private void LoadLastLevel()
         {
             StartingPosition = BoardState.CloneGrid(appPreferences.LastLevelBeforeClosing.GameGrid);
+
             //gameGrid = CloneGrid(StartingPosition);
             //ColorCount = CountColors(StartingPosition);
             LoadGameState();

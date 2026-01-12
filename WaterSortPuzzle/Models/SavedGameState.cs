@@ -8,11 +8,11 @@ namespace WaterSortPuzzle.Models
 {
     public class SavedGameState
     {
-        public SavedGameState(LiquidColor[,] gameGrid, int source, int target, int colorsCounter, int extraTubeCounter)
+        public SavedGameState(LiquidColor[,] gameGrid, int sourceTube, int targetTube, int colorsCounter, int extraTubeCounter)
         {
             GameGrid = gameGrid;
-            Source = source;
-            Target = target;
+            Source = sourceTube;
+            Target = targetTube;
             ColorsCounter = colorsCounter;
             ExtraTubeCounter = extraTubeCounter;
         }

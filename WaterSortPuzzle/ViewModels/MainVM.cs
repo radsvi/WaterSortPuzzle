@@ -31,7 +31,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             if (e.PropertyName == nameof(AppPreferences.MaximumExtraTubes) || e.PropertyName == nameof(GameState.ColorsCounter))
             {
-                RefreshAddExtraTubekState();
+                RefreshAddExtraTubeState();
             }
             else if (e.PropertyName == nameof(AppPreferences.UnlimitedStepBack)
                 || e.PropertyName == nameof(GameState.SavedGameStates)
@@ -66,7 +66,7 @@ namespace WaterSortPuzzle.ViewModels
             OnPropertyChanged(nameof(StepBackButtonText));
             StepBackCommand.NotifyCanExecuteChanged();
         }
-        private void RefreshAddExtraTubekState()
+        private void RefreshAddExtraTubeState()
         {
             OnPropertyChanged(nameof(CanAddExtraTube));
             OnPropertyChanged(nameof(AddExtraTubeImage));
@@ -254,7 +254,7 @@ namespace WaterSortPuzzle.ViewModels
             //SolvingStepsOLD.Add(upcomingStep);
 
             //previousGameState = node.Data.GameState; // tohle je gamestate kterej uchovavam jen uvnitr autosolvu
-            GameState.SetGameState(move.GameState);
+            GameState.BoardState.SetBoardState(move.GameState);
             var currentTubeReference = new TubeReference(
                 move.Target.X,
                 move.GameState[move.Target.X, move.Target.Y],
@@ -458,13 +458,13 @@ namespace WaterSortPuzzle.ViewModels
                 return;
 
             GameState.BoardState.AddExtraTube();
-            RefreshAddExtraTubekState();
+            RefreshAddExtraTubeState();
             RecalculateTubesPerLine();
-            var task = DrawTubesAsync(GameState.BoardState.Grid.GetLength(0));
+            _ = DrawTubesAsync(GameState.BoardState.Grid.GetLength(0));
         }
         public bool CanAddExtraTube()
         {
-            return GameState.BoardState.ExtraTubesCounter <= AppPreferences.MaximumExtraTubes;
+            return GameState.BoardState.CanAddExtraTube();
         }
         public string AddExtraTubeImage =>
             CanAddExtraTube() ? "button_plus_one.png" : "button_gray_plus_one.png";
@@ -667,7 +667,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             GameState.SaveGameState(-1, -1);
             RecalculateTubesPerLine();
-            RefreshAddExtraTubekState();
+            RefreshAddExtraTubeState();
             RefreshStepBackState();
             OnPropertyChanged(nameof(StepBackButtonText));
             var task = DrawTubesAsync();
@@ -684,7 +684,7 @@ namespace WaterSortPuzzle.ViewModels
             AutoSolve?.Reset();
             AutoSolveUsed = false;
             RecalculateTubesPerLine();
-            RefreshAddExtraTubekState();
+            RefreshAddExtraTubeState();
             RefreshStepBackState();
             OnPropertyChanged(nameof(StepBackButtonText));
             var task = DrawTubesAsync();

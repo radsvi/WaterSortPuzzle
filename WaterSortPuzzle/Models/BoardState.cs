@@ -11,13 +11,13 @@ namespace WaterSortPuzzle.Models
         private readonly AppPreferences appPreferences;
         public string ReadableState => BoardStateToString(Grid, StringFormat.Numbers);
         public LiquidColor[,] Grid { get; set; }
-        private int extraTubesCounter;
+        private int extraTubesCounter = 0;
         public int ExtraTubesCounter
         {
             get { return extraTubesCounter; }
             private set
             {
-                if (value != extraTubesCounter && value <= appPreferences.MaximumExtraTubes)
+                if (value != extraTubesCounter)
                 {
                     extraTubesCounter = value;
                     OnPropertyChanged();
@@ -33,11 +33,12 @@ namespace WaterSortPuzzle.Models
         {
             this.appPreferences = appPreferences;
         }
-        private BoardState(BoardState source)
+
+        private BoardState(BoardState source, int incrementBy = 0)
         {
             appPreferences = source.appPreferences;
             ExtraTubesCounter = source.ExtraTubesCounter;
-            Grid = CloneGrid(source.Grid);
+            Grid = CloneGrid(source.Grid, incrementBy);
         }
 
 
@@ -110,21 +111,13 @@ namespace WaterSortPuzzle.Models
                 Grid[tubeNumber, i] = new LiquidColor((int)liquids[i]);
             }
         }
-        /// <summary>
-        /// Adding extra (empty) tube during gameplay
-        /// </summary>
-        public void AddExtraTube()
+        //private static LiquidColor[,] CloneGrid(LiquidColor[,] grid)
+        //{
+        //    return CloneGrid(grid, grid.GetLength(0));
+        //}
+        [Obsolete] public static LiquidColor[,] CloneGrid(LiquidColor[,] grid, int incrementBy = 0) // Nemazat uplne. Jen prestat pouzivat mimo tuhle classu a pak predelat na private
         {
-            IncrementExtraTubesCounter();
-            Grid = CloneGrid(Grid, Grid.GetLength(0) + 1);
-        }
-        private static LiquidColor[,] CloneGrid(LiquidColor[,] grid)
-        {
-            return CloneGrid(grid, grid.GetLength(0));
-        }
-        private static LiquidColor[,] CloneGrid(LiquidColor[,] grid, int newNumberOfTubes)
-        {
-            LiquidColor[,] gridClone = new LiquidColor[newNumberOfTubes, grid.GetLength(1)];
+            LiquidColor[,] gridClone = new LiquidColor[grid.GetLength(0) + incrementBy, grid.GetLength(1)];
             for (int x = 0; x < grid.GetLength(0); x++)
             {
                 for (int y = 0; y < grid.GetLength(1); y++)
@@ -141,15 +134,52 @@ namespace WaterSortPuzzle.Models
         {
             return new BoardState(this);
         }
+        //public BoardState IncrementTubeNumberBy(int incrementBy)
+        //{
+        //    return new BoardState(this, incrementBy);
+        //}
+        public void IncrementTubeNumberBy(int incrementBy)
+        {
+            IncrementExtraTubesCounter();
+            Grid = CloneGrid(Grid, incrementBy);
+        }
+        /// <summary>
+        /// Adding extra (empty) tube during gameplay
+        /// </summary>
+        public void AddExtraTube()
+        {
+            if (!CanAddExtraTube())
+                return;
+
+            IncrementExtraTubesCounter();
+            Grid = CloneGrid(Grid, ExtraTubesCounter);
+        }
+        public bool CanAddExtraTube()
+        {
+            return ExtraTubesCounter < appPreferences.MaximumExtraTubes;
+        }
         public int GetTubeCount() => Grid.GetLength(0);
 
-        public void IncrementExtraTubesCounter()
+        private void IncrementExtraTubesCounter(int incrementBy = 1)
         {
-            ExtraTubesCounter++;
+            ExtraTubesCounter += incrementBy;
         }
         public void ResetExtraTubesCounter()
         {
             ExtraTubesCounter = 0;
+        }
+        public void SetBoardState(BoardState boardState)
+        {
+            Grid = boardState.Grid;
+            ExtraTubesCounter = boardState.ExtraTubesCounter;
+        }
+        /// <summary>
+        /// Simplified SetBoardState that doesnt change number of extra tubes
+        /// </summary>
+        /// <param name="grid"></param>
+        public void SetBoardState(LiquidColor[,] grid)
+        {
+            Grid = grid;
         }
     }
 }

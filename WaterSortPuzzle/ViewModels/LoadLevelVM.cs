@@ -405,10 +405,10 @@
                 return;
             }
 
-            var importedGameState = DecodeImportedString(ImportGameStateString);
-            if (importedGameState is null) return;
+            LiquidColor[,]? importedBoardState = DecodeImportedString(ImportGameStateString);
+            if (importedBoardState is null) return;
 
-            GameState.SetGameState(importedGameState);
+            GameState.BoardState.SetBoardState(importedBoardState);
             MainVM.OnStartingLevel();
             ImportGameStateString = string.Empty;
         }
