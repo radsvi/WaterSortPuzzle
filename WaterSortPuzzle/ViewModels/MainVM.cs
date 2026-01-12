@@ -464,7 +464,7 @@ namespace WaterSortPuzzle.ViewModels
         }
         public bool CanAddExtraTube()
         {
-            return GameState.ColorCount + AppPreferences.MaximumExtraTubes + 2 - GameState.TubeCount > 0;
+            return GameState.ExtraTubes.Counter <= AppPreferences.MaximumExtraTubes;
         }
         public string AddExtraTubeImage =>
             CanAddExtraTube() ? "button_plus_one.png" : "button_gray_plus_one.png";
@@ -725,7 +725,7 @@ namespace WaterSortPuzzle.ViewModels
             {
                 if (SourceTube!.TopMostLiquid.Name != GameState[currentTubeReference.TubeId, firstEmptyLayer - 1].Name)
                 {
-                    return false; // Pokud ma zkumavka v sobe uz nejaky barvy a nejvrchnejsi barva neshoulasi se SourceLiquid tak vratit false
+                    return false; // Pokud ma zkumavka v sobe uz nejaky barvy a nejvrchnejsi barva nesouhlasi se SourceLiquid tak vratit false
                 }
             }
 

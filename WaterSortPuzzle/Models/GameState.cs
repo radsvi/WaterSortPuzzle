@@ -9,13 +9,14 @@ namespace WaterSortPuzzle.Models
         readonly AppPreferences appPreferences;
         readonly Notification notification;
         readonly Leveling leveling;
+        public ExtraTubes ExtraTubes { get; }
         public GameState() { }
-        public GameState(AppPreferences appPreferences, Notification notification, Leveling leveling)
+        public GameState(AppPreferences appPreferences, Notification notification, Leveling leveling, ExtraTubes extraTubes)
         {
             this.appPreferences = appPreferences;
             this.notification = notification;
             this.leveling = leveling;
-            
+            this.ExtraTubes = extraTubes;
             if (appPreferences.LastLevelBeforeClosing is not null && appPreferences.LastLevelBeforeClosing.GameGrid.Length > 0)
             {
                 LoadLastLevel();
@@ -88,6 +89,7 @@ namespace WaterSortPuzzle.Models
                 }
             }
         }
+        
         public LiquidColor[,] gameGrid;
         public LiquidColor this[int tubes, int layers]
         {
@@ -129,12 +131,14 @@ namespace WaterSortPuzzle.Models
         //{
         //    MainPage.DrawTubes();
         //}
+
         public int GetLength(int dimension)
         {
             return gameGrid.GetLength(dimension);
         }
         public void GenerateNewLevel()
         {
+            ExtraTubes.ResetCounter();
             if (appPreferences.SingleLevelMode == false)
             {
                 GenerateStandardLevel(leveling.NumberOfColorsToGenerate);
@@ -422,6 +426,7 @@ namespace WaterSortPuzzle.Models
         }
         public void RestartLevel()
         {
+            ExtraTubes.ResetCounter();
             gameGrid = CloneGrid(StartingPosition);
         }
         private void GenerateStandardLevel(int numberOfColorsToGenerate)

@@ -18,6 +18,7 @@ namespace WaterSortPuzzle.Models
         public LiquidColor[,] GameGrid { get; private set; }
         public int Source { get; private set; }
         public int Target { get; private set; }
+        public int ExtraTubeCounter { get; private set; }
         public static SavedGameState Clone(SavedGameState original)
         {
             return new SavedGameState(GameState.CloneGridStatic(original.GameGrid), original.Source, original.Target);
