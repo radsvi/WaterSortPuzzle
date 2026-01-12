@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.Models
 {
-    public class BoardState
+    public partial class BoardState : ObservableObject
     {
+        private readonly AppPreferences appPreferences;
         public string ReadableState
         {
             get
@@ -26,15 +27,29 @@ namespace WaterSortPuzzle.Models
                 //OnLiquidMoving();
             }
         }
-        public EmptyTubes EmptyTubes { get; }
 
 
-
-
-
-        public BoardState(EmptyTubes emptyTubes)
+        private int extraTubesCounter;
+        public int ExtraTubesCounter
         {
-            EmptyTubes = emptyTubes;
+            get { return extraTubesCounter; }
+            private set
+            {
+                if (value != extraTubesCounter && value <= appPreferences.MaximumExtraTubes)
+                {
+                    extraTubesCounter = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        
+
+
+
+
+        public BoardState(AppPreferences appPreferences)
+        {
+            this.appPreferences = appPreferences;
         }
 
 
@@ -101,14 +116,14 @@ namespace WaterSortPuzzle.Models
         /// </summary>
         public void AddExtraTube()
         {
-            EmptyTubes.IncrementCounter();
+            IncrementCounter();
             Grid = CloneGrid(Grid, Grid.GetLength(0) + 1);
         }
-        public static LiquidColor[,] CloneGrid(LiquidColor[,] grid)
+        private static LiquidColor[,] CloneGrid(LiquidColor[,] grid)
         {
             return CloneGrid(grid, grid.GetLength(0));
         }
-        public static LiquidColor[,] CloneGrid(LiquidColor[,] grid, int newNumberOfTubes)
+        private static LiquidColor[,] CloneGrid(LiquidColor[,] grid, int newNumberOfTubes)
         {
             LiquidColor[,] gridClone = new LiquidColor[newNumberOfTubes, grid.GetLength(1)];
             for (int x = 0; x < grid.GetLength(0); x++)
@@ -123,7 +138,19 @@ namespace WaterSortPuzzle.Models
             }
             return gridClone;
         }
+        public BoardState Clone()
+        {
+            var board = new BoardState();
+        }
         public int GetTubeCount() => Grid.GetLength(0);
 
+        public void IncrementCounter()
+        {
+            ExtraTubesCounter++;
+        }
+        public void ResetCounter()
+        {
+            ExtraTubesCounter = 0;
+        }
     }
 }

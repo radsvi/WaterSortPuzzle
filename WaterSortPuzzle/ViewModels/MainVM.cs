@@ -464,7 +464,7 @@ namespace WaterSortPuzzle.ViewModels
         }
         public bool CanAddExtraTube()
         {
-            return GameState.EmptyTubes.Counter <= AppPreferences.MaximumExtraTubes;
+            return GameState.BoardState.ExtraTubesCounter <= AppPreferences.MaximumExtraTubes;
         }
         public string AddExtraTubeImage =>
             CanAddExtraTube() ? "button_plus_one.png" : "button_gray_plus_one.png";

@@ -9,16 +9,14 @@ namespace WaterSortPuzzle.Models
         readonly AppPreferences appPreferences;
         readonly Notification notification;
         readonly Leveling leveling;
-        public EmptyTubes EmptyTubes { get; }
         public BoardState BoardState { get; }
 
         public GameState() { }
-        public GameState(AppPreferences appPreferences, Notification notification, Leveling leveling, EmptyTubes emptyTubes, BoardState boardState)
+        public GameState(AppPreferences appPreferences, Notification notification, Leveling leveling, BoardState boardState)
         {
             this.appPreferences = appPreferences;
             this.notification = notification;
             this.leveling = leveling;
-            this.EmptyTubes = emptyTubes;
             BoardState = boardState;
             if (appPreferences.LastLevelBeforeClosing is not null && appPreferences.LastLevelBeforeClosing.GameGrid.Length > 0)
             {
@@ -115,7 +113,7 @@ namespace WaterSortPuzzle.Models
 
         public void GenerateNewLevel()
         {
-            EmptyTubes.ResetCounter();
+            BoardState.ResetCounter();
             if (appPreferences.SingleLevelMode == false)
             {
                 GenerateStandardLevel(leveling.NumberOfColorsToGenerate);
@@ -357,7 +355,7 @@ namespace WaterSortPuzzle.Models
         }
         public void RestartLevel()
         {
-            EmptyTubes.ResetCounter();
+            BoardState.ResetCounter();
             BoardState.Grid = BoardState.CloneGrid(StartingPosition);
         }
         private void GenerateStandardLevel(int numberOfColorsToGenerate)
@@ -417,7 +415,7 @@ namespace WaterSortPuzzle.Models
                     SavedGameStates.Add(LastGameState);
                 }
 
-                LastGameState = new SavedGameState(BoardState.CloneGrid(BoardState.Grid), source, target, ColorsCounter, EmptyTubes.Counter);
+                LastGameState = new SavedGameState(BoardState.CloneGrid(BoardState.Grid), source, target, ColorsCounter, BoardState.ExtraTubesCounter);
                 return;
             }
         }

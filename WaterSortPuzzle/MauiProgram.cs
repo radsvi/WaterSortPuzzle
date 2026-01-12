@@ -81,7 +81,6 @@ namespace WaterSortPuzzle
             builder.Services.AddSingleton<AutoSolve>();
             builder.Services.AddSingleton<Leveling>();
             builder.Services.AddSingleton<ILevelPreferences, LevelPreferences>();
-            builder.Services.AddSingleton<EmptyTubes>();
             builder.Services.AddSingleton<BoardState>();
 
             builder.Services.AddTransient<IConfirmationPopupService, ConfirmationPopupService>();
