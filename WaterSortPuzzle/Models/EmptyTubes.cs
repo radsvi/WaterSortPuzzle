@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.Models
 {
-    public partial class ExtraTubes : ObservableObject
+    public partial class EmptyTubes : ObservableObject
     {
-        public ExtraTubes(AppPreferences appPreferences)
+        public EmptyTubes(AppPreferences appPreferences)
         {
             this.appPreferences = appPreferences;
         }
-        private int counter;
         private readonly AppPreferences appPreferences;
 
+        private int counter;
         public int Counter
         {
             get { return counter; }

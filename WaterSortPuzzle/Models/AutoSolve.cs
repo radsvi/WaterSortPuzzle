@@ -264,7 +264,7 @@
                 return new NullTreeNode(parentNode);
             }
 
-            var newGameState = GameState.CloneGrid(parentNode.Data.GameState);
+            var newGameState = BoardState.CloneGrid(parentNode.Data.GameState);
             var validMove = new ValidMove(dualColorTube, singleColorTube, newGameState, MoveType.NeverWrong);
 
             return GeneratePriorityFutureState(parentNode, validMove, hashedSteps);
@@ -837,7 +837,7 @@
             {
                 Started = true;
                 InProgress = true;
-                StartSolution(gameState.gameGrid);
+                StartSolution(gameState.BoardState.Grid);
                 return;
             }
         }
@@ -916,7 +916,7 @@
         {
             string exportString = DateTime.Now.ToString("[MM/dd/yyyy HH:mm:ss]");
 
-            exportString += GameState.GameStateToString(treeNode.Data.GameState, StringFormat.Numbers, true);
+            exportString += BoardState.BoardStateToString(treeNode.Data.GameState, StringFormat.Numbers, true);
             exportString += "{" + note + "}" + "\n";
             //System.IO.File.AppendAllText(exportLogFilename, exportString); // ## convertovat do MAUI
         }

@@ -171,7 +171,7 @@ namespace WaterSortPuzzle.ViewModels
                 //else
                 //    return 2;
 
-                if (GameState.TubeCount <= 14)
+                if (GameState.BoardState.GetTubeCount() <= 14)
                     return 0;
                 else
                     return 1;
@@ -293,7 +293,7 @@ namespace WaterSortPuzzle.ViewModels
             SavedGameState lastGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 1];
 
             PropertyChangedEventPaused = true;
-            GameState.gameGrid = lastGameStatus.GameGrid;
+            GameState.BoardState.Grid = lastGameStatus.GameGrid;
             PropertyChangedEventPaused = false;
 
             GameState.LastGameState = SavedGameState.Clone(lastGameStatus);
@@ -457,14 +457,14 @@ namespace WaterSortPuzzle.ViewModels
             if (!CanAddExtraTube())
                 return;
 
-            GameState.AddExtraTube();
+            GameState.BoardState.AddExtraTube();
             RefreshAddExtraTubekState();
             RecalculateTubesPerLine();
-            var task = DrawTubesAsync(GameState.gameGrid.GetLength(0));
+            var task = DrawTubesAsync(GameState.BoardState.Grid.GetLength(0));
         }
         public bool CanAddExtraTube()
         {
-            return GameState.ExtraTubes.Counter <= AppPreferences.MaximumExtraTubes;
+            return GameState.EmptyTubes.Counter <= AppPreferences.MaximumExtraTubes;
         }
         public string AddExtraTubeImage =>
             CanAddExtraTube() ? "button_plus_one.png" : "button_gray_plus_one.png";
@@ -693,11 +693,11 @@ namespace WaterSortPuzzle.ViewModels
         {
             for (int i = Constants.Layers - 1; i >= 0; i--)
             {
-                if (GameState[sourceTube.TubeId, i] is not null)
+                if (GameState.BoardState[sourceTube.TubeId, i] is not null)
                 {
                     if (LastClickedTube != sourceTube)
                         LastClickedTube = sourceTube;
-                    sourceTube.TopMostLiquid = GameState[sourceTube.TubeId, i];
+                    sourceTube.TopMostLiquid = GameState.BoardState[sourceTube.TubeId, i];
                     MoveTubeVertically(sourceTube, VerticalAnimation.Raise);
                     //MoveAndTiltTube(sourceTube);
                     return;
@@ -710,7 +710,7 @@ namespace WaterSortPuzzle.ViewModels
             int firstEmptyLayer = -1;
             for (int y = 0; y < Constants.Layers; y++)
             {
-                if (GameState[currentTubeReference.TubeId, y] == null)
+                if (GameState.BoardState[currentTubeReference.TubeId, y] == null)
                 {
                     firstEmptyLayer = y;
                     break;
@@ -723,14 +723,14 @@ namespace WaterSortPuzzle.ViewModels
 
             if (firstEmptyLayer > 0)
             {
-                if (SourceTube!.TopMostLiquid.Name != GameState[currentTubeReference.TubeId, firstEmptyLayer - 1].Name)
+                if (SourceTube!.TopMostLiquid.Name != GameState.BoardState[currentTubeReference.TubeId, firstEmptyLayer - 1].Name)
                 {
                     return false; // Pokud ma zkumavka v sobe uz nejaky barvy a nejvrchnejsi barva nesouhlasi se SourceLiquid tak vratit false
                 }
             }
 
             currentTubeReference.LastColorMoved = SourceTube!.TopMostLiquid.Clone(); // saving this to use in CreateImageBackground(). Musim dat Clone protoze jinak se to deselectne
-            GameState[currentTubeReference.TubeId, firstEmptyLayer] = SourceTube.TopMostLiquid;
+            GameState.BoardState[currentTubeReference.TubeId, firstEmptyLayer] = SourceTube.TopMostLiquid;
             currentTubeReference.TargetEmptyRow = firstEmptyLayer;
             return true;
         }
@@ -738,9 +738,9 @@ namespace WaterSortPuzzle.ViewModels
         {
             for (int y = Constants.Layers - 1; y >= 0; y--)
             {
-                if (GameState[SourceTube!.TubeId, y] is not null)
+                if (GameState.BoardState[SourceTube!.TubeId, y] is not null)
                 {
-                    GameState[SourceTube.TubeId, y] = null;
+                    GameState.BoardState[SourceTube.TubeId, y] = null;
                     SourceTube.TopMostLiquid = null;
                     return;
                 }
@@ -790,19 +790,19 @@ namespace WaterSortPuzzle.ViewModels
                 //});
                 TubeData.ResetCounter();
                 var newTubeItems = new ObservableCollection<TubeData>();
-                for (int x = 0; x < GameState.GetLength(0); x++)
+                for (int x = 0; x < GameState.BoardState.GetLength(0); x++)
                 {
                     //TubesItemsSource.Add(new TubeData(GameState[x, 0], GameState[x, 1], GameState[x, 2], GameState[x, 3]));
-                    newTubeItems.Add(new TubeData(GameState.gameGrid, x));
+                    newTubeItems.Add(new TubeData(GameState.BoardState.Grid, x));
                 }
                 TubesItemsSource = newTubeItems;
                 OnPropertyChanged(nameof(TubesItemsSource));
             }
             else
             {
-                TubesItemsSource[source].CopyValuesFrom(GameState.gameGrid, source);
+                TubesItemsSource[source].CopyValuesFrom(GameState.BoardState.Grid, source);
                 if (target != -1)
-                    TubesItemsSource[target].CopyValuesFrom(GameState.gameGrid, target);
+                    TubesItemsSource[target].CopyValuesFrom(GameState.BoardState.Grid, target);
             }
         }
         public async Task DrawTubesAsync(int source = -1, int target = -1)
@@ -811,13 +811,13 @@ namespace WaterSortPuzzle.ViewModels
         }
         private void RecalculateTubesPerLine()
         {
-            if (GameState.TubeCount > Constants.MaxTubesPerLine * 2)
+            if (GameState.BoardState.GetTubeCount() > Constants.MaxTubesPerLine * 2)
             {
-                TubesPerLine = (int)Math.Ceiling((decimal)GameState.TubeCount / 3);
+                TubesPerLine = (int)Math.Ceiling((decimal)GameState.BoardState.GetTubeCount() / 3);
             }
             else
             {
-                TubesPerLine = (int)Math.Ceiling((decimal)GameState.TubeCount / 2);
+                TubesPerLine = (int)Math.Ceiling((decimal)GameState.BoardState.GetTubeCount() / 2);
             }
         }
         ///// <summary>

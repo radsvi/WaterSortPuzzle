@@ -4,7 +4,7 @@
     {
         public ValidMove(PositionPointer source, PositionPointer target, LiquidColor[,] gameState, bool isTargetSingleColor = false, MoveType moveType = MoveType.Standard)
         {
-            GameState = Models.GameState.CloneGrid(gameState);
+            GameState = BoardState.CloneGrid(gameState);
             Target = target;
             Source = source; // mam to v tomhle poradi kvuli eventum
             Liquid = gameState[source.X, source.Y];
@@ -169,7 +169,7 @@
         }
         private static string GameStateToString(LiquidColor[,] gameState, StringFormat format = StringFormat.Names)
         {
-            return Models.GameState.GameStateToString(gameState, format);
+            return BoardState.BoardStateToString(gameState, format);
         }
     }
     internal class NullValidMove : ValidMove

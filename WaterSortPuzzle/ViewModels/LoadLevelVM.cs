@@ -419,7 +419,7 @@
 
             var importStringTrimmed = importString.Trim(new char[] { '[', ']', '"' });
             var splitToTubes = importStringTrimmed.Split("][");
-            LiquidColor[,] importedGameState = new LiquidColor[splitToTubes.Count(), GameState.gameGrid.GetLength(1)];
+            LiquidColor[,] importedGameState = new LiquidColor[splitToTubes.Count(), GameState.BoardState.Grid.GetLength(1)];
 
             for (int x = 0; x < splitToTubes.Length; x++)
             {

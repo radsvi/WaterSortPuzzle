@@ -24,7 +24,7 @@ namespace WaterSortPuzzle.Models
         public int ExtraTubeCounter { get; private set; }
         public static SavedGameState Clone(SavedGameState original)
         {
-            return new SavedGameState(GameState.CloneGrid(original.GameGrid), original.Source, original.Target, original.ColorsCounter, original.ExtraTubeCounter);
+            return new SavedGameState(BoardState.CloneGrid(original.GameGrid), original.Source, original.Target, original.ColorsCounter, original.ExtraTubeCounter);
         }
         public void UpdateSourceNTarget(int source, int target)
         {

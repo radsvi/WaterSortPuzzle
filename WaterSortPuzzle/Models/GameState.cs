@@ -9,14 +9,17 @@ namespace WaterSortPuzzle.Models
         readonly AppPreferences appPreferences;
         readonly Notification notification;
         readonly Leveling leveling;
-        public ExtraTubes ExtraTubes { get; }
+        public EmptyTubes EmptyTubes { get; }
+        public BoardState BoardState { get; }
+
         public GameState() { }
-        public GameState(AppPreferences appPreferences, Notification notification, Leveling leveling, ExtraTubes extraTubes)
+        public GameState(AppPreferences appPreferences, Notification notification, Leveling leveling, EmptyTubes emptyTubes, BoardState boardState)
         {
             this.appPreferences = appPreferences;
             this.notification = notification;
             this.leveling = leveling;
-            this.ExtraTubes = extraTubes;
+            this.EmptyTubes = emptyTubes;
+            BoardState = boardState;
             if (appPreferences.LastLevelBeforeClosing is not null && appPreferences.LastLevelBeforeClosing.GameGrid.Length > 0)
             {
                 LoadLastLevel();
@@ -27,21 +30,7 @@ namespace WaterSortPuzzle.Models
             }
         }
         public bool SolvedAtLeastOnce { get; set; } = false;
-        private string readableGameState;
-        public string ReadableGameState
-        {
-            get { 
-                return GameStateToString(gameGrid, StringFormat.Numbers); 
-            }
-            set
-            {
-                if (value != readableGameState)
-                {
-                    readableGameState = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+
         private int stepBackPressesCounter;
         public int StepBackPressesCounter
         {
@@ -70,7 +59,7 @@ namespace WaterSortPuzzle.Models
                 }
             }
         }
-        public int TubeCount { get => gameGrid.GetLength(0); }
+        
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(mainVM.AddExtraTubeCommand))]
         //private int colorCount = 0;
@@ -90,16 +79,7 @@ namespace WaterSortPuzzle.Models
             }
         }
         
-        public LiquidColor[,] gameGrid;
-        public LiquidColor this[int tubes, int layers]
-        {
-            get => gameGrid[tubes, layers];
-            set
-            {
-                gameGrid[tubes, layers] = value;
-                //OnLiquidMoving();
-            }
-        }
+
         private LiquidColor[,] startingPosition;
         public LiquidColor[,] StartingPosition { get; set; }
         //[ObservableProperty]
@@ -132,13 +112,10 @@ namespace WaterSortPuzzle.Models
         //    MainPage.DrawTubes();
         //}
 
-        public int GetLength(int dimension)
-        {
-            return gameGrid.GetLength(dimension);
-        }
+
         public void GenerateNewLevel()
         {
-            ExtraTubes.ResetCounter();
+            EmptyTubes.ResetCounter();
             if (appPreferences.SingleLevelMode == false)
             {
                 GenerateStandardLevel(leveling.NumberOfColorsToGenerate);
@@ -169,15 +146,15 @@ namespace WaterSortPuzzle.Models
             //Tubes?.Clear();
             
             int i = 0;
-            gameGrid = new LiquidColor[20, Constants.Layers];
+            BoardState.Grid = new LiquidColor[20, Constants.Layers];
 
             // Almost solved:
-            AddTube(i++, new int[] { });
-            AddTube(i++, new int[] { 1, 1, 1, 3 });
-            AddTube(i++, new int[] { 2, 3, 1 });
-            AddTube(i++, new int[] { 2, 2, 2 });
-            AddTube(i++, new int[] { 3, 3 });
-            AddTube(i++, new int[] { 4, 4, 4, 4 });
+            BoardState.AddTube(i++, new int[] { });
+            BoardState.AddTube(i++, new int[] { 1, 1, 1, 3 });
+            BoardState.AddTube(i++, new int[] { 2, 3, 1 });
+            BoardState.AddTube(i++, new int[] { 2, 2, 2 });
+            BoardState.AddTube(i++, new int[] { 3, 3 });
+            BoardState.AddTube(i++, new int[] { 4, 4, 4, 4 });
 
 
 
@@ -346,10 +323,10 @@ namespace WaterSortPuzzle.Models
             //AddTube(i++, new LiquidColorName[] { });
 
             // check if puzzle has correct number for each color:
-            CheckCorrectColorNumber(gameGrid);
+            CheckCorrectColorNumber(BoardState.Grid);
 
             //gameGrid = CloneGrid(gameGrid, i + 2);
-            gameGrid = CloneGrid(gameGrid, i + 2);
+            BoardState.Grid = BoardState.CloneGrid(BoardState.Grid, i + 2);
         }
         private void CheckCorrectColorNumber(LiquidColor[,] gameGrid)
         {
@@ -368,59 +345,20 @@ namespace WaterSortPuzzle.Models
             }
             ColorsCounter = colorCount;
         }
-        private void AddTube(int tubeNumber, int[] layers)
-        {
-            for (int i = 0; i < layers.Length; i++)
-            {
-                this[tubeNumber, i] = new LiquidColor(layers[i]);
-            }
-        }
-        private void AddTube(int tubeNumber, LiquidColorName[] liquids)
-        {
-            for (int i = 0; i < liquids.Length; i++)
-            {
-                this[tubeNumber, i] = new LiquidColor((int)liquids[i]);
-            }
-        }
-        /// <summary>
-        /// Adding extra (empty) tube during gameplay
-        /// </summary>
-        public void AddExtraTube()
-        {
-            ExtraTubes.IncrementCounter();
-            gameGrid = CloneGrid(gameGrid, gameGrid.GetLength(0) + 1);
-        }
+
         //public bool CanAddExtraTube()
         //{
         //    return CountColors() + appPreferences.MaximumExtraTubes + 2 - gameGrid.GetLength(0) > 0;
         //}
-        public static LiquidColor[,] CloneGrid(LiquidColor[,] grid)
-        {
-            return CloneGrid(grid, grid.GetLength(0));
-        }
-        public static LiquidColor[,] CloneGrid(LiquidColor[,] gameGrid, int newNumberOfTubes)
-        {
-            LiquidColor[,] gridClone = new LiquidColor[newNumberOfTubes, gameGrid.GetLength(1)];
-            for (int x = 0; x < gameGrid.GetLength(0); x++)
-            {
-                for (int y = 0; y < gameGrid.GetLength(1); y++)
-                {
-                    if (gameGrid[x, y] is not null)
-                    {
-                        gridClone[x, y] = gameGrid[x, y].Clone();
-                    }
-                }
-            }
-            return gridClone;
-        }
+
         public void SetGameState(LiquidColor[,] newGameState)
         {
-            gameGrid = CloneGrid(newGameState);
+            BoardState.Grid = BoardState.CloneGrid(newGameState);
         }
         public void RestartLevel()
         {
-            ExtraTubes.ResetCounter();
-            gameGrid = CloneGrid(StartingPosition);
+            EmptyTubes.ResetCounter();
+            BoardState.Grid = BoardState.CloneGrid(StartingPosition);
         }
         private void GenerateStandardLevel(int numberOfColorsToGenerate)
         {
@@ -428,7 +366,7 @@ namespace WaterSortPuzzle.Models
 
             List<LiquidColor> colorsList = new List<LiquidColor>();
 
-            gameGrid = new LiquidColor[numberOfColorsToGenerate + 2, Constants.Layers];
+            BoardState.Grid = new LiquidColor[numberOfColorsToGenerate + 2, Constants.Layers];
             //Tube.ResetCounter();
 
             List<int> selectedColors = new List<int>();
@@ -461,7 +399,7 @@ namespace WaterSortPuzzle.Models
                     int colorNumber = rnd.Next(0, colorsList.Count);
 
                     //var asdf = colorsList[colorNumber];
-                    gameGrid[x, y] = colorsList[colorNumber];
+                    BoardState.Grid[x, y] = colorsList[colorNumber];
                     colorsList.Remove(colorsList[colorNumber]);
                 }
             }
@@ -479,7 +417,7 @@ namespace WaterSortPuzzle.Models
                     SavedGameStates.Add(LastGameState);
                 }
 
-                LastGameState = new SavedGameState(CloneGrid(gameGrid), source, target, ColorsCounter, ExtraTubes.Counter);
+                LastGameState = new SavedGameState(BoardState.CloneGrid(BoardState.Grid), source, target, ColorsCounter, EmptyTubes.Counter);
                 return;
             }
         }
@@ -489,24 +427,24 @@ namespace WaterSortPuzzle.Models
             {
                 return true;
             }
-            if (LastGameState.GameGrid.Length != gameGrid.Length) // pokud jen pridavam extra prazdnou zkumavku tak to neukladat!
+            if (LastGameState.GameGrid.Length != BoardState.Grid.Length) // pokud jen pridavam extra prazdnou zkumavku tak to neukladat!
             {
                 return true;
             }
 
-            for (int x = 0; x < gameGrid.GetLength(0); x++)
+            for (int x = 0; x < BoardState.Grid.GetLength(0); x++)
             {
-                for (int y = 0; y < gameGrid.GetLength(1); y++)
+                for (int y = 0; y < BoardState.Grid.GetLength(1); y++)
                 {
-                    if (LastGameState.GameGrid[x, y] is null && gameGrid[x, y] is null)
+                    if (LastGameState.GameGrid[x, y] is null && BoardState.Grid[x, y] is null)
                     {
                         continue;
                     }
-                    if (LastGameState.GameGrid[x, y] is null && gameGrid[x, y] is not null || LastGameState.GameGrid[x, y] is not null && gameGrid[x, y] is null)
+                    if (LastGameState.GameGrid[x, y] is null && BoardState.Grid[x, y] is not null || LastGameState.GameGrid[x, y] is not null && BoardState.Grid[x, y] is null)
                     {
                         return true;
                     }
-                    if (LastGameState.GameGrid[x,y].Name != gameGrid[x,y].Name)
+                    if (LastGameState.GameGrid[x,y].Name != BoardState.Grid[x,y].Name)
                     {
                         return true;
                     }
@@ -516,11 +454,11 @@ namespace WaterSortPuzzle.Models
         }
         public bool IsLevelCompleted()
         {
-            return IsLevelCompleted(gameGrid);
+            return IsLevelCompleted(BoardState.Grid);
         }
         public bool IsLevelCompleted(LiquidColor[,] internalGameGrid)
         {
-            for (int x = 0; x < gameGrid.GetLength(0); x++)
+            for (int x = 0; x < BoardState.Grid.GetLength(0); x++)
             {
                 //if (gameGrid[x, 0] is null || gameGrid[x, 1] is null || gameGrid[x, 2] is null || gameGrid[x, 3] is null)
                 //{ // tohle tu je abych nikdy neporovnaval hodnoty GameGridu kdyz je moznost ze budou null:
@@ -562,9 +500,9 @@ namespace WaterSortPuzzle.Models
             string exportString = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + "\n";
             foreach (var savedState in SavedGameStates)
             {
-                exportString += GameStateToString(savedState.GameGrid, StringFormat.Names, true) + "\n";
+                exportString += BoardState.BoardStateToString(savedState.GameGrid, StringFormat.Names, true) + "\n";
             }
-            exportString += GameStateToString(gameGrid, StringFormat.Names) + "\n";
+            exportString += BoardState.BoardStateToString(BoardState.Grid, StringFormat.Names) + "\n";
             exportString += "===================================\n";
 
             //System.IO.File.WriteAllText("ExportStepBack.log", exportString);
@@ -598,7 +536,7 @@ namespace WaterSortPuzzle.Models
         public async Task CopyExportString()
         {
             //Clipboard.SetText(ReadableGameState);
-            await Clipboard.Default.SetTextAsync(ReadableGameState);
+            await Clipboard.Default.SetTextAsync(BoardState.ReadableState);
             //mainVM.ClosePopupWindow();
             //await mainVM.NavigateBack();
         }
@@ -606,65 +544,27 @@ namespace WaterSortPuzzle.Models
         //{
         //    return GameStateToString(gameState, StringFormat.Names, enableSort);
         //}
-        public static string GameStateToString(LiquidColor[,] gameState, StringFormat format = StringFormat.Names, bool enableSort = true)
-        {
-            List<string> intGameState = new List<string>();
-            for (int x = 0; x < gameState.GetLength(0); x++)
-            {
-                string tubeString = "[";
-                for (int y = gameState.GetLength(1) - 1; y >= 0; y--)
-                {
-                    if (gameState[x, y] is not null)
-                    {
-                        //tubeInt += (int)gameState[x, y].Name * (int)Math.Pow(100,y);
-                        if (format == StringFormat.Names)
-                        {
-                            tubeString += (gameState[x, y].Name).ToString();
-                        }
-                        else
-                        {
-                            tubeString += ((int)gameState[x, y].Name).ToString("00"); // this format is used for debugging. To easily export the gamestate as a string.
-                        }
-                    }
-                    else
-                        tubeString += "-";
-                    if (y > 0) tubeString += ".";
-                }
-                tubeString += "]";
-                intGameState.Add(tubeString);
-            }
-            if (enableSort)
-            {
-                intGameState.Sort(); // nechci sortovat kdyz chci vizualizaci
-            }
-            string stringGameState = string.Empty;
-            foreach (var tube in intGameState)
-            {
-                stringGameState += tube.ToString();
-            }
-            return stringGameState;
-        }
         public void ResetStepBackCounter()
         {
             StepBackPressesCounter = 0;
         }
         private void LoadLastLevel()
         {
-            StartingPosition = CloneGrid(appPreferences.LastLevelBeforeClosing.GameGrid);
+            StartingPosition = BoardState.CloneGrid(appPreferences.LastLevelBeforeClosing.GameGrid);
             //gameGrid = CloneGrid(StartingPosition);
             //ColorCount = CountColors(StartingPosition);
             LoadGameState();
         }
         private void StoreStartingGrid()
         {
-            StartingPosition = CloneGrid(gameGrid);
+            StartingPosition = BoardState.CloneGrid(BoardState.Grid);
             appPreferences.LastLevelBeforeClosing = new StoredLevel(StartingPosition, "Last level");
             appPreferences.StepBackPressesCounter = StepBackPressesCounter;
             appPreferences.SavedGameStatesBeforeSleep = new ObservableCollection<SavedGameState>();
         }
         public void SaveGameStateOnSleep()
         {
-            appPreferences.GameStateBeforeSleep = gameGrid;
+            appPreferences.GameStateBeforeSleep = BoardState.Grid;
 
             ObservableCollection<SavedGameState> copySavedGameStates = [];
             foreach (var savedGameState in SavedGameStates)
@@ -684,11 +584,11 @@ namespace WaterSortPuzzle.Models
                 SavedGameStates.Remove(SavedGameStates.Last());
                 StepBackPressesCounter = appPreferences.StepBackPressesCounter;
 
-                gameGrid = appPreferences.GameStateBeforeSleep;
+                BoardState.Grid = appPreferences.GameStateBeforeSleep;
             }
             else
             {
-                gameGrid = CloneGrid(StartingPosition);
+                BoardState.Grid = BoardState.CloneGrid(StartingPosition);
                 ColorsCounter = CountColors(StartingPosition);
             }
         }
