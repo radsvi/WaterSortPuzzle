@@ -198,12 +198,14 @@
         {
             for (int y = 0; y < Constants.Layers; y++)
             {
-                if (gameGrid[tubeId, y] is null)
+                if (tubeId == gameGrid.GetLength(0) // pokud je stejny cislo tak je tubeId vlastne vetsi nez rozmer pole! Deje se kdyz dam +1 tube a pak StepBack
+                    || gameGrid[tubeId, y] is null)
                     this.Layers[y]?.CopyFrom(LiquidColorName.Blank);
                 else
                     this.Layers[y]?.CopyFrom(gameGrid[tubeId, y].Name);
                     //this.Layers[y] = gameGrid[tubeId, y].Clone();
             }
+            System.Diagnostics.Debug.WriteLine("debugging");
         }
         private static void RecalculateTubesPerLine(LiquidColor[,] gameGrid)
         {
