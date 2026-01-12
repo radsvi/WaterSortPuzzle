@@ -306,11 +306,15 @@
                             Text=" "
                             Grid.Column="1"/>
                         <Button
-                            ImageSource="button_back.png"
+                            ImageSource="{Binding StepBackImage}"
                             Style="{StaticResource NavigationButton}"
                             Command="{Binding StepBackCommand}"
                             Text="{Binding StepBackButtonText}"
                             Grid.Column="2"/>
+                        <!--<Button
+                            Command="{Binding StepBackCommand}"
+                            Text="{Binding StepBackButtonText}"
+                            Grid.Column="2"/>-->
                     </Grid>
                 </Grid>
 

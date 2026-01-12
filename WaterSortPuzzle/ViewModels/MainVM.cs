@@ -33,8 +33,11 @@ namespace WaterSortPuzzle.ViewModels
             {
                 AddExtraTubeCommand.NotifyCanExecuteChanged();
             }
-            else if (e.PropertyName == nameof(AppPreferences.UnlimitedStepBack) || e.PropertyName == nameof(GameState.SavedGameStates))
+            else if (e.PropertyName == nameof(AppPreferences.UnlimitedStepBack)
+                || e.PropertyName == nameof(GameState.SavedGameStates)
+                || e.PropertyName == nameof(GameState.StepBackPressesCounter))
             {
+                //UpdateCanStepBack();
                 StepBackCommand.NotifyCanExecuteChanged();
             }
             else if (e.PropertyName == nameof(AutoSolve.CurrentSolutionStep))
@@ -77,7 +80,7 @@ namespace WaterSortPuzzle.ViewModels
         //}
 
         //public IWindowService WindowService { get; }
-        
+
         // Using these in MainPage.xaml so they need to be public and should remain properties
         public AppPreferences AppPreferences { get; }
         public Notification Notification { get; }
@@ -266,7 +269,7 @@ namespace WaterSortPuzzle.ViewModels
         [RelayCommand(CanExecute = nameof(CanStepBack))]
         private async Task StepBack()
         {
-            if (CanStepBack() == false)
+            if (CanStepBack == false)
                 return;
 
             DeselectTube();
@@ -290,18 +293,92 @@ namespace WaterSortPuzzle.ViewModels
             autoSolve?.SoftReset();
             await DrawTubesAsync(lastGameStatus.Source, lastGameStatus.Target);
         }
-        private bool CanStepBack()
+        //        private bool CanStepBack
+        //        {
+        //            get
+        //            {
+        //                //return SavedGameStates.Count > 0 && autoSolve.LimitToOneStep is false;
+        //                //return SavedGameStates.Count > 0;
+        //#warning sjednotit ify
+        //                if (GameState.SavedGameStates.Count == 0)
+        //                {
+        //                    //OnPropertyChanged(nameof(StepBackImage));
+        //                    return false;
+        //                }
+
+        //                if (AppPreferences.UnlimitedStepBack == false && Constants.MaxStepBack <= GameState.StepBackPressesCounter)
+        //                {
+        //                    //OnPropertyChanged(nameof(StepBackImage));
+        //                    return false;
+        //                }
+
+        //                //OnPropertyChanged(nameof(StepBackImage));
+        //                return true;
+        //            }
+        //        }
+
+        //[ObservableProperty]
+        //[NotifyCanExecuteChangedFor(nameof(StepBackCommand))]
+        //private bool canStepBack;
+        //public bool CanStepBack
+        //{
+        //    get
+        //    {
+        //        if (GameState.SavedGameStates.Count == 0)
+        //            return false;
+
+        //        if (!AppPreferences.UnlimitedStepBack &&
+        //            Constants.MaxStepBack <= GameState.StepBackPressesCounter)
+        //            return false;
+
+        //        return true;
+        //    }
+        //}
+
+
+        private bool CanStepBack
         {
-            //return SavedGameStates.Count > 0 && autoSolve.LimitToOneStep is false;
-            //return SavedGameStates.Count > 0;
+            get
+            {
+                if (GameState.SavedGameStates.Count == 0
+                    || (AppPreferences.UnlimitedStepBack == false && Constants.MaxStepBack <= GameState.StepBackPressesCounter))
+                {
+                    //OnPropertyChanged(nameof(StepBackImage));
+                    StepBackImage = "button_gray_back.png";
+                    return false;
+                }
 
-            if (GameState.SavedGameStates.Count == 0)
-                return false;
-            if (AppPreferences.UnlimitedStepBack == false && Constants.MaxStepBack <= GameState.StepBackPressesCounter)
-                return false;
-
-            return true;
+                StepBackImage = "button_back.png";
+                //OnPropertyChanged(nameof(StepBackImage));
+                return true;
+            }
         }
+
+        //public string StepBackImage =>
+        //    CanStepBack ? "button_back.png" : "button_gray_back.png";
+        private string stepBackImage = "button_gray_back.png";
+        public string StepBackImage
+        {
+            get
+            {
+                return stepBackImage;
+            }
+            set
+            {
+                //return CanStepBack ? "button_back.png" : "button_gray_back.png";
+                stepBackImage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        //private void UpdateCanStepBack()
+        //{
+        //    CanStepBack =
+        //        GameState.SavedGameStates.Count > 0 &&
+        //        (AppPreferences.UnlimitedStepBack ||
+        //         Constants.MaxStepBack > GameState.StepBackPressesCounter);
+        //}
+
         //[RelayCommand]
         //async Task NavigateToOptions() => await AppShell.Current.GoToAsync(nameof(OptionsPage));
         [RelayCommand]
@@ -363,7 +440,7 @@ namespace WaterSortPuzzle.ViewModels
                     {
                         answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("YOU WIN", "Congratulation! You won!", "Next level", "Restart level");
                     }
-                    
+
                     if (answer)
                         GenerateNewLevel();
                     else
@@ -372,21 +449,21 @@ namespace WaterSortPuzzle.ViewModels
                 case PopupParams.Help:
                     await DisplayHelpPopup();
                     break;
-                //case PopupParams.LoadLevel:
-                    
-                //    break;
-                //case PopupParams.SaveLevel:
-                //    await ShowCustomPopup("Save Level", "## Dodelat text ##", "OK");
-                //    break;
+                    //case PopupParams.LoadLevel:
+
+                    //    break;
+                    //case PopupParams.SaveLevel:
+                    //    await ShowCustomPopup("Save Level", "## Dodelat text ##", "OK");
+                    //    break;
             }
         }
-        
+
 
         //private void DisplayStartupPopup() // predelat, tohle je hrozny to takhle mit dvakrat
         //{
         //    if (AppPreferences.DontShowHelpScreenAtStart)
         //        return;
-            
+
         //    string text = "Separate each color into different flasks.\n";
         //    text += "You can only move matching colors onto each other.\n";
         //    text += "You can always move colors to empty flask.\n";
@@ -401,7 +478,7 @@ namespace WaterSortPuzzle.ViewModels
         //        //}));
         //        //App.AlertSvc.ShowConfirmation("Help", text, new Action<bool>((c) => { }), "Don't show this again.", "Close");
         //        //App.AlertSvc.ShowConfirmationSimple("Help", text, "Don't show this again.", "Close");
-                
+
         //        App.AlertSvc.ShowConfirmation("Help", text, (result =>
         //        {
         //            //App.AlertSvc.ShowAlert("Result", $"{result}");
@@ -426,7 +503,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             if (!CanAddExtraTube())
                 return;
-            
+
             GameState.AddExtraTube();
             AddExtraTubeCommand.NotifyCanExecuteChanged();
             RecalculateTubesPerLine();
@@ -943,7 +1020,7 @@ namespace WaterSortPuzzle.ViewModels
 
                 //(var innerGrid, var image) = RippleSurfaceBackgroundCreation(rippleLayoutElement, currentTubeReference, currentLiquid);
 
-                
+
 
                 currentTubeReference.TubeData.RippleGridRow = Constants.Layers - 1 - currentTubeReference.TargetEmptyRow;
                 currentTubeReference.TubeData.RippleGridRowSpan = currentTubeReference.NumberOfRepeatingLiquids > 0 ? currentTubeReference.NumberOfRepeatingLiquids : 1; // I need to have this here in case of AutoSolve "skips" one step through PickNeverincorectMovesFirst()
@@ -1003,7 +1080,7 @@ namespace WaterSortPuzzle.ViewModels
             sourceTube.TubeData.TranslateY = diff.Y;
             sourceTube.TubeData.ActualWidth = rect1.Width;
             sourceTube.TubeData.ActualHeight = rect1.Height;
-            
+
             //sourceTube.TubeData.IsVisible = false;
 
 

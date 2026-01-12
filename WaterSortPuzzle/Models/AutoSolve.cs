@@ -866,14 +866,17 @@
         //}
         public void SoftReset()
         {
-            exportLogFilename = Constants.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
-            CompleteSolution.Clear();
-            ResumeRequest = false;
-            InProgress = false;
-            Started = false;
-            Solved = false;
-            Iterations = 0;
-            CurrentSolutionStep = 0;
+            if (Solved) // without this condition the OnPropertyChanged events are called very often and unnecessarily
+            {
+                exportLogFilename = Constants.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
+                CompleteSolution.Clear();
+                ResumeRequest = false;
+                InProgress = false;
+                Started = false;
+                Solved = false;
+                Iterations = 0;
+                CurrentSolutionStep = 0;
+            }
         }
         public void Reset()
         {
