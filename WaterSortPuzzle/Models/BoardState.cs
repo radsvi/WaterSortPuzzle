@@ -38,7 +38,7 @@ namespace WaterSortPuzzle.Models
         {
             appPreferences = source.appPreferences;
             ExtraTubesCounter = source.ExtraTubesCounter;
-            Grid = CloneGrid(source.Grid, incrementBy);
+            Grid = GridHelper.CloneGrid(source.Grid, incrementBy);
         }
 
 
@@ -115,33 +115,39 @@ namespace WaterSortPuzzle.Models
         //{
         //    return CloneGrid(grid, grid.GetLength(0));
         //}
-        [Obsolete] public static LiquidColor[,] CloneGrid(LiquidColor[,] grid, int incrementBy = 0) // Nemazat uplne. Jen prestat pouzivat mimo tuhle classu a pak predelat na private
-        {
-            LiquidColor[,] gridClone = new LiquidColor[grid.GetLength(0) + incrementBy, grid.GetLength(1)];
-            for (int x = 0; x < grid.GetLength(0); x++)
-            {
-                for (int y = 0; y < grid.GetLength(1); y++)
-                {
-                    if (grid[x, y] is not null)
-                    {
-                        gridClone[x, y] = grid[x, y].Clone();
-                    }
-                }
-            }
-            return gridClone;
-        }
+        //[Obsolete] public static LiquidColor[,] CloneGrid(LiquidColor[,] grid, int incrementBy = 0) // Nemazat uplne. Jen prestat pouzivat mimo tuhle classu a pak predelat na private
+        //{
+        //    LiquidColor[,] gridClone = new LiquidColor[grid.GetLength(0) + incrementBy, grid.GetLength(1)];
+        //    for (int x = 0; x < grid.GetLength(0); x++)
+        //    {
+        //        for (int y = 0; y < grid.GetLength(1); y++)
+        //        {
+        //            if (grid[x, y] is not null)
+        //            {
+        //                gridClone[x, y] = grid[x, y].Clone();
+        //            }
+        //        }
+        //    }
+        //    return gridClone;
+        //}
         public BoardState Clone()
         {
             return new BoardState(this);
         }
+        //public SavedGameState CloneFromSavedGameState(SavedGameState savedGameState)
+        //{
+        //    var newGrid = GridHelper.CloneGrid(savedGameState.Grid, this.extraTubesCounter);
+
+        //    return newGrid;
+        //}
         //public BoardState IncrementTubeNumberBy(int incrementBy)
         //{
         //    return new BoardState(this, incrementBy);
         //}
-        public void IncrementTubeNumberBy(int incrementBy)
+        public void IncrementTubesBy(int incrementBy)
         {
             IncrementExtraTubesCounter();
-            Grid = CloneGrid(Grid, incrementBy);
+            Grid = GridHelper.CloneGrid(Grid, incrementBy);
         }
         /// <summary>
         /// Adding extra (empty) tube during gameplay
@@ -152,7 +158,7 @@ namespace WaterSortPuzzle.Models
                 return;
 
             IncrementExtraTubesCounter();
-            Grid = CloneGrid(Grid, ExtraTubesCounter);
+            Grid = GridHelper.CloneGrid(Grid, ExtraTubesCounter);
         }
         public bool CanAddExtraTube()
         {

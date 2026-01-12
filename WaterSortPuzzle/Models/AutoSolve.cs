@@ -264,7 +264,7 @@
                 return new NullTreeNode(parentNode);
             }
 
-            var newGameState = BoardState.CloneGrid(parentNode.Data.GameState);
+            var newGameState = GridHelper.CloneGrid(parentNode.Data.GameState);
             var validMove = new ValidMove(dualColorTube, singleColorTube, newGameState, MoveType.NeverWrong);
 
             return GeneratePriorityFutureState(parentNode, validMove, hashedSteps);

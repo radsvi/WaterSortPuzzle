@@ -293,12 +293,13 @@ namespace WaterSortPuzzle.ViewModels
             SavedGameState lastGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 1];
 
             PropertyChangedEventPaused = true;
-            GameState.BoardState.Grid = lastGameStatus.GameGrid;
+            GameState.BoardState.Grid = lastGameStatus.Grid;
             PropertyChangedEventPaused = false;
 
             GameState.LastGameState = SavedGameState.Clone(lastGameStatus);
 
             GameState.SavedGameStates.Remove(lastGameStatus);
+
 
             if (autoSolve?.CompleteSolution.Count > 0)
                 autoSolve.CurrentSolutionStep++;
