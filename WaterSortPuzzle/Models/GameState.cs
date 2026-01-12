@@ -74,15 +74,15 @@ namespace WaterSortPuzzle.Models
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(mainVM.AddExtraTubeCommand))]
         //private int colorCount = 0;
-        private int colorCount;
-        public int ColorCount
+        private int colorsCounter;
+        public int ColorsCounter
         {
-            get { return colorCount; }
+            get { return colorsCounter; }
             private set
             {
-                if (value != colorCount)
+                if (value != colorsCounter)
                 {
-                    colorCount = value;
+                    colorsCounter = value;
                     OnPropertyChanged();
                     //OnPropertyChanged(nameof(mainVM.AddExtraTubeCommand));
                     //mainVM.AddExtraTubeCommand.NotifyCanExecuteChanged();
@@ -366,7 +366,7 @@ namespace WaterSortPuzzle.Models
                 if (color.Value != gameGrid.GetLength(1))
                 notification.Show($"{color.Key}: {color.Value}", 60000);
             }
-            ColorCount = colorCount;
+            ColorsCounter = colorCount;
         }
         private void AddTube(int tubeNumber, int[] layers)
         {
@@ -387,25 +387,18 @@ namespace WaterSortPuzzle.Models
         /// </summary>
         public void AddExtraTube()
         {
+            ExtraTubes.IncrementCounter();
             gameGrid = CloneGrid(gameGrid, gameGrid.GetLength(0) + 1);
         }
         //public bool CanAddExtraTube()
         //{
         //    return CountColors() + appPreferences.MaximumExtraTubes + 2 - gameGrid.GetLength(0) > 0;
         //}
-        public static LiquidColor[,] CloneGridStatic(LiquidColor[,] grid)
-        {
-            return new GameState().CloneGrid(grid, grid.GetLength(0));
-        }
-        public LiquidColor[,] CloneGrid(LiquidColor[,] grid)
+        public static LiquidColor[,] CloneGrid(LiquidColor[,] grid)
         {
             return CloneGrid(grid, grid.GetLength(0));
         }
-        //public SavedGameState CloneGrid(SavedGameState savedGameState)
-        //{
-        //    return new SavedGameState(CloneGrid(savedGameState.GameGrid, savedGameState.GameGrid.GetLength(0)));
-        //}
-        public LiquidColor[,] CloneGrid(LiquidColor[,] gameGrid, int newNumberOfTubes)
+        public static LiquidColor[,] CloneGrid(LiquidColor[,] gameGrid, int newNumberOfTubes)
         {
             LiquidColor[,] gridClone = new LiquidColor[newNumberOfTubes, gameGrid.GetLength(1)];
             for (int x = 0; x < gameGrid.GetLength(0); x++)
@@ -473,7 +466,7 @@ namespace WaterSortPuzzle.Models
                 }
             }
 
-            ColorCount = selectedColors.Count();
+            ColorsCounter = selectedColors.Count();
         }
         public void SaveGameState(int source, int target)
         {
@@ -486,7 +479,7 @@ namespace WaterSortPuzzle.Models
                     SavedGameStates.Add(LastGameState);
                 }
 
-                LastGameState = new SavedGameState(CloneGrid(gameGrid), source, target);
+                LastGameState = new SavedGameState(CloneGrid(gameGrid), source, target, ColorsCounter, ExtraTubes.Counter);
                 return;
             }
         }
@@ -696,7 +689,7 @@ namespace WaterSortPuzzle.Models
             else
             {
                 gameGrid = CloneGrid(StartingPosition);
-                ColorCount = CountColors(StartingPosition);
+                ColorsCounter = CountColors(StartingPosition);
             }
         }
     }

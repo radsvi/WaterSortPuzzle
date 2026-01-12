@@ -4,7 +4,7 @@
     {
         public ValidMove(PositionPointer source, PositionPointer target, LiquidColor[,] gameState, bool isTargetSingleColor = false, MoveType moveType = MoveType.Standard)
         {
-            GameState = Models.GameState.CloneGridStatic(gameState);
+            GameState = Models.GameState.CloneGrid(gameState);
             Target = target;
             Source = source; // mam to v tomhle poradi kvuli eventum
             Liquid = gameState[source.X, source.Y];

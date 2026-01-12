@@ -29,7 +29,7 @@ namespace WaterSortPuzzle.ViewModels
         }
         private void PropertyChangedHandler(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(AppPreferences.MaximumExtraTubes) || e.PropertyName == nameof(GameState.ColorCount))
+            if (e.PropertyName == nameof(AppPreferences.MaximumExtraTubes) || e.PropertyName == nameof(GameState.ColorsCounter))
             {
                 RefreshAddExtraTubekState();
             }
@@ -765,7 +765,7 @@ namespace WaterSortPuzzle.ViewModels
                 var task = NavigationMenuPopup(PopupParams.LevelComplete);
                 if (AppPreferences.SingleLevelMode == false && GameState.SolvedAtLeastOnce == false)
                 {
-                    Leveling.LevelFinished(GameState.ColorCount);
+                    Leveling.LevelFinished(GameState.ColorsCounter);
                 }
                 GameState.SolvedAtLeastOnce = true;
                 //Task.Run(() => NavigationMenuPopup(PopupParams.LevelComplete));
