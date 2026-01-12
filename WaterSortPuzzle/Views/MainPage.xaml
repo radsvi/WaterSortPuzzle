@@ -300,7 +300,7 @@
                             Text="{Binding NextStepButtonText}"
                             Grid.Column="0"/>
                         <Button
-                            ImageSource="button_plus_one.png"
+                            ImageSource="{Binding AddExtraTubeImage}"
                             Style="{StaticResource NavigationButton}"
                             Command="{Binding AddExtraTubeCommand}"
                             Text=" "
