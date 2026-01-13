@@ -423,8 +423,12 @@ namespace WaterSortPuzzle.Models
         }
         //public void RestoreGameState(SavedGameState savedGameState)
         //{
-        //    LastGameState = BoardState.CloneFromSavedGameState(savedGameState);
-        //    SavedGameStates.Remove(savedGameState);
+        //    if (BoardState.Grid.GetLength(0) > savedGameState.Grid.GetLength(0))
+        //    {
+        //        BoardState.IncrementTubesBy()
+        //    }
+        //    else
+        //        BoardState.Grid = savedGameState.Grid;
         //}
         private bool DidGameStateChange()
         {

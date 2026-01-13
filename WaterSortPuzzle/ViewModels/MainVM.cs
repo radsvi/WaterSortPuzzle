@@ -294,6 +294,7 @@ namespace WaterSortPuzzle.ViewModels
 
             PropertyChangedEventPaused = true;
             GameState.BoardState.Grid = lastGameStatus.Grid;
+            //GameState.RestoreGameState(lastGameStatus);
             PropertyChangedEventPaused = false;
 
             GameState.LastGameState = SavedGameState.Clone(lastGameStatus);
