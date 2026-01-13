@@ -170,6 +170,20 @@ namespace WaterSortPuzzle.Models
         {
             ExtraTubesCounter += incrementBy;
         }
+        /// <summary>
+        /// Overwrites ExtraTubesCounter and resizes the Grid array
+        /// </summary>
+        /// <param name="newValue"></param>
+        public void OverwriteExtraTubesCounter(int newValue)
+        {
+            var difference = newValue - extraTubesCounter;
+            if (difference < 0)
+                throw new ArgumentOutOfRangeException("Only allowed to inrement size of the array");
+
+            ExtraTubesCounter = newValue;
+
+            Grid = GridHelper.CloneGrid(Grid, newValue);
+        }
         public void ResetExtraTubesCounter()
         {
             ExtraTubesCounter = 0;

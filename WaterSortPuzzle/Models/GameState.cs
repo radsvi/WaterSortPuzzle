@@ -9,7 +9,7 @@ namespace WaterSortPuzzle.Models
         readonly AppPreferences appPreferences;
         readonly Notification notification;
         readonly Leveling leveling;
-        public BoardState BoardState { get; }
+        public BoardState BoardState { get; private set; }
 
         public GameState() { }
         public GameState(AppPreferences appPreferences, Notification notification, Leveling leveling, BoardState boardState)
@@ -601,6 +601,11 @@ namespace WaterSortPuzzle.Models
                 BoardState.Grid = GridHelper.CloneGrid(StartingPosition);
                 ColorsCounter = CountColors(StartingPosition);
             }
+        }
+        public void ReplaceBoardState(BoardState newBoardState)
+        {
+            newBoardState.OverwriteExtraTubesCounter(BoardState.ExtraTubesCounter);
+            BoardState = newBoardState;
         }
     }
 }
