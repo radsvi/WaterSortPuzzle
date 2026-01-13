@@ -469,7 +469,7 @@ namespace WaterSortPuzzle.ViewModels
             return GameState.BoardState.CanAddExtraTube();
         }
         public string AddExtraTubeImage =>
-            CanAddExtraTube() ? "button_plus_one.png" : "button_gray_plus_one.png";
+            CanAddExtraTube() ? "button_plus_tube.png" : "button_gray_plus_tube.png";
         private void GenerateNewLevel()
         {
             GameState.GenerateNewLevel();
