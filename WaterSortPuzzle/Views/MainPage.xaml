@@ -147,10 +147,10 @@
                                     Stroke="LightBlue" StrokeThickness="1" StyleId="{x:Static models:Constants.InnerBorderElementName}"
                                     StrokeShape="RoundRectangle 0,0,28,28" >
 
-                                    <Grid Margin="0,21,0,0" IsClippedToBounds="True">
+                                    <Grid IsClippedToBounds="True">
                                         <Grid
                                             RowDefinitions="*,*,*,*" StyleId="{x:Static models:Constants.RippleElementName}"
-                                            
+                                            Margin="0,21,0,0"
                                             VerticalOptions="Fill"
                                             WidthRequest="200"
                                             HorizontalOptions="Center"
@@ -203,7 +203,19 @@
                                             </AbsoluteLayout>
                                         </Grid>
 
+                                        <!--flask gleam-->
                                         <BoxView
+                                            BackgroundColor="Transparent">
+                                            <BoxView.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="Transparent" Offset="0"/>
+                                                    <GradientStop Color="#4FFFFFFF" Offset="0.1"/>
+                                                    <GradientStop Color="Transparent" Offset="0.2"/>
+                                                </LinearGradientBrush>
+                                            </BoxView.Background>
+                                        </BoxView>
+                                        
+                                        <!--<BoxView
                                             BackgroundColor="Transparent">
                                             <BoxView.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -215,7 +227,7 @@
                                             </BoxView.Background>
                                         </BoxView>
                                         <BoxView BackgroundColor="Red"
-                                                 VerticalOptions="End" HeightRequest="23" WidthRequest="44"><!--This should be eventuall using StaticResource TubeGrid to dynamically change height, maybe half of that other value-->
+                                                 VerticalOptions="End" HeightRequest="23" WidthRequest="44">--><!--This should be eventuall using StaticResource TubeGrid to dynamically change height, maybe half of that other value--><!--
                                             <BoxView.Background>
                                                 <RadialGradientBrush Center="0.5,0.0" Radius="0.5">
                                                     <GradientStop Color="#00000000" Offset="0.0"/>
@@ -223,11 +235,24 @@
                                                     <GradientStop Color="LightBlue" Offset="1"/>
                                                 </RadialGradientBrush>
                                             </BoxView.Background>
-                                        </BoxView>
+                                        </BoxView>-->
                                     </Grid>
                                 </Border>
-                                <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center" WidthRequest="48"
-                                    Background="LightBlue" CornerRadius="0,0,5,5"/>
+
+                                <!--flask neck:-->
+                                <Border Margin="0,4,0,0" Style="{StaticResource FlaskNeck}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center" WidthRequest="48"
+                                    BackgroundColor="LightBlue" StrokeShape="RoundRectangle 0,0,5,5" StrokeThickness="0">
+                                    <!--flask gleam:-->
+                                    <BoxView BackgroundColor="Transparent">
+                                        <BoxView.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <GradientStop Color="Transparent" Offset="0"/>
+                                                <GradientStop Color="#4FFFFFFF" Offset="0.10"/>
+                                                <GradientStop Color="Transparent" Offset="0.25"/>
+                                            </LinearGradientBrush>
+                                        </BoxView.Background>
+                                    </BoxView>
+                                </Border>
 
                                 <BoxView
                                     IsVisible="{Binding DisplayPourEffect, Mode=TwoWay}"

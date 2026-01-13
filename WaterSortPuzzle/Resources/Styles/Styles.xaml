@@ -588,12 +588,12 @@
             </DataTrigger>-->
         </Style.Triggers>
     </Style>
-    <Style TargetType="BoxView" x:Key="TubeBoxView">
+    <Style TargetType="Border" x:Key="FlaskNeck">
         <Style.Triggers>
-            <DataTrigger Value="0" TargetType="BoxView" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
+            <DataTrigger Value="0" TargetType="Border" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
                 <Setter Property="WidthRequest" Value="48" />
             </DataTrigger>
-            <DataTrigger Value="1" TargetType="BoxView" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
+            <DataTrigger Value="1" TargetType="Border" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
                 <Setter Property="WidthRequest" Value="36" />
             </DataTrigger>
             <!--<DataTrigger Value="2" TargetType="BoxView" Binding="{Binding Path=BindingContext.TubeStyle, Source={RelativeSource AncestorType={x:Type CollectionView}}}">
