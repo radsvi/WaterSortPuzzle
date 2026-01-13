@@ -202,6 +202,28 @@
                                                 <!--TranslationY="{x:Static models:Constants.RippleEffectOffset}"-->
                                             </AbsoluteLayout>
                                         </Grid>
+
+                                        <BoxView
+                                            BackgroundColor="Transparent">
+                                            <BoxView.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="LightBlue" Offset="0"/>
+                                                    <GradientStop Color="#00000000" Offset="0.1"/>
+                                                    <GradientStop Color="#00000000" Offset="0.9"/>
+                                                    <GradientStop Color="LightBlue" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </BoxView.Background>
+                                        </BoxView>
+                                        <BoxView BackgroundColor="Red"
+                                                 VerticalOptions="End" HeightRequest="23" WidthRequest="44"><!--This should be eventuall using StaticResource TubeGrid to dynamically change height, maybe half of that other value-->
+                                            <BoxView.Background>
+                                                <RadialGradientBrush Center="0.5,0.0" Radius="0.5">
+                                                    <GradientStop Color="#00000000" Offset="0.0"/>
+                                                    <GradientStop Color="#00FF0000" Offset="0.9"/>
+                                                    <GradientStop Color="LightBlue" Offset="1"/>
+                                                </RadialGradientBrush>
+                                            </BoxView.Background>
+                                        </BoxView>
                                     </Grid>
                                 </Border>
                                 <BoxView Margin="0,4,0,0" Style="{StaticResource TubeBoxView}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center" WidthRequest="48"
@@ -249,7 +271,7 @@
                     <Label Text="Game locked while automatic solution is engaged." TextColor="White" Margin="1" FontSize="9" />
                 </Border>
             </Grid>
-
+            
             <!--#endregion-->
             
             <!--#region Bottom section -->
