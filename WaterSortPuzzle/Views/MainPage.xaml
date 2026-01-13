@@ -98,13 +98,7 @@
 
             <!--#endregion-->
 
-            <!-- // Mid section // -->
-            <!-- // Notification Overlay // -->
-            <!--<ScrollView VerticalOptions="Start" HeightRequest="62" Grid.Row="1">
-            <StackLayout VerticalOptions="Start" x:Name="NotificationBox" />
-            
-            <controls:QuickNotificationOverlay Title="Testovaci notifikace"/>
-        </ScrollView>-->
+            <!--#region // Mid section // -->
 
             <!-- // Grid for Tubes // -->
 
@@ -226,33 +220,6 @@
                     </bl:BindableLayout.ItemTemplate>
                 </AbsoluteLayout>
 
-
-                
-                <!--<StackLayout x:Name="TestingStack" Orientation="Horizontal" Grid.Row="1" BackgroundColor="AliceBlue" HorizontalOptions="Start" VerticalOptions="Start" >
-                    <Button Text="←" Command="{Binding MoveGifLeftCommand}" />
-                    <Button Text="→" Command="{Binding MoveGifRightCommand}" />
-                    <Button Text="↑" Command="{Binding MoveGifUpCommand}" />
-                    <Button Text="↓" Command="{Binding MoveGifDownCommand}" />
-                    <Label Text="{Binding TubesItemsSource[1].XPos, StringFormat=' x: {0}'}" TextColor="Black" />
-                    <Label Text="{Binding TubesItemsSource[1].YPos, StringFormat=' y: {0}'}" TextColor="Black" />
-                </StackLayout>-->
-
-                
-                <!--<Border
-                    Padding="10"
-                    StrokeShape="RoundRectangle 30"
-                    StrokeThickness="0"
-                    BackgroundColor="#70000000"
-                    Margin="10"
-                    >
-                    <Border.Shadow>
-                        <Shadow Brush="#40000000"
-                            Offset="0,0"
-                            Radius="10"
-                             />
-                    </Border.Shadow>
-                </Border>-->
-                <!-- Semi transparent overlay when autosolve is in progress -->
                 <Border
                     IsVisible="{Binding GrayOutMiddleOfTheScreen}"
                     StrokeThickness="0"
@@ -283,6 +250,8 @@
                 </Border>
             </Grid>
 
+            <!--#endregion-->
+            
             <!--#region Bottom section -->
             
             <!-- // Bottom Bar // -->
