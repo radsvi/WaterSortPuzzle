@@ -90,6 +90,12 @@ namespace WaterSortPuzzle.Models
             double difficultyMultiplier = (double)colorCount / Constants.ColorCount;
             var scoreMultiplier = (int)(Constants.DefaultScoreMultiplier * difficultyMultiplier);
 
+            // sometimes it doesn't increase score on the very first level, and I haven't figured out why, or even when it happens
+            // so introducing this workaround to hopefully make it work correctly always:
+
+            if (scoreMultiplier == 0)
+                scoreMultiplier = 6;
+
             Score += scoreMultiplier;
         }
         public void CalculateNextLevelParameters()
