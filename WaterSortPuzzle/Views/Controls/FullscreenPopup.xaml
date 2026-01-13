@@ -42,8 +42,8 @@
     
     <Grid Padding="25,50" RowDefinitions="auto,10*,auto,2*">
         <Grid Margin="0,100,0,0">
-            <Image Source="ribbon_tall.png" Margin="0,19,0,0" />
-            <Label Text="{Binding Title}" Style="{StaticResource Title}" />
+            <Image Source="ribbon_tall_text.png" Margin="0,19,0,0" />
+            <!--<Label Text="{Binding Title}" Style="{StaticResource Title}" />-->
         </Grid>
 
 
