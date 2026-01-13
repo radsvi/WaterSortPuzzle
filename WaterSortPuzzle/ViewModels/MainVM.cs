@@ -293,7 +293,7 @@ namespace WaterSortPuzzle.ViewModels
             SavedGameState lastGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 1];
 
             PropertyChangedEventPaused = true;
-            GameState.BoardState.Grid = lastGameStatus.Grid;
+            GameState.BoardState.Grid = lastGameStatus.BoardState.Grid;
             //GameState.RestoreGameState(lastGameStatus);
             PropertyChangedEventPaused = false;
 

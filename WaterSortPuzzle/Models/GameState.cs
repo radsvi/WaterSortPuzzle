@@ -436,7 +436,7 @@ namespace WaterSortPuzzle.Models
             {
                 return true;
             }
-            if (LastGameState.Grid.Length != BoardState.Grid.Length) // pokud jen pridavam extra prazdnou zkumavku tak to neukladat!
+            if (LastGameState.BoardState.Grid.Length != BoardState.Grid.Length) // pokud jen pridavam extra prazdnou zkumavku tak to neukladat!
             {
                 return true;
             }
@@ -445,15 +445,15 @@ namespace WaterSortPuzzle.Models
             {
                 for (int y = 0; y < BoardState.Grid.GetLength(1); y++)
                 {
-                    if (LastGameState.Grid[x, y] is null && BoardState.Grid[x, y] is null)
+                    if (LastGameState.BoardState.Grid[x, y] is null && BoardState.Grid[x, y] is null)
                     {
                         continue;
                     }
-                    if (LastGameState.Grid[x, y] is null && BoardState.Grid[x, y] is not null || LastGameState.Grid[x, y] is not null && BoardState.Grid[x, y] is null)
+                    if (LastGameState.BoardState.Grid[x, y] is null && BoardState.Grid[x, y] is not null || LastGameState.BoardState.Grid[x, y] is not null && BoardState.Grid[x, y] is null)
                     {
                         return true;
                     }
-                    if (LastGameState.Grid[x,y].Name != BoardState.Grid[x,y].Name)
+                    if (LastGameState.BoardState.Grid[x,y].Name != BoardState.Grid[x,y].Name)
                     {
                         return true;
                     }
@@ -509,7 +509,7 @@ namespace WaterSortPuzzle.Models
             string exportString = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + "\n";
             foreach (var savedState in SavedGameStates)
             {
-                exportString += BoardState.BoardStateToString(savedState.Grid, StringFormat.Names, true) + "\n";
+                exportString += BoardState.BoardStateToString(savedState.BoardState.Grid, StringFormat.Names, true) + "\n";
             }
             exportString += BoardState.BoardStateToString(BoardState.Grid, StringFormat.Names) + "\n";
             exportString += "===================================\n";
