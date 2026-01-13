@@ -144,17 +144,17 @@
                 Preferences.Set(nameof(GameStateBeforeSleep) + "_Serialized", savedLevelList);
             }
         }
-        public ObservableCollection<SavedGameState> SavedGameStatesBeforeSleep
+        public ObservableCollection<SavedGameState> SavedGameStatesBeforeSleepV2
         {
             get
             {
-                string serialized = Preferences.Default.Get(nameof(SavedGameStatesBeforeSleep) + "_Serialized", string.Empty);
+                string serialized = Preferences.Default.Get(nameof(SavedGameStatesBeforeSleepV2) + "_Serialized", string.Empty);
                 return JsonConvert.DeserializeObject<ObservableCollection<SavedGameState>>(serialized)!;
             }
             set
             {
                 string savedLevelList = JsonConvert.SerializeObject(value);
-                Preferences.Set(nameof(SavedGameStatesBeforeSleep) + "_Serialized", savedLevelList);
+                Preferences.Set(nameof(SavedGameStatesBeforeSleepV2) + "_Serialized", savedLevelList);
             }
         }
         public int StepBackPressesCounter

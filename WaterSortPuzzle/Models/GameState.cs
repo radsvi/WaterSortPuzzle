@@ -570,7 +570,7 @@ namespace WaterSortPuzzle.Models
             StartingPosition = GridHelper.CloneGrid(BoardState.Grid);
             appPreferences.LastLevelBeforeClosing = new StoredLevel(StartingPosition, "Last level");
             appPreferences.StepBackPressesCounter = StepBackPressesCounter;
-            appPreferences.SavedGameStatesBeforeSleep = new ObservableCollection<SavedGameState>();
+            appPreferences.SavedGameStatesBeforeSleepV2 = new ObservableCollection<SavedGameState>();
         }
         public void SaveGameStateOnSleep()
         {
@@ -582,15 +582,15 @@ namespace WaterSortPuzzle.Models
                 copySavedGameStates.Add(savedGameState);
             }
             copySavedGameStates.Add(LastGameState);
-            appPreferences.SavedGameStatesBeforeSleep = copySavedGameStates;
+            appPreferences.SavedGameStatesBeforeSleepV2 = copySavedGameStates;
             appPreferences.StepBackPressesCounter = StepBackPressesCounter;
         }
         private void LoadGameState()
         {
-            if (appPreferences.SavedGameStatesBeforeSleep is not null && appPreferences.SavedGameStatesBeforeSleep.Count > 0)
+            if (appPreferences.SavedGameStatesBeforeSleepV2 is not null && appPreferences.SavedGameStatesBeforeSleepV2.Count > 0)
             {
-                LastGameState = appPreferences.SavedGameStatesBeforeSleep.Last();
-                SavedGameStates = appPreferences.SavedGameStatesBeforeSleep;
+                LastGameState = appPreferences.SavedGameStatesBeforeSleepV2.Last();
+                SavedGameStates = appPreferences.SavedGameStatesBeforeSleepV2;
                 SavedGameStates.Remove(SavedGameStates.Last());
                 StepBackPressesCounter = appPreferences.StepBackPressesCounter;
 
