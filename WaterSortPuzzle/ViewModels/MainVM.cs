@@ -6,7 +6,7 @@ namespace WaterSortPuzzle.ViewModels
     public partial class MainVM : ViewModelBase
     {
         #region Constructor
-        public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve, Leveling leveling, IConfirmationPopupService popupService)
+        public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve, Leveling leveling, IConfirmationPopupService popupService, IServiceProvider  serviceProvider)
         {
             AppPreferences = appPreferences;
             GameState = gameState;
@@ -14,6 +14,7 @@ namespace WaterSortPuzzle.ViewModels
             AutoSolve = autoSolve;
             Leveling = leveling;
             this.popupService = popupService;
+            this.serviceProvider = serviceProvider;
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
             GameState.SavedGameStates.CollectionChanged += CollectionChangedHandler;
@@ -189,6 +190,7 @@ namespace WaterSortPuzzle.ViewModels
         }
         private bool uiEnabled = true; // also used to mean that level is completed
         private readonly IConfirmationPopupService popupService;
+        private readonly IServiceProvider serviceProvider;
 
         public bool UIEnabled
         {
@@ -337,37 +339,27 @@ namespace WaterSortPuzzle.ViewModels
         //[RelayCommand]
         //async Task NavigateToOptions() => await AppShell.Current.GoToAsync(nameof(OptionsPage));
         [RelayCommand]
-        public async Task NavigateToPage(PopupParams menuItem)
+        public async Task NavigateToPage(Type obj)
         {
-            //string destination;
-            //switch (menuItem)
-            //{
-            //    case PopupParams.OptionsPage:
-            //        destination = nameof(OptionsPage);
-            //        break;
-            //    //case PopupParams.LoadLevelPage:
-            //    //    destination = nameof(LoadLevelPage);
-            //    //    break;
-            //    default:
-            //        return;
-            //}
+            //if (Activator.CreateInstance(obj) is not Page page)
+            //    throw new InvalidCastException($"Expected type Page but got {obj.GetType().Name}");
+
+            Page page = ActivatorUtilities.CreateInstance(serviceProvider, obj) as Page
+                ?? throw new NullReferenceException($"page variable is null");
 
             string route;
-            if (menuItem == PopupParams.MainPage)
-            {
-                route = "///" + menuItem.ToString();
-            }
+            if (page.Title == nameof(MainPage))
+                route = $"///{page.GetType().Name}";
             else
-            {
-                route = menuItem.ToString();
-            }
+                route = $"{page.GetType().Name}";
 
             if (Shell.Current.FlyoutIsPresented is true)
                 Shell.Current.FlyoutIsPresented = false;
+
             await AppShell.Current.GoToAsync(route);
         }
         [RelayCommand]
-        public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
+        public static async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
         [RelayCommand]
         private async Task NavigationMenuPopup(PopupParams menuItem)
         {
@@ -388,13 +380,9 @@ namespace WaterSortPuzzle.ViewModels
                     break;
                 case PopupParams.LevelComplete:
                     if (AutoSolveUsed)
-                    {
                         answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("YOU WIN", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
-                    }
                     else
-                    {
                         answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("YOU WIN", "Congratulation! You won!", "Next level", "Restart level");
-                    }
 
                     if (answer)
                         GenerateNewLevel();

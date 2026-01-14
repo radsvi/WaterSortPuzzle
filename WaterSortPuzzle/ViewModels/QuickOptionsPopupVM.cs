@@ -30,10 +30,10 @@ namespace WaterSortPuzzle.ViewModels
         }
 
         [RelayCommand]
-        private async Task NavigateToPage(PopupParams menuItem)
+        private async Task NavigateToPage(Type pageType)
         {
             await popupService.ClosePopupAsync(Shell.Current, false);
-            await mainVM.NavigateToPage(menuItem);
+            await mainVM.NavigateToPage(pageType);
         }
         [RelayCommand]
         private async Task StartAutoSolve()
