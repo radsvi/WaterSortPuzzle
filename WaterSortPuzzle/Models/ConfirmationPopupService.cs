@@ -57,7 +57,7 @@ namespace WaterSortPuzzle.Models
         }
         public async Task ShowParameterlessPopupAsync<T>() where T : QuickOptionsPopupVM
         {
-            CommunityToolkit.Maui.Core.IPopupResult<bool> result = await this.popupService.ShowPopupAsync<T, bool>(
+            await this.popupService.ShowPopupAsync<T, bool>(
                 Shell.Current,
                 options: PopupOptions.Empty);
         }

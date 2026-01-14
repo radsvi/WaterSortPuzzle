@@ -62,7 +62,12 @@
                 </StackLayout>
                 <StackLayout Orientation="Vertical" Margin="5">
                     <Grid ColumnDefinitions="*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.LevelingMode}">
-                        <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
+                        <ImageButton
+                            Source="button_options.png"
+                            Style="{StaticResource NavigationImageButton}"
+                            Command="{Binding NavigationMenuPopupCommand}"
+                            CommandParameter="{x:Static enums:PopupParams.QuickOptions}"
+                            Grid.Column="0"/>
 
                         <ImageButton
                             Source="button_restart.png"
