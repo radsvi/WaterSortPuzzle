@@ -258,7 +258,7 @@
 
                                 <!--flask neck:-->
                                 <Border Margin="0,4,0,0" Style="{StaticResource FlaskNeck}" HeightRequest="8" VerticalOptions="Start" HorizontalOptions="Center" WidthRequest="48"
-                                    BackgroundColor="LightBlue" StrokeShape="RoundRectangle 0,0,5,5" StrokeThickness="0">
+                                    BackgroundColor="#A7D1DF" StrokeShape="RoundRectangle 0,0,5,5" StrokeThickness="0">
                                     <!--flask gleam:-->
                                     <BoxView BackgroundColor="Transparent">
                                         <BoxView.Background>
