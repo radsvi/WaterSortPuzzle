@@ -146,6 +146,12 @@
                                 <Border Style="{StaticResource TubeBorder}" Margin="0,4,0,0" Background="LightBlue" InputTransparent="True"
                                     Stroke="LightBlue" StrokeThickness="1" StyleId="{x:Static models:Constants.InnerBorderElementName}"
                                     StrokeShape="RoundRectangle 0,0,28,28" >
+                                    <Border.Shadow>
+                                        <Shadow Brush="Black"
+                                            Offset="1,1"
+                                            Radius="10"
+                                            Opacity="0.8" />
+                                    </Border.Shadow>
 
                                     <Grid IsClippedToBounds="True">
                                         <Grid
