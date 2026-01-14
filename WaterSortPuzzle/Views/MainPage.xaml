@@ -77,14 +77,13 @@
                             Grid.Column="2"/>
                     </Grid>
 
-                    <Grid ColumnDefinitions="*,*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.SingleLevelMode}">
-                        <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
+                    <Grid ColumnDefinitions="*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.SingleLevelMode}">
                         <ImageButton
-                            Source="button_next_level.png"
+                            Source="button_options.png"
                             Style="{StaticResource NavigationImageButton}"
                             Command="{Binding NavigationMenuPopupCommand}"
-                            CommandParameter="{x:Static enums:PopupParams.NewLevel}"
-                            Grid.Column="1"/>
+                            CommandParameter="{x:Static enums:PopupParams.QuickOptions}"
+                            Grid.Column="0"/>
                         <ImageButton
                             Source="button_restart.png"
                             Style="{StaticResource NavigationImageButton}"
@@ -92,17 +91,11 @@
                             CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
                             Grid.Column="2"/>
                         <ImageButton
-                            Source="button_options.png"
+                            Source="button_next_level.png"
                             Style="{StaticResource NavigationImageButton}"
                             Command="{Binding NavigationMenuPopupCommand}"
-                            CommandParameter="{x:Static enums:PopupParams.QuickOptions}"
-                            Grid.Column="3"/>
-                        <!--<ImageButton
-                            Source="button_options.png"
-                            Style="{StaticResource NavigationImageButton}"
-                            Command="{Binding NavigateToPageCommand}"
-                            CommandParameter="{x:Static enums:PopupParams.OptionsPage}"
-                            Grid.Column="3"/>-->
+                            CommandParameter="{x:Static enums:PopupParams.NewLevel}"
+                            Grid.Column="1"/>
                     </Grid>
 
                     <!--<BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>-->

@@ -3,7 +3,7 @@ namespace WaterSortPuzzle
 {
     public partial class AppShell : Shell
     {
-        readonly MainVM vm;
+        //readonly MainVM vm;
         public AppShell()
         {
             InitializeComponent();
@@ -14,7 +14,7 @@ namespace WaterSortPuzzle
             //Routing.RegisterRoute(nameof(MainPage) + "/" + nameof(OptionsPage), typeof(OptionsPage));
             Routing.RegisterRoute(nameof(LoadLevelPage), typeof(LoadLevelPage));
 
-            BindingContext = vm = IPlatformApplication.Current!.Services.GetService<MainVM>()!;
+            //BindingContext = vm = IPlatformApplication.Current!.Services.GetService<MainVM>()!;
         }
         //protected override void OnNavigated(ShellNavigatedEventArgs args)
         //{

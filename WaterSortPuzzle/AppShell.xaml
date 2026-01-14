@@ -8,12 +8,13 @@
     xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
     xmlns:fontAwesome="clr-namespace:FontAwesome"
     x:DataType="viewmodels:MainVM"
-    Shell.FlyoutBehavior="Flyout"
+    Shell.FlyoutBehavior="Disabled"
     
-    Shell.BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
-    FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
+    
     
     Title="WaterSortPuzzle"><!--FlyoutBackgroundColor="#6b95ed"-->
+    <!--Shell.BackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"
+    FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"-->
     
     <!--Shell.NavBarIsVisible="False"-->
 
@@ -25,7 +26,7 @@
         <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
     </FlyoutItem>
 
-    <MenuItem Text="Options" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}">
+    <!--<MenuItem Text="Options" Command="{Binding NavigateToPageCommand}" CommandParameter="{x:Static enums:PopupParams.OptionsPage}">
         <MenuItem.IconImageSource>
             <FontImageSource Glyph="&#x2699;" FontFamily="FontAwesomeSolid" Color="{AppThemeBinding Light=Black, Dark=White}" />
         </MenuItem.IconImageSource>
@@ -34,6 +35,6 @@
         <MenuItem.IconImageSource>
             <FontImageSource Glyph="&#xf074;" FontFamily="FontAwesomeSolid" Color="{AppThemeBinding Light=Black, Dark=White}" />
         </MenuItem.IconImageSource>
-    </MenuItem>
+    </MenuItem>-->
 
 </Shell>
