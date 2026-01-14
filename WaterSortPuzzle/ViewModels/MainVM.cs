@@ -6,7 +6,14 @@ namespace WaterSortPuzzle.ViewModels
     public partial class MainVM : ViewModelBase
     {
         #region Constructor
-        public MainVM(AppPreferences appPreferences, GameState gameState, Notification notification, AutoSolve autoSolve, Leveling leveling, IConfirmationPopupService popupService, IServiceProvider  serviceProvider)
+        public MainVM(
+            AppPreferences appPreferences,
+            GameState gameState,
+            Notification notification,
+            AutoSolve autoSolve,
+            Leveling leveling,
+            IConfirmationPopupService popupService,
+            IServiceProvider serviceProvider)
         {
             AppPreferences = appPreferences;
             GameState = gameState;
@@ -361,7 +368,7 @@ namespace WaterSortPuzzle.ViewModels
         [RelayCommand]
         public static async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
         [RelayCommand]
-        private async Task NavigationMenuPopup(PopupParams menuItem)
+        public async Task NavigationMenuPopup(PopupParams menuItem)
         {
             bool answer;
             switch (menuItem)
@@ -434,15 +441,21 @@ namespace WaterSortPuzzle.ViewModels
         //        }), "Don't show this again.", "Close");
         //    });
         //}
+        [RelayCommand]
         public async Task DisplayHelpPopup()
         {
-            string text = "Separate each color into different flasks.\n";
-            text += "You can only move matching colors onto each other.\n";
-            text += "You can always move colors to empty flask.\n";
-            text += "You can add empty flasks, if you are really stuck.\n";
-            bool answer = await App.Current!.Windows[0].Page!.DisplayAlert("Help", text, "Don't show this again.", "Close");
-            if (answer)
-                AppPreferences.DontShowHelpScreenAtStart = true;
+            //string text = "Separate each color into different flasks.\n";
+            //text += "You can only move matching colors onto each other.\n";
+            //text += "You can always move colors to empty flask.\n";
+            //text += "You can add empty flasks, if you are really stuck.\n";
+            //bool answer = await App.Current!.Windows[0].Page!.DisplayAlert("Help", text, "Don't show this again.", "Close");
+
+            //await popupService.ClosePopupAsync(Shell.Current, false);
+
+            //bool answer = await popupService.ShowParameterlessPopupAsync<HelpPopupVM>();
+            await popupService.ShowParameterlessPopupAsync<HelpPopupVM>();
+            //if (answer)
+            //    AppPreferences.DontShowHelpScreenAtStart = true;
         }
         [RelayCommand(CanExecute = nameof(CanAddExtraTube))]
         private void AddExtraTube()

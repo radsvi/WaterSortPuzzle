@@ -110,7 +110,8 @@
                             IsToggled="{Binding AppPreferences.DontShowHelpScreenAtStart, Mode=TwoWay}"
                             Text="Don't show help at startup" />
 
-                    <Button Text="Open Help" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.Help}" />
+                    <!--<Button Text="Open Help" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.NavigationMenuPopupCommand}" CommandParameter="{x:Static enums:PopupParams.Help}" />-->
+                    <Button Text="Open Help" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.DisplayHelpPopupCommand}" />
                 </StackLayout>
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Developer options" IsClippedToBounds="True">

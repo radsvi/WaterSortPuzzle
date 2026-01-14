@@ -4,15 +4,15 @@
              xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
              xmlns:views="clr-namespace:WaterSortPuzzle.Views"
              xmlns:viewModels="clr-namespace:WaterSortPuzzle.ViewModels"
-             x:Class="WaterSortPuzzle.Views.Controls.QuickOptionsPopup"
+             x:Class="WaterSortPuzzle.Views.HelpPopup"
              HorizontalOptions="Fill"
              VerticalOptions="Fill"
-             BackgroundColor="#60000000"
+             BackgroundColor="#00000000"
              WidthRequest="{Binding DeviceWidth}"
              HeightRequest="{Binding DeviceHeight}"
              Margin="0"
              Padding="0"
-             x:DataType="viewModels:QuickOptionsPopupVM">
+             x:DataType="viewModels:HelpPopupVM">
     <ContentView.Resources>
         <Style TargetType="Label" BasedOn="{StaticResource BasicLabelStyle}">
             <Setter Property="TextColor" Value="White" />
@@ -48,53 +48,21 @@
 
 
     <Grid
-        Margin="50,0"
-        HeightRequest="400">
-
-        <Border
-            StrokeShape="RoundRectangle 28"
-            BackgroundColor="#2d68c4"
-                
-            StrokeThickness="0">
-            <VerticalStackLayout>
+        Margin="0"
+        >
 
 
-                <Image Source="gear_icon.png" Margin="0,25,0,25" WidthRequest="50">
-                    <Image.Shadow>
-                        <Shadow Brush="Black"
-                            Offset="1,1"
-                            Radius="15"
-                            Opacity="1" />
-                    </Image.Shadow>
-                </Image>
-
-                <Button
-                    Text="Options"
-                    Style="{StaticResource MenuButton}"
-                    Command="{Binding NavigateToPageCommand}"
-                    CommandParameter="{x:Type views:OptionsPage}" />
-                <Button
-                    Text="Display help"
-                    Style="{StaticResource MenuButton}"
-                    Command="{Binding NavigationMenuPopupCommand}"
-                    CommandParameter="{x:Static enums:PopupParams.Help}" />
-                <Button
-                    Text="Calculate solution"
-                    Style="{StaticResource MenuButton}"
-                    Command="{Binding StartAutoSolveCommand}" />
-            </VerticalStackLayout>
-        </Border>
         <Button
             Text="×"
-            FontSize="45"
+            FontSize="55"
             Padding="0,-7,0,0"
             Command="{Binding CancelCommand}"
             Style="{StaticResource Cancel}"
             VerticalOptions="Start"
             HorizontalOptions="End"
-            WidthRequest="50"
-            HeightRequest="50"
-            Margin="-10,-10"/>
+            WidthRequest="70"
+            HeightRequest="70"
+            Margin="0,50,10,0"/>
     </Grid>
 
 </ContentView>
