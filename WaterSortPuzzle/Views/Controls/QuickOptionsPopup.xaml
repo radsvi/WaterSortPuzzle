@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:WaterSortPuzzle.ViewModels"
+             x:Class="WaterSortPuzzle.Views.Controls.QuickOptionsPopup"
+             HorizontalOptions="Fill"
+             VerticalOptions="Fill"
+             BackgroundColor="#60000000"
+             WidthRequest="{Binding DeviceWidth}"
+             HeightRequest="{Binding DeviceHeight}"
+             Margin="0"
+             Padding="0"
+             x:DataType="viewModels:FullscreenPopupVM">
+    <ContentView.Resources>
+        <Style TargetType="Label" BasedOn="{StaticResource BasicLabelStyle}">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="Title">
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="Margin" Value="0,55,0,15" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="Message">
+            <Setter Property="Margin" Value="0,0,0,20" />
+        </Style>
+
+        <Style TargetType="Button" BasedOn="{StaticResource BasicButtonStyle}">
+            <Setter Property="CornerRadius" Value="50"/>
+            <Setter Property="HeightRequest" Value="60" />
+        </Style>
+
+        <Style TargetType="Button" x:Key="Confirm">
+            <Setter Property="Background" Value="Green" />
+        </Style>
+
+        <Style TargetType="Button" x:Key="Cancel">
+            <Setter Property="Background" Value="#c60" />
+        </Style>
+    </ContentView.Resources>
+    
+    <Grid Padding="25,50" RowDefinitions="auto,10*,auto,2*">
+        <Grid Margin="0,100,0,0">
+            <Image Source="ribbon_tall_text.png" Margin="0,19,0,0" />
+            <!--<Label Text="{Binding Title}" Style="{StaticResource Title}" />-->
+        </Grid>
+
+
+
+        <Label Text="{Binding Message}" Style="{StaticResource Message}" Grid.Row="1" VerticalTextAlignment="End" />
+
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="25" Grid.Row="2">
+            <Button Text="{Binding Accept}" Command="{Binding SaveCommand}" Style="{StaticResource Confirm}" />
+            <Button Text="{Binding Cancel}" Command="{Binding CancelCommand}" Style="{StaticResource Cancel}" Grid.Column="1" />
+        </Grid>
+    </Grid>
+</ContentView>
