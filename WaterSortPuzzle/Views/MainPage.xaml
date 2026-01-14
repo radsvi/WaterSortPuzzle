@@ -204,17 +204,28 @@
                                         </Grid>
 
                                         <!--flask gleam-->
-                                        <BoxView
-                                            BackgroundColor="Transparent">
-                                            <BoxView.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                    <GradientStop Color="Transparent" Offset="0"/>
-                                                    <GradientStop Color="#4FFFFFFF" Offset="0.1"/>
-                                                    <GradientStop Color="Transparent" Offset="0.2"/>
-                                                </LinearGradientBrush>
-                                            </BoxView.Background>
-                                        </BoxView>
-                                        
+                                        <Grid RowDefinitions="93*,7*">
+                                            <BoxView BackgroundColor="Transparent">
+                                                <BoxView.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Color="Transparent" Offset="0"/>
+                                                        <GradientStop Color="Transparent" Offset="0.1"/>
+                                                        <GradientStop Color="#4FFFFFFF" Offset="0.2"/>
+                                                        <GradientStop Color="Transparent" Offset="0.3"/>
+                                                    </LinearGradientBrush>
+                                                </BoxView.Background>
+                                            </BoxView>
+                                            
+                                            <BoxView BackgroundColor="Transparent" Grid.Row="1">
+                                                <BoxView.Background>
+                                                    <RadialGradientBrush Center="0.2,0" Radius="0.5">
+                                                        <GradientStop Color="#3AFFFFFF" Offset="0.0"/>
+                                                        <GradientStop Color="Transparent" Offset="0.2"/>
+                                                    </RadialGradientBrush>
+                                                </BoxView.Background>
+                                            </BoxView>
+                                        </Grid>
+
                                         <!--<BoxView
                                             BackgroundColor="Transparent">
                                             <BoxView.Background>
@@ -247,8 +258,9 @@
                                         <BoxView.Background>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                                 <GradientStop Color="Transparent" Offset="0"/>
-                                                <GradientStop Color="#4FFFFFFF" Offset="0.10"/>
-                                                <GradientStop Color="Transparent" Offset="0.25"/>
+                                                <GradientStop Color="Transparent" Offset="0.1"/>
+                                                <GradientStop Color="#4FFFFFFF" Offset="0.20"/>
+                                                <GradientStop Color="Transparent" Offset="0.35"/>
                                             </LinearGradientBrush>
                                         </BoxView.Background>
                                     </BoxView>
