@@ -34,6 +34,7 @@ namespace WaterSortPuzzle.ViewModels
             //    OnStart();
             //}
             OnStart();
+            InitializeCoachMarks();
         }
         private void PropertyChangedHandler(object? sender, PropertyChangedEventArgs e)
         {
@@ -88,6 +89,163 @@ namespace WaterSortPuzzle.ViewModels
         #region Properties
         [ObservableProperty]
         private ObservableCollection<TubeData> tubesItemsSource = new ObservableCollection<TubeData>();
+        #region CoachMarks
+        public ObservableCollection<CoachMarkItem> CoachMarks { get; } = new();
+        int _index;
+
+        public CoachMarkItem? Current { get; private set; }
+
+        //public ICommand NextCommand { get; }
+
+        private void InitializeCoachMarks()
+        {
+            CoachMarks.Add(new CoachMarkItem
+            {
+                Id = "StepBackButton",
+                Text = "One step back. Limited amount of uses per level",
+                Position = RelativePosition.TopLeft
+            });
+            CoachMarks.Add(new CoachMarkItem
+            {
+                Id = "AddExtraTubeButton",
+                Text = "Adds extra empty flask.",
+                Position = RelativePosition.Top
+            });
+            CoachMarks.Add(new CoachMarkItem
+            {
+                Id = "RestartButton",
+                Text = "Restarts the level",
+                Position = RelativePosition.BottomLeft
+            });
+            CoachMarks.Add(new CoachMarkItem
+            {
+                Id = "RestartButton2",
+                Text = "Restarts the level",
+                Position = RelativePosition.BottomLeft
+            });
+            CoachMarks.Add(new CoachMarkItem
+            {
+                Id = "NextLevelButton",
+                Text = "Generates new level",
+                Position = RelativePosition.Bottom
+            });
+            CoachMarks.Add(new CoachMarkItem
+            {
+                Id = "AutoSolveNextStepButton",
+                Text = "Next step to check automatically generated solution",
+                Position = RelativePosition.TopRight
+            });
+
+            MessagingCenter.Subscribe<CoachMarkBehavior, (string Id, Rect Bounds)>(
+                this,
+                "CoachMarkBounds",
+                (_, data) =>
+                {
+                    var mark = CoachMarks.FirstOrDefault(x => x.Id == data.Id);
+                    if (mark != null)
+                        mark.SourceBounds = data.Bounds;
+
+                    TryActivate();
+                });
+
+            //NextCommand = new Command(Next);
+        }
+        void TryActivate()
+        {
+            if (Current == null &&
+                CoachMarks.All(x => x.SourceBounds.HasValue))
+            {
+                Current = CoachMarks[0];
+                OnPropertyChanged(nameof(Current));
+            }
+        }
+        [RelayCommand]
+        void Next()
+        {
+            _index++;
+            if (_index < CoachMarks.Count)
+            {
+                Current = CoachMarks[_index];
+            }
+            else
+            {
+                Current = CoachMarks[0];
+                _index = 0;
+            }
+
+            if (Current.TargetBounds == null && Current.SourceBounds is not null)
+            {
+                Current.TargetBounds = ShiftPosition((Rect)Current.SourceBounds, Current.Position);
+            }
+
+            OnPropertyChanged(nameof(Current));
+        }
+        private static Rect ShiftPosition(Rect source, RelativePosition position)
+        {
+            const int markWidth = 200;
+            const int markHeight = 100;
+
+            Rect rect;
+            if (position == RelativePosition.Bottom)
+            {
+                rect = new Rect(
+                    (source.X + (source.Width / 2) - (markWidth / 2)),
+                    source.Y + source.Height,
+                    markWidth,
+                    markHeight);
+            }
+            else if (position == RelativePosition.BottomLeft)
+            {
+                rect = new Rect(
+                    (source.X + source.Width - markWidth),
+                    source.Y + source.Height,
+                    markWidth,
+                    markHeight);
+            }
+            else if (position == RelativePosition.BottomRight)
+            {
+                rect = new Rect(
+                    source.X,
+                    source.Y + source.Height,
+                    markWidth,
+                    markHeight);
+            }
+            else if (position == RelativePosition.Top)
+            {
+                rect = new Rect(
+                    (source.X + (source.Width / 2) - (markWidth / 2)),
+                    source.Y - markHeight,
+                    markWidth,
+                    markHeight);
+            }
+            else if (position == RelativePosition.TopLeft)
+            {
+                rect = new Rect(
+                    (source.X + source.Width - markWidth),
+                    source.Y - markHeight,
+                    markWidth,
+                    markHeight);
+            }
+            else if (position == RelativePosition.TopRight)
+            {
+                rect = new Rect(
+                    source.X,
+                    source.Y - markHeight,
+                    markWidth,
+                    markHeight);
+            }
+            else
+            {
+                rect = new Rect(
+                    source.X,
+                    source.Y,
+                    markWidth,
+                    markHeight);
+            }
+
+            return rect;
+        }
+        #endregion
         //public ObservableCollection<TubeData> TubesItemsSource
         //{
         //    get { return tubesItemsSource; }

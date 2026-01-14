@@ -9,6 +9,10 @@ namespace WaterSortPuzzle.ViewModels
 {
     public partial class HelpPopupVM : FullscreenParameterlessPopupBaseVM
     {
-        public HelpPopupVM(IPopupService popupService, MainVM mainVM) : base(popupService, mainVM) {}
+        public MainVM MainVM { get; }
+        public HelpPopupVM(IPopupService popupService, MainVM mainVM) : base(popupService, mainVM)
+        {
+            MainVM = mainVM;
+        }
     }
 }

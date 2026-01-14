@@ -46,11 +46,27 @@
         </Style>
     </ContentView.Resources>
 
+    <Grid Margin="0">
 
-    <Grid
-        Margin="0"
-        >
+        <AbsoluteLayout IsVisible="{Binding MainVM.Current}">
+            <BoxView
+                BackgroundColor="#80000000"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All" />
 
+            <Border
+                IsVisible="{Binding MainVM.Current}"
+                AbsoluteLayout.LayoutBounds="{Binding MainVM.Current.TargetBounds}"
+                AbsoluteLayout.LayoutFlags="None"
+                Padding="10">
+
+                <Label Text="{Binding MainVM.Current.Text}" />
+            </Border>
+
+            <AbsoluteLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding MainVM.NextCommand}" />
+            </AbsoluteLayout.GestureRecognizers>
+        </AbsoluteLayout>
 
         <Button
             Text="×"

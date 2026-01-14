@@ -75,7 +75,11 @@
                             Style="{StaticResource NavigationImageButton}"
                             Command="{Binding NavigationMenuPopupCommand}"
                             CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
-                            Grid.Column="2"/>
+                            Grid.Column="2">
+                            <ImageButton.Behaviors>
+                                <models:CoachMarkBehavior Id="RestartButton" />
+                            </ImageButton.Behaviors>
+                        </ImageButton>
                     </Grid>
 
                     <Grid ColumnDefinitions="*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.SingleLevelMode}">
@@ -90,13 +94,21 @@
                             Style="{StaticResource NavigationImageButton}"
                             Command="{Binding NavigationMenuPopupCommand}"
                             CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
-                            Grid.Column="2"/>
+                            Grid.Column="2">
+                            <ImageButton.Behaviors>
+                                <models:CoachMarkBehavior Id="RestartButton2" />
+                            </ImageButton.Behaviors>
+                        </ImageButton>
                         <ImageButton
                             Source="button_next_level.png"
                             Style="{StaticResource NavigationImageButton}"
                             Command="{Binding NavigationMenuPopupCommand}"
                             CommandParameter="{x:Static enums:PopupParams.NewLevel}"
-                            Grid.Column="1"/>
+                            Grid.Column="1">
+                            <ImageButton.Behaviors>
+                                <models:CoachMarkBehavior Id="NextLevelButton" />
+                            </ImageButton.Behaviors>
+                        </ImageButton>
                     </Grid>
 
                     <!--<BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>-->
@@ -347,19 +359,31 @@
                             Style="{StaticResource NavigationButton}"
                             Command="{Binding StepThroughCommand}"
                             Text="{Binding NextStepButtonText}"
-                            Grid.Column="0"/>
+                            Grid.Column="0">
+                            <Button.Behaviors>
+                                <models:CoachMarkBehavior Id="AutoSolveNextStepButton" />
+                            </Button.Behaviors>
+                        </Button>
                         <Button
                             ImageSource="{Binding AddExtraTubeImage}"
                             Style="{StaticResource NavigationButton}"
                             Command="{Binding AddExtraTubeCommand}"
                             Text=" "
-                            Grid.Column="1"/>
+                            Grid.Column="1">
+                            <Button.Behaviors>
+                                <models:CoachMarkBehavior Id="AddExtraTubeButton" />
+                            </Button.Behaviors>
+                        </Button>
                         <Button
                             ImageSource="{Binding StepBackImage}"
                             Style="{StaticResource NavigationButton}"
                             Command="{Binding StepBackCommand}"
                             Text="{Binding StepBackButtonText}"
-                            Grid.Column="2"/>
+                            Grid.Column="2">
+                            <Button.Behaviors>
+                                <models:CoachMarkBehavior Id="StepBackButton" />
+                            </Button.Behaviors>
+                        </Button>
                     </Grid>
                 </Grid>
 
