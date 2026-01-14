@@ -499,6 +499,14 @@
         <Setter Property="WidthRequest" Value="66" />
         <Setter Property="BorderWidth" Value="0" />
         <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="Black"
+                        Offset="1,1"
+                        Radius="10"
+                        Opacity="1" />
+            </Setter.Value>
+        </Setter>
     </Style>
     <Style x:Key="NavigationButton" TargetType="Button">
         <Setter Property="Margin" Value="0,0,0,0" />
@@ -513,6 +521,14 @@
         <Setter Property="BorderWidth" Value="0" />
         <Setter Property="CornerRadius" Value="50" />
         <Setter Property="TextColor" Value="White" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="Black"
+                        Offset="1,1"
+                        Radius="10"
+                        Opacity="1" />
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="NavigationButtonAdvancedSettings" TargetType="Button">
