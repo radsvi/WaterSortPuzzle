@@ -10,7 +10,7 @@
              HeightRequest="{Binding DeviceHeight}"
              Margin="0"
              Padding="0"
-             x:DataType="viewModels:FullscreenPopupVM">
+             x:DataType="viewModels:QuickOptionsPopupVM">
     <ContentView.Resources>
         <Style TargetType="Label" BasedOn="{StaticResource BasicLabelStyle}">
             <Setter Property="TextColor" Value="White" />
@@ -48,11 +48,11 @@
 
 
 
-        <Label Text="{Binding Message}" Style="{StaticResource Message}" Grid.Row="1" VerticalTextAlignment="End" />
+        <Label Text="msg" Style="{StaticResource Message}" Grid.Row="1" VerticalTextAlignment="End" />
 
         <Grid ColumnDefinitions="*,*" ColumnSpacing="25" Grid.Row="2">
-            <Button Text="{Binding Accept}" Command="{Binding SaveCommand}" Style="{StaticResource Confirm}" />
-            <Button Text="{Binding Cancel}" Command="{Binding CancelCommand}" Style="{StaticResource Cancel}" Grid.Column="1" />
+            <Button Text="1" Command="{Binding SaveCommand}" Style="{StaticResource Confirm}" />
+            <Button Text="2" Command="{Binding CancelCommand}" Style="{StaticResource Cancel}" Grid.Column="1" />
         </Grid>
     </Grid>
 </ContentView>

@@ -404,6 +404,9 @@ namespace WaterSortPuzzle.ViewModels
                 case PopupParams.Help:
                     await DisplayHelpPopup();
                     break;
+                case PopupParams.QuickOptions:
+                    await popupService.ShowParameterlessPopupAsync<QuickOptionsPopupVM>();
+                    break;
                     //case PopupParams.LoadLevel:
 
                     //    break;

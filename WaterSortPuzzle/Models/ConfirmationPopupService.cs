@@ -12,6 +12,7 @@ namespace WaterSortPuzzle.Models
         //Task<bool> ShowPopupAsync(string title, string message, string accept, string cancel);
         //Task<bool> ShowFullscreenPopupAsync(string title, string message, string accept, string cancel);
         Task<bool> ShowPopupAsync<T>(string title, string message, string accept, string cancel) where T : CustomPopupVM;
+        Task ShowParameterlessPopupAsync<T>() where T : QuickOptionsPopupVM;
     }
 
     public class ConfirmationPopupService : IConfirmationPopupService
@@ -53,6 +54,12 @@ namespace WaterSortPuzzle.Models
             {
                 return false;
             }
+        }
+        public async Task ShowParameterlessPopupAsync<T>() where T : QuickOptionsPopupVM
+        {
+            CommunityToolkit.Maui.Core.IPopupResult<bool> result = await this.popupService.ShowPopupAsync<T, bool>(
+                Shell.Current,
+                options: PopupOptions.Empty);
         }
     }
 }

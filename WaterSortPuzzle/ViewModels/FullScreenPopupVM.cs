@@ -7,15 +7,8 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.ViewModels
 {
-    public class FullscreenPopupVM : CustomPopupVM
+    public partial class FullscreenPopupVM : FullscreenPopupBaseVM
     {
-        public double DeviceWidth { get; set; }
-        public double DeviceHeight { get; set; }
-        public FullscreenPopupVM(IPopupService popupService) : base(popupService)
-        {
-            var displayInfo = DeviceDisplay.MainDisplayInfo;
-            DeviceWidth = displayInfo.Width / displayInfo.Density;
-            DeviceHeight = displayInfo.Height / displayInfo.Density;
-        }
+        public FullscreenPopupVM(IPopupService popupService) : base(popupService) {}
     }
 }
