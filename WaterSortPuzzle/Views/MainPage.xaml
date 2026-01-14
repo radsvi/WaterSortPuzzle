@@ -27,74 +27,78 @@
             />
 
         <Grid RowDefinitions="auto,*,auto" VerticalOptions="Fill">
-
-
             <!--#region Top section -->
 
-            <!--<Border HorizontalOptions="Start" Background="White" HeightRequest="40">
-            <Label Text="{Binding DrawTubesCounter}" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-        </Border>-->
+            <Border Background="#687488"
+                Stroke="LightBlue" StrokeThickness="0"
+                StrokeShape="RoundRectangle 0,0,28,28" Margin="20,0" >
+                <Border.Shadow>
+                    <Shadow Brush="Black"
+                        Offset="0,0"
+                        Radius="20"
+                        Opacity="1" />
+                </Border.Shadow>
+                <Grid>
 
-            <!-- // Top Bar // -->
-
-
-            <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.LevelingMode}" HorizontalOptions="Center">
-                <Label 
+                    <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.LevelingMode}" HorizontalOptions="Center">
+                        <Label 
                     Text="{Binding Leveling.Level, StringFormat='Level {0}'}"
                     TextColor="White"
                     FontSize="35"
                     VerticalTextAlignment="Center"
                     Margin="0,10,0,0"
                     >
-                    <Label.Shadow>
-                        <Shadow Brush="Black"
+                            <Label.Shadow>
+                                <Shadow Brush="Black"
                                 Offset="1,1"
                                 Radius="10"
                                 Opacity="1" />
-                    </Label.Shadow>
-                </Label>
-                <Label
+                            </Label.Shadow>
+                        </Label>
+                        <Label
                     Text="{Binding Leveling.Score, StringFormat='Score: {0}'}"
                     TextColor="White"
                     HorizontalTextAlignment="Center"
                     />
-            </StackLayout>
-            <StackLayout Orientation="Vertical" Margin="5">
-                <Grid ColumnDefinitions="*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.LevelingMode}">
-                    <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical" Margin="5">
+                        <Grid ColumnDefinitions="*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.LevelingMode}">
+                            <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
 
-                    <ImageButton
+                            <ImageButton
                         Source="button_restart.png"
                         Style="{StaticResource NavigationImageButton}"
                         Command="{Binding NavigationMenuPopupCommand}"
                         CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
                         Grid.Column="2"/>
-                </Grid>
+                        </Grid>
 
-                <Grid ColumnDefinitions="*,*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.SingleLevelMode}">
-                    <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
-                    <ImageButton
+                        <Grid ColumnDefinitions="*,*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.SingleLevelMode}">
+                            <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
+                            <ImageButton
                         Source="button_next_level.png"
                         Style="{StaticResource NavigationImageButton}"
                         Command="{Binding NavigationMenuPopupCommand}"
                         CommandParameter="{x:Static enums:PopupParams.NewLevel}"
                         Grid.Column="1"/>
-                    <ImageButton
+                            <ImageButton
                         Source="button_restart.png"
                         Style="{StaticResource NavigationImageButton}"
                         Command="{Binding NavigationMenuPopupCommand}"
                         CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
                         Grid.Column="2"/>
-                    <ImageButton
+                            <ImageButton
                         Source="button_options.png"
                         Style="{StaticResource NavigationImageButton}"
                         Command="{Binding NavigateToPageCommand}"
                         CommandParameter="{x:Static enums:PopupParams.OptionsPage}"
                         Grid.Column="3"/>
-                </Grid>
+                        </Grid>
 
-                <!--<BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>-->
-            </StackLayout>
+                        <!--<BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>-->
+                    </StackLayout>
+                </Grid>
+            </Border>
 
             <!--#endregion-->
 
