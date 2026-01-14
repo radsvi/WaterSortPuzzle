@@ -29,76 +29,75 @@
         <Grid RowDefinitions="auto,*,auto" VerticalOptions="Fill">
             <!--#region Top section -->
 
-            <Border Background="#687488"
-                Stroke="LightBlue" StrokeThickness="0"
-                StrokeShape="RoundRectangle 0,0,28,28" Margin="20,0" >
-                <Border.Shadow>
-                    <Shadow Brush="Black"
-                        Offset="0,0"
-                        Radius="20"
-                        Opacity="1" />
-                </Border.Shadow>
-                <Grid>
 
-                    <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.LevelingMode}" HorizontalOptions="Center">
-                        <Label 
-                    Text="{Binding Leveling.Level, StringFormat='Level {0}'}"
-                    TextColor="White"
-                    FontSize="35"
-                    VerticalTextAlignment="Center"
-                    Margin="0,10,0,0"
-                    >
-                            <Label.Shadow>
-                                <Shadow Brush="Black"
-                                Offset="1,1"
-                                Radius="10"
-                                Opacity="1" />
-                            </Label.Shadow>
-                        </Label>
-                        <Label
-                    Text="{Binding Leveling.Score, StringFormat='Score: {0}'}"
-                    TextColor="White"
-                    HorizontalTextAlignment="Center"
-                    />
-                    </StackLayout>
-                    <StackLayout Orientation="Vertical" Margin="5">
-                        <Grid ColumnDefinitions="*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.LevelingMode}">
-                            <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
+            <Grid Padding="0,0,0,15">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#7B000000" Offset="0"/>
+                        <GradientStop Color="#7B000000" Offset="0.8"/>
+                        <GradientStop Color="Transparent" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
 
-                            <ImageButton
-                        Source="button_restart.png"
-                        Style="{StaticResource NavigationImageButton}"
-                        Command="{Binding NavigationMenuPopupCommand}"
-                        CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
-                        Grid.Column="2"/>
-                        </Grid>
+                <StackLayout Orientation="Vertical" IsVisible="{Binding AppPreferences.LevelingMode}" HorizontalOptions="Center">
+                    <Label 
+                        Text="{Binding Leveling.Level, StringFormat='Level {0}'}"
+                        TextColor="White"
+                        FontSize="35"
+                        VerticalTextAlignment="Center"
+                        Margin="0,10,0,0"
+                        >
+                        <Label.Shadow>
+                            <Shadow Brush="Black"
+                            Offset="1,1"
+                            Radius="10"
+                            Opacity="1" />
+                        </Label.Shadow>
+                    </Label>
+                    <Label
+                        Text="{Binding Leveling.Score, StringFormat='Score: {0}'}"
+                        TextColor="White"
+                        HorizontalTextAlignment="Center"
+                        />
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Margin="5">
+                    <Grid ColumnDefinitions="*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.LevelingMode}">
+                        <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
 
-                        <Grid ColumnDefinitions="*,*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.SingleLevelMode}">
-                            <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
-                            <ImageButton
-                        Source="button_next_level.png"
-                        Style="{StaticResource NavigationImageButton}"
-                        Command="{Binding NavigationMenuPopupCommand}"
-                        CommandParameter="{x:Static enums:PopupParams.NewLevel}"
-                        Grid.Column="1"/>
-                            <ImageButton
-                        Source="button_restart.png"
-                        Style="{StaticResource NavigationImageButton}"
-                        Command="{Binding NavigationMenuPopupCommand}"
-                        CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
-                        Grid.Column="2"/>
-                            <ImageButton
-                        Source="button_options.png"
-                        Style="{StaticResource NavigationImageButton}"
-                        Command="{Binding NavigateToPageCommand}"
-                        CommandParameter="{x:Static enums:PopupParams.OptionsPage}"
-                        Grid.Column="3"/>
-                        </Grid>
+                        <ImageButton
+                            Source="button_restart.png"
+                            Style="{StaticResource NavigationImageButton}"
+                            Command="{Binding NavigationMenuPopupCommand}"
+                            CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
+                            Grid.Column="2"/>
+                    </Grid>
 
-                        <!--<BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>-->
-                    </StackLayout>
-                </Grid>
-            </Border>
+                    <Grid ColumnDefinitions="*,*,*,*" HorizontalOptions="Fill" IsVisible="{Binding AppPreferences.SingleLevelMode}">
+                        <Button Style="{StaticResource FlyoutButton}" Command="{Binding OpenFlyoutCommand}" FontFamily="FontAwesomeSolid" HorizontalOptions="Start" />
+                        <ImageButton
+                            Source="button_next_level.png"
+                            Style="{StaticResource NavigationImageButton}"
+                            Command="{Binding NavigationMenuPopupCommand}"
+                            CommandParameter="{x:Static enums:PopupParams.NewLevel}"
+                            Grid.Column="1"/>
+                        <ImageButton
+                            Source="button_restart.png"
+                            Style="{StaticResource NavigationImageButton}"
+                            Command="{Binding NavigationMenuPopupCommand}"
+                            CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
+                            Grid.Column="2"/>
+                        <ImageButton
+                            Source="button_options.png"
+                            Style="{StaticResource NavigationImageButton}"
+                            Command="{Binding NavigateToPageCommand}"
+                            CommandParameter="{x:Static enums:PopupParams.OptionsPage}"
+                            Grid.Column="3"/>
+                    </Grid>
+
+                    <!--<BoxView Style="{StaticResource Separator}" Margin="0,4,0,0"/>-->
+                </StackLayout>
+            </Grid>
+
 
             <!--#endregion-->
 
@@ -325,10 +324,17 @@
             
             <!-- // Bottom Bar // -->
 
-            <StackLayout Orientation="Vertical" Grid.Row="2" Margin="5">
+            <StackLayout Orientation="Vertical" Grid.Row="2" Margin="0">
                 <!--<BoxView Style="{StaticResource Separator}" Margin="0,0,0,4"/>-->
 
-                <Grid>
+                <Grid Padding="0,25,0,0">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="Transparent" Offset="0"/>
+                            <GradientStop Color="#7B000000" Offset="0.2"/>
+                            <GradientStop Color="#7B000000" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
                         <Button
                             IsVisible="{Binding AutoSolve.Solved}"
