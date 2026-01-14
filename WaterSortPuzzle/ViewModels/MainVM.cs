@@ -234,7 +234,7 @@ namespace WaterSortPuzzle.ViewModels
             }
         }
         [RelayCommand]
-        void StartAutoSolve()
+        public void StartAutoSolve()
         {
             AutoSolve?.Start();
             AutoSolveUsed = true;
@@ -337,7 +337,7 @@ namespace WaterSortPuzzle.ViewModels
         //[RelayCommand]
         //async Task NavigateToOptions() => await AppShell.Current.GoToAsync(nameof(OptionsPage));
         [RelayCommand]
-        async Task NavigateToPage(PopupParams menuItem)
+        public async Task NavigateToPage(PopupParams menuItem)
         {
             //string destination;
             //switch (menuItem)

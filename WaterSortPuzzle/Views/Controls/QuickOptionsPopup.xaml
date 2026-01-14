@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
              xmlns:viewModels="clr-namespace:WaterSortPuzzle.ViewModels"
              x:Class="WaterSortPuzzle.Views.Controls.QuickOptionsPopup"
              HorizontalOptions="Fill"
@@ -34,25 +35,60 @@
         <Style TargetType="Button" x:Key="Confirm">
             <Setter Property="Background" Value="Green" />
         </Style>
+        
+        <Style TargetType="Button" x:Key="MenuButton">
+            <Setter Property="Margin" Value="30,10,30,0" />
+        </Style>
 
         <Style TargetType="Button" x:Key="Cancel">
-            <Setter Property="Background" Value="#c60" />
+            <Setter Property="Background" Value="OrangeRed" />
         </Style>
     </ContentView.Resources>
-    
-    <Grid Padding="25,50" RowDefinitions="auto,10*,auto,2*">
-        <Grid Margin="0,100,0,0">
-            <Image Source="ribbon_tall_text.png" Margin="0,19,0,0" />
-            <!--<Label Text="{Binding Title}" Style="{StaticResource Title}" />-->
-        </Grid>
 
 
+    <Grid
+        Margin="50,0"
+        HeightRequest="400">
 
-        <Label Text="msg" Style="{StaticResource Message}" Grid.Row="1" VerticalTextAlignment="End" />
+        <Border
+            StrokeShape="RoundRectangle 28"
+            BackgroundColor="#2d68c4"
+                
+            StrokeThickness="0">
+            <VerticalStackLayout>
 
-        <Grid ColumnDefinitions="*,*" ColumnSpacing="25" Grid.Row="2">
-            <Button Text="1" Command="{Binding SaveCommand}" Style="{StaticResource Confirm}" />
-            <Button Text="2" Command="{Binding CancelCommand}" Style="{StaticResource Cancel}" Grid.Column="1" />
-        </Grid>
+
+                <Image Source="gear_icon.png" Margin="0,25,0,25" WidthRequest="50">
+                    <Image.Shadow>
+                        <Shadow Brush="Black"
+                            Offset="1,1"
+                            Radius="15"
+                            Opacity="1" />
+                    </Image.Shadow>
+                </Image>
+
+                <Button
+                    Text="Options"
+                    Style="{StaticResource MenuButton}"
+                    Command="{Binding NavigateToPageCommand}"
+                    CommandParameter="{x:Static enums:PopupParams.OptionsPage}" />
+                <Button
+                    Text="Calculate solution"
+                    Style="{StaticResource MenuButton}"
+                    Command="{Binding StartAutoSolveCommand}" />
+            </VerticalStackLayout>
+        </Border>
+        <Button
+            Text="×"
+            FontSize="45"
+            Padding="0,-7,0,0"
+            Command="{Binding CancelCommand}"
+            Style="{StaticResource Cancel}"
+            VerticalOptions="Start"
+            HorizontalOptions="End"
+            WidthRequest="50"
+            HeightRequest="50"
+            Margin="-10,-10"/>
     </Grid>
+
 </ContentView>
