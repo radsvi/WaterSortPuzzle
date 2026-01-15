@@ -3,6 +3,7 @@
     x:Class="WaterSortPuzzle.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:views="clr-namespace:WaterSortPuzzle.Views"
     xmlns:viewmodels="clr-namespace:WaterSortPuzzle.ViewModels"
     xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
@@ -17,7 +18,11 @@
     FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}"-->
     
     <!--Shell.NavBarIsVisible="False"-->
-
+    <Shell.Behaviors>
+        <toolkit:StatusBarBehavior
+        StatusBarColor="Black"
+        StatusBarStyle="LightContent" />
+    </Shell.Behaviors>
     <FlyoutItem Title="Home" Route="MainPage" FlyoutItemIsVisible="True">
         <FlyoutItem.Icon>
             <!--<FontImageSource FontFamily="FontAwesomeRegular" Glyph="{x:Static fontAwesome:FontAwesomeIcons.AddressBook}"/>-->
