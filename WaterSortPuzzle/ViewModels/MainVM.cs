@@ -365,6 +365,19 @@ namespace WaterSortPuzzle.ViewModels
                 OnPropertyChanged(nameof(TubeStyle));
             }
         }
+        private Thickness marginForFlasksGrid;
+        public Thickness MarginForFlasksGrid
+        {
+            get { return marginForFlasksGrid; }
+            private set
+            {
+                if (value != marginForFlasksGrid)
+                {
+                    marginForFlasksGrid = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public int TubeStyle
         {
             get
@@ -1014,14 +1027,19 @@ namespace WaterSortPuzzle.ViewModels
         }
         private void RecalculateTubesPerLine()
         {
+            int divider;
             if (GameState.BoardState.GetTubeCount() > Constants.MaxTubesPerLine * 2)
             {
-                TubesPerLine = (int)Math.Ceiling((decimal)GameState.BoardState.GetTubeCount() / 3);
+                divider = 3;
+                MarginForFlasksGrid = new Thickness(0, -30, 0, 0);
             }
             else
             {
-                TubesPerLine = (int)Math.Ceiling((decimal)GameState.BoardState.GetTubeCount() / 2);
+                divider = 2;
+                MarginForFlasksGrid = new Thickness(0, 5, 0, 0);
             }
+
+            TubesPerLine = (int)Math.Ceiling((decimal)GameState.BoardState.GetTubeCount() / divider);
         }
         ///// <summary>
         ///// Draws border that is filled with an image that will later be animated.
