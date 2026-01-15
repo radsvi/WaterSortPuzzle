@@ -66,6 +66,13 @@
 
                 <Label Text="{Binding MainVM.Current.Text}" />
             </Border>
+            <Border
+                IsVisible="{Binding MainVM.Current}"
+                AbsoluteLayout.LayoutBounds="{Binding MainVM.Current.SourceBounds}"
+                AbsoluteLayout.LayoutFlags="None"
+                Padding="5">
+
+            </Border>
 
             <HorizontalStackLayout AbsoluteLayout.LayoutBounds="0.5,0.5,1,0.3" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="Center" Spacing="4">
                 <Button Text="Previous" Command="{Binding MainVM.PreviousCommand}" Style="{StaticResource NavigationButton}" />
