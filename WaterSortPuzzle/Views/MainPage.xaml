@@ -230,7 +230,7 @@
                                         </Grid>
 
                                         <!--flask gleam-->
-                                        <Grid RowDefinitions="86*,14*">
+                                        <Grid RowDefinitions="84*,16*">
                                             <BoxView BackgroundColor="Transparent">
                                                 <BoxView.Background>
                                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
