@@ -353,7 +353,7 @@
                         </LinearGradientBrush>
                     </Grid.Background>
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
-                        <Button
+                        <!--<Button
                             IsVisible="{Binding AutoSolve.Solved}"
                             ImageSource="button_next.png"
                             Style="{StaticResource NavigationButton}"
@@ -363,7 +363,29 @@
                             <Button.Behaviors>
                                 <models:CoachMarkBehavior Id="AutoSolveNextStepButton" />
                             </Button.Behaviors>
-                        </Button>
+                        </Button>-->
+                        <Border Style="{StaticResource NavigationTapEnabledLayout}" IsVisible="{Binding AutoSolve.Solved}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding StepThroughCommand}" />
+                            </Border.GestureRecognizers>
+                            <Border.Behaviors>
+                                <models:CoachMarkBehavior Id="AutoSolveNextStepButton" />
+                            </Border.Behaviors>
+                            <Grid Style="{StaticResource NavigationTapEnabledLayout_Grid}">
+                                <Border Style="{StaticResource NavigationTapEnabledLayout_Border}">
+                                    <Border.Triggers>
+                                        <DataTrigger
+                                            TargetType="Border"
+                                            Binding="{Binding AutoSolve.Solved}"
+                                            Value="False">
+                                            <Setter Property="BackgroundColor" Value="#ADADAD" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Label Style="{StaticResource NavigationTapEnabledLayout_Label}" Text="{Binding NextStepButtonText}" />
+                                </Border>
+                                <Image Source="button_next.png" VerticalOptions="Start" Margin="0,4,0,0" />
+                            </Grid>
+                        </Border>
                         <Button
                             ImageSource="{Binding AddExtraTubeImage}"
                             Style="{StaticResource NavigationButton}"
@@ -374,7 +396,7 @@
                                 <models:CoachMarkBehavior Id="AddExtraTubeButton" />
                             </Button.Behaviors>
                         </Button>
-                        <Button
+                        <!--<Button
                             ImageSource="{Binding StepBackImage}"
                             Style="{StaticResource NavigationButton}"
                             Command="{Binding StepBackCommand}"
@@ -383,7 +405,30 @@
                             <Button.Behaviors>
                                 <models:CoachMarkBehavior Id="StepBackButton" />
                             </Button.Behaviors>
-                        </Button>
+                        </Button>-->
+                        <Border Style="{StaticResource NavigationTapEnabledLayout}" Grid.Column="2">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding StepBackCommand}" />
+                            </Border.GestureRecognizers>
+                            <Border.Behaviors>
+                                <models:CoachMarkBehavior Id="StepBackButton" />
+                            </Border.Behaviors>
+
+                            <Grid Style="{StaticResource NavigationTapEnabledLayout_Grid}">
+                                <Border Style="{StaticResource NavigationTapEnabledLayout_Border}">
+                                    <Border.Triggers>
+                                        <DataTrigger
+                                                TargetType="Border"
+                                                Binding="{Binding CanStepBack}"
+                                                Value="False">
+                                            <Setter Property="BackgroundColor" Value="#ADADAD" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Label Style="{StaticResource NavigationTapEnabledLayout_Label}" Text="{Binding StepBackButtonText}" />
+                                </Border>
+                                <Image Source="{Binding StepBackImage}" VerticalOptions="Start" Margin="0,4,0,0" />
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Grid>
 

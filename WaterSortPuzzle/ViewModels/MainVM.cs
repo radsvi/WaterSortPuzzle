@@ -390,8 +390,8 @@ namespace WaterSortPuzzle.ViewModels
 
         #endregion
         #region Navigation
-        public string StepBackButtonText { get => $"({GameState.StepBackDisplay})"; }
-        public string NextStepButtonText { get => $"({AutoSolve?.CurrentSolutionStep})"; }
+        public string StepBackButtonText { get => $"{GameState.StepBackDisplay}"; }
+        public string NextStepButtonText { get => $"{AutoSolve?.CurrentSolutionStep}"; }
         public string NewLevelButtonText
         {
             get
@@ -476,7 +476,7 @@ namespace WaterSortPuzzle.ViewModels
             autoSolve?.SoftReset();
             await DrawTubesAsync(lastGameStatus.Source, lastGameStatus.Target);
         }
-        private bool CanStepBack
+        public bool CanStepBack
         {
             get
             {
