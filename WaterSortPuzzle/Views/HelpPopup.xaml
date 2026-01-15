@@ -44,6 +44,10 @@
         <Style TargetType="Button" x:Key="Cancel">
             <Setter Property="Background" Value="OrangeRed" />
         </Style>
+
+        <Style x:Key="NavigationButton" TargetType="Button">
+            <Setter Property="CornerRadius" Value="15" />
+        </Style>
     </ContentView.Resources>
 
     <Grid Margin="0">
@@ -58,17 +62,24 @@
                 IsVisible="{Binding MainVM.Current}"
                 AbsoluteLayout.LayoutBounds="{Binding MainVM.Current.TargetBounds}"
                 AbsoluteLayout.LayoutFlags="None"
-                Padding="10">
+                Padding="5">
 
                 <Label Text="{Binding MainVM.Current.Text}" />
             </Border>
 
-            <AbsoluteLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding MainVM.NextCommand}" />
-            </AbsoluteLayout.GestureRecognizers>
+            <HorizontalStackLayout AbsoluteLayout.LayoutBounds="0.5,0.5,1,0.3" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="Center" Spacing="4">
+                <Button Text="Previous" Command="{Binding MainVM.PreviousCommand}" Style="{StaticResource NavigationButton}" />
+                <Button Text="Next" Command="{Binding MainVM.NextCommand}" Style="{StaticResource NavigationButton}" />
+                <Button Text="Close" Command="{Binding CancelCommand}" BackgroundColor="OrangeRed" Margin="10,0,0,0" Style="{StaticResource NavigationButton}" />
+            </HorizontalStackLayout>
+            
+
+            <!--<AbsoluteLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding MainVM.NavigateCommand}" CommandParameter="{x:Int32 1}" />
+            </AbsoluteLayout.GestureRecognizers>-->
         </AbsoluteLayout>
 
-        <Button
+        <!--<Button
             Text="×"
             FontSize="55"
             Padding="0,-7,0,0"
@@ -78,7 +89,7 @@
             HorizontalOptions="End"
             WidthRequest="70"
             HeightRequest="70"
-            Margin="0,50,10,0"/>
+            Margin="0,50,10,0"/>-->
     </Grid>
 
 </ContentView>

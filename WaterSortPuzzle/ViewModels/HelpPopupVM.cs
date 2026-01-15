@@ -13,6 +13,8 @@ namespace WaterSortPuzzle.ViewModels
         public HelpPopupVM(IPopupService popupService, MainVM mainVM) : base(popupService, mainVM)
         {
             MainVM = mainVM;
+
+            MainVM.ResetIndex();
         }
     }
 }
