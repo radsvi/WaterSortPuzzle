@@ -38,11 +38,13 @@ namespace WaterSortPuzzle.Models
         protected override void OnAttachedTo(VisualElement bindable)
         {
             bindable.SizeChanged += OnSizeChanged;
+            bindable.PropertyChanged += OnPropertyChanged;
         }
 
         protected override void OnDetachingFrom(VisualElement bindable)
         {
             bindable.SizeChanged -= OnSizeChanged;
+            bindable.PropertyChanged -= OnPropertyChanged;
         }
         void OnSizeChanged(object? sender, EventArgs e)
         {
@@ -63,6 +65,32 @@ namespace WaterSortPuzzle.Models
                 "CoachMarkBounds",
                 (Id, rect));
         }
+        void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName)
+                TryReport(sender as VisualElement);
+        }
+        void TryReport(VisualElement? element)
+        {
+            if (element == null)
+                return;
+
+            // Skip hidden elements
+            if (!element.IsVisible)
+                return;
+
+            // Skip non-laid-out elements
+            if (element.Width <= 0 || element.Height <= 0)
+                return;
+
+            var rect = GetAbsoluteBounds(element);
+
+            MessagingCenter.Send(
+                this,
+                "CoachMarkAvailable",
+                (Id, rect));
+        }
+
 
 
         private static Rect GetAbsoluteBounds(VisualElement element)

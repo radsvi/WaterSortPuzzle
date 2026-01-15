@@ -152,12 +152,28 @@ namespace WaterSortPuzzle.ViewModels
         }
         void TryActivate()
         {
-            if (Current == null &&
-                CoachMarks.All(x => x.SourceBounds.HasValue))
-            {
-                Current = CoachMarks[0];
-                OnPropertyChanged(nameof(Current));
-            }
+            if (CoachMarks.Any(x => x.IsVisible))
+                return;
+
+            var firstAvailable = CoachMarks.FirstOrDefault(x => x.IsAvailable);
+            if (firstAvailable == null)
+                return;
+
+            HideAll();
+            firstAvailable.IsVisible = true;
+
+            Next();
+            //if (Current == null &&
+            //    CoachMarks.All(x => x.SourceBounds.HasValue))
+            //{
+            //    Current = CoachMarks[0];
+            //    OnPropertyChanged(nameof(Current));
+            //}
+        }
+        void HideAll()
+        {
+            foreach (var mark in CoachMarks)
+                mark.IsVisible = false;
         }
         [RelayCommand]
         void Next()
@@ -165,7 +181,14 @@ namespace WaterSortPuzzle.ViewModels
             _index++;
             if (_index < CoachMarks.Count)
             {
-                Current = CoachMarks[_index];
+                if (CoachMarks[_index].IsAvailable == false)
+                {
+                    Next();
+                    return;
+                }
+                else {
+                    Current = CoachMarks[_index];
+                }
             }
             else
             {
@@ -180,6 +203,22 @@ namespace WaterSortPuzzle.ViewModels
 
             OnPropertyChanged(nameof(Current));
         }
+        //[RelayCommand]
+        //void Next()
+        //{
+        //    var ordered = CoachMarks
+        //        .Where(x => x.IsAvailable)
+        //        .ToList();
+
+        //    var index = ordered.FindIndex(x => x.IsVisible);
+        //    if (index == -1)
+        //        return;
+
+        //    ordered[index].IsVisible = false;
+
+        //    if (index + 1 < ordered.Count)
+        //        ordered[index + 1].IsVisible = true;
+        //}
         private static Rect ShiftPosition(Rect source, RelativePosition position)
         {
             const int markWidth = 200;
