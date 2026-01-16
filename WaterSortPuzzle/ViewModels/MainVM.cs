@@ -1163,13 +1163,13 @@ namespace WaterSortPuzzle.ViewModels
             CoachMarks.Add(new CoachMarkItem
             {
                 Id = "StepBackButton",
-                Text = "One step back. Limited amount of uses per level",
+                Text = "One step back. 5 uses per level",
                 Position = RelativePosition.TopLeft
             });
             CoachMarks.Add(new CoachMarkItem
             {
                 Id = "AddExtraTubeButton",
-                Text = "Adds extra empty flask.",
+                Text = "Adds extra empty flask (decreases the final score for the level).",
                 Position = RelativePosition.Top
             });
             CoachMarks.Add(new CoachMarkItem

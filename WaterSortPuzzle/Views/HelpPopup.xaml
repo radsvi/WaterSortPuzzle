@@ -48,6 +48,11 @@
         <Style x:Key="NavigationButton" TargetType="Button">
             <Setter Property="CornerRadius" Value="15" />
         </Style>
+        
+        <Style x:Key="LabelBullets" TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="Margin" Value="0,5" />
+        </Style>
     </ContentView.Resources>
 
     <Grid Margin="0">
@@ -64,8 +69,8 @@
                 AbsoluteLayout.LayoutFlags="None"
                 Padding="5"
                 StrokeThickness="1"
-                BackgroundColor="#1FFFFFFF">
-                <Label Text="{Binding MainVM.Current.Text}" />
+                BackgroundColor="{StaticResource HelpPopupBackground}">
+                <Label Text="{Binding MainVM.Current.Text}" HorizontalOptions="Start" />
             </Border>
             <Grid
                 AbsoluteLayout.LayoutBounds="{Binding MainVM.Current.SourceBounds}"
@@ -74,17 +79,34 @@
                     IsVisible="{Binding MainVM.Current}"
                     Padding="5"
                     StrokeThickness="0"
-                    BackgroundColor="#1FFFFFFF"/>
+                    BackgroundColor="{StaticResource HelpPopupBackground}"/>
                 <BoxView WidthRequest="1" BackgroundColor="Silver" HorizontalOptions="Start" VerticalOptions="Fill" />
                 <BoxView WidthRequest="1" BackgroundColor="Silver" HorizontalOptions="End" VerticalOptions="Fill" />
                 <BoxView HeightRequest="1" BackgroundColor="Silver" VerticalOptions="End" HorizontalOptions="Fill" />
             </Grid>
 
-            <HorizontalStackLayout AbsoluteLayout.LayoutBounds="0.5,0.75,1,0.3" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="Center" Spacing="4">
-                <Button Text="Previous" Command="{Binding MainVM.PreviousCommand}" Style="{StaticResource NavigationButton}" />
-                <Button Text="Next" Command="{Binding MainVM.NextCommand}" Style="{StaticResource NavigationButton}" />
-                <Button Text="Close" Command="{Binding CancelCommand}" BackgroundColor="OrangeRed" Margin="10,0,0,0" Style="{StaticResource NavigationButton}" />
-            </HorizontalStackLayout>
+            <Grid
+                AbsoluteLayout.LayoutBounds="0.5,0.49,1,0.49" AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="Center" VerticalOptions="Fill"
+                RowDefinitions="*,auto">
+                <Border
+                    Stroke="Silver" Margin="0,0,0,15" VerticalOptions="Start">
+                    <VerticalStackLayout
+                        BackgroundColor="Black"
+                        Padding="10">
+                        <Label Text="Separate each color into different flasks" Style="{StaticResource LabelBullets}" />
+                        <Label Text="You can only move matching colors onto each other" Style="{StaticResource LabelBullets}" />
+                        <Label Text="You can always move colors to empty flask" Style="{StaticResource LabelBullets}" />
+                        <Label Text="You can add empty flasks, if you are really stuck" Style="{StaticResource LabelBullets}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <HorizontalStackLayout Spacing="4" Grid.Row="1" VerticalOptions="Start">
+                    <Button Text="Previous" Command="{Binding MainVM.PreviousCommand}" Style="{StaticResource NavigationButton}" />
+                    <Button Text="Next" Command="{Binding MainVM.NextCommand}" Style="{StaticResource NavigationButton}" />
+                    <Button Text="Close" Command="{Binding CancelCommand}" BackgroundColor="OrangeRed" Margin="10,0,0,0" Style="{StaticResource NavigationButton}" />
+                </HorizontalStackLayout>
+            </Grid>
             
 
             <!--<AbsoluteLayout.GestureRecognizers>
