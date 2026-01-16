@@ -9,11 +9,13 @@ namespace WaterSortPuzzle.Models
     public partial class Leveling : ObservableObject
     {
         readonly ILevelPreferences levelPreferences;
-        public Leveling(ILevelPreferences levelPreferences)
+        private readonly BoardState boardState;
+
+        public Leveling(ILevelPreferences levelPreferences, BoardState boardState)
         {
             //this.levelPreferences = (LevelPreferences)levelPreferences;
             this.levelPreferences = levelPreferences;
-
+            this.boardState = boardState;
             CalculateNextLevelParameters();
         }
 
@@ -82,17 +84,17 @@ namespace WaterSortPuzzle.Models
         public void LevelFinished(int colorCount)
         {
             IncreaseScore(colorCount);
-            Level++; // V setteru mam rovnou kalkulovani obtiznosti dalsiho levelu. blbej design pro priste...
+            Level++; // V setteru mam rovnou kalkulovani obtiznosti dalsiho levelu. blbej design, pro priste...
         }
         
         void IncreaseScore(int colorCount)
         {
             double difficultyMultiplier = (double)colorCount / Constants.ColorCount;
-            var scoreMultiplier = (int)(Constants.DefaultScoreMultiplier * difficultyMultiplier);
+            var penaltyFromExtraTubes = (boardState.ExtraTubesCounter > 0) ? 0.25 : 1;
+            var scoreMultiplier = (int)(Constants.DefaultScoreMultiplier * difficultyMultiplier * penaltyFromExtraTubes);
 
             // sometimes it doesn't increase score on the very first level, and I haven't figured out why, or even when it happens
-            // so introducing this workaround to hopefully make it work correctly always:
-
+            // so introducing this workaround to hopefully make it work correctly every time:
             if (scoreMultiplier == 0)
                 scoreMultiplier = 6;
 
