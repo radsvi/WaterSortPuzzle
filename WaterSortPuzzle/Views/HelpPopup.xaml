@@ -63,18 +63,24 @@
                 AbsoluteLayout.LayoutBounds="{Binding MainVM.Current.TargetBounds}"
                 AbsoluteLayout.LayoutFlags="None"
                 Padding="5"
+                StrokeThickness="1"
                 BackgroundColor="#1FFFFFFF">
                 <Label Text="{Binding MainVM.Current.Text}" />
             </Border>
-            <Border
-                IsVisible="{Binding MainVM.Current}"
+            <Grid
                 AbsoluteLayout.LayoutBounds="{Binding MainVM.Current.SourceBounds}"
-                AbsoluteLayout.LayoutFlags="None"
-                Padding="5"
-                BackgroundColor="#1FFFFFFF">
-            </Border>
+                AbsoluteLayout.LayoutFlags="None">
+                <Border
+                    IsVisible="{Binding MainVM.Current}"
+                    Padding="5"
+                    StrokeThickness="0"
+                    BackgroundColor="#1FFFFFFF"/>
+                <BoxView WidthRequest="1" BackgroundColor="Silver" HorizontalOptions="Start" VerticalOptions="Fill" />
+                <BoxView WidthRequest="1" BackgroundColor="Silver" HorizontalOptions="End" VerticalOptions="Fill" />
+                <BoxView HeightRequest="1" BackgroundColor="Silver" VerticalOptions="End" HorizontalOptions="Fill" />
+            </Grid>
 
-            <HorizontalStackLayout AbsoluteLayout.LayoutBounds="0.5,0.5,1,0.3" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="Center" Spacing="4">
+            <HorizontalStackLayout AbsoluteLayout.LayoutBounds="0.5,0.75,1,0.3" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="Center" Spacing="4">
                 <Button Text="Previous" Command="{Binding MainVM.PreviousCommand}" Style="{StaticResource NavigationButton}" />
                 <Button Text="Next" Command="{Binding MainVM.NextCommand}" Style="{StaticResource NavigationButton}" />
                 <Button Text="Close" Command="{Binding CancelCommand}" BackgroundColor="OrangeRed" Margin="10,0,0,0" Style="{StaticResource NavigationButton}" />
