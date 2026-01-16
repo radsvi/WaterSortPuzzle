@@ -1240,16 +1240,25 @@ namespace WaterSortPuzzle.ViewModels
             NextCommand.NotifyCanExecuteChanged();
             PreviousCommand.NotifyCanExecuteChanged();
         }
-        private bool CanNavigate(CoachMarkNavigation direction)
-        {
-            int newIndex = Index + (int)direction;
-            var length = CoachMarks.Where(n => n.IsAvailable).Count();
-            return newIndex >= 0 && newIndex <= length;
-        }
-        private bool CanNavigatePrevious => CanNavigate(CoachMarkNavigation.Previous);
+        //private bool CanNavigate(CoachMarkNavigation direction)
+        //{
+        //    int newIndex = Index + (int)direction;
+        //    var length = CoachMarks.Where(n => n.IsAvailable).Count();
+        //    return newIndex >= 0 && newIndex <= length;
+        //}
+        private bool CanNavigatePrevious => Index + (int)CoachMarkNavigation.Previous >= 0;
+
         [RelayCommand(CanExecute = nameof(CanNavigatePrevious))]
         private void Previous() => Navigate(CoachMarkNavigation.Previous);
-        private bool CanNavigateNext => CanNavigate(CoachMarkNavigation.Next);
+        private bool CanNavigateNext
+        {
+            get
+            {
+                int newIndex = Index + (int)CoachMarkNavigation.Next;
+                var length = CoachMarks.Where(n => n.IsAvailable).Count();
+                return newIndex < length;
+            }
+        }
 
         [RelayCommand(CanExecute = nameof(CanNavigateNext))]
         private void Next() => Navigate(CoachMarkNavigation.Next);
