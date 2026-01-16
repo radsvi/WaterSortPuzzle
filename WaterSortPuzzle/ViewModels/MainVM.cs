@@ -1235,19 +1235,24 @@ namespace WaterSortPuzzle.ViewModels
             foreach (var mark in CoachMarks)
                 mark.IsVisible = false;
         }
-
-        private bool CanNavigatePrevious => Index > 0;
+        partial void OnIndexChanged(int value) // hooked automatically by MVVM toolkit
+        {
+            NextCommand.NotifyCanExecuteChanged();
+            PreviousCommand.NotifyCanExecuteChanged();
+        }
+        private bool CanNavigate(CoachMarkNavigation direction)
+        {
+            int newIndex = Index + (int)direction;
+            var length = CoachMarks.Where(n => n.IsAvailable).Count();
+            return newIndex >= 0 && newIndex <= length;
+        }
+        private bool CanNavigatePrevious => CanNavigate(CoachMarkNavigation.Previous);
         [RelayCommand(CanExecute = nameof(CanNavigatePrevious))]
-        private void Previous()
-        {
-            Navigate(CoachMarkNavigation.Previous);
-        }
-        private bool CanNavigateNext => Index + 1 < CoachMarks.Count;
+        private void Previous() => Navigate(CoachMarkNavigation.Previous);
+        private bool CanNavigateNext => CanNavigate(CoachMarkNavigation.Next);
+
         [RelayCommand(CanExecute = nameof(CanNavigateNext))]
-        private void Next()
-        {
-            Navigate(CoachMarkNavigation.Next);
-        }
+        private void Next() => Navigate(CoachMarkNavigation.Next);
         public void Navigate(CoachMarkNavigation direction)
         {
             int delta = (int)direction;
