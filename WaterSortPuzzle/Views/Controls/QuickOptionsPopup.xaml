@@ -55,7 +55,7 @@
             StrokeShape="RoundRectangle 28"
             BackgroundColor="#2d68c4"
                 
-            StrokeThickness="0">
+            StrokeThickness="4">
             <VerticalStackLayout>
 
 
@@ -69,17 +69,17 @@
                 </Image>
 
                 <Button
-                    Text="Options"
+                    Text="Advanced ptions"
                     Style="{StaticResource MenuButton}"
                     Command="{Binding NavigateToPageCommand}"
                     CommandParameter="{x:Type views:OptionsPage}" />
                 <Button
-                    Text="Display help"
+                    Text="Show help"
                     Style="{StaticResource MenuButton}"
                     Command="{Binding NavigationMenuPopupCommand}"
                     CommandParameter="{x:Static enums:PopupParams.Help}" />
                 <Button
-                    Text="Calculate solution"
+                    Text="Calculate solution >>"
                     Style="{StaticResource MenuButton}"
                     Command="{Binding StartAutoSolveCommand}" />
             </VerticalStackLayout>
