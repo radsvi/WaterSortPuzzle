@@ -1163,7 +1163,7 @@ namespace WaterSortPuzzle.ViewModels
             CoachMarks.Add(new CoachMarkItem
             {
                 Id = "StepBackButton",
-                Text = "One step back. 5 uses per level",
+                Text = "Takes you one step back. 5 uses per level",
                 Position = RelativePosition.TopLeft
             });
             CoachMarks.Add(new CoachMarkItem
