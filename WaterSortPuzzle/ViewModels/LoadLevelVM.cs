@@ -160,7 +160,7 @@
             //MainVM.ClosePopupWindow();
             MainVM.PropertyChangedEventPaused = true;
             //MainVM.GameState.StartingPosition = MainVM.GameState.CloneGrid(SelectedLevelForLoading.GameGrid);
-            GameState.StartingPosition = CloneGrid(SelectedLevelForLoading.GameGrid);
+            GameState.StartingPosition = SelectedLevelForLoading.BoardState.Clone();
 
 
             //TubesManager.Tubes = DeepCopyTubesCollection(TubesManager.SavedStartingTubes);
@@ -322,7 +322,7 @@
                 {null, null, null,null },
                 {null, null, null,null }
             };
-            savedLevelList.Insert(0, new StoredLevel(ConvertToColorBrush(firstLevel)!, 0, "Never solved this level without adding extra tubes."));
+            savedLevelList.Insert(0, new StoredLevel(GameState.BoardState.FactoryCreate(ConvertToColorBrush(firstLevel)!), "Never solved this level without adding extra tubes."));
 
             //{ new Tube(8, 1, 3, 0) },
             //{ new Tube(2, 7, 10, 4) },
@@ -372,7 +372,8 @@
                 { 11, 11, 11, null },
                 { null, null, null, null },
             };
-            savedLevelList.Insert(0, new StoredLevel(ConvertToColorBrush(secondLevel)!, 0, "asdfTesting"));
+            //savedLevelList.Insert(0, new StoredLevel(ConvertToColorBrush(secondLevel)!, 0, "asdfTesting"));
+            savedLevelList.Insert(0, new StoredLevel(GameState.BoardState.FactoryCreate(ConvertToColorBrush(secondLevel)!), "asdfTesting"));
 
 
             AppPreferences.SavedLevels = JsonConvert.SerializeObject(savedLevelList);

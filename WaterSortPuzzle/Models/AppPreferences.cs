@@ -116,19 +116,19 @@
             get => Preferences.Default.Get(nameof(SavedLevels), string.Empty);
             set => Preferences.Set(nameof(SavedLevels), value);
         }
-        public StoredLevel LastLevelBeforeClosing
+        public StoredLevel LastLevelBeforeClosingV2
         {
             //get => Preferences.Default.Get(nameof(LastLevelBeforeClosing), new NullStoredLevel());
             get
             {
                 //var temp = Preferences.Default.Get(nameof(LastLevelBeforeClosing), new StoredLevel(new LiquidColor[0, 0], ""));
-                string serialized = Preferences.Default.Get(nameof(LastLevelBeforeClosing) + "_Serialized", string.Empty);
+                string serialized = Preferences.Default.Get(nameof(LastLevelBeforeClosingV2) + "_Serialized", string.Empty);
                 return JsonConvert.DeserializeObject<StoredLevel>(serialized)!;
             }
             set
             {
                 string savedLevelList = JsonConvert.SerializeObject(value);
-                Preferences.Set(nameof(LastLevelBeforeClosing) + "_Serialized", savedLevelList);
+                Preferences.Set(nameof(LastLevelBeforeClosingV2) + "_Serialized", savedLevelList);
             }
         }
         public LiquidColor[,] GameStateBeforeSleep

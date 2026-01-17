@@ -72,11 +72,10 @@ namespace WaterSortPuzzle.Models
             }
         }
         
-        private LiquidColor[,] startingPosition;
         /// <summary>
         /// Starting board position right after generating new level
         /// </summary>
-        public LiquidColor[,] StartingPosition { get; set; }
+        public BoardState StartingPosition { get; set; }
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(StepBackCommand), nameof(StepBackDisplay))]
         private ObservableCollection<SavedGameState> savedGameStates = new ObservableCollection<SavedGameState>();
@@ -109,7 +108,7 @@ namespace WaterSortPuzzle.Models
 
         private void FillBoard()
         {
-            if (appPreferences.LastLevelBeforeClosing is not null && appPreferences.LastLevelBeforeClosing.GameGrid.Length > 0)
+            if (appPreferences.LastLevelBeforeClosingV2 is not null && appPreferences.LastLevelBeforeClosingV2.BoardState.Grid.Length > 0)
                 LoadLastLevel();
             else
                 GenerateNewLevel();
@@ -561,8 +560,9 @@ namespace WaterSortPuzzle.Models
         }
         private void StoreStartingGrid()
         {
-            StartingPosition = GridHelper.CloneGrid(BoardState.Grid);
-            appPreferences.LastLevelBeforeClosing = new StoredLevel(StartingPosition, BoardState.ExtraTubesCounter, "Last level");
+            //StartingPosition = GridHelper.CloneGrid(BoardState.Grid);
+            StartingPosition = BoardState.Clone();
+            appPreferences.LastLevelBeforeClosingV2 = new StoredLevel(StartingPosition, "Last level");
             appPreferences.StepBackPressesCounter = StepBackPressesCounter;
             appPreferences.SavedGameStatesBeforeSleepV2 = new ObservableCollection<SavedGameState>();
         }
@@ -581,7 +581,8 @@ namespace WaterSortPuzzle.Models
         }
         private void LoadLastLevel()
         {
-            StartingPosition = GridHelper.CloneGrid(appPreferences.LastLevelBeforeClosing.GameGrid);
+            //StartingPosition = GridHelper.CloneGrid(appPreferences.LastLevelBeforeClosingV2.BoardState);
+            StartingPosition = appPreferences.LastLevelBeforeClosingV2.BoardState.Clone();
 
             if (appPreferences.SavedGameStatesBeforeSleepV2 is not null && appPreferences.SavedGameStatesBeforeSleepV2.Count > 0)
             {
@@ -594,8 +595,9 @@ namespace WaterSortPuzzle.Models
             }
             else
             {
-                BoardState.Grid = GridHelper.CloneGrid(StartingPosition);
-                ColorsCounter = CountColors(StartingPosition);
+                //BoardState.Grid = GridHelper.CloneGrid(StartingPosition);
+                BoardState = StartingPosition.Clone();
+                ColorsCounter = CountColors(StartingPosition.Grid);
             }
         }
         public void ReplaceBoardState(BoardState newBoardState)

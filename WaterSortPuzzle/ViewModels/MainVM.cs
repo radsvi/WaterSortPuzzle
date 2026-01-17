@@ -516,7 +516,7 @@ namespace WaterSortPuzzle.ViewModels
                 savedLevelList = new ObservableCollection<StoredLevel>();
             }
 
-            savedLevelList.Add(new StoredLevel(GameState.StartingPosition, GameState.BoardState.ExtraTubesCounter, NoteForSavedLevel));
+            savedLevelList.Add(new StoredLevel(GameState.StartingPosition, NoteForSavedLevel));
 
             AppPreferences.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
             //Settings.Default.SavedLevels = JsonConvert.SerializeObject(new ObservableCollection<StoredLevel>() { new StoredLevel(TubesManager.SavedStartingTubes) });

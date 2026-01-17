@@ -44,8 +44,15 @@ namespace WaterSortPuzzle.Models
         {
             appPreferences = source.appPreferences;
 
-            ExtraTubesCounter = storedLevel.ExtraTubesCounter;
-            Grid = storedLevel.GameGrid;
+            ExtraTubesCounter = storedLevel.BoardState.ExtraTubesCounter;
+            Grid = storedLevel.BoardState.Grid;
+        }
+        private BoardState(BoardState source, LiquidColor[,] grid)
+        {
+            appPreferences = source.appPreferences;
+
+            ExtraTubesCounter = 0;
+            Grid = grid;
         }
 
 
@@ -144,6 +151,10 @@ namespace WaterSortPuzzle.Models
         public BoardState FactoryCreate(StoredLevel storedLevel)
         {
             return new BoardState(this, storedLevel);
+        }
+        public BoardState FactoryCreate(LiquidColor[,] grid)
+        {
+            return new BoardState(this, grid);
         }
         //public SavedGameState CloneFromSavedGameState(SavedGameState savedGameState)
         //{
