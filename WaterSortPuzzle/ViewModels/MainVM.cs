@@ -33,7 +33,6 @@ namespace WaterSortPuzzle.ViewModels
             //{
             //    OnStart();
             //}
-            OnStart();
             InitializeCoachMarks();
         }
         private void PropertyChangedHandler(object? sender, PropertyChangedEventArgs e)
@@ -44,7 +43,7 @@ namespace WaterSortPuzzle.ViewModels
             }
             else if (e.PropertyName == nameof(AppPreferences.UnlimitedStepBack)
                 || e.PropertyName == nameof(GameState.SavedGameStates)
-                || e.PropertyName == nameof(GameState.StepBackPressesCounter))
+                || e.PropertyName == nameof(GameState.StepBackCounter))
             {
                 RefreshStepBackState();
             }
@@ -311,7 +310,7 @@ namespace WaterSortPuzzle.ViewModels
 
             DeselectTube();
 
-            GameState.StepBackPressesCounter++;
+            GameState.StepBackCounter++;
 
             SavedGameState previousGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 2]; // nechci vracet posledni, protoze posledni je vlastne aktualni stav
             SavedGameState lastGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 1]; // using this just for conveing which tubes changed so that I can properly generate only those (visual) flasks
@@ -334,7 +333,7 @@ namespace WaterSortPuzzle.ViewModels
             get
             {
                 if (GameState.SavedGameStates.Count <= 1
-                    || (AppPreferences.UnlimitedStepBack == false && Constants.MaxStepBack <= GameState.StepBackPressesCounter))
+                    || (AppPreferences.UnlimitedStepBack == false && Constants.MaxStepBack <= GameState.StepBackCounter))
                     return false;
 
                 return true;
@@ -681,14 +680,14 @@ namespace WaterSortPuzzle.ViewModels
             IsLevelCompleted();
             GameState.SaveGameState(source, target);
         }
-        private void OnStart() // when starting the application
+        public void Start()
         {
             GameState.SaveGameState(-1, -1);
             RecalculateTubesPerLine();
             RefreshAddExtraTubeState();
             RefreshStepBackState();
             OnPropertyChanged(nameof(StepBackButtonText));
-            var task = DrawTubesAsync();
+            _ = DrawTubesAsync();
         }
         public void OnStartingLevel()
         {
@@ -727,7 +726,7 @@ namespace WaterSortPuzzle.ViewModels
             int firstEmptyLayer = -1;
             for (int y = 0; y < Constants.Layers; y++)
             {
-                if (GameState.BoardState[currentTubeReference.TubeId, y] == null)
+                if (GameState.BoardState.Grid[currentTubeReference.TubeId, y] == null)
                 {
                     firstEmptyLayer = y;
                     break;

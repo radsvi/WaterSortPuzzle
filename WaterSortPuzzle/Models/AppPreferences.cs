@@ -116,34 +116,6 @@
             get => Preferences.Default.Get(nameof(SavedLevels), string.Empty);
             set => Preferences.Set(nameof(SavedLevels), value);
         }
-        public StoredLevel LastLevelBeforeClosingV2
-        {
-            //get => Preferences.Default.Get(nameof(LastLevelBeforeClosing), new NullStoredLevel());
-            get
-            {
-                //var temp = Preferences.Default.Get(nameof(LastLevelBeforeClosing), new StoredLevel(new LiquidColor[0, 0], ""));
-                string serialized = Preferences.Default.Get(nameof(LastLevelBeforeClosingV2) + "_Serialized", string.Empty);
-                return JsonConvert.DeserializeObject<StoredLevel>(serialized)!;
-            }
-            set
-            {
-                string savedLevelList = JsonConvert.SerializeObject(value);
-                Preferences.Set(nameof(LastLevelBeforeClosingV2) + "_Serialized", savedLevelList);
-            }
-        }
-        public LiquidColor[,] GameStateBeforeSleep
-        {
-            get
-            {
-                string serialized = Preferences.Default.Get(nameof(GameStateBeforeSleep) + "_Serialized", string.Empty);
-                return JsonConvert.DeserializeObject<LiquidColor[,]>(serialized)!;
-            }
-            set
-            {
-                string savedLevelList = JsonConvert.SerializeObject(value);
-                Preferences.Set(nameof(GameStateBeforeSleep) + "_Serialized", savedLevelList);
-            }
-        }
         public ObservableCollection<SavedGameState> SavedGameStatesBeforeSleepV2
         {
             get

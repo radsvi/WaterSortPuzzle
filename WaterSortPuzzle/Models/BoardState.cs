@@ -184,7 +184,7 @@ namespace WaterSortPuzzle.Models
         }
         public bool CanAddExtraTube()
         {
-            return ExtraTubesCounter < appPreferences.MaximumExtraTubes;
+            return appPreferences != null && ExtraTubesCounter < appPreferences.MaximumExtraTubes;
         }
         public int GetTubeCount() => Grid.GetLength(0);
 
@@ -210,16 +210,38 @@ namespace WaterSortPuzzle.Models
         {
             ExtraTubesCounter = 0;
         }
-        public void SetBoardState(BoardState boardState)
+        /// <summary>
+        /// Used in StepBack(). Doesn't decrease the size of the grid
+        /// </summary>
+        /// <param name="boardState"></param>
+        public void ReturnBoardState(BoardState boardState)
         {
-            Grid = boardState.Grid;
+            var origX = this.Grid == null ? 0 : this.Grid.GetLength(0);
+            var newX = boardState.Grid.GetLength(0);
+
+            if (origX > newX)
+            {
+                Grid = GridHelper.CloneGrid(boardState.Grid, origX - newX);
+            }
+            else
+            {
+                Grid = boardState.Clone().Grid;
+            }
+        }
+        /// <summary>
+        /// (Used in restart level, LoadLevel, and MakeAMove in AutoSolve)
+        /// </summary>
+        /// <param name="boardState"></param>
+        public void ResetBoardState(BoardState boardState)
+        {
+            Grid = boardState.Clone().Grid;
             ExtraTubesCounter = boardState.ExtraTubesCounter;
         }
         /// <summary>
         /// Simplified SetBoardState that doesnt change number of extra tubes
         /// </summary>
         /// <param name="grid"></param>
-        public void SetBoardState(LiquidColor[,] grid)
+        [Obsolete]public void SetBoardState(LiquidColor[,] grid)
         {
             Grid = grid;
         }

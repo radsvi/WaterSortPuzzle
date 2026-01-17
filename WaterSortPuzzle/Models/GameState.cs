@@ -18,14 +18,12 @@ namespace WaterSortPuzzle.Models
             this.notification = notification;
             this.leveling = leveling;
             BoardState = boardState;
-            
-            FillBoard();
         }
 
         public bool SolvedAtLeastOnce { get; set; } = false;
 
         private int stepBackPressesCounter;
-        public int StepBackPressesCounter
+        public int StepBackCounter
         {
             get { return stepBackPressesCounter; }
             set
@@ -48,7 +46,7 @@ namespace WaterSortPuzzle.Models
                 }
                 else
                 {
-                    return Constants.MaxStepBack - StepBackPressesCounter;
+                    return Constants.MaxStepBack - StepBackCounter;
                 }
             }
         }
@@ -104,9 +102,9 @@ namespace WaterSortPuzzle.Models
         //    MainPage.DrawTubes();
         //}
 
-        private void FillBoard()
+        public void FillBoard()
         {
-            if (appPreferences.LastLevelBeforeClosingV2 is not null && appPreferences.LastLevelBeforeClosingV2.BoardState.Grid.Length > 0)
+            if (appPreferences.SavedGameStatesBeforeSleepV2 is not null && appPreferences.SavedGameStatesBeforeSleepV2.Count > 0)
                 LoadLastLevel();
             else
                 GenerateNewLevel();
@@ -358,7 +356,7 @@ namespace WaterSortPuzzle.Models
         {
             BoardState.ResetExtraTubesCounter();
             //BoardState.SetBoardState(StartingPosition);
-            BoardState.SetBoardState(SavedGameStates.First().BoardState);
+            BoardState.ResetBoardState(SavedGameStates.First().BoardState);
         }
         private void GenerateStandardLevel(int numberOfColorsToGenerate)
         {
@@ -548,7 +546,7 @@ namespace WaterSortPuzzle.Models
         //}
         public void ResetStepBackCounter()
         {
-            StepBackPressesCounter = 0;
+            StepBackCounter = 0;
         }
         private void StoreStartingGrid()
         {
@@ -557,31 +555,30 @@ namespace WaterSortPuzzle.Models
             SavedGameStates.Clear();
             SavedGameStates.Add(new SavedGameState(BoardState.Clone()));
 
-            appPreferences.StepBackCounter = StepBackPressesCounter;
-            appPreferences.SavedGameStatesBeforeSleepV2 = new ObservableCollection<SavedGameState>();
+            appPreferences.StepBackCounter = StepBackCounter;
+            appPreferences.SavedGameStatesBeforeSleepV2 = SavedGameStates;
         }
         public void SaveGameStateOnSleep()
         {
-            appPreferences.GameStateBeforeSleep = BoardState.Grid;
-
             //List<SavedGameState> copySavedGameStatesList = [];
             //foreach (var savedGameState in SavedGameStates)
             //{
             //    copySavedGameStatesList.Add(savedGameState);
             //}
-            var copySavedGameStates = new ObservableCollection<SavedGameState>(SavedGameStates);
-            appPreferences.SavedGameStatesBeforeSleepV2 = copySavedGameStates;
-            appPreferences.StepBackCounter = StepBackPressesCounter;
+            var savedGameStatesCopy = new ObservableCollection<SavedGameState>(SavedGameStates);
+            appPreferences.SavedGameStatesBeforeSleepV2 = savedGameStatesCopy;
+            appPreferences.StepBackCounter = StepBackCounter;
         }
         private void LoadLastLevel()
         {
             if (appPreferences.SavedGameStatesBeforeSleepV2 is not null && appPreferences.SavedGameStatesBeforeSleepV2.Count > 0)
             {
-                SavedGameStates = appPreferences.SavedGameStatesBeforeSleepV2;
-                SavedGameStates.Remove(SavedGameStates.Last());
-                StepBackPressesCounter = appPreferences.StepBackCounter;
-                BoardState.Grid = appPreferences.GameStateBeforeSleep;
-                BoardState.SetExtraTubesCounter(SavedGameStates.Last().BoardState.ExtraTubesCounter);
+                SavedGameStates.Clear();
+                foreach(var savedGame in appPreferences.SavedGameStatesBeforeSleepV2) // need this so that when I subscribe to CollectionChanged event in MainVM it doesn't get replaced
+                    SavedGameStates.Add(savedGame);
+
+                StepBackCounter = appPreferences.StepBackCounter;
+                ReplaceBoardState(SavedGameStates.Last().BoardState.Clone());
             }
             else
             {
@@ -593,7 +590,7 @@ namespace WaterSortPuzzle.Models
         public void ReplaceBoardState(BoardState newBoardState)
         {
             newBoardState.SetExtraTubesCounter(BoardState.ExtraTubesCounter);
-            BoardState = newBoardState.Clone();
+            BoardState.ReturnBoardState(newBoardState);
         }
     }
 }

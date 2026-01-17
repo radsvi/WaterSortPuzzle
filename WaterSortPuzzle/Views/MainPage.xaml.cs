@@ -5,10 +5,8 @@ namespace WaterSortPuzzle.Views
 {
     public partial class MainPage : ContentPage
     {
-        //internal AppPreferences AppPreferences { get; }
-        //readonly MainVM mainVM;
+        private readonly MainVM mainVM;
 
-        //public MainPage()
         public MainPage(MainVM mainVM)
         {
             InitializeComponent();
@@ -17,6 +15,14 @@ namespace WaterSortPuzzle.Views
             //BindingContext = ServiceHelper.GetService<MainVM>();
             //var mainVM = new MainVM(this);
             BindingContext = mainVM;
+            this.mainVM = mainVM;
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            mainVM.GameState.FillBoard();
+            mainVM.Start();
         }
     }
 }
