@@ -570,11 +570,12 @@ namespace WaterSortPuzzle.Models
         {
             appPreferences.GameStateBeforeSleep = BoardState.Grid;
 
-            ObservableCollection<SavedGameState> copySavedGameStates = [];
-            foreach (var savedGameState in SavedGameStates)
-            {
-                copySavedGameStates.Add(savedGameState);
-            }
+            //List<SavedGameState> copySavedGameStatesList = [];
+            //foreach (var savedGameState in SavedGameStates)
+            //{
+            //    copySavedGameStatesList.Add(savedGameState);
+            //}
+            var copySavedGameStates = new ObservableCollection<SavedGameState>(SavedGameStates);
             copySavedGameStates.Add(LastGameState);
             appPreferences.SavedGameStatesBeforeSleepV2 = copySavedGameStates;
             appPreferences.StepBackPressesCounter = StepBackPressesCounter;
