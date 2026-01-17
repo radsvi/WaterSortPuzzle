@@ -40,6 +40,13 @@ namespace WaterSortPuzzle.Models
             ExtraTubesCounter = source.ExtraTubesCounter;
             Grid = GridHelper.CloneGrid(source.Grid, incrementBy);
         }
+        private BoardState(BoardState source, StoredLevel storedLevel)
+        {
+            appPreferences = source.appPreferences;
+
+            ExtraTubesCounter = storedLevel.ExtraTubesCounter;
+            Grid = storedLevel.GameGrid;
+        }
 
 
         public LiquidColor this[int tubes, int layers]
@@ -134,6 +141,10 @@ namespace WaterSortPuzzle.Models
         {
             return new BoardState(this);
         }
+        public BoardState FactoryCreate(StoredLevel storedLevel)
+        {
+            return new BoardState(this, storedLevel);
+        }
         //public SavedGameState CloneFromSavedGameState(SavedGameState savedGameState)
         //{
         //    var newGrid = GridHelper.CloneGrid(savedGameState.Grid, this.extraTubesCounter);
@@ -174,7 +185,7 @@ namespace WaterSortPuzzle.Models
         /// Overwrites ExtraTubesCounter and resizes the Grid array
         /// </summary>
         /// <param name="newValue"></param>
-        public void OverwriteExtraTubesCounter(int newValue)
+        public void SetExtraTubesCounter(int newValue)
         {
             var difference = newValue - extraTubesCounter;
             if (difference < 0)

@@ -322,7 +322,7 @@
                 {null, null, null,null },
                 {null, null, null,null }
             };
-            savedLevelList.Insert(0, new StoredLevel(ConvertToColorBrush(firstLevel)!, "Never solved this level without adding extra tubes."));
+            savedLevelList.Insert(0, new StoredLevel(ConvertToColorBrush(firstLevel)!, 0, "Never solved this level without adding extra tubes."));
 
             //{ new Tube(8, 1, 3, 0) },
             //{ new Tube(2, 7, 10, 4) },
@@ -372,7 +372,7 @@
                 { 11, 11, 11, null },
                 { null, null, null, null },
             };
-            savedLevelList.Insert(0, new StoredLevel(ConvertToColorBrush(secondLevel)!, "asdfTesting"));
+            savedLevelList.Insert(0, new StoredLevel(ConvertToColorBrush(secondLevel)!, 0, "asdfTesting"));
 
 
             AppPreferences.SavedLevels = JsonConvert.SerializeObject(savedLevelList);

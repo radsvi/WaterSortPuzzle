@@ -320,7 +320,7 @@ namespace WaterSortPuzzle.ViewModels
             //GameState.RestoreGameState(lastGameStatus);
             PropertyChangedEventPaused = false;
 
-            GameState.LastGameState = SavedGameState.Clone(lastGameStatus);
+            GameState.LastGameState = lastGameStatus.Clone();
 
             GameState.SavedGameStates.Remove(lastGameStatus);
 
@@ -516,7 +516,7 @@ namespace WaterSortPuzzle.ViewModels
                 savedLevelList = new ObservableCollection<StoredLevel>();
             }
 
-            savedLevelList.Add(new StoredLevel(GameState.StartingPosition, NoteForSavedLevel));
+            savedLevelList.Add(new StoredLevel(GameState.StartingPosition, GameState.BoardState.ExtraTubesCounter, NoteForSavedLevel));
 
             AppPreferences.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
             //Settings.Default.SavedLevels = JsonConvert.SerializeObject(new ObservableCollection<StoredLevel>() { new StoredLevel(TubesManager.SavedStartingTubes) });

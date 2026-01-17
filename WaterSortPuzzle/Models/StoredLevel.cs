@@ -7,6 +7,7 @@ namespace WaterSortPuzzle.Models
         [JsonProperty] public DateTime Date { get; private set; }
         [JsonProperty] public string Note { get; private set; }
         [JsonProperty] public LiquidColor[,] GameGrid { get; private set; }
+        [JsonProperty] public int ExtraTubesCounter { get; private set; }
         public List<TubeData> GameGridDisplayList { get; private set; } = new List<TubeData>();
         private bool markedForDeletion;
         public bool MarkedForDeletion
@@ -22,7 +23,7 @@ namespace WaterSortPuzzle.Models
             }
         }
         [JsonConstructor]
-        public StoredLevel(LiquidColor[,] gameGrid, string noteForSavedLevel)
+        public StoredLevel(LiquidColor[,] gameGrid, int extraTubesCounter, string noteForSavedLevel)
         {
             if (gameGrid is null)
             {
@@ -31,6 +32,7 @@ namespace WaterSortPuzzle.Models
             this.GameGrid = gameGrid;
             this.Date = DateTime.Now;
             this.Note = noteForSavedLevel;
+            this.ExtraTubesCounter = extraTubesCounter;
 
             List<LiquidColorName?> colorIds = new List<LiquidColorName?>();
             for (int x = 0; x < gameGrid.GetLength(0); x++)
@@ -51,7 +53,6 @@ namespace WaterSortPuzzle.Models
         }
         public void GenerateArrayToTubeList()
         {
-            //List<Tube> list = new List<Tube>();
             GameGridDisplayList?.Clear();
             for (int x = 0; x < GameGrid.GetLength(0); x++)
             {
@@ -59,56 +60,6 @@ namespace WaterSortPuzzle.Models
 
                 GameGridDisplayList!.Add(row);
             }
-            //return list;
         }
-        //public StoredLevel(int?[,] gameGridInt, string noteForSavedLevel)
-        //{
-        //    if (gameGridInt is null)
-        //    {
-        //        return;
-        //    }
-        //    this.GameGrid = new LiquidColorNew[gameGridInt.GetLength(0), gameGridInt.GetLength(1)];
-        //    this.Date = DateTime.Now;
-        //    this.Note = noteForSavedLevel;
-
-        //    List<LiquidColorNames?> colorIds = new List<LiquidColorNames?>();
-        //    for (int x = 0; x < gameGridInt.GetLength(0); x++)
-        //    {
-        //        for (int y = 0; y < gameGridInt.GetLength(1); y++)
-        //        {
-        //            if (gameGridInt[x, y] is null)
-        //            {
-        //                continue;
-        //            }
-        //            this.GameGrid[x, y] = new LiquidColorNew((int)gameGridInt[x, y]);
-        //            if (colorIds.Contains(this.GameGrid[x, y].Name) == false)
-        //            {
-        //                colorIds.Add(this.GameGrid[x, y].Name);
-        //                this.NumberOfColors++;
-        //            }
-        //        }
-        //    }
-        //}
-        //public StoredLevel(int?[,] gameGridInt, string noteForSavedLevel) : this(gameGrid, noteForSavedLevel)
-        //{
-        //    var gameGrid = new LiquidColorNew[gameGridInt.GetLength(0), gameGridInt.GetLength(1)];
-        //    for (int x = 0; x < gameGridInt.GetLength(0); x++)
-        //    {
-        //        for (int y = 0; y < gameGridInt.GetLength(1); y++)
-        //        {
-        //            if (gameGridInt[x, y] is null)
-        //            {
-        //                continue;
-        //            }
-        //            GameGrid[x, y] = new LiquidColorNew((int)gameGridInt[x, y]);
-        //        }
-        //    }
-
-
-        //}
     }
-    //public class NullStoredLevel : StoredLevel
-    //{
-    //    public NullStoredLevel() : base(new LiquidColor[0,0], "") {}
-    //}
 }

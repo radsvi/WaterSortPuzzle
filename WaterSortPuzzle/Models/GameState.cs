@@ -18,15 +18,10 @@ namespace WaterSortPuzzle.Models
             this.notification = notification;
             this.leveling = leveling;
             BoardState = boardState;
-            if (appPreferences.LastLevelBeforeClosing is not null && appPreferences.LastLevelBeforeClosing.GameGrid.Length > 0)
-            {
-                LoadLastLevel();
-            }
-            else
-            {
-                GenerateNewLevel();
-            }
+            
+            FillBoard();
         }
+
         public bool SolvedAtLeastOnce { get; set; } = false;
 
         private int stepBackPressesCounter;
@@ -77,8 +72,10 @@ namespace WaterSortPuzzle.Models
             }
         }
         
-
         private LiquidColor[,] startingPosition;
+        /// <summary>
+        /// Starting board position right after generating new level
+        /// </summary>
         public LiquidColor[,] StartingPosition { get; set; }
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(StepBackCommand), nameof(StepBackDisplay))]
@@ -110,7 +107,13 @@ namespace WaterSortPuzzle.Models
         //    MainPage.DrawTubes();
         //}
 
-
+        private void FillBoard()
+        {
+            if (appPreferences.LastLevelBeforeClosing is not null && appPreferences.LastLevelBeforeClosing.GameGrid.Length > 0)
+                LoadLastLevel();
+            else
+                GenerateNewLevel();
+        }
         public void GenerateNewLevel()
         {
             BoardState.ResetExtraTubesCounter();
@@ -416,7 +419,6 @@ namespace WaterSortPuzzle.Models
                     SavedGameStates.Add(LastGameState);
                 }
 
-                //LastGameState = new SavedGameState(BoardState.Clone(), source, target);
                 LastGameState = new SavedGameState(BoardState.Clone(), source, target);
                 return;
             }
@@ -557,18 +559,10 @@ namespace WaterSortPuzzle.Models
         {
             StepBackPressesCounter = 0;
         }
-        private void LoadLastLevel()
-        {
-            StartingPosition = GridHelper.CloneGrid(appPreferences.LastLevelBeforeClosing.GameGrid);
-
-            //gameGrid = CloneGrid(StartingPosition);
-            //ColorCount = CountColors(StartingPosition);
-            LoadGameState();
-        }
         private void StoreStartingGrid()
         {
             StartingPosition = GridHelper.CloneGrid(BoardState.Grid);
-            appPreferences.LastLevelBeforeClosing = new StoredLevel(StartingPosition, "Last level");
+            appPreferences.LastLevelBeforeClosing = new StoredLevel(StartingPosition, BoardState.ExtraTubesCounter, "Last level");
             appPreferences.StepBackPressesCounter = StepBackPressesCounter;
             appPreferences.SavedGameStatesBeforeSleepV2 = new ObservableCollection<SavedGameState>();
         }
@@ -585,16 +579,18 @@ namespace WaterSortPuzzle.Models
             appPreferences.SavedGameStatesBeforeSleepV2 = copySavedGameStates;
             appPreferences.StepBackPressesCounter = StepBackPressesCounter;
         }
-        private void LoadGameState()
+        private void LoadLastLevel()
         {
+            StartingPosition = GridHelper.CloneGrid(appPreferences.LastLevelBeforeClosing.GameGrid);
+
             if (appPreferences.SavedGameStatesBeforeSleepV2 is not null && appPreferences.SavedGameStatesBeforeSleepV2.Count > 0)
             {
                 LastGameState = appPreferences.SavedGameStatesBeforeSleepV2.Last();
                 SavedGameStates = appPreferences.SavedGameStatesBeforeSleepV2;
                 SavedGameStates.Remove(SavedGameStates.Last());
                 StepBackPressesCounter = appPreferences.StepBackPressesCounter;
-
                 BoardState.Grid = appPreferences.GameStateBeforeSleep;
+                BoardState.SetExtraTubesCounter(LastGameState.BoardState.ExtraTubesCounter);
             }
             else
             {
@@ -604,7 +600,7 @@ namespace WaterSortPuzzle.Models
         }
         public void ReplaceBoardState(BoardState newBoardState)
         {
-            newBoardState.OverwriteExtraTubesCounter(BoardState.ExtraTubesCounter);
+            newBoardState.SetExtraTubesCounter(BoardState.ExtraTubesCounter);
             BoardState = newBoardState;
         }
     }
