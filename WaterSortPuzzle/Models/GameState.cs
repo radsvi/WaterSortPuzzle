@@ -557,7 +557,7 @@ namespace WaterSortPuzzle.Models
             SavedGameStates.Clear();
             SavedGameStates.Add(new SavedGameState(BoardState.Clone()));
 
-            appPreferences.StepBackPressesCounter = StepBackPressesCounter;
+            appPreferences.StepBackCounter = StepBackPressesCounter;
             appPreferences.SavedGameStatesBeforeSleepV2 = new ObservableCollection<SavedGameState>();
         }
         public void SaveGameStateOnSleep()
@@ -571,7 +571,7 @@ namespace WaterSortPuzzle.Models
             //}
             var copySavedGameStates = new ObservableCollection<SavedGameState>(SavedGameStates);
             appPreferences.SavedGameStatesBeforeSleepV2 = copySavedGameStates;
-            appPreferences.StepBackPressesCounter = StepBackPressesCounter;
+            appPreferences.StepBackCounter = StepBackPressesCounter;
         }
         private void LoadLastLevel()
         {
@@ -579,7 +579,7 @@ namespace WaterSortPuzzle.Models
             {
                 SavedGameStates = appPreferences.SavedGameStatesBeforeSleepV2;
                 SavedGameStates.Remove(SavedGameStates.Last());
-                StepBackPressesCounter = appPreferences.StepBackPressesCounter;
+                StepBackPressesCounter = appPreferences.StepBackCounter;
                 BoardState.Grid = appPreferences.GameStateBeforeSleep;
                 BoardState.SetExtraTubesCounter(SavedGameStates.Last().BoardState.ExtraTubesCounter);
             }

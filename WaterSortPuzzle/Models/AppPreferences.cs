@@ -157,10 +157,10 @@
                 Preferences.Set(nameof(SavedGameStatesBeforeSleepV2) + "_Serialized", savedLevelList);
             }
         }
-        public int StepBackPressesCounter
+        public int StepBackCounter
         {
-            get => Preferences.Default.Get(nameof(StepBackPressesCounter), 0);
-            set => Preferences.Set(nameof(StepBackPressesCounter), value);
+            get => Preferences.Default.Get(nameof(StepBackCounter), 0);
+            set => Preferences.Set(nameof(StepBackCounter), value);
         }
         
 
