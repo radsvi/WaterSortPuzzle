@@ -313,17 +313,13 @@ namespace WaterSortPuzzle.ViewModels
 
             GameState.StepBackPressesCounter++;
 
-            SavedGameState lastGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 1];
+            SavedGameState lastGameStatus = GameState.SavedGameStates.Last();
 
             PropertyChangedEventPaused = true;
             GameState.ReplaceBoardState(lastGameStatus.BoardState);
-            //GameState.RestoreGameState(lastGameStatus);
             PropertyChangedEventPaused = false;
 
-            GameState.LastGameState = lastGameStatus.Clone();
-
             GameState.SavedGameStates.Remove(lastGameStatus);
-
 
             if (autoSolve?.CompleteSolution.Count > 0)
                 autoSolve.CurrentSolutionStep++;
@@ -698,7 +694,6 @@ namespace WaterSortPuzzle.ViewModels
             UIEnabled = true;
             DeselectTube();
             GameState.SavedGameStates.Clear();
-            GameState.LastGameState = null;
             GameState.SaveGameState(-1, -1);
             //AutoSolve = new AutoSolve(); // guarantees that we remove stuff like previous moves in autosolving
             AutoSolve?.Reset();
@@ -707,7 +702,7 @@ namespace WaterSortPuzzle.ViewModels
             RefreshAddExtraTubeState();
             RefreshStepBackState();
             OnPropertyChanged(nameof(StepBackButtonText));
-            var task = DrawTubesAsync();
+            _ = DrawTubesAsync();
         }
         private void GetTopmostLiquid(TubeReference sourceTube) // selects topmost liquid in a sourceTube
         {

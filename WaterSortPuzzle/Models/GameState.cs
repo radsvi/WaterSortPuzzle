@@ -95,7 +95,6 @@ namespace WaterSortPuzzle.Models
             }
         }
 
-        public SavedGameState LastGameState { get; set; }
         //private void SetGameGrid(int numberOfTubes)
         //{
         //    //gameGrid = new LiquidColorNew[(NumberOfTubes + ExtraTubesAdded + 2), NumberOfLayers];
@@ -409,18 +408,10 @@ namespace WaterSortPuzzle.Models
         }
         public void SaveGameState(int source, int target)
         {
-            if (DidGameStateChange() == true)
-            //if (SolvingSteps[SolvingSteps.Count - 1] != Tubes)
-            {
-                if (LastGameState != null) // pridavam to tady, protoze nechci v game states mit i current game state.
-                {
-                    LastGameState.UpdateSourceNTarget(source, target);
-                    SavedGameStates.Add(LastGameState);
-                }
-
-                LastGameState = new SavedGameState(BoardState.Clone(), source, target);
+            if (DidGameStateChange() == false)
                 return;
-            }
+
+            SavedGameStates.Add(new SavedGameState(BoardState.Clone(), source, target));
         }
         //public void RestoreGameState(SavedGameState savedGameState)
         //{
@@ -433,11 +424,11 @@ namespace WaterSortPuzzle.Models
         //}
         private bool DidGameStateChange()
         {
-            if (SavedGameStates.Count == 0 && LastGameState == null)
+            if (SavedGameStates.Count == 0)
             {
                 return true;
             }
-            if (LastGameState.BoardState.Grid.Length != BoardState.Grid.Length) // pokud jen pridavam extra prazdnou zkumavku tak to neukladat!
+            if (SavedGameStates.Last().BoardState.Grid.Length != BoardState.Grid.Length) // pokud jen pridavam extra prazdnou zkumavku tak to neukladat!
             {
                 return true;
             }
@@ -446,15 +437,15 @@ namespace WaterSortPuzzle.Models
             {
                 for (int y = 0; y < BoardState.Grid.GetLength(1); y++)
                 {
-                    if (LastGameState.BoardState.Grid[x, y] is null && BoardState.Grid[x, y] is null)
+                    if (SavedGameStates.Last().BoardState.Grid[x, y] is null && BoardState.Grid[x, y] is null)
                     {
                         continue;
                     }
-                    if (LastGameState.BoardState.Grid[x, y] is null && BoardState.Grid[x, y] is not null || LastGameState.BoardState.Grid[x, y] is not null && BoardState.Grid[x, y] is null)
+                    if (SavedGameStates.Last().BoardState.Grid[x, y] is null && BoardState.Grid[x, y] is not null || SavedGameStates.Last().BoardState.Grid[x, y] is not null && BoardState.Grid[x, y] is null)
                     {
                         return true;
                     }
-                    if (LastGameState.BoardState.Grid[x,y].Name != BoardState.Grid[x,y].Name)
+                    if (SavedGameStates.Last().BoardState.Grid[x,y].Name != BoardState.Grid[x,y].Name)
                     {
                         return true;
                     }
@@ -576,7 +567,6 @@ namespace WaterSortPuzzle.Models
             //    copySavedGameStatesList.Add(savedGameState);
             //}
             var copySavedGameStates = new ObservableCollection<SavedGameState>(SavedGameStates);
-            copySavedGameStates.Add(LastGameState);
             appPreferences.SavedGameStatesBeforeSleepV2 = copySavedGameStates;
             appPreferences.StepBackPressesCounter = StepBackPressesCounter;
         }
@@ -587,16 +577,14 @@ namespace WaterSortPuzzle.Models
 
             if (appPreferences.SavedGameStatesBeforeSleepV2 is not null && appPreferences.SavedGameStatesBeforeSleepV2.Count > 0)
             {
-                LastGameState = appPreferences.SavedGameStatesBeforeSleepV2.Last();
                 SavedGameStates = appPreferences.SavedGameStatesBeforeSleepV2;
                 SavedGameStates.Remove(SavedGameStates.Last());
                 StepBackPressesCounter = appPreferences.StepBackPressesCounter;
                 BoardState.Grid = appPreferences.GameStateBeforeSleep;
-                BoardState.SetExtraTubesCounter(LastGameState.BoardState.ExtraTubesCounter);
+                BoardState.SetExtraTubesCounter(SavedGameStates.Last().BoardState.ExtraTubesCounter);
             }
             else
             {
-                //BoardState.Grid = GridHelper.CloneGrid(StartingPosition);
                 BoardState = StartingPosition.Clone();
                 ColorsCounter = CountColors(StartingPosition.Grid);
             }
