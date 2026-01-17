@@ -160,7 +160,6 @@
             //MainVM.ClosePopupWindow();
             MainVM.PropertyChangedEventPaused = true;
             //MainVM.GameState.StartingPosition = MainVM.GameState.CloneGrid(SelectedLevelForLoading.GameGrid);
-            GameState.StartingPosition = SelectedLevelForLoading.BoardState.Clone();
 
 
             //TubesManager.Tubes = DeepCopyTubesCollection(TubesManager.SavedStartingTubes);

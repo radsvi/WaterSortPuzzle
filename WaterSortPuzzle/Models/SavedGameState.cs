@@ -12,20 +12,20 @@ namespace WaterSortPuzzle.Models
         [JsonProperty] public int Target { get; private set; }
         [JsonProperty] public BoardState BoardState { get; private set; }
 
-        public SavedGameState(BoardState boardState, int sourceTube, int targetTube)
+        public SavedGameState(BoardState boardState, int sourceTube = -1, int targetTube = -1)
         {
             Source = sourceTube;
             Target = targetTube;
             BoardState = boardState;
         }
 
-        public SavedGameState Clone()
-        {
-            return new SavedGameState(
-                this.BoardState.Clone(),
-                this.Source,
-                this.Target);
-        }
+        //public SavedGameState Clone()
+        //{
+        //    return new SavedGameState(
+        //        this.BoardState.Clone(),
+        //        this.Source,
+        //        this.Target);
+        //}
         public void UpdateSourceNTarget(int source, int target)
         {
             Source = source;

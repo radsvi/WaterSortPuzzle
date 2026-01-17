@@ -75,7 +75,6 @@ namespace WaterSortPuzzle.Models
         /// <summary>
         /// Starting board position right after generating new level
         /// </summary>
-        public BoardState StartingPosition { get; set; }
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(StepBackCommand), nameof(StepBackDisplay))]
         private ObservableCollection<SavedGameState> savedGameStates = new ObservableCollection<SavedGameState>();
@@ -358,7 +357,8 @@ namespace WaterSortPuzzle.Models
         public void RestartLevel()
         {
             BoardState.ResetExtraTubesCounter();
-            BoardState.SetBoardState(StartingPosition);
+            //BoardState.SetBoardState(StartingPosition);
+            BoardState.SetBoardState(SavedGameStates.First().BoardState);
         }
         private void GenerateStandardLevel(int numberOfColorsToGenerate)
         {
@@ -441,7 +441,8 @@ namespace WaterSortPuzzle.Models
                     {
                         continue;
                     }
-                    if (SavedGameStates.Last().BoardState.Grid[x, y] is null && BoardState.Grid[x, y] is not null || SavedGameStates.Last().BoardState.Grid[x, y] is not null && BoardState.Grid[x, y] is null)
+                    if (SavedGameStates.Last().BoardState.Grid[x, y] is null && BoardState.Grid[x, y] is not null
+                        || SavedGameStates.Last().BoardState.Grid[x, y] is not null && BoardState.Grid[x, y] is null)
                     {
                         return true;
                     }
@@ -552,8 +553,10 @@ namespace WaterSortPuzzle.Models
         private void StoreStartingGrid()
         {
             //StartingPosition = GridHelper.CloneGrid(BoardState.Grid);
-            StartingPosition = BoardState.Clone();
-            appPreferences.LastLevelBeforeClosingV2 = new StoredLevel(StartingPosition, "Last level");
+            //StartingPosition = BoardState.Clone();
+            SavedGameStates.Clear();
+            SavedGameStates.Add(new SavedGameState(BoardState.Clone()));
+
             appPreferences.StepBackPressesCounter = StepBackPressesCounter;
             appPreferences.SavedGameStatesBeforeSleepV2 = new ObservableCollection<SavedGameState>();
         }
@@ -572,9 +575,6 @@ namespace WaterSortPuzzle.Models
         }
         private void LoadLastLevel()
         {
-            //StartingPosition = GridHelper.CloneGrid(appPreferences.LastLevelBeforeClosingV2.BoardState);
-            StartingPosition = appPreferences.LastLevelBeforeClosingV2.BoardState.Clone();
-
             if (appPreferences.SavedGameStatesBeforeSleepV2 is not null && appPreferences.SavedGameStatesBeforeSleepV2.Count > 0)
             {
                 SavedGameStates = appPreferences.SavedGameStatesBeforeSleepV2;
@@ -585,14 +585,15 @@ namespace WaterSortPuzzle.Models
             }
             else
             {
-                BoardState = StartingPosition.Clone();
-                ColorsCounter = CountColors(StartingPosition.Grid);
+                //BoardState = StartingPosition.Clone();
+                BoardState = SavedGameStates.First().BoardState;
+                ColorsCounter = CountColors(SavedGameStates.First().BoardState.Grid);
             }
         }
         public void ReplaceBoardState(BoardState newBoardState)
         {
             newBoardState.SetExtraTubesCounter(BoardState.ExtraTubesCounter);
-            BoardState = newBoardState;
+            BoardState = newBoardState.Clone();
         }
     }
 }

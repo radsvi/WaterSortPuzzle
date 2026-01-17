@@ -246,7 +246,7 @@ namespace WaterSortPuzzle.ViewModels
 
         #endregion
         #region Navigation
-        public string StepBackButtonText { get => $"{GameState.StepBackDisplay}"; }
+        public string StepBackButtonText { get => $"{GameState.StepBackDisplay - 1}"; }
         public string NextStepButtonText { get => $"{AutoSolve?.CurrentSolutionStep}"; }
         public string NewLevelButtonText
         {
@@ -313,13 +313,14 @@ namespace WaterSortPuzzle.ViewModels
 
             GameState.StepBackPressesCounter++;
 
-            SavedGameState lastGameStatus = GameState.SavedGameStates.Last();
+            SavedGameState previousGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 2]; // nechci vracet posledni, protoze posledni je vlastne aktualni stav
+            SavedGameState lastGameStatus = GameState.SavedGameStates[GameState.SavedGameStates.Count - 1]; // using this just for conveing which tubes changed so that I can properly generate only those (visual) flasks
 
             PropertyChangedEventPaused = true;
-            GameState.ReplaceBoardState(lastGameStatus.BoardState);
+            GameState.ReplaceBoardState(previousGameStatus.BoardState);
             PropertyChangedEventPaused = false;
 
-            GameState.SavedGameStates.Remove(lastGameStatus);
+            GameState.SavedGameStates.Remove(GameState.SavedGameStates.Last());
 
             if (autoSolve?.CompleteSolution.Count > 0)
                 autoSolve.CurrentSolutionStep++;
@@ -332,7 +333,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             get
             {
-                if (GameState.SavedGameStates.Count == 0
+                if (GameState.SavedGameStates.Count <= 1
                     || (AppPreferences.UnlimitedStepBack == false && Constants.MaxStepBack <= GameState.StepBackPressesCounter))
                     return false;
 
@@ -512,7 +513,8 @@ namespace WaterSortPuzzle.ViewModels
                 savedLevelList = new ObservableCollection<StoredLevel>();
             }
 
-            savedLevelList.Add(new StoredLevel(GameState.StartingPosition, NoteForSavedLevel));
+            //savedLevelList.Add(new StoredLevel(GameState.StartingPosition, NoteForSavedLevel));
+            savedLevelList.Add(new StoredLevel(GameState.SavedGameStates.First().BoardState, NoteForSavedLevel));
 
             AppPreferences.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
             //Settings.Default.SavedLevels = JsonConvert.SerializeObject(new ObservableCollection<StoredLevel>() { new StoredLevel(TubesManager.SavedStartingTubes) });
