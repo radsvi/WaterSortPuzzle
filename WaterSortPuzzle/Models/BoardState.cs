@@ -32,6 +32,7 @@ namespace WaterSortPuzzle.Models
         public BoardState(AppPreferences appPreferences)
         {
             this.appPreferences = appPreferences;
+            Grid = null!;
         }
 
         private BoardState(BoardState source, int incrementBy = 0)

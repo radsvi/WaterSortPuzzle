@@ -501,57 +501,33 @@ namespace WaterSortPuzzle.ViewModels
             GameState.RestartLevel();
             OnStartingLevel();
         }
-        public string? NoteForSavedLevel { get; set; }
-        private void SaveLevel()
-        {
-            ObservableCollection<StoredLevel>? savedLevelList;
-            try
-            {
-                savedLevelList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(AppPreferences.SavedLevels);
-            }
-            catch
-            {
-                return;
-            }
-            if (savedLevelList is null)
-            {
-                savedLevelList = new ObservableCollection<StoredLevel>();
-            }
+        public string NoteForSavedLevel { get; set; } = string.Empty;
+        //private void SaveLevel()
+        //{
+        //    ObservableCollection<StoredLevel>? savedLevelList;
+        //    try
+        //    {
+        //        savedLevelList = JsonConvert.DeserializeObject<ObservableCollection<StoredLevel>>(AppPreferences.SavedLevels);
+        //    }
+        //    catch
+        //    {
+        //        return;
+        //    }
+        //    if (savedLevelList is null)
+        //    {
+        //        savedLevelList = new ObservableCollection<StoredLevel>();
+        //    }
 
-            //savedLevelList.Add(new StoredLevel(GameState.StartingPosition, NoteForSavedLevel));
-            savedLevelList.Add(new StoredLevel(GameState.SavedGameStates.First().BoardState, NoteForSavedLevel));
+        //    //savedLevelList.Add(new StoredLevel(GameState.StartingPosition, NoteForSavedLevel));
+        //    savedLevelList.Add(new StoredLevel(GameState.SavedGameStates.First().BoardState, NoteForSavedLevel));
 
-            AppPreferences.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
-            //Settings.Default.SavedLevels = JsonConvert.SerializeObject(new ObservableCollection<StoredLevel>() { new StoredLevel(TubesManager.SavedStartingTubes) });
-            NoteForSavedLevel = null;
+        //    AppPreferences.SavedLevels = JsonConvert.SerializeObject(savedLevelList);
+        //    //Settings.Default.SavedLevels = JsonConvert.SerializeObject(new ObservableCollection<StoredLevel>() { new StoredLevel(TubesManager.SavedStartingTubes) });
+        //    NoteForSavedLevel = string.Empty;
 
-            TokenSource = new CancellationTokenSource();
-            var token = TokenSource.Token;
-            PopupWindowNotification(token);
-        }
+            
+        //}
         //public RelayCommand AddPresetLevels_Command => new RelayCommand(execute => LoadLevelVM.AddPresetLevels());
-        public CancellationTokenSource TokenSource { get; set; } = null;
-        public async void PopupWindowNotification(CancellationToken token)
-        {
-            //PopupWindow.Execute(PopupParams.GameSaved);
-            //Thread.Sleep(500);
-            //await Task.Delay(2000);
-            //Task.Delay(2000);
-            for (int i = 0; i < 20; i++)
-            {
-                await Task.Delay(100);
-                if (token.IsCancellationRequested)
-                {
-                    break;
-                }
-            }
-
-            //ClosePopupWindow();
-        }
-        private void CloseNotification()
-        {
-            TokenSource?.Cancel();
-        }
         //public RelayCommand OpenOptionsWindowCommand => new RelayCommand(execute => WindowService?.OpenOptionsWindow(this));
         //public RelayCommand LevelCompleteWindowCommand => new RelayCommand(execute => windowService?.OpenLevelCompleteWindow(this));
         //public RelayCommand OpenHelpFromOptionsCommand => new RelayCommand(execute =>
@@ -608,10 +584,12 @@ namespace WaterSortPuzzle.ViewModels
             }
 
             // if selecting different tube:
-            bool success = false;
+            bool success;
             int successAtLeastOnce = 0;
             LiquidColor? currentLiquid = null;
 
+            if (SourceTube == null)
+                throw new NullReferenceException($"{nameof(SourceTube)} is null");
             do
             {
                 success = AddLiquidToTargetTube(currentTubeReference);
@@ -627,6 +605,9 @@ namespace WaterSortPuzzle.ViewModels
             {
                 currentTubeReference.NumberOfRepeatingLiquids = successAtLeastOnce;
                 currentTubeReference.TubeData.NumberOfRepeatingLiquids = successAtLeastOnce;
+
+                if (currentLiquid == null)
+                    throw new NullReferenceException($"{nameof(currentLiquid)} is null");
                 await DisplayChanges(currentTubeReference, SourceTube, currentLiquid);
 
 
@@ -720,10 +701,10 @@ namespace WaterSortPuzzle.ViewModels
         {
             for (int y = Constants.Layers - 1; y >= 0; y--)
             {
-                if (GameState.BoardState[SourceTube!.TubeId, y] is not null)
+                if (GameState.BoardState.Grid[SourceTube!.TubeId, y] is not null)
                 {
-                    GameState.BoardState[SourceTube.TubeId, y] = null;
-                    SourceTube.TopMostLiquid = null;
+                    GameState.BoardState.Grid[SourceTube.TubeId, y] = null!;
+                    SourceTube.TopMostLiquid = null!;
                     return;
                 }
             }
