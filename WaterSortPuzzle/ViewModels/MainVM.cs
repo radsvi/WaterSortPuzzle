@@ -100,6 +100,7 @@ namespace WaterSortPuzzle.ViewModels
 
             GameState.FillBoard();
             Start();
+            IsLevelCompleted();
         }
         #endregion
         #region Properties
@@ -743,7 +744,7 @@ namespace WaterSortPuzzle.ViewModels
                 if (AppPreferences.AdvancedOptionsVisible == false)
                     UIEnabled = false;
                 //PopupWindow.Execute(PopupParams.LevelComplete);
-                var task = NavigationMenuPopup(PopupParams.LevelComplete);
+                _ = NavigationMenuPopup(PopupParams.LevelComplete);
                 if (AppPreferences.SingleLevelMode == false && GameState.SolvedAtLeastOnce == false)
                 {
                     Leveling.LevelFinished(GameState.ColorsCounter);
