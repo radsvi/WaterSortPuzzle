@@ -101,16 +101,6 @@
                 OnPropertyChanged();
             }
         }
-        public int OptionsWindowHeight
-        {
-            get => Preferences.Default.Get(nameof(OptionsWindowHeight), 500);
-            set => Preferences.Set(nameof(OptionsWindowHeight), value);
-        }
-        public int OptionsWindowWidth
-        {
-            get => Preferences.Default.Get(nameof(OptionsWindowWidth), 800);
-            set => Preferences.Set(nameof(OptionsWindowWidth), value);
-        }
         public string SavedLevels
         {
             get => Preferences.Default.Get(nameof(SavedLevels), string.Empty);

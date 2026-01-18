@@ -494,25 +494,6 @@ namespace WaterSortPuzzle.Models
             }
             return true;
         }
-        
-        [RelayCommand]
-        public void WriteToFileStepBack()
-        {
-            //await App.Current!.Windows[0].Page!.DisplayAlert("zkouska","zkouska text", "ok");
-
-            string exportString = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss") + "\n";
-            foreach (var savedState in SavedGameStates)
-            {
-                exportString += BoardState.BoardStateToString(savedState.BoardState.Grid, StringFormat.Names, true) + "\n";
-            }
-            exportString += BoardState.BoardStateToString(BoardState.Grid, StringFormat.Names) + "\n";
-            exportString += "===================================\n";
-
-            //System.IO.File.WriteAllText("ExportStepBack.log", exportString);
-            System.IO.File.AppendAllText("Export-StepBack.log", exportString);
-
-            //await mainVM.NavigateBack();
-        }
 
         private int CountColors(LiquidColor[,] iGameGrid)
         {

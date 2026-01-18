@@ -241,7 +241,7 @@ namespace WaterSortPuzzle.Models
             ExtraTubesCounter = boardState.ExtraTubesCounter;
         }
         /// <summary>
-        /// Simplified SetBoardState that doesnt change number of extra tubes
+        /// Simplified ReplaceWith that doesn't change number of extra tubes
         /// </summary>
         /// <param name="grid"></param>
         public void ReplaceGridWith(LiquidColor[,] grid)
