@@ -104,7 +104,7 @@
                 //if (LimitToOneStep) { MakeAMove(treeNode.Data); await WaitForButtonPress(); }
 #endif
 
-                TreeNode<ValidMove> highestPriority_TreeNode = null;
+                TreeNode<ValidMove> highestPriority_TreeNode = null!;
                 if (treeNode.Data.FullyVisited == true)
                 {
                     if (treeNode.Parent is null)

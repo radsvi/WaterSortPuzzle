@@ -21,7 +21,7 @@ global using WaterSortPuzzle.Enums;
 global using WaterSortPuzzle.Helpers;
 global using WaterSortPuzzle.Models;
 global using Cts = WaterSortPuzzle.Models.Constants;
-global using WaterSortPuzzle.MVVM;
+//global using WaterSortPuzzle.MVVM;
 //global using WaterSortPuzzle.Services;
 global using WaterSortPuzzle.ViewModels;
 global using WaterSortPuzzle.Views;
