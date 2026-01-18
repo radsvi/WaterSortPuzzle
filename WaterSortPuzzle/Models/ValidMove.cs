@@ -4,7 +4,7 @@
     {
         public ValidMove(PositionPointer source, PositionPointer target, LiquidColor[,] gameState, bool isTargetSingleColor = false, MoveType moveType = MoveType.Standard)
         {
-            GameState = GridHelper.CloneGrid(gameState);
+            Grid = GridHelper.CloneGrid(gameState);
             Target = target;
             Source = source; // mam to v tomhle poradi kvuli eventum
             Liquid = gameState[source.X, source.Y];
@@ -25,37 +25,38 @@
         }
         public ValidMove(LiquidColor[,] gameState)
         {
-            GameState = gameState;
+            Grid = gameState;
             StepNumber = stepCounter++;
         }
         //public PositionPointer Source { get; private set; }
-        private PositionPointer source;
-        public PositionPointer Source
-        {
-            get { return source; }
-            private protected set
-            {
-                if (value != source)
-                {
-                    source = value;
-                    //CalculatePriority(); // aktualne nepouzivam, protoze jsem pro prioritu zavedl uz tim ze seradim ValidMoves jeste predtim nez je priradim do Nodu.
-                    // aktualne to pouzivam pouze pro urceni priority u uplne prvniho tahu
-                }
-            }
-        }
+        //private PositionPointer source;
+        //public PositionPointer Source
+        //{
+        //    get { return source; }
+        //    private protected set
+        //    {
+        //        if (value != source)
+        //        {
+        //            source = value;
+        //            //CalculatePriority(); // aktualne nepouzivam, protoze jsem pro prioritu zavedl uz tim ze seradim ValidMoves jeste predtim nez je priradim do Nodu.
+        //            // aktualne to pouzivam pouze pro urceni priority u uplne prvniho tahu
+        //        }
+        //    }
+        //}
+        public PositionPointer Source { get; private protected set; } = null!;
         private static protected int stepCounter = 0;
         public int StepNumber { get; set; }
         public bool Visited { get; set; } // True means we just peaked once, but didn't necesarily visited all children
         public bool FullyVisited { get; set; } // True means that all children were visited.
-        public PositionPointer Target { get; private protected set; }
+        public PositionPointer Target { get; private protected set; } = null!;
         public bool IsTargetSingleColor { get; private set; }
-        public LiquidColor Liquid { get; private protected set; }
+        public LiquidColor Liquid { get; private protected set; } = null!;
         public float Priority { get; set; } = 0; // higher weight means better move
-        public LiquidColor[,] GameState { get; protected set; }
+        public LiquidColor[,] Grid { get; protected set; } = null!;
         public int SolutionValue { get; set; }
         public int Hash { get; private set; }
-        [Obsolete] public string ReadableHash { get; private set; }
-        [Obsolete] public string ReadableGameState { get; private set; }
+        //[Obsolete] public string ReadableHash { get; private set; }
+        //[Obsolete] public string ReadableGameState { get; private set; }
         public MoveType MoveType { get; private set; } = MoveType.Standard;
         //public int MaxSolutionValue { get; set; }
 
@@ -91,18 +92,18 @@
             //var dva = GameStateToInt(otherGameState);
 
 
-            return GameStateToInt(GameState) == GameStateToInt(otherGameState);
+            return GameStateToInt(Grid) == GameStateToInt(otherGameState);
         }
         private void CalculatePriority()
         {
             float newPriority = 0;
             // Singular colors have slightly higher priority than stacked colors so that they are picked first when there is a choise between the two.
-            newPriority += (GameState.GetLength(1) - Source.NumberOfRepeatingLiquids) / 10f;
+            newPriority += (Grid.GetLength(1) - Source.NumberOfRepeatingLiquids) / 10f;
 
             // if target is not empty tube (but rather the same color), give it higher priority, but only if all stacked liquids fit
             if (Target is not null)
             {
-                if (Target.Y > 0 && Source.NumberOfRepeatingLiquids <= (GameState.GetLength(1) - Target.Y))
+                if (Target.Y > 0 && Source.NumberOfRepeatingLiquids <= (Grid.GetLength(1) - Target.Y))
                 {
                     newPriority++;
                 }
@@ -111,7 +112,7 @@
         }
         public override int GetHashCode()
         {
-            var intGameState = GameStateToInt(GameState);
+            var intGameState = GameStateToInt(Grid);
             //var hash = intGameState.GetHashCode();
             //var hashSlow = GameState.GetHashCode();
             
@@ -122,9 +123,9 @@
         public void UpdateHash()
         {
             Hash = GetHashCode();
-            ReadableHash = GameStateToInt(GameState);
+            //ReadableHash = GameStateToInt(GameState);
             //ReadableGameState = GameStateToString(GameState);
-            ReadableGameState = GameStateToString(GameState, StringFormat.Numbers);
+            //ReadableGameState = GameStateToString(GameState, StringFormat.Numbers);
 
         }
         //private static List<string> GameStateToInt(LiquidColorNew[,] gameState)
@@ -175,7 +176,7 @@
     internal class NullValidMove : ValidMove
     {
         public NullValidMove() : base(true) {
-            GameState = new LiquidColor[0,0];
+            Grid = new LiquidColor[0,0];
             Target = new NullPositionPointer();
             Source = new NullPositionPointer();
             Liquid = new NullLiquidColor();

@@ -1,8 +1,8 @@
 ﻿namespace WaterSortPuzzle.Models
 {
-    internal class CollisionDictionary<TKey, TValue> //: IDictionary<TKey, TValue>
+    internal class CollisionDictionary<TKey, TValue> where TKey : struct //: IDictionary<TKey, TValue>
     {
-        private Dictionary<TKey, List<TValue>> data = new();
+        private readonly Dictionary<TKey, List<TValue>> data = [];
         public bool ContainsKey(TKey key)
         {
             return this.data.ContainsKey(key);

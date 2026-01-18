@@ -102,11 +102,17 @@
             {
                 if (jNode.Data.Priority > pivot.Data.Priority)
                 {
+                    if (iNode.NextSibling == null)
+                        throw new NullReferenceException($"{nameof(iNode.NextSibling)} is null");
+
                     jNode.SwapData(iNode.NextSibling);
 
                     //DebugPrintAllSiblings(head);
                     iNode = iNode.NextSibling;
                 }
+                if (jNode.NextSibling == null)
+                    throw new NullReferenceException($"{nameof(jNode.NextSibling)} is null");
+
                 jNode = jNode.NextSibling;
             }
             iNode.SwapData(pivot);
@@ -122,6 +128,9 @@
             //DebugPrint(head, tail);
             TreeNode<ValidMove> pivot = Partition(head, tail);
             QuickSortHelper(head, pivot);
+
+            if (pivot.NextSibling == null)
+                throw new NullReferenceException($"{nameof(pivot.NextSibling)} is null");
             QuickSortHelper(pivot.NextSibling, tail);
         }
         public static TreeNode<ValidMove> QuickSort(TreeNode<ValidMove> head)

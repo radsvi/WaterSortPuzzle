@@ -282,10 +282,10 @@ namespace WaterSortPuzzle.ViewModels
 
             //previousGameState = node.Data.GameState; // tohle je gamestate kterej uchovavam jen uvnitr autosolvu
             //GameState.BoardState.SetBoardState(move.GameState);
-            GameState.BoardState.ReplaceWith(GameState.BoardState.FactoryCreate(move.GameState));
+            GameState.BoardState.ReplaceWith(GameState.BoardState.FactoryCreate(move.Grid));
             var currentTubeReference = new TubeReference(
                 move.Target.X,
-                move.GameState[move.Target.X, move.Target.Y],
+                move.Grid[move.Target.X, move.Target.Y],
                 move.Target.Y,
                 move.Source.NumberOfRepeatingLiquids,
                 TubesItemsSource[move.Target.X]
@@ -293,7 +293,7 @@ namespace WaterSortPuzzle.ViewModels
 
             var sourceTubeReference = new TubeReference(
                 move.Source.X,
-                move.GameState[move.Source.X, move.Source.Y],
+                move.Grid[move.Source.X, move.Source.Y],
                 move.Source.Y,
                 TubesItemsSource[move.Source.X]
             );

@@ -144,12 +144,12 @@
                     //    continue; // vygeneroval jsem dalsi stav, takze zbytek preskakuju
                     //}
 
-                    (var movableLiquids, var mostFrequentColors) = GetMovableLiquids(treeNode.Data.GameState);
+                    (var movableLiquids, var mostFrequentColors) = GetMovableLiquids(treeNode.Data.Grid);
 
-                    Debug_IterateThroughList(movableLiquids, "movableLiquids:", (liquid) => $"[{liquid.X},{liquid.Y}] {{{treeNode.Data.GameState[liquid.X, liquid.Y].Name}}} {{{liquid.AllIdenticalLiquids}}} {{{liquid.NumberOfRepeatingLiquids}}}");
+                    Debug_IterateThroughList(movableLiquids, "movableLiquids:", (liquid) => $"[{liquid.X},{liquid.Y}] {{{treeNode.Data.Grid[liquid.X, liquid.Y].Name}}} {{{liquid.AllIdenticalLiquids}}} {{{liquid.NumberOfRepeatingLiquids}}}");
 
-                    var emptySpots = GetEmptySpots(treeNode.Data.GameState, movableLiquids);
-                    var validMoves = GetValidMoves(treeNode.Data.GameState, movableLiquids, emptySpots);
+                    var emptySpots = GetEmptySpots(treeNode.Data.Grid, movableLiquids);
+                    var validMoves = GetValidMoves(treeNode.Data.Grid, movableLiquids, emptySpots);
 
                     //if (treeNode.Data.StepNumber == -1 // i.e. first node
                     //    || treeNode.Data.MoveType == MoveType.NeverWrong && treeNode.Parent.Data.StepNumber == -1
@@ -170,20 +170,20 @@
                         //validMoves = validMoves.OrderByDescending(x => x.Priority).ToList();
                     }
 
-                    Debug_IterateThroughList(validMoves, "validMoves:", (move) => $"[{move.Source.X},{move.Source.Y}] => [{move.Target.X},{move.Target.Y}] {{{treeNode.Data.GameState[move.Source.X, move.Source.Y].Name}}} {{HowMany {move.Source.NumberOfRepeatingLiquids}}}");
+                    Debug_IterateThroughList(validMoves, "validMoves:", (move) => $"[{move.Source.X},{move.Source.Y}] => [{move.Target.X},{move.Target.Y}] {{{treeNode.Data.Grid[move.Source.X, move.Source.Y].Name}}} {{HowMany {move.Source.NumberOfRepeatingLiquids}}}");
 
                     //var mostFrequentColors = PickMostFrequentColor(movableLiquids); // ## tohle jsem jeste nezacal nikde pouzivat!
 
                     RemoveEqualColorMoves(validMoves);
                     RemoveUselessMoves(validMoves);
-                    RemoveSolvedTubesFromMoves(treeNode.Data.GameState, validMoves);
+                    RemoveSolvedTubesFromMoves(treeNode.Data.Grid, validMoves);
 
                     // Pro kazdy validMove vytvorim sibling ve strome:
                     CreateAllPossibleFutureStates(HashedSteps, treeNode, validMoves); // also checks for repeating moves
 
                     if (UnvisitedChildrenExist(treeNode) == false)
                     {
-                        if (gameState.IsLevelCompleted(treeNode.Data.GameState) is false)
+                        if (gameState.IsLevelCompleted(treeNode.Data.Grid) is false)
                         {
                             treeNode.Data.FullyVisited = true;
                             //if (treeNode.Parent is not null)
@@ -247,24 +247,24 @@
         }
         private TreeNode<ValidMove> PickNeverincorectMovesFirst(TreeNode<ValidMove> parentNode, CollisionDictionary<int, TreeNode<ValidMove>> hashedSteps) // dat to hned na zacatek jeste nez delam valid move a podobny veci
         { // name implies that its not always the best or optimal move, but its never wrong. Can at worst generate one extra move, but at best remove whole branch and cut the whole solution tree in half if its early on in the solution.
-            if (HasEmptyTubes(parentNode.Data.GameState).Count == 0)
+            if (HasEmptyTubes(parentNode.Data.Grid).Count == 0)
             {
                 return new NullTreeNode(parentNode);
             }
             
-            var singleColorTubeList = HasSingleColorTube(parentNode.Data.GameState);
+            var singleColorTubeList = HasSingleColorTube(parentNode.Data.Grid);
             if (singleColorTubeList.Count() == 0)
             {
                 return new NullTreeNode(parentNode);
             }
 
-            (var dualColorTube, var singleColorTube) = HasCorrespondingDualColorTube(parentNode.Data.GameState, singleColorTubeList);
+            (var dualColorTube, var singleColorTube) = HasCorrespondingDualColorTube(parentNode.Data.Grid, singleColorTubeList);
             if (dualColorTube is null)
             {
                 return new NullTreeNode(parentNode);
             }
 
-            var newGameState = GridHelper.CloneGrid(parentNode.Data.GameState);
+            var newGameState = GridHelper.CloneGrid(parentNode.Data.Grid);
             var validMove = new ValidMove(dualColorTube, singleColorTube, newGameState, MoveType.NeverWrong);
 
             return GeneratePriorityFutureState(parentNode, validMove, hashedSteps);
@@ -297,21 +297,21 @@
             //{
             //    validMove.GameState[validMove.Target.X, y] = validMove.GameState[validMove.Target.X, y + 1];
             //}
-            for (int y = 0; y < validMove.GameState.GetLength(1); y++)
+            for (int y = 0; y < validMove.Grid.GetLength(1); y++)
             {
-                if (validMove.GameState[validMove.Target.X, y] is null) 
+                if (validMove.Grid[validMove.Target.X, y] is null) 
                 {
-                    validMove.GameState[validMove.Target.X, y] = validMove.GameState[validMove.Source.X, validMove.Source.Y];
+                    validMove.Grid[validMove.Target.X, y] = validMove.Grid[validMove.Source.X, validMove.Source.Y];
                 }
             }
             //newGameState[singleColorTube.X, 0] = null;
 
             //validMove.GameState[validMove.Target.X, 0] = validMove.GameState[validMove.Source.X, validMove.Source.Y];
-            for (int y = 0; y < validMove.GameState.GetLength(1) - 1; y++)
+            for (int y = 0; y < validMove.Grid.GetLength(1) - 1; y++)
             {
-                validMove.GameState[validMove.Source.X, y] = validMove.GameState[validMove.Source.X, y + 1];
+                validMove.Grid[validMove.Source.X, y] = validMove.Grid[validMove.Source.X, y + 1];
             }
-            validMove.GameState[validMove.Source.X, validMove.GameState.GetLength(1) - 1] = null;
+            validMove.Grid[validMove.Source.X, validMove.Grid.GetLength(1) - 1] = null;
         }
         private List<int> HasEmptyTubes(LiquidColor[,] gameState)
         {
@@ -492,10 +492,10 @@
         {
             int j = 0;
             while (j < node.Data.Source.NumberOfRepeatingLiquids
-                && node.Data.Target.Y + j < node.Data.GameState.GetLength(1)) // pocet stejnych barev na sobe source && uroven barvy v targetu
+                && node.Data.Target.Y + j < node.Data.Grid.GetLength(1)) // pocet stejnych barev na sobe source && uroven barvy v targetu
             {
-                node.Data.GameState[node.Data.Target.X, node.Data.Target.Y + j] = node.Data.GameState[node.Data.Source.X, node.Data.Source.Y - j];
-                node.Data.GameState[node.Data.Source.X, node.Data.Source.Y - j] = null;
+                node.Data.Grid[node.Data.Target.X, node.Data.Target.Y + j] = node.Data.Grid[node.Data.Source.X, node.Data.Source.Y - j];
+                node.Data.Grid[node.Data.Source.X, node.Data.Source.Y - j] = null;
                 j++;
             }
             node.Data.UpdateHash();
@@ -506,7 +506,7 @@
             {
                 foreach (var hashItem in hashedSteps[nextNode.Data.Hash])
                 {
-                    if (hashItem.Data.Equals(nextNode.Data.GameState) && hashItem.Data.Visited == true) // pokud neni Visited == true tak jsem to jen vygeneroval jako dalsi krok, ale jeste nikdy neprozkoumal, takze stale muzu pouzit
+                    if (hashItem.Data.Equals(nextNode.Data.Grid) && hashItem.Data.Visited == true) // pokud neni Visited == true tak jsem to jen vygeneroval jako dalsi krok, ale jeste nikdy neprozkoumal, takze stale muzu pouzit
                     {
                         Debug.WriteLine("Nasel jsem opakujici se stav!");
                         return true;
@@ -541,7 +541,7 @@
                     resultNode.Parent.Data.Visited = true;
                     resultNode.Parent.Data.FullyVisited = true;
                 }
-                resultNode.Data.SolutionValue = GetStepValue(resultNode.Data.GameState);
+                resultNode.Data.SolutionValue = GetStepValue(resultNode.Data.Grid);
             }
 
             return resultNode;
@@ -916,7 +916,7 @@
         {
             string exportString = DateTime.Now.ToString("[MM/dd/yyyy HH:mm:ss]");
 
-            exportString += BoardState.BoardStateToString(treeNode.Data.GameState, StringFormat.Numbers, true);
+            exportString += BoardState.BoardStateToString(treeNode.Data.Grid, StringFormat.Numbers, true);
             exportString += "{" + note + "}" + "\n";
             //System.IO.File.AppendAllText(exportLogFilename, exportString); // ## convertovat do MAUI
         }
