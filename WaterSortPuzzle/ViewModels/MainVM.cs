@@ -5,6 +5,12 @@ namespace WaterSortPuzzle.ViewModels
 {
     public partial class MainVM : ViewModelBase
     {
+        public AppPreferences AppPreferences { get; }
+        public GameState GameState { get; }
+        public Notification Notification { get; }
+        public AutoSolve? AutoSolve { get; }
+        public Leveling Leveling { get; }
+
         #region Constructor
         public MainVM(
             AppPreferences appPreferences,
@@ -104,22 +110,7 @@ namespace WaterSortPuzzle.ViewModels
         //public IWindowService WindowService { get; }
 
         // Using these in MainPage.xaml so they need to be public and should remain properties
-        public AppPreferences AppPreferences { get; }
-        public Notification Notification { get; }
-        private AutoSolve? autoSolve;
-        public AutoSolve? AutoSolve
-        {
-            get { return autoSolve; }
-            set
-            {
-                if (value != autoSolve)
-                {
-                    autoSolve = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public GameState GameState { get; }
+
         private LoadLevelVM? loadLevelVM;
         public LoadLevelVM? LoadLevelVM
         {
@@ -133,12 +124,7 @@ namespace WaterSortPuzzle.ViewModels
                 }
             }
         }
-        private Leveling leveling;
-        public Leveling Leveling
-        {
-            get => leveling;
-            set { leveling = value; OnPropertyChanged(); }
-        }
+
 
         private ViewModelBase? selectedViewModel;
         public ViewModelBase? SelectedViewModel
@@ -261,10 +247,17 @@ namespace WaterSortPuzzle.ViewModels
             AutoSolve?.Start();
             AutoSolveUsed = true;
         }
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanStepThrough))]
         public async Task StepThrough()
         {
+            if (!CanStepThrough())
+                return;
+
             await MakeAMove(AutoSolve!.CompleteSolution[--AutoSolve.CurrentSolutionStep]);
+        }
+        private bool CanStepThrough()
+        {
+            return AutoSolve.CurrentSolutionStep > 0;
         }
         private async Task MakeAMove(ValidMove move)
         {
@@ -321,11 +314,11 @@ namespace WaterSortPuzzle.ViewModels
 
             GameState.SavedGameStates.Remove(GameState.SavedGameStates.Last());
 
-            if (autoSolve?.CompleteSolution.Count > 0)
-                autoSolve.CurrentSolutionStep++;
+            if (AutoSolve?.CompleteSolution.Count > 0)
+                AutoSolve.CurrentSolutionStep++;
 
             RecalculateTubesPerLine();
-            autoSolve?.SoftReset();
+            AutoSolve?.SoftReset();
             await DrawTubesAsync(lastGameStatus.Source, lastGameStatus.Target);
         }
         public bool CanStepBack
