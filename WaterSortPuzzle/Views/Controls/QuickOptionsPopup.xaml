@@ -98,6 +98,10 @@
                     Text="Calculate solution >>"
                     Style="{StaticResource MenuButton}"
                     Command="{Binding StartAutoSolveCommand}" />
+                <!--<Button
+                    Text="DEBUG"
+                    Style="{StaticResource MenuButton}"
+                    Command="{Binding TestMethodCommand}" />-->
             </VerticalStackLayout>
         </Border>
         <Button

@@ -9,7 +9,7 @@ namespace WaterSortPuzzle.Models
         readonly AppPreferences appPreferences;
         readonly Notification notification;
         readonly Leveling leveling;
-        public BoardState BoardState { get; private set; }
+        public BoardState BoardState { get; }
 
         public GameState() { }
         public GameState(AppPreferences appPreferences, Notification notification, Leveling leveling, BoardState boardState)
@@ -145,7 +145,7 @@ namespace WaterSortPuzzle.Models
             //Tubes?.Clear();
             
             int i = 0;
-            BoardState.Grid = new LiquidColor[20, Constants.Layers];
+            BoardState.Grid = new LiquidColor[Constants.ColorCount + 10, Constants.Layers];
 
             // Almost solved:
             BoardState.AddStartingTube(i++, new int[] { });
@@ -359,7 +359,7 @@ namespace WaterSortPuzzle.Models
         {
             BoardState.ResetExtraTubesCounter();
             //BoardState.SetBoardState(StartingPosition);
-            BoardState.ResetBoardState(SavedGameStates.First().BoardState);
+            BoardState.ReplaceWith(SavedGameStates.First().BoardState);
         }
         private void GenerateStandardLevel(int numberOfColorsToGenerate)
         {
@@ -581,12 +581,12 @@ namespace WaterSortPuzzle.Models
                     SavedGameStates.Add(savedGame);
 
                 StepBackCounter = appPreferences.StepBackCounter;
-                ReplaceBoardState(SavedGameStates.Last().BoardState.Clone());
+                ReplaceBoardState(SavedGameStates.Last().BoardState);
             }
             else
             {
                 //BoardState = StartingPosition.Clone();
-                BoardState = SavedGameStates.First().BoardState;
+                BoardState.ReplaceWith(SavedGameStates.First().BoardState);
                 ColorsCounter = CountColors(SavedGameStates.First().BoardState.Grid);
             }
         }

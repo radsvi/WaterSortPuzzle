@@ -146,7 +146,10 @@ namespace WaterSortPuzzle.Models
         //}
         public BoardState Clone()
         {
-            return new BoardState(this);
+            var newBoard = new BoardState(this);
+            newBoard.Grid = GridHelper.CloneGrid(Grid);
+            newBoard.ExtraTubesCounter = ExtraTubesCounter;
+            return newBoard;
         }
         public BoardState FactoryCreate(StoredLevel storedLevel)
         {
@@ -232,16 +235,16 @@ namespace WaterSortPuzzle.Models
         /// (Used in restart level, LoadLevel, and MakeAMove in AutoSolve)
         /// </summary>
         /// <param name="boardState"></param>
-        public void ResetBoardState(BoardState boardState)
+        public void ReplaceWith(BoardState boardState)
         {
-            Grid = boardState.Clone().Grid;
+            Grid = GridHelper.CloneGrid(boardState.Grid);
             ExtraTubesCounter = boardState.ExtraTubesCounter;
         }
         /// <summary>
         /// Simplified SetBoardState that doesnt change number of extra tubes
         /// </summary>
         /// <param name="grid"></param>
-        [Obsolete]public void SetBoardState(LiquidColor[,] grid)
+        public void ReplaceGridWith(LiquidColor[,] grid)
         {
             Grid = grid;
         }

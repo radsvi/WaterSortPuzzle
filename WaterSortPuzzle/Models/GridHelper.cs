@@ -8,7 +8,7 @@ namespace WaterSortPuzzle.Models
 {
     public static class GridHelper
     {
-        [Obsolete]
+        //[Obsolete]
         public static LiquidColor[,] CloneGrid(LiquidColor[,] grid, int incrementBy = 0) // Nemazat uplne. Jen prestat pouzivat mimo tuhle classu a pak predelat na private (pokud se to rozhodnu presunout zpet do BoardState)
         {
             LiquidColor[,] gridClone = new LiquidColor[grid.GetLength(0) + incrementBy, grid.GetLength(1)];

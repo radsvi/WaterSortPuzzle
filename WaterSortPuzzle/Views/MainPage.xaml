@@ -354,6 +354,11 @@
                     </Grid.Background>
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
                         <!--<Button
+                            Command="{Binding TestMethodCommand}"
+                            Text="DEBUG"
+                            Grid.Column="0">
+                        </Button>-->
+                        <!--<Button
                             IsVisible="{Binding AutoSolve.Solved}"
                             ImageSource="button_next.png"
                             Style="{StaticResource NavigationButton}"

@@ -60,7 +60,7 @@
         //[NotifyCanExecuteChangedFor(nameof(GameState.StepBackCommand))]
         //private bool limitToOneStep = false;
         public bool LimitToOneStep { get; set; } = false; // When true - makes the AutoSolve generate only one step for each press of the button and visualises the changes. When false - generates whole solution
-        private async void StartSolution(LiquidColor[,] startingPosition)
+        private async void StartSolving(LiquidColor[,] startingPosition)
         {
             IsBusy = true;
             //var notificationType = MessageType.Debug;
@@ -828,7 +828,7 @@
             if (CanStart() == false)
                 return;
 
-            Shell.Current.FlyoutIsPresented = false;
+            //Shell.Current.FlyoutIsPresented = false;
             //Notification.Show("Game grid locked while automatic solution is engaged",MessageType.Information, 10000);
             ResumeRequest = true; // provede se i pri prvnim spusteni, protoze je pauza na zacatku
             //ResumeRequestCounterDebug++;
@@ -837,7 +837,7 @@
             {
                 Started = true;
                 InProgress = true;
-                StartSolution(gameState.BoardState.Grid);
+                StartSolving(gameState.BoardState.Grid);
                 return;
             }
         }

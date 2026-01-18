@@ -8,7 +8,7 @@ namespace WaterSortPuzzle.ViewModels
         public AppPreferences AppPreferences { get; }
         public GameState GameState { get; }
         public Notification Notification { get; }
-        public AutoSolve? AutoSolve { get; }
+        public AutoSolve AutoSolve { get; }
         public Leveling Leveling { get; }
 
         #region Constructor
@@ -89,6 +89,17 @@ namespace WaterSortPuzzle.ViewModels
             //OnPropertyChanged(nameof(StepBackImage));
             //OnPropertyChanged(nameof(StepBackButtonText));
             //StepBackCommand.NotifyCanExecuteChanged();
+        }
+        private bool initialized;
+        public void InitializeOnce()
+        {
+            if (initialized)
+                return;
+
+            initialized = true;
+
+            GameState.FillBoard();
+            Start();
         }
         #endregion
         #region Properties
@@ -269,7 +280,8 @@ namespace WaterSortPuzzle.ViewModels
             //SolvingStepsOLD.Add(upcomingStep);
 
             //previousGameState = node.Data.GameState; // tohle je gamestate kterej uchovavam jen uvnitr autosolvu
-            GameState.BoardState.SetBoardState(move.GameState);
+            //GameState.BoardState.SetBoardState(move.GameState);
+            GameState.BoardState.ReplaceWith(GameState.BoardState.FactoryCreate(move.GameState));
             var currentTubeReference = new TubeReference(
                 move.Target.X,
                 move.GameState[move.Target.X, move.Target.Y],
@@ -552,50 +564,10 @@ namespace WaterSortPuzzle.ViewModels
         //    Notification.Show(displayText);
         //}
         [RelayCommand]
-        private void TestMethod()
+        public void TestMethod()
         {
 #if DEBUG
-            TreeNode<ValidMove> node = new TreeNode<ValidMove>(new ValidMove(null));
-            var startingNode = node;
-            TreeNode<ValidMove> nextNode;
-
-            node.Data.Priority = 100;
-
-            nextNode = new TreeNode<ValidMove>(new ValidMove(null));
-            node.AddSibling(nextNode);
-            node = nextNode;
-
-            node.Data.Priority = 1;
-
-            nextNode = new TreeNode<ValidMove>(new ValidMove(null));
-            node.AddSibling(nextNode);
-            node = nextNode;
-
-            node.Data.Priority = 5;
-
-            nextNode = new TreeNode<ValidMove>(new ValidMove(null));
-            node.AddSibling(nextNode);
-            node = nextNode;
-
-            node.Data.Priority = 3;
-
-            //int number = TreeNodeHelper.CountSiblings(startingNode) + 1; // siblings, plus the original node
-            //Notification.Show("Total Nodes: " + number);
-
-            //Notification.Show("StepNumber of last node: " + TreeNodeHelper.GetTailNode(startingNode).Data.StepNumber, 10000);
-
-            TreeNodeHelper.QuickSort(startingNode);
-
-            node = startingNode;
-            string displayText = string.Empty;
-            while (node is not null)
-            {
-                //displayText += $"[{node.Data.StepNumber}: {node.Data.Priority}], ";
-                displayText += $"[{node.Data.Priority}], ";
-
-                node = node.NextSibling;
-            }
-            Notification.Show("Priorities list: " + displayText, 10000);
+            var qwer = GameState.BoardState.Grid;
 #endif
         }
         [RelayCommand]

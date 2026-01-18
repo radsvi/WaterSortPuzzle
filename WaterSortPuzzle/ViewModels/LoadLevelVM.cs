@@ -408,7 +408,7 @@
             LiquidColor[,]? importedBoardState = DecodeImportedString(ImportGameStateString);
             if (importedBoardState is null) return;
 
-            GameState.BoardState.SetBoardState(importedBoardState);
+            GameState.BoardState.ReplaceGridWith(importedBoardState);
             MainVM.OnStartingLevel();
             ImportGameStateString = string.Empty;
         }

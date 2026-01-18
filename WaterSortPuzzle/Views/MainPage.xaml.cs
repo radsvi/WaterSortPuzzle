@@ -21,8 +21,7 @@ namespace WaterSortPuzzle.Views
         {
             base.OnAppearing();
 
-            mainVM.GameState.FillBoard();
-            mainVM.Start();
+            mainVM.InitializeOnce();
         }
     }
 }
