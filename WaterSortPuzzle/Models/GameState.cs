@@ -69,28 +69,31 @@ namespace WaterSortPuzzle.Models
                 }
             }
         }
-        
+
+
+        //[ObservableProperty]
+        //[NotifyCanExecuteChangedFor(nameof(StepBackCommand), nameof(StepBackDisplay))]
+
+        //private ObservableCollection<SavedGameState> savedGameStates = new ObservableCollection<SavedGameState>();
         /// <summary>
         /// Starting board position right after generating new level
         /// </summary>
-        //[ObservableProperty]
-        //[NotifyCanExecuteChangedFor(nameof(StepBackCommand), nameof(StepBackDisplay))]
-        private ObservableCollection<SavedGameState> savedGameStates = new ObservableCollection<SavedGameState>();
-        public ObservableCollection<SavedGameState> SavedGameStates
-        {
-            get { return savedGameStates; }
-            private set
-            {
-                if (value != savedGameStates)
-                {
-                    savedGameStates = value;
-                    OnPropertyChanged();
-                    //OnPropertyChanged(nameof(StepBackCommand));
-                    //StepBackCommand.NotifyCanExecuteChanged();
-                    OnPropertyChanged(nameof(StepBackDisplay));
-                }
-            }
-        }
+        public ObservableCollection<SavedGameState> SavedGameStates { get; } = [];
+        //public ObservableCollection<SavedGameState> SavedGameStates
+        //{
+        //    get { return savedGameStates; }
+        //    private set
+        //    {
+        //        if (value != savedGameStates)
+        //        {
+        //            savedGameStates = value;
+        //            OnPropertyChanged();
+        //            //OnPropertyChanged(nameof(StepBackCommand));
+        //            //StepBackCommand.NotifyCanExecuteChanged();
+        //            //OnPropertyChanged(nameof(StepBackDisplay));
+        //        }
+        //    }
+        //}
 
         //private void SetGameGrid(int numberOfTubes)
         //{
