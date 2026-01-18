@@ -42,7 +42,7 @@ namespace WaterSortPuzzle.Models
             {
                 if (appPreferences.UnlimitedStepBack)
                 {
-                    return SavedGameStates.Count;
+                    return SavedGameStates.Count - 1;
                 }
                 else
                 {

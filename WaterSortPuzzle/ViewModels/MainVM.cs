@@ -245,7 +245,7 @@ namespace WaterSortPuzzle.ViewModels
 
         #endregion
         #region Navigation
-        public string StepBackButtonText { get => $"{GameState.StepBackDisplay - 1}"; }
+        public string StepBackButtonText { get => $"{GameState.StepBackDisplay}"; }
         public string NextStepButtonText { get => $"{AutoSolve?.CurrentSolutionStep}"; }
         public string NewLevelButtonText
         {
