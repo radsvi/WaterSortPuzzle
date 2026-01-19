@@ -5,12 +5,7 @@
         readonly Notification notification;
         readonly GameState gameState;
 
-        string exportLogFilename;
-        private int currentSolutionStep = 0;
-        private int iterations = 0;
-        private bool solved = false;
-        private bool started = false;
-
+        //string exportLogFilename;
 
         //TreeNode<ValidMove> SolvingSteps;
         //TreeNode<ValidMove> FirstStep;
@@ -20,13 +15,17 @@
             this.notification = notification;
             this.gameState = gameState;
 
-            exportLogFilename = Constants.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
+            //exportLogFilename = Constants.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
         }
         private bool ResumeRequest { get; set; }
         private bool inProgress;
         public bool InProgress { get => inProgress; private set { inProgress = value; OnPropertyChanged(); } }
+        private bool started = false;
         public bool Started { get => started; private set { started = value; OnPropertyChanged(); StartCommand.NotifyCanExecuteChanged(); } }
+        private bool solved = false;
         public bool Solved { get => solved; private set { solved = value; OnPropertyChanged(); } }
+        private bool noSolutionFound;
+        public bool NoSolutionFound { get => noSolutionFound; private set { noSolutionFound = value; OnPropertyChanged(); } }
         //[Obsolete]public int ResumeRequestCounterDebug { get; set; } = 0; // used only for debugging how many times I clicked the button and only triggering breakpoint upon certain number.
         //public List<ValidMove> CompleteSolution { get; private set; }
         private ObservableCollection<ValidMove> completeSolution = new ObservableCollection<ValidMove>();
@@ -42,6 +41,7 @@
             }
         }
         internal CollisionDictionary<int, TreeNode<ValidMove>> HashedSteps { get; private set; } = new CollisionDictionary<int, TreeNode<ValidMove>>();
+        private int iterations = 0;
         public int Iterations
         {
             get { return iterations; }
@@ -55,6 +55,7 @@
             }
         }
 
+        private int currentSolutionStep = 0;
         public int CurrentSolutionStep { get => currentSolutionStep; set { currentSolutionStep = value; OnPropertyChanged(); } }
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(GameState.StepBackCommand))]
@@ -222,11 +223,15 @@
                 if (CompleteSolution.Count > 0)
                     await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve - Finished", $"Total states explored: {Iterations}.\nSteps required to solve the puzzle: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds", "Close");
                 else
+                {
+                    NoSolutionFound = true;
                     await App.Current!.Windows[0].Page!.DisplayAlert("AutoSolve - No Solution found", $"Total states explored: {Iterations}.\nSteps generated: {CompleteSolution.Count}.\nDuration: {duration.TotalSeconds} seconds\nNo solution found", "Close");
+                }
             }
 
             IsBusy = false;
             InProgress = false;
+
         }
         private List<ValidMove> OrderList(List<ValidMove> validMoves, ColorCount mostFrequentColors)
         {
@@ -866,14 +871,15 @@
         //}
         public void SoftReset()
         {
-            if (Solved) // without this condition the OnPropertyChanged events are called very often and unnecessarily
+            if (Started) // without this condition the OnPropertyChanged events are called very often and unnecessarily
             {
-                exportLogFilename = Constants.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
+                //exportLogFilename = Constants.logFolderName + "/Export-AutoSolve-" + DateTime.Now.ToString("MMddyyyy-HH.mm.ss") + ".log";
                 CompleteSolution.Clear();
                 ResumeRequest = false;
                 InProgress = false;
                 Started = false;
                 Solved = false;
+                NoSolutionFound = false;
                 Iterations = 0;
                 CurrentSolutionStep = 0;
             }

@@ -320,9 +320,29 @@
                 </Border>
 
                 <!-- // AutoSolve box // -->
-                <Border VerticalOptions="End" Background="White" IsVisible="{Binding AutoSolve.Started}" HorizontalOptions="Start" Margin="5,0" >
-                    <Label Text="{Binding AutoSolve.Iterations}" HeightRequest="40" WidthRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="Black"/>
-                </Border>
+                <HorizontalStackLayout VerticalOptions="End" IsVisible="{Binding AutoSolve.Started}" HorizontalOptions="Start" Margin="5,0" >
+                    <Label
+                        Text="{Binding AutoSolve.Iterations}"
+                        HeightRequest="40"
+                        WidthRequest="40"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        Background="White"
+                        TextColor="Black"/>
+                    <Label
+                        Margin="5,0,0,0"
+                        IsVisible="{Binding AutoSolve.NoSolutionFound}"
+                        TextColor="White"
+                        VerticalOptions="Center"
+                        Text="No solution for this state of the game">
+                        <Label.Shadow>
+                            <Shadow Brush="Black"
+                                Offset="1,1"
+                                Radius="10"
+                                Opacity="1" />
+                        </Label.Shadow>
+                    </Label>
+                </HorizontalStackLayout>
 
                 <!--<Grid VerticalOptions="Start" HorizontalOptions="Center" x:Name="GridForTubes">
                     <usercontrols:TubeControl TubeItem="{Binding Tubes[0]}"/>
