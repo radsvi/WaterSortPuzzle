@@ -10,12 +10,14 @@ namespace WaterSortPuzzle.ViewModels
     public partial class QuickOptionsPopupVM : FullscreenParameterlessPopupBaseVM
     {
         public QuickOptionsPopupVM(IPopupService popupService, MainVM mainVM) : base(popupService, mainVM) {}
-        [RelayCommand]
+
+        [RelayCommand(CanExecute = nameof(CanStart))]
         private async Task StartAutoSolve()
         {
             await popupService.ClosePopupAsync(Shell.Current, false);
             mainVM.StartAutoSolve();
         }
+        private bool CanStart() => mainVM.AutoSolve.CanStart();
         //[RelayCommand]
         //private async Task TestMethod()
         //{
