@@ -89,11 +89,11 @@
                     Style="{StaticResource MenuButton}"
                     Command="{Binding NavigateToPageCommand}"
                     CommandParameter="{x:Type views:OptionsPage}" />
-                <Button
+                <!--<Button
                     Text="Show help"
                     Style="{StaticResource MenuButton}"
                     Command="{Binding NavigationMenuPopupCommand}"
-                    CommandParameter="{x:Static enums:PopupParams.Help}" />
+                    CommandParameter="{x:Static enums:PopupParams.Help}" />-->
                 <Button
                     Text="Calculate solution >>"
                     Style="{StaticResource MenuButton}"

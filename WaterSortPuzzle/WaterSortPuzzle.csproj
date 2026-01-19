@@ -27,9 +27,9 @@
 		<ApplicationId>com.svira.watersortpuzzle</ApplicationId>
 
 		<!-- Versions -->
-		<Version>0.7.9</Version>
-		<ApplicationDisplayVersion>0.7.9</ApplicationDisplayVersion>
-		<ApplicationVersion>17</ApplicationVersion>
+		<Version>0.7.10</Version>
+		<ApplicationDisplayVersion>0.7.10</ApplicationDisplayVersion>
+		<ApplicationVersion>18</ApplicationVersion>
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
