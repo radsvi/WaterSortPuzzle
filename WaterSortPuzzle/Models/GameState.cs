@@ -364,11 +364,16 @@ namespace WaterSortPuzzle.Models
         }
         private void GenerateStandardLevel(int numberOfColorsToGenerate)
         {
+            //GenerateStandardLevel_Forward(numberOfColorsToGenerate);
+            GenerateStandardLevel_Retrograde(numberOfColorsToGenerate);
+        }
+        private void GenerateStandardLevel_Forward(int numberOfColorsToGenerate)
+        {
             Random rnd = new Random();
 
             List<LiquidColor> colorsList = new List<LiquidColor>();
 
-            BoardState.Grid = new LiquidColor[numberOfColorsToGenerate + 2, Constants.Layers];
+            BoardState.Grid = new LiquidColor[numberOfColorsToGenerate + Constants.EmptyTubesAtTheStart, Constants.Layers];
             //Tube.ResetCounter();
 
             List<int> selectedColors = new List<int>();
@@ -407,6 +412,11 @@ namespace WaterSortPuzzle.Models
             }
 
             ColorsCounter = selectedColors.Count();
+        }
+        private void GenerateStandardLevel_Retrograde(int numberOfColorsToGenerate)
+        {
+            var generator = new RetrogradeLevelGenerator(BoardState);
+            ColorsCounter = generator.GenerateStandardLevel_Retrograde(numberOfColorsToGenerate);
         }
         public void SaveGameState(int source, int target)
         {

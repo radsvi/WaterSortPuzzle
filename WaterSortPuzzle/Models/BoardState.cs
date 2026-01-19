@@ -29,7 +29,7 @@ namespace WaterSortPuzzle.Models
 
 
 
-        public BoardState(AppPreferences appPreferences)
+        public BoardState(AppPreferences appPreferences) // used just in DI
         {
             this.appPreferences = appPreferences;
             Grid = null!;
