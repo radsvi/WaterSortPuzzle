@@ -37,9 +37,9 @@ namespace WaterSortPuzzle.Models
             // generate solved state:
             for (int x = 0; x < numberOfColorsToGenerate; x++)
             {
-                int colorNumber = selectedColors[rnd.Next(0, selectedColors.Count)];
-                //#warning return to random numbers:
-                //                int colorNumber = selectedColors[selectedColors.Count - 1]; // non-random
+                //int colorNumber = selectedColors[rnd.Next(0, selectedColors.Count)];
+#warning return to random numbers:
+                int colorNumber = selectedColors[selectedColors.Count - 1]; // non-random
                 for (int y = 0; y < Constants.Layers; y++)
                 {
                     //newBoard.Grid[x, y] = selectedColors[colorNumber];
@@ -60,9 +60,9 @@ namespace WaterSortPuzzle.Models
 
             for (int i = 0; i < Constants.ColorCount - numberOfColorsToGenerate; i++) // now remove some random colors. 
             {
-                //                selectedColors.Remove(selectedColors[^1]); // this always keeps the same colors
-                //#warning return to random numbers:
-                selectedColors.Remove(selectedColors[rnd.Next(0, selectedColors.Count)]);
+                selectedColors.Remove(selectedColors[^1]); // this always keeps the same colors
+#warning return to random numbers:
+                //selectedColors.Remove(selectedColors[rnd.Next(0, selectedColors.Count)]);
             }
 
             return selectedColors;
