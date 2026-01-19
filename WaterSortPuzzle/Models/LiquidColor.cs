@@ -132,6 +132,17 @@ namespace WaterSortPuzzle.Models
             var color = LiquidHelper.GetKey(name).Brush;
             Brush = new Color(color.Red, color.Green, color.Blue);
         }
+        public override bool Equals(Object? obj) // https://learn.microsoft.com/en-us/dotnet/api/system.object.equals?view=net-10.0
+        {
+            if (obj == null || obj is not LiquidColor)
+                return false;
+            else
+                return this.Name == ((LiquidColor)obj).Name;
+        }
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
+        }
         //public static void Testuju()
         //{
         //    LiquidHelper.GetKey(LiquidColorName.Gray).Name = LiquidColorName.Red;
@@ -173,7 +184,7 @@ namespace WaterSortPuzzle.Models
         //    }
         //    return false;
         //}
-        private static bool EqualsOverload(LiquidColor first, LiquidColor second)
+        private static bool EqualsOverload(LiquidColor? first, LiquidColor? second)
         {
             if (System.Object.ReferenceEquals(first, second)) // they are both null, or both the same (reference) object
                 return true;
@@ -190,11 +201,12 @@ namespace WaterSortPuzzle.Models
 
             return false;
         }
-        public static bool operator ==(LiquidColor first, LiquidColor second)
+        
+        public static bool operator ==(LiquidColor? first, LiquidColor? second)
         {
             return EqualsOverload(first, second);
         }
-        public static bool operator !=(LiquidColor first, LiquidColor second)
+        public static bool operator !=(LiquidColor? first, LiquidColor? second)
         {
             return !EqualsOverload(first, second);
         }

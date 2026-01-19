@@ -10,7 +10,7 @@ namespace WaterSortPuzzle.Models
     {
         private readonly AppPreferences appPreferences;
         public string ReadableState => BoardStateToString(Grid, StringFormat.Numbers);
-        public LiquidColor[,] Grid { get; set; }
+        public LiquidColor?[,] Grid { get; set; }
         private int extraTubesCounter = 0;
         public int ExtraTubesCounter
         {
@@ -57,7 +57,7 @@ namespace WaterSortPuzzle.Models
         }
 
 
-        public LiquidColor this[int tubes, int layers]
+        public LiquidColor? this[int tubes, int layers]
         {
             get => Grid[tubes, layers];
             set
@@ -70,7 +70,7 @@ namespace WaterSortPuzzle.Models
 
 
 
-        public static string BoardStateToString(LiquidColor[,] boardState, StringFormat format = StringFormat.Names, bool enableSort = true)
+        public static string BoardStateToString(LiquidColor?[,] boardState, StringFormat format = StringFormat.Names, bool enableSort = true)
         {
             List<string> internalBoardState = new List<string>();
             for (int x = 0; x < boardState.GetLength(0); x++)
@@ -78,16 +78,17 @@ namespace WaterSortPuzzle.Models
                 string tubeString = "[";
                 for (int y = boardState.GetLength(1) - 1; y >= 0; y--)
                 {
-                    if (boardState[x, y] is not null)
+                    var cell = boardState[x, y];
+                    if (cell is not null)
                     {
                         //tubeInt += (int)gameState[x, y].Name * (int)Math.Pow(100,y);
                         if (format == StringFormat.Names)
                         {
-                            tubeString += (boardState[x, y].Name).ToString();
+                            tubeString += cell.Name.ToString();
                         }
                         else
                         {
-                            tubeString += ((int)boardState[x, y].Name).ToString("00"); // this format is used for debugging. To easily export the gamestate as a string.
+                            tubeString += ((int)cell.Name).ToString("00"); // this format is used for debugging. To easily export the gamestate as a string.
                         }
                     }
                     else

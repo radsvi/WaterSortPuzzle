@@ -103,12 +103,13 @@ namespace WaterSortPuzzle.Models
             int colorsPicked = 1;
             for (int y = boardState.Grid.GetLength(1) - 1; y >= 1; y--) // max 3 colors picked
             {
-                if (currentColor == null)
+                var cell = boardState.Grid[x, y];
+                if (currentColor is null)
                 {
-                    currentColor = boardState.Grid[x, y];
+                    currentColor = cell;
                     boardState.Grid[x, y] = null;
                 }
-                else if (currentColor == boardState.Grid[x, y])
+                else if (cell is not null && currentColor == cell)
                 {
                     colorsPicked++;
                     boardState.Grid[x, y] = null;

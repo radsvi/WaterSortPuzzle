@@ -328,11 +328,11 @@ namespace WaterSortPuzzle.Models
             //gameGrid = CloneGrid(gameGrid, i + 2);
             BoardState.IncrementTubesBy(2);
         }
-        private void CheckCorrectColorNumber(LiquidColor[,] gameGrid)
+        private void CheckCorrectColorNumber(LiquidColor?[,] gameGrid)
         {
             int colorCount = 0;
             ColorCount colorList = new ColorCount();
-            foreach (LiquidColor color in gameGrid)
+            foreach (LiquidColor? color in gameGrid)
             {
                 if (color is not null)
                     colorList.AddColor(color.Name);
@@ -449,16 +449,18 @@ namespace WaterSortPuzzle.Models
             {
                 for (int y = 0; y < BoardState.Grid.GetLength(1); y++)
                 {
-                    if (SavedGameStates.Last().BoardState.Grid[x, y] is null && BoardState.Grid[x, y] is null)
+                    var savedGrid = SavedGameStates.Last().BoardState.Grid[x, y];
+                    var currentGrid = BoardState.Grid[x, y];
+                    if (savedGrid is null && currentGrid is null)
                     {
                         continue;
                     }
-                    if (SavedGameStates.Last().BoardState.Grid[x, y] is null && BoardState.Grid[x, y] is not null
-                        || SavedGameStates.Last().BoardState.Grid[x, y] is not null && BoardState.Grid[x, y] is null)
+                    if (savedGrid is null && currentGrid is not null
+                        || savedGrid is not null && currentGrid is null)
                     {
                         return true;
                     }
-                    if (SavedGameStates.Last().BoardState.Grid[x,y].Name != BoardState.Grid[x,y].Name)
+                    if (savedGrid is not null && currentGrid is not null && savedGrid.Name != currentGrid.Name)
                     {
                         return true;
                     }
@@ -470,7 +472,7 @@ namespace WaterSortPuzzle.Models
         {
             return IsLevelCompleted(BoardState.Grid);
         }
-        public bool IsLevelCompleted(LiquidColor[,] internalGameGrid)
+        public bool IsLevelCompleted(LiquidColor?[,] internalGameGrid)
         {
             for (int x = 0; x < BoardState.Grid.GetLength(0); x++)
             {
@@ -478,26 +480,30 @@ namespace WaterSortPuzzle.Models
                 //{ // tohle tu je abych nikdy neporovnaval hodnoty GameGridu kdyz je moznost ze budou null:
                 //    continue;
                 //}
-                
+
                 // tohle tu je abych nikdy neporovnaval hodnoty GameGridu kdyz je moznost ze budou null:
-                if (internalGameGrid[x, 0] is not null &&
-                    internalGameGrid[x, 1] is not null &&
-                    internalGameGrid[x, 2] is not null &&
-                    internalGameGrid[x, 3] is not null)
+                var firstCell = internalGameGrid[x, 0];
+                var secondCell = internalGameGrid[x, 1];
+                var thirdCell = internalGameGrid[x, 2];
+                var fourthCell = internalGameGrid[x, 3];
+                if (firstCell is not null &&
+                    secondCell is not null &&
+                    thirdCell is not null &&
+                    fourthCell is not null)
                 {
-                    if (!(internalGameGrid[x, 0].Name == internalGameGrid[x, 1].Name &&
-                        internalGameGrid[x, 0].Name == internalGameGrid[x, 2].Name &&
-                        internalGameGrid[x, 0].Name == internalGameGrid[x, 3].Name))
+                    if (!(firstCell.Name == secondCell.Name &&
+                        firstCell.Name == thirdCell.Name &&
+                        firstCell.Name == fourthCell.Name))
                     {
                         return false;
                     }
                 }
                 else
                 { // v pripade ze aspon jeden objekt je null, otestovat jestli jsou vsechny null
-                    if (!(internalGameGrid[x, 0] is null &&
-                    internalGameGrid[x, 1] is null &&
-                    internalGameGrid[x, 2] is null &&
-                    internalGameGrid[x, 3] is null))
+                    if (!(firstCell is null &&
+                    secondCell is null &&
+                    thirdCell is null &&
+                    fourthCell is null))
                     {
                         return false;
                     }
@@ -506,21 +512,22 @@ namespace WaterSortPuzzle.Models
             return true;
         }
 
-        private int CountColors(LiquidColor[,] iGameGrid)
+        private int CountColors(LiquidColor?[,] iGameGrid)
         {
             int numberOfColors = 0;
-            List<LiquidColorName?> liquidColors = new List<LiquidColorName?>();
+            List<LiquidColorName?> liquidColors = [];
             for (int x = 0; x < iGameGrid.GetLength(0); x++)
             {
                 for (int y = 0; y < iGameGrid.GetLength(1); y++)
                 {
-                    if (iGameGrid[x, y] is null)
+                    var cell = iGameGrid[x, y];
+                    if (cell is null)
                     {
                         continue;
                     }
-                    if (liquidColors.Contains(iGameGrid[x, y].Name) == false)
+                    if (liquidColors.Contains(cell.Name) == false)
                     {
-                        liquidColors.Add(iGameGrid[x, y].Name);
+                        liquidColors.Add(cell.Name);
                         numberOfColors++;
                     }
                 }
