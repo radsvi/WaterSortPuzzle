@@ -84,6 +84,9 @@ namespace WaterSortPuzzle.Models
         public void LevelFinished(int colorCount)
         {
             IncreaseScore(colorCount);
+        }
+        public void IncreaseLevel()
+        {
             Level++; // V setteru mam rovnou kalkulovani obtiznosti dalsiho levelu. blbej design, pro priste...
         }
         
