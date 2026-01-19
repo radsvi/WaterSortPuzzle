@@ -69,7 +69,7 @@ namespace WaterSortPuzzle.Models
         }
         private void ScrambleBoardState(BoardState boardState)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 (int maxAdjacentEmptySpots, int emptiestTube) = FindMaximumAdjacentEmptySlots(boardState);
                 (LiquidColor currentColor, int pickedColors) = PickMaximumAdjacentColors(boardState, maxAdjacentEmptySpots);
@@ -94,19 +94,18 @@ namespace WaterSortPuzzle.Models
                 int adjacentEmptySpots = 0;
                 for (int y = boardState.Grid.GetLength(1) - 1; y >= 0; y--)
                 {
-                    if (boardState.Grid[x, y] == null)
-                    {
-                        emptiestTube = x;
-                        adjacentEmptySpots++;
-                    }
-
-                    if (adjacentEmptySpots > highestAdjacentEmptySpots)
-                        highestAdjacentEmptySpots = adjacentEmptySpots;
-
-                    if (highestAdjacentEmptySpots >= boardState.Grid.GetLength(1))
+                    if (boardState.Grid[x, y] != null)
                         break;
 
-                    if (boardState.Grid[x, y] != null)
+                    adjacentEmptySpots++;
+
+                    if (adjacentEmptySpots > highestAdjacentEmptySpots)
+                    {
+                        emptiestTube = x;
+                        highestAdjacentEmptySpots = adjacentEmptySpots;
+                    }
+
+                    if (highestAdjacentEmptySpots >= boardState.Grid.GetLength(1))
                         break;
                 }
 
