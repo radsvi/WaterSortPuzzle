@@ -67,15 +67,8 @@ namespace WaterSortPuzzle.Models
         private void ScrambleBoardState(BoardState boardState)
         {
             (int maxAdjacentEmptySpots, int emptiestTube) = FindMaximumAdjacentEmptySlots(boardState);
-
-            for (int x = 0; x < boardState.Grid.GetLength(0); x++)
-            {
-                (LiquidColor currentColor, int pickedColors) = PickAdjacentColors(boardState, x, maxAdjacentEmptySpots);
-                DepositPickedColors(boardState, maxAdjacentEmptySpots, emptiestTube, currentColor, pickedColors);
-
-#warning smazat:
-                break; // smazat
-            }
+            (int pickedTube, LiquidColor currentColor, int pickedColors) = PickMaximumAdjacentColors(boardState, maxAdjacentEmptySpots);
+            DepositPickedColors(boardState, maxAdjacentEmptySpots, emptiestTube, currentColor, pickedColors);
         }
 
         private static void DepositPickedColors(BoardState boardState, int maxAdjacentEmptySpots, int emptiestTube, LiquidColor currentColor, int pickedColors)
@@ -86,10 +79,9 @@ namespace WaterSortPuzzle.Models
                 boardState.Grid[emptiestTube, y] = currentColor;
             }
         }
-
         private static (int, int) FindMaximumAdjacentEmptySlots(BoardState boardState)
         {
-            int maxAdjacentEmptySpots = 1;
+            int highestAdjacentEmptySpots = 1;
             int? emptiestTube = null;
             for (int x = 0; x < boardState.Grid.GetLength(0); x++)
             {
@@ -102,23 +94,22 @@ namespace WaterSortPuzzle.Models
                         adjacentEmptySpots++;
                     }
 
-                    if (adjacentEmptySpots > maxAdjacentEmptySpots)
-                        maxAdjacentEmptySpots = adjacentEmptySpots;
+                    if (adjacentEmptySpots > highestAdjacentEmptySpots)
+                        highestAdjacentEmptySpots = adjacentEmptySpots;
 
-                    if (maxAdjacentEmptySpots >= boardState.Grid.GetLength(1))
+                    if (highestAdjacentEmptySpots >= boardState.Grid.GetLength(1))
                         break;
                 }
 
-                if (maxAdjacentEmptySpots >= boardState.Grid.GetLength(1))
+                if (highestAdjacentEmptySpots >= boardState.Grid.GetLength(1))
                     break;
             }
 
             if (emptiestTube == null)
                 throw new NullReferenceException($"{nameof(emptiestTube)} is null");
 
-            return (maxAdjacentEmptySpots, (int)emptiestTube);
+            return (highestAdjacentEmptySpots, (int)emptiestTube);
         }
-
         /// <summary>
         /// Picks either maximum of 3 colors, or until it reaches liquid of different color
         /// </summary>
@@ -126,30 +117,46 @@ namespace WaterSortPuzzle.Models
         /// <param name="x"></param>
         /// <param name="currentColor"></param>
         /// <returns></returns>
-        private static (LiquidColor, int) PickAdjacentColors(BoardState boardState, int x, int maxColors)
+        private static (int, LiquidColor, int) PickMaximumAdjacentColors(BoardState boardState, int emptySlots)
         {
             LiquidColor? currentColor = null;
-            int pickedColors = 1;
-            for (int y = maxColors - 1; y >= 1; y--) // max 3 colors picked
+            
+            int highestPickedColors = 1;
+            int? pickedTube = null;
+            for (int x = 0; x < boardState.Grid.GetLength(0); x++)
             {
-                var cell = boardState.Grid[x, y];
-                if (currentColor is null)
+                int pickedColors = 1;
+                for (int y = emptySlots - 1; y >= 1; y--) // max 3 colors picked
                 {
-                    currentColor = cell;
-                    boardState.Grid[x, y] = null;
+                    var cell = boardState.Grid[x, y];
+                    if (currentColor is null)
+                    {
+                        currentColor = cell;
+                        boardState.Grid[x, y] = null;
+                    }
+                    else if (cell is not null && currentColor == cell)
+                    {
+                        pickedColors++;
+                        boardState.Grid[x, y] = null;
+                    }
+                    else
+                        break;
                 }
-                else if (cell is not null && currentColor == cell)
+                if (pickedTube is null || highestPickedColors > pickedColors)
                 {
-                    pickedColors++;
-                    boardState.Grid[x, y] = null;
+                    pickedTube = x;
+                    highestPickedColors = pickedColors;
                 }
-                else
+                if (highestPickedColors >= emptySlots)
                     break;
             }
+
             if (currentColor == null)
                 throw new NullReferenceException($"{nameof(currentColor)} is null");
+            if (pickedTube == null)
+                throw new NullReferenceException($"{nameof(pickedTube)} is null");
 
-            return ((LiquidColor)currentColor, pickedColors);
+            return ((int)pickedTube, (LiquidColor)currentColor, highestPickedColors);
         }
     }
 }
