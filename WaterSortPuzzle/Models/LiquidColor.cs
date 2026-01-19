@@ -25,6 +25,20 @@ namespace WaterSortPuzzle.Models
             { LiquidColorName.Lime, new LiquidColor(LiquidColorName.Lime, Color.FromRgb(74,219,36)) },
             { LiquidColorName.Scarlet, new LiquidColor(LiquidColorName.Scarlet, Color.FromRgb(188,36,94)) },
         };
+        // Blue: 0
+        // Indigo: 1
+        // Turquoise: 2
+        // Orange: 3
+        // Gray: 4
+        // Purple: 5
+        // Yellow: 6
+        // Pink: 7
+        // Green: 8
+        // Olive: 9
+        // Red: 10
+        // Brown: 11
+        // Lime: 12
+        // Scarlet: 12
         public static LiquidColor GetKey(LiquidColorName name)
         {
             var brush = ColorKeys[name].Brush;

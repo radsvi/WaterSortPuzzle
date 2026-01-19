@@ -9,7 +9,7 @@ namespace WaterSortPuzzle.Models
     public partial class BoardState : ObservableObject
     {
         private readonly AppPreferences appPreferences;
-        public string ReadableState => BoardStateToString(Grid, StringFormat.Numbers);
+        public string ReadableState => BoardStateToString(Grid, StringFormat.Numbers, false);
         public LiquidColor?[,] Grid { get; set; }
         private int extraTubesCounter = 0;
         public int ExtraTubesCounter
