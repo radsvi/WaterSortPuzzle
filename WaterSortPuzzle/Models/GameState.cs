@@ -364,8 +364,8 @@ namespace WaterSortPuzzle.Models
         }
         private void GenerateStandardLevel(int numberOfColorsToGenerate)
         {
-            GenerateStandardLevel_Forward(numberOfColorsToGenerate);
-            //GenerateStandardLevel_Retrograde(numberOfColorsToGenerate);
+            //GenerateStandardLevel_Forward(numberOfColorsToGenerate);
+            GenerateStandardLevel_Retrograde(numberOfColorsToGenerate);
         }
         private void GenerateStandardLevel_Forward(int numberOfColorsToGenerate)
         {

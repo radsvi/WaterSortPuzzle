@@ -34,9 +34,9 @@ namespace WaterSortPuzzle.Models
     public class LiquidColor : ObservableObject
     {
         private LiquidColorName name;
-        private Color brush;
-
         [JsonProperty] public LiquidColorName Name { get => name; private set { name = value; OnPropertyChanged(); } }
+
+        private Color brush;
         [JsonProperty] public Color Brush { get => brush; private set { brush = value; OnPropertyChanged(); } }
         //public static List<LiquidColorNew> ColorKeys { get; } = new List<LiquidColorNew>() {
         //    new LiquidColorNew(LiquidColorName.Blank, new SolidColorBrush(Color.FromRgb(0,0,0))),
@@ -173,14 +173,31 @@ namespace WaterSortPuzzle.Models
         //    }
         //    return false;
         //}
-        //public static bool operator ==(LiquidColorNew first, LiquidColorNew second)
-        //{
-        //    return OperatorOverload(first, second);
-        //}
-        //public static bool operator !=(LiquidColorNew first, LiquidColorNew second)
-        //{
-        //    return !OperatorOverload(first, second);
-        //}
+        private static bool EqualsOverload(LiquidColor first, LiquidColor second)
+        {
+            if (System.Object.ReferenceEquals(first, second)) // they are both null, or both the same (reference) object
+                return true;
+
+            if (first is null || second is null)
+            {
+                return false;
+            }
+
+            if (first.Name == second.Name)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        public static bool operator ==(LiquidColor first, LiquidColor second)
+        {
+            return EqualsOverload(first, second);
+        }
+        public static bool operator !=(LiquidColor first, LiquidColor second)
+        {
+            return !EqualsOverload(first, second);
+        }
     }
     internal class NullLiquidColor : LiquidColor
     {

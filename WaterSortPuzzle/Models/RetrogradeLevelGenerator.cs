@@ -22,7 +22,16 @@ namespace WaterSortPuzzle.Models
             Random rnd = new Random();
 
             List<int> selectedColors = GenerateListOfRandomColors(numberOfColorsToGenerate, rnd);
+            BoardState newBoard = GenerateSolvedBoard(numberOfColorsToGenerate, rnd, selectedColors);
+            ScrambleBoardState(newBoard);
 
+            boardState.ReplaceWith(newBoard);
+
+            return selectedColors.Count;
+        }
+
+        private BoardState GenerateSolvedBoard(int numberOfColorsToGenerate, Random rnd, List<int> selectedColors)
+        {
             var newBoard = boardState.FactoryCreate(new LiquidColor[numberOfColorsToGenerate + Constants.EmptyTubesAtTheStart, Constants.Layers]);
 
             // generate solved state:
@@ -37,11 +46,8 @@ namespace WaterSortPuzzle.Models
                 selectedColors.Remove(colorNumber);
             }
 
-            boardState.ReplaceWith(newBoard);
-
-            return selectedColors.Count;
+            return newBoard;
         }
-
         private static List<int> GenerateListOfRandomColors(int numberOfColorsToGenerate, Random rnd)
         {
             List<int> selectedColors = [];
@@ -57,6 +63,60 @@ namespace WaterSortPuzzle.Models
             }
 
             return selectedColors;
+        }
+        private void ScrambleBoardState(BoardState boardState)
+        {
+            // find maximum number of adjacent empty spots
+            int maxAdjacentEmptySpots = 1;
+            //for (int x = 0; x < boardState.Grid.GetLength(0); x++)
+            //{
+            //    int adjacentEmptySpots = 1;
+            //    for (int y = boardState.Grid.GetLength(1) - 1; y >= 0; y--)
+            //    {
+            //        if (boardState.Grid[x, y] == null)
+
+            //        adjacentEmptySpots++;
+
+            //        if (adjacentEmptySpots > maxAdjacentEmptySpots)
+            //            maxAdjacentEmptySpots = adjacentEmptySpots;
+                    
+                        
+            //    }
+            //}
+
+            for (int x = 0; x < boardState.Grid.GetLength(0); x++)
+            {
+                LiquidColor? currentColor = null;
+                (currentColor, int colorsPicked) = PickAdjacentColors(boardState, x, currentColor);
+
+            }
+        }
+        /// <summary>
+        /// Picks either maximum of 3 colors, or until it reaches liquid of different color
+        /// </summary>
+        /// <param name="boardState"></param>
+        /// <param name="x"></param>
+        /// <param name="currentColor"></param>
+        /// <returns></returns>
+        private static (LiquidColor?, int) PickAdjacentColors(BoardState boardState, int x, LiquidColor? currentColor)
+        {
+            int colorsPicked = 1;
+            for (int y = boardState.Grid.GetLength(1) - 1; y >= 1; y--) // max 3 colors picked
+            {
+                if (currentColor == null)
+                {
+                    currentColor = boardState.Grid[x, y];
+                    boardState.Grid[x, y] = null;
+                }
+                else if (currentColor == boardState.Grid[x, y])
+                {
+                    colorsPicked++;
+                    boardState.Grid[x, y] = null;
+                }
+                else
+                    break;
+            }
+            return (currentColor, colorsPicked);
         }
     }
 }
