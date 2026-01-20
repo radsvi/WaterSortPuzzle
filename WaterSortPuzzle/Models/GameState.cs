@@ -146,15 +146,29 @@ namespace WaterSortPuzzle.Models
             //Tubes?.Clear();
             
             int i = 0;
-            BoardState.Grid = new LiquidColor[Constants.ColorCount + 10, Constants.Layers];
+            //BoardState.Grid = new LiquidColor[Constants.ColorCount + 10, Constants.Layers];
+            var board = BoardState.FactoryCreate(new LiquidColor[Constants.ColorCount + 10, Constants.Layers]);
 
             // Almost solved:
-            BoardState.AddStartingTube(i++, new int[] { });
-            BoardState.AddStartingTube(i++, new int[] { 1, 1, 1, 3 });
-            BoardState.AddStartingTube(i++, new int[] { 2, 3, 1 });
-            BoardState.AddStartingTube(i++, new int[] { 2, 2, 2 });
-            BoardState.AddStartingTube(i++, new int[] { 3, 3 });
-            BoardState.AddStartingTube(i++, new int[] { 4, 4, 4, 4 });
+            //board.AddStartingTube(i++, new int[] { });
+            //board.AddStartingTube(i++, new int[] { 1, 1, 1, 3 });
+            //board.AddStartingTube(i++, new int[] { 2, 3, 1 });
+            //board.AddStartingTube(i++, new int[] { 2, 2, 2 });
+            //board.AddStartingTube(i++, new int[] { 3, 3 });
+            //board.AddStartingTube(i++, new int[] { 4, 4, 4, 4 });
+
+            // Kuba 2026/01/20 01:04:53:
+            board.AddStartingTube(i++, new ColN[] { ColN.Pink, ColN.Brown, ColN.Pink, ColN.Indigo });
+            board.AddStartingTube(i++, new ColN[] { ColN.Green, ColN.Brown, ColN.Indigo, ColN.Purple });
+            board.AddStartingTube(i++, new ColN[] { ColN.Gray, ColN.Yellow, ColN.Indigo, ColN.Olive });
+            board.AddStartingTube(i++, new ColN[] { ColN.Pink, ColN.Turquoise, ColN.Olive, ColN.Purple });
+            board.AddStartingTube(i++, new ColN[] { ColN.Blue, ColN.Purple, ColN.Blue, ColN.Olive });
+            board.AddStartingTube(i++, new ColN[] { ColN.Green, ColN.Brown, ColN.Green, ColN.Turquoise });
+            board.AddStartingTube(i++, new ColN[] { ColN.Purple, ColN.Indigo, ColN.Blue, ColN.Red });
+            board.AddStartingTube(i++, new ColN[] { ColN.Red, ColN.Gray, ColN.Pink, ColN.Red });
+            board.AddStartingTube(i++, new ColN[] { ColN.Olive, ColN.Gray, ColN.Green, ColN.Yellow });
+            board.AddStartingTube(i++, new ColN[] { ColN.Red, ColN.Yellow, ColN.Yellow, ColN.Blue });
+            board.AddStartingTube(i++, new ColN[] { ColN.Turquoise, ColN.Gray, ColN.Turquoise, ColN.Brown });
 
 
 
@@ -323,10 +337,10 @@ namespace WaterSortPuzzle.Models
             //AddTube(i++, new LiquidColorName[] { });
 
             // check if puzzle has correct number for each color:
-            CheckCorrectColorNumber(BoardState.Grid);
+            board.Grid = GridHelper.CloneGrid_ForceSize(board.Grid, i + 2);
+            CheckCorrectColorNumber(board.Grid);
 
-            //gameGrid = CloneGrid(gameGrid, i + 2);
-            BoardState.IncrementTubesBy(2);
+            BoardState.ReplaceWith(board);
         }
         private void CheckCorrectColorNumber(LiquidColor?[,] gameGrid)
         {
