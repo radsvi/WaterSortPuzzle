@@ -115,9 +115,10 @@ namespace WaterSortPuzzle.Models
         public void GenerateNewLevel()
         {
             BoardState.ResetExtraTubesCounter();
-            leveling.IncreaseLevel();
+            
             if (appPreferences.SingleLevelMode == false)
             {
+                leveling.IncreaseLevel();
                 GenerateStandardLevel(leveling.NumberOfColorsToGenerate);
             }
             else if (appPreferences.LoadDebugLevel == true)
