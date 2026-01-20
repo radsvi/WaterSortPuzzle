@@ -81,9 +81,10 @@ namespace WaterSortPuzzle.Models
 
 
 
-        public void LevelFinished(int colorCount)
+        public void LevelFinished(int colorCount, bool autoSolveUsed)
         {
-            IncreaseScore(colorCount);
+            if (autoSolveUsed == false)
+                IncreaseScore(colorCount);
         }
         public void IncreaseLevel()
         {
