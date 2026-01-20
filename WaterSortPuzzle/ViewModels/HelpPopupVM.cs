@@ -11,7 +11,7 @@ namespace WaterSortPuzzle.ViewModels
     {
         public CoachMarkManager CoachMarkManager { get; }
         public ObservableCollection<CoachMarkItem> CoachMarks { get; } = [];
-        public ObservableCollection<CoachMarkItem> AvailableCoachMarks { get; } = [];
+        //public ObservableCollection<CoachMarkItem> AvailableCoachMarks { get; } = [];
         public CoachMarkItem? Current { get; set; }
 
 
