@@ -57,26 +57,26 @@
 
     <Grid Margin="0">
 
-        <AbsoluteLayout IsVisible="{Binding CoachMarkManager.Current}">
+        <AbsoluteLayout IsVisible="{Binding Current}">
             <BoxView
                 BackgroundColor="#80000000"
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All" />
 
             <Border
-                IsVisible="{Binding CoachMarkManager.Current}"
-                AbsoluteLayout.LayoutBounds="{Binding CoachMarkManager.Current.TargetBounds}"
+                IsVisible="{Binding Current}"
+                AbsoluteLayout.LayoutBounds="{Binding Current.TargetBounds}"
                 AbsoluteLayout.LayoutFlags="None"
                 Padding="5"
                 StrokeThickness="1"
                 BackgroundColor="{StaticResource HelpPopupBackground}">
-                <Label Text="{Binding CoachMarkManager.Current.Text}" HorizontalOptions="Start" />
+                <Label Text="{Binding Current.Text}" HorizontalOptions="Start" />
             </Border>
             <Grid
-                AbsoluteLayout.LayoutBounds="{Binding CoachMarkManager.Current.SourceBounds}"
+                AbsoluteLayout.LayoutBounds="{Binding Current.SourceBounds}"
                 AbsoluteLayout.LayoutFlags="None">
                 <Border
-                    IsVisible="{Binding CoachMarkManager.Current}"
+                    IsVisible="{Binding Current}"
                     Padding="5"
                     StrokeThickness="0"
                     BackgroundColor="{StaticResource HelpPopupBackground}"/>

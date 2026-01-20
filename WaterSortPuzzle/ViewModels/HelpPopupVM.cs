@@ -10,17 +10,23 @@ namespace WaterSortPuzzle.ViewModels
     public partial class HelpPopupVM : FullscreenParameterlessPopupBaseVM
     {
         public CoachMarkManager CoachMarkManager { get; }
+        public ObservableCollection<CoachMarkItem> CoachMarks { get; } = [];
+        public ObservableCollection<CoachMarkItem> AvailableCoachMarks { get; } = [];
+        public CoachMarkItem? Current { get; set; }
+
 
         public HelpPopupVM(IPopupService popupService, MainVM mainVM, CoachMarkManager coachMarkManager) : base(popupService, mainVM)
         {
             CoachMarkManager = coachMarkManager;
 
-            CoachMarkManager.MoveToFirst();
+            CoachMarkManager.Attach(this);
 
-            mainVM.PropertyChanged += (_, __) =>
-            {
-                CoachMarkManager.UpdateAvailableMarks();
-            };
+            //CoachMarkManager.MoveToFirst();
+
+            //mainVM.PropertyChanged += (_, __) =>
+            //{
+            //    CoachMarkManager.UpdateAvailableMarks();
+            //};
         }
     }
 }

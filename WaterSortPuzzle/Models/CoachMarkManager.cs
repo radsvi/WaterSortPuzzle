@@ -8,8 +8,6 @@ namespace WaterSortPuzzle.Models
 {
     public partial class CoachMarkManager : ObservableObject
     {
-        public ObservableCollection<CoachMarkItem> CoachMarks { get; } = [];
-        public ObservableCollection<CoachMarkItem> AvailableCoachMarks { get; set; } = [];
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(PreviousCommand))]
         [NotifyCanExecuteChangedFor(nameof(NextCommand))]
@@ -19,11 +17,24 @@ namespace WaterSortPuzzle.Models
         //    get => index;
         //    private set { if (value == index) return; index = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanNavigatePrevious)); OnPropertyChanged(nameof(CanNavigateNext)); }
         //}
-        public CoachMarkManager()
+        private HelpPopupVM? _vm;
+        //public CoachMarkManager()
+        //{
+        //    //InitializeCoachMarks();
+        //    RefreshAvailable();
+        //    MoveToFirst();
+        //}
+        public void Attach(HelpPopupVM vm)
         {
-            InitializeCoachMarks();
+            _vm = vm;
         }
-        public CoachMarkItem? Current { get; private set; }
+        private void RefreshAvailable()
+        {
+            _vm!.AvailableCoachMarks.Clear();
+
+            foreach (var mark in _vm.CoachMarks.Where(m => m.IsAvailable))
+                _vm.AvailableCoachMarks.Add(mark);
+        }
         public void MoveToFirst()
         {
             Index = -1;
@@ -31,51 +42,56 @@ namespace WaterSortPuzzle.Models
         }
         public void Start()
         {
-            UpdateAvailableMarks();
+            //UpdateAvailableMarks();
+            InitializeCoachMarks();
+            RefreshAvailable();
             MoveToFirst();
         }
-        public void UpdateAvailableMarks()
-        {
-            //AvailableCoachMarks = (ObservableCollection<CoachMarkItem>)CoachMarks.Where(m => m.IsAvailable);
-            AvailableCoachMarks.Clear();
-            foreach (var mark in CoachMarks.Where(m => m.IsAvailable))
-            {
-                AvailableCoachMarks.Add(mark);
-            }
-        }
+        //public void UpdateAvailableMarks()
+        //{
+        //    //AvailableCoachMarks = (ObservableCollection<CoachMarkItem>)CoachMarks.Where(m => m.IsAvailable);
+        //    AvailableCoachMarks.Clear();
+        //    foreach (var mark in CoachMarks.Where(m => m.IsAvailable))
+        //    {
+        //        AvailableCoachMarks.Add(mark);
+        //    }
+        //}
         private void InitializeCoachMarks()
         {
-            CoachMarks.Add(new CoachMarkItem
+            if (_vm is null)
+                throw new NullReferenceException($"{nameof(_vm)} is null");
+
+            _vm.CoachMarks.Add(new CoachMarkItem
             {
                 Id = "StepBackButton",
                 Text = "One step back. 5 uses per level",
                 Position = RelativePosition.TopLeft
             });
-            CoachMarks.Add(new CoachMarkItem
+            _vm.CoachMarks.Add(new CoachMarkItem
             {
                 Id = "AddExtraTubeButton",
                 Text = "Adds extra empty flask (decreases the final score for the level).",
                 Position = RelativePosition.Top
             });
-            CoachMarks.Add(new CoachMarkItem
+            _vm.CoachMarks.Add(new CoachMarkItem
             {
                 Id = "RestartButton",
                 Text = "Restarts the level",
                 Position = RelativePosition.BottomLeft
             });
-            CoachMarks.Add(new CoachMarkItem
+            _vm.CoachMarks.Add(new CoachMarkItem
             {
                 Id = "RestartButton2",
                 Text = "Restarts the level",
                 Position = RelativePosition.BottomLeft
             });
-            CoachMarks.Add(new CoachMarkItem
+            _vm.CoachMarks.Add(new CoachMarkItem
             {
                 Id = "NextLevelButton",
                 Text = "Generates new level",
                 Position = RelativePosition.Bottom
             });
-            CoachMarks.Add(new CoachMarkItem
+            _vm.CoachMarks.Add(new CoachMarkItem
             {
                 Id = "AutoSolveNextStepButton",
                 Text = "Next step to check automatically generated solution",
@@ -87,7 +103,7 @@ namespace WaterSortPuzzle.Models
                 "CoachMarkBounds",
                 (_, data) =>
                 {
-                    var mark = CoachMarks.FirstOrDefault(x => x.Id == data.Id);
+                    var mark = _vm.CoachMarks.FirstOrDefault(x => x.Id == data.Id);
                     if (mark != null)
                         mark.SourceBounds = data.Bounds;
 
@@ -98,10 +114,13 @@ namespace WaterSortPuzzle.Models
         }
         private void TryActivate()
         {
-            if (CoachMarks.Any(x => x.IsVisible))
+            if (_vm == null)
+                throw new NullReferenceException($"{nameof(_vm)} is null");
+
+            if (_vm.CoachMarks.Any(x => x.IsVisible))
                 return;
 
-            var firstAvailable = CoachMarks.FirstOrDefault(x => x.IsAvailable);
+            var firstAvailable = _vm.CoachMarks.FirstOrDefault(x => x.IsAvailable);
             if (firstAvailable == null)
                 return;
 
@@ -117,7 +136,10 @@ namespace WaterSortPuzzle.Models
         }
         private void HideAll()
         {
-            foreach (var mark in CoachMarks)
+            if (_vm == null)
+                throw new NullReferenceException($"{nameof(_vm)} is null");
+
+            foreach (var mark in _vm.CoachMarks)
                 mark.IsVisible = false;
         }
         partial void OnIndexChanged(int value) // hooked automatically by MVVM toolkit
@@ -128,7 +150,10 @@ namespace WaterSortPuzzle.Models
         private bool CanNavigate(CoachMarkNavigation direction)
         {
             int newIndex = Index + (int)direction;
-            var length = CoachMarks.Where(n => n.IsAvailable).Count();
+            if (_vm is null)
+                return false;
+
+            var length = _vm.CoachMarks.Where(n => n.IsAvailable).Count();
             return newIndex >= 0 && newIndex <= length;
         }
         private bool CanNavigatePrevious => CanNavigate(CoachMarkNavigation.Previous);
@@ -138,39 +163,53 @@ namespace WaterSortPuzzle.Models
 
         [RelayCommand(CanExecute = nameof(CanNavigateNext))]
         private void Next() => NavigateTo(CoachMarkNavigation.Next);
-        public void NavigateTo(CoachMarkNavigation direction)
+        private void NavigateTo(CoachMarkNavigation direction)
         {
-            int delta = (int)direction;
-            if (Index + delta < CoachMarks.Count && Index + delta >= 0)
-            {
-                Index += delta;
-
-                if (CoachMarks[Index].IsAvailable == false)
-                {
-                    NavigateTo(direction);
-                    return;
-                }
-                else
-                {
-                    Current = CoachMarks[Index];
-                }
-            }
-            else
-            {
-                //Current = CoachMarks[0];
-                //_index = 0;
-
-                //Current = null;
+            if (_vm!.AvailableCoachMarks.Count == 0)
                 return;
-            }
 
-            if (Current != null && Current.TargetBounds == null && Current.SourceBounds is not null)
-            {
-                Current.TargetBounds = ShiftPosition((Rect)Current.SourceBounds, Current.Position);
-            }
+            if (_vm.Current is null)
+                return;
 
-            OnPropertyChanged(nameof(Current));
+            int delta = (int)direction;
+
+            var index = _vm.AvailableCoachMarks.IndexOf(_vm.Current);
+            index = Math.Clamp(index + delta, 0, _vm.AvailableCoachMarks.Count - 1);
+            _vm.Current = _vm.AvailableCoachMarks[index];
         }
+        //public void NavigateTo(CoachMarkNavigation direction)
+        //{
+        //    int delta = (int)direction;
+        //    if (Index + delta < CoachMarks.Count && Index + delta >= 0)
+        //    {
+        //        Index += delta;
+
+        //        if (CoachMarks[Index].IsAvailable == false)
+        //        {
+        //            NavigateTo(direction);
+        //            return;
+        //        }
+        //        else
+        //        {
+        //            Current = CoachMarks[Index];
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //Current = CoachMarks[0];
+        //        //_index = 0;
+
+        //        //Current = null;
+        //        return;
+        //    }
+
+        //    if (Current != null && Current.TargetBounds == null && Current.SourceBounds is not null)
+        //    {
+        //        Current.TargetBounds = ShiftPosition((Rect)Current.SourceBounds, Current.Position);
+        //    }
+
+        //    OnPropertyChanged(nameof(Current));
+        //}
         //[RelayCommand]
         //void Next()
         //{
