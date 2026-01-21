@@ -10,6 +10,7 @@ namespace WaterSortPuzzle.ViewModels
         public Notification Notification { get; }
         public AutoSolve AutoSolve { get; }
         public Leveling Leveling { get; }
+        public CoachMarkManager CoachMarkManager { get; }
 
         #region Constructor
         public MainVM(
@@ -34,13 +35,24 @@ namespace WaterSortPuzzle.ViewModels
             AppPreferences.PropertyChanged += PropertyChangedHandler;
             GameState.PropertyChanged += PropertyChangedHandler;
             AutoSolve.PropertyChanged += PropertyChangedHandler;
+            
 
             //if (appPreferences.LastLevelBeforeClosing is null || appPreferences.LastLevelBeforeClosing.GameGrid.Length == 0)
             //{
             //    OnStart();
             //}
-            InitializeCoachMarks();
+
+            CoachMarkManager = new CoachMarkManager(this);
+            CoachMarkManager.CurrentCoachMarkChanged += CoachMarkManager_CurrentCoachMarkChanged;
+
+            
         }
+
+        private void CoachMarkManager_CurrentCoachMarkChanged(object? sender, EventArgs e)
+        {
+            OnPropertyChanged(nameof(Current));
+        }
+
         private void PropertyChangedHandler(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(AppPreferences.MaximumExtraTubes) || e.PropertyName == nameof(GameState.ColorsCounter))
@@ -1094,90 +1106,17 @@ namespace WaterSortPuzzle.ViewModels
         public void ResetIndex()
         {
             Index = -1;
-            Navigate(CoachMarkNavigation.Next);
+            CoachMarkManager.Navigate(CoachMarkNavigation.Next);
+            OnPropertyChanged(nameof(MainVM.Current));
         }
 
-        public CoachMarkItem? Current { get; private set; }
+        public CoachMarkItem? Current { get; set; }
 
         //public ICommand NextCommand { get; }
 
-        private void InitializeCoachMarks()
-        {
-            CoachMarks.Add(new CoachMarkItem
-            {
-                Id = "StepBackButton",
-                Text = "Takes you one step back. 5 uses per level",
-                Position = RelativePosition.TopLeft
-            });
-            CoachMarks.Add(new CoachMarkItem
-            {
-                Id = "AddExtraTubeButton",
-                Text = "Adds extra empty flask (decreases the final score for the level).",
-                Position = RelativePosition.Top
-            });
-            CoachMarks.Add(new CoachMarkItem
-            {
-                Id = "RestartButton",
-                Text = "Restarts the level",
-                Position = RelativePosition.BottomLeft
-            });
-            CoachMarks.Add(new CoachMarkItem
-            {
-                Id = "RestartButton2",
-                Text = "Restarts the level",
-                Position = RelativePosition.BottomLeft
-            });
-            CoachMarks.Add(new CoachMarkItem
-            {
-                Id = "NextLevelButton",
-                Text = "Generates new level",
-                Position = RelativePosition.Bottom
-            });
-            CoachMarks.Add(new CoachMarkItem
-            {
-                Id = "AutoSolveNextStepButton",
-                Text = "Next step to check automatically generated solution",
-                Position = RelativePosition.TopRight
-            });
+        
+        
 
-            MessagingCenter.Subscribe<CoachMarkBehavior, (string Id, Rect Bounds)>(
-                this,
-                "CoachMarkBounds",
-                (_, data) =>
-                {
-                    var mark = CoachMarks.FirstOrDefault(x => x.Id == data.Id);
-                    if (mark != null)
-                        mark.SourceBounds = data.Bounds;
-
-                    TryActivate();
-                });
-
-            //NextCommand = new Command(Next);
-        }
-        private void TryActivate()
-        {
-            if (CoachMarks.Any(x => x.IsVisible))
-                return;
-
-            var firstAvailable = CoachMarks.FirstOrDefault(x => x.IsAvailable);
-            if (firstAvailable == null)
-                return;
-
-            HideAll();
-            firstAvailable.IsVisible = true;
-
-            //if (Current == null &&
-            //    CoachMarks.All(x => x.SourceBounds.HasValue))
-            //{
-            //    Current = CoachMarks[0];
-            //    OnPropertyChanged(nameof(Current));
-            //}
-        }
-        private void HideAll()
-        {
-            foreach (var mark in CoachMarks)
-                mark.IsVisible = false;
-        }
         partial void OnIndexChanged(int value) // hooked automatically by MVVM toolkit
         {
             NextCommand.NotifyCanExecuteChanged();
@@ -1192,7 +1131,13 @@ namespace WaterSortPuzzle.ViewModels
         private bool CanNavigatePrevious => Index + (int)CoachMarkNavigation.Previous >= 0;
 
         [RelayCommand(CanExecute = nameof(CanNavigatePrevious))]
-        private void Previous() => Navigate(CoachMarkNavigation.Previous);
+        private void Previous() => CoachMarkManager.Navigate(CoachMarkNavigation.Previous);
+        //private void Previous()
+        //{
+        //    CoachMarkManager.Navigate(CoachMarkNavigation.Previous);
+        //    OnPropertyChanged(nameof(Current));
+        //}
+
         private bool CanNavigateNext
         {
             get
@@ -1204,40 +1149,13 @@ namespace WaterSortPuzzle.ViewModels
         }
 
         [RelayCommand(CanExecute = nameof(CanNavigateNext))]
-        private void Next() => Navigate(CoachMarkNavigation.Next);
-        public void Navigate(CoachMarkNavigation direction)
-        {
-            int delta = (int)direction;
-            if (Index + delta < CoachMarks.Count && Index + delta >= 0)
-            {
-                Index += delta;
+        private void Next() => CoachMarkManager.Navigate(CoachMarkNavigation.Next);
+        //private void Next()
+        //{
+        //    CoachMarkManager.Navigate(CoachMarkNavigation.Next);
+        //    OnPropertyChanged(nameof(Current));
+        //}
 
-                if (CoachMarks[Index].IsAvailable == false)
-                {
-                    Navigate(direction);
-                    return;
-                }
-                else
-                {
-                    Current = CoachMarks[Index];
-                }
-            }
-            else
-            {
-                //Current = CoachMarks[0];
-                //_index = 0;
-
-                //Current = null;
-                return;
-            }
-
-            if (Current != null && Current.TargetBounds == null && Current.SourceBounds is not null)
-            {
-                Current.TargetBounds = ShiftPosition((Rect)Current.SourceBounds, Current.Position);
-            }
-
-            OnPropertyChanged(nameof(Current));
-        }
         //[RelayCommand]
         //void Next()
         //{
@@ -1254,71 +1172,7 @@ namespace WaterSortPuzzle.ViewModels
         //    if (index + 1 < ordered.Count)
         //        ordered[index + 1].IsVisible = true;
         //}
-        private static Rect ShiftPosition(Rect source, RelativePosition position)
-        {
-            const int markWidth = 200;
-            const int markHeight = 100;
 
-            Rect rect;
-            if (position == RelativePosition.Bottom)
-            {
-                rect = new Rect(
-                    (source.X + (source.Width / 2) - (markWidth / 2)),
-                    source.Y + source.Height,
-                    markWidth,
-                    markHeight);
-            }
-            else if (position == RelativePosition.BottomLeft)
-            {
-                rect = new Rect(
-                    (source.X + source.Width - markWidth),
-                    source.Y + source.Height,
-                    markWidth,
-                    markHeight);
-            }
-            else if (position == RelativePosition.BottomRight)
-            {
-                rect = new Rect(
-                    source.X,
-                    source.Y + source.Height,
-                    markWidth,
-                    markHeight);
-            }
-            else if (position == RelativePosition.Top)
-            {
-                rect = new Rect(
-                    (source.X + (source.Width / 2) - (markWidth / 2)),
-                    source.Y - markHeight,
-                    markWidth,
-                    markHeight);
-            }
-            else if (position == RelativePosition.TopLeft)
-            {
-                rect = new Rect(
-                    (source.X + source.Width - markWidth),
-                    source.Y - markHeight,
-                    markWidth,
-                    markHeight);
-            }
-            else if (position == RelativePosition.TopRight)
-            {
-                rect = new Rect(
-                    source.X,
-                    source.Y - markHeight,
-                    markWidth,
-                    markHeight);
-            }
-            else
-            {
-                rect = new Rect(
-                    source.X,
-                    source.Y,
-                    markWidth,
-                    markHeight);
-            }
-
-            return rect;
-        }
         #endregion
     }
 }

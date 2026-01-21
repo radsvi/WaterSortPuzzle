@@ -16,7 +16,7 @@ namespace WaterSortPuzzle.ViewModels
         //public CoachMarkItem? Current { get; set; }
 
 
-        public HelpPopupVM(IPopupService popupService, MainVM mainVM, CoachMarkManager coachMarkManager) : base(popupService, mainVM)
+        public HelpPopupVM(IPopupService popupService, MainVM mainVM) : base(popupService, mainVM)
         {
             MainVM = mainVM;
             //CoachMarkManager = coachMarkManager;
