@@ -12,6 +12,7 @@
              HeightRequest="{Binding DeviceHeight}"
              Margin="0"
              Padding="0"
+             x:Name="HelpPopupRoot"
              x:DataType="viewModels:HelpPopupVM">
     <ContentView.Resources>
         <Style TargetType="Label" BasedOn="{StaticResource BasicLabelStyle}">
@@ -117,7 +118,7 @@
                 VerticalOptions="Center"
                 BackgroundColor="Green">
                 <Label Text="{Binding Current.Text}" TextColor="White" />
-                <Label Text="{Binding Current.SourceBounds}" />
+                <Label Text="{Binding Current.XToText}" />
             </HorizontalStackLayout>
         </AbsoluteLayout>
 

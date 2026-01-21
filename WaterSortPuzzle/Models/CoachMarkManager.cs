@@ -146,98 +146,98 @@ namespace WaterSortPuzzle.Models
             //_vm.OnPropertyChanged(nameof(_vm.Current));
         }
 
-        //private static Rect ShiftPosition(Rect source, RelativePosition position)
-        //{
-        //    const int w = 200;
-        //    const int h = 100;
-
-        //    return position switch
-        //    {
-        //        RelativePosition.Top =>
-        //            new Rect(source.Center.X - w / 2, source.Y - h, w, h),
-
-        //        RelativePosition.Bottom =>
-        //            new Rect(source.Center.X - w / 2, source.Bottom, w, h),
-
-        //        RelativePosition.TopLeft =>
-        //            new Rect(source.Right - w, source.Y - h, w, h),
-
-        //        RelativePosition.BottomLeft =>
-        //            new Rect(source.Right - w, source.Bottom, w, h),
-
-        //        RelativePosition.TopRight =>
-        //            new Rect(source.X, source.Y - h, w, h),
-
-        //        RelativePosition.BottomRight =>
-        //            new Rect(source.X, source.Bottom, w, h),
-
-        //        _ => new Rect(source.X, source.Y, w, h)
-        //    };
-        //}
         private static Rect ShiftPosition(Rect source, RelativePosition position)
         {
-            const int markWidth = 200;
-            const int markHeight = 100;
+            const int w = 200;
+            const int h = 100;
 
-            Rect rect;
-            if (position == RelativePosition.Bottom)
+            return position switch
             {
-                rect = new Rect(
-                    (source.X + (source.Width / 2) - (markWidth / 2)),
-                    source.Y + source.Height,
-                    markWidth,
-                    markHeight);
-            }
-            else if (position == RelativePosition.BottomLeft)
-            {
-                rect = new Rect(
-                    (source.X + source.Width - markWidth),
-                    source.Y + source.Height,
-                    markWidth,
-                    markHeight);
-            }
-            else if (position == RelativePosition.BottomRight)
-            {
-                rect = new Rect(
-                    source.X,
-                    source.Y + source.Height,
-                    markWidth,
-                    markHeight);
-            }
-            else if (position == RelativePosition.Top)
-            {
-                rect = new Rect(
-                    (source.X + (source.Width / 2) - (markWidth / 2)),
-                    source.Y - markHeight,
-                    markWidth,
-                    markHeight);
-            }
-            else if (position == RelativePosition.TopLeft)
-            {
-                rect = new Rect(
-                    (source.X + source.Width - markWidth),
-                    source.Y - markHeight,
-                    markWidth,
-                    markHeight);
-            }
-            else if (position == RelativePosition.TopRight)
-            {
-                rect = new Rect(
-                    source.X,
-                    source.Y - markHeight,
-                    markWidth,
-                    markHeight);
-            }
-            else
-            {
-                rect = new Rect(
-                    source.X,
-                    source.Y,
-                    markWidth,
-                    markHeight);
-            }
+                RelativePosition.Top =>
+                    new Rect(source.Center.X - w / 2, source.Y - h, w, h),
 
-            return rect;
+                RelativePosition.Bottom =>
+                    new Rect(source.Center.X - w / 2, source.Bottom, w, h),
+
+                RelativePosition.TopLeft =>
+                    new Rect(source.Right - w, source.Y - h, w, h),
+
+                RelativePosition.BottomLeft =>
+                    new Rect(source.Right - w, source.Bottom, w, h),
+
+                RelativePosition.TopRight =>
+                    new Rect(source.X, source.Y - h, w, h),
+
+                RelativePosition.BottomRight =>
+                    new Rect(source.X, source.Bottom, w, h),
+
+                _ => new Rect(source.X, source.Y, w, h)
+            };
         }
+        //private static Rect ShiftPosition(Rect source, RelativePosition position)
+        //{
+        //    const int markWidth = 200;
+        //    const int markHeight = 100;
+
+        //    Rect rect;
+        //    if (position == RelativePosition.Bottom)
+        //    {
+        //        rect = new Rect(
+        //            (source.X + (source.Width / 2) - (markWidth / 2)),
+        //            source.Y + source.Height,
+        //            markWidth,
+        //            markHeight);
+        //    }
+        //    else if (position == RelativePosition.BottomLeft)
+        //    {
+        //        rect = new Rect(
+        //            (source.X + source.Width - markWidth),
+        //            source.Y + source.Height,
+        //            markWidth,
+        //            markHeight);
+        //    }
+        //    else if (position == RelativePosition.BottomRight)
+        //    {
+        //        rect = new Rect(
+        //            source.X,
+        //            source.Y + source.Height,
+        //            markWidth,
+        //            markHeight);
+        //    }
+        //    else if (position == RelativePosition.Top)
+        //    {
+        //        rect = new Rect(
+        //            (source.X + (source.Width / 2) - (markWidth / 2)),
+        //            source.Y - markHeight,
+        //            markWidth,
+        //            markHeight);
+        //    }
+        //    else if (position == RelativePosition.TopLeft)
+        //    {
+        //        rect = new Rect(
+        //            (source.X + source.Width - markWidth),
+        //            source.Y - markHeight,
+        //            markWidth,
+        //            markHeight);
+        //    }
+        //    else if (position == RelativePosition.TopRight)
+        //    {
+        //        rect = new Rect(
+        //            source.X,
+        //            source.Y - markHeight,
+        //            markWidth,
+        //            markHeight);
+        //    }
+        //    else
+        //    {
+        //        rect = new Rect(
+        //            source.X,
+        //            source.Y,
+        //            markWidth,
+        //            markHeight);
+        //    }
+
+        //    return rect;
+        //}
     }
 }

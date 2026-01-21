@@ -20,7 +20,8 @@ namespace WaterSortPuzzle.ViewModels
             AutoSolve autoSolve,
             Leveling leveling,
             IConfirmationPopupService popupService,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider,
+            CoachMarkManager coachMarkManager)
         {
             AppPreferences = appPreferences;
             GameState = gameState;
@@ -29,6 +30,7 @@ namespace WaterSortPuzzle.ViewModels
             Leveling = leveling;
             this.popupService = popupService;
             this.serviceProvider = serviceProvider;
+            CoachMarkManager = coachMarkManager;
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
             GameState.SavedGameStates.CollectionChanged += CollectionChangedHandler;

@@ -22,5 +22,21 @@ namespace WaterSortPuzzle.Models
         public bool IsAvailable => Availability?.Invoke() ?? true;
         [ObservableProperty]
         bool _isVisible;
+
+        public string XToText {
+            get
+            {
+                if (TargetBounds is null)
+                    return string.Empty;
+
+                string text = string.Empty;
+                text += $"X: {TargetBounds.Value.X}, ";
+                text += $"Y: {TargetBounds.Value.Y}, ";
+                text += $"Width: {TargetBounds.Value.Width}, ";
+                text += $"Height: {TargetBounds.Value.Height}, ";
+
+                return text;
+            }
+        }
     }
 }

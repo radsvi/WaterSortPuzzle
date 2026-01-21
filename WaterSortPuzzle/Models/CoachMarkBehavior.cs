@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WaterSortPuzzle.Models
 {
-    public class CoachMarkBehavior : Behavior<VisualElement>
+    public partial class CoachMarkBehavior : Behavior<VisualElement>
     {
         public static readonly BindableProperty IdProperty =
             BindableProperty.Create(nameof(Id), typeof(string), typeof(CoachMarkBehavior));
@@ -30,6 +30,8 @@ namespace WaterSortPuzzle.Models
         {
             base.OnAttachedTo(bindable);
             bindable.SizeChanged += OnSizeChanged;
+
+            OnSizeChanged(bindable, EventArgs.Empty);
         }
 
         protected override void OnDetachingFrom(VisualElement bindable)
