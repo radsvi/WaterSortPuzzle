@@ -8,128 +8,172 @@ namespace WaterSortPuzzle.Models
 {
     public partial class CoachMarkManager : ObservableObject
     {
-        public MainVM MainVM { get; }
+        private HelpPopupVM? _vm;
 
-        public event EventHandler? CurrentCoachMarkChanged;
-        public CoachMarkManager(MainVM mainVM)
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(NextCommand))]
+        [NotifyCanExecuteChangedFor(nameof(PreviousCommand))]
+        private int index = -1;
+
+        public void Attach(HelpPopupVM vm)
         {
-            MainVM = mainVM;
+            _vm = vm;
+        }
+
+        public void Start()
+        {
+            if (_vm == null)
+                return;
 
             InitializeCoachMarks();
+            ActivateFirst();
         }
 
         private void InitializeCoachMarks()
         {
-            MainVM.CoachMarks.Add(new CoachMarkItem
+            _vm!.CoachMarks.Clear();
+
+            _vm.CoachMarks.Add(new CoachMarkItem
             {
                 Id = "StepBackButton",
-                Text = "Takes you one step back. 5 uses per level",
+                Text = "One step back. 5 uses per level",
                 Position = RelativePosition.TopLeft
             });
-            MainVM.CoachMarks.Add(new CoachMarkItem
-            {
-                Id = "AddExtraTubeButton",
-                Text = "Adds extra empty flask (decreases the final score for the level).",
-                Position = RelativePosition.Top
-            });
-            MainVM.CoachMarks.Add(new CoachMarkItem
+
+            _vm.CoachMarks.Add(new CoachMarkItem
             {
                 Id = "RestartButton",
-                Text = "Restarts the level",
+                Text = "Restart the level",
                 Position = RelativePosition.BottomLeft
             });
-            MainVM.CoachMarks.Add(new CoachMarkItem
-            {
-                Id = "RestartButton2",
-                Text = "Restarts the level",
-                Position = RelativePosition.BottomLeft
-            });
-            MainVM.CoachMarks.Add(new CoachMarkItem
+
+            _vm.CoachMarks.Add(new CoachMarkItem
             {
                 Id = "NextLevelButton",
-                Text = "Generates new level",
+                Text = "Generate next level",
                 Position = RelativePosition.Bottom
             });
-            MainVM.CoachMarks.Add(new CoachMarkItem
-            {
-                Id = "AutoSolveNextStepButton",
-                Text = "Next step to check automatically generated solution",
-                Position = RelativePosition.TopRight
-            });
-
-            MessagingCenter.Subscribe<CoachMarkBehavior, (string Id, Rect Bounds)>(
-                this,
-                "CoachMarkBounds",
-                (_, data) =>
-                {
-                    var mark = MainVM.CoachMarks.FirstOrDefault(x => x.Id == data.Id);
-                    if (mark != null)
-                        mark.SourceBounds = data.Bounds;
-
-                    TryActivate();
-                });
-
-            //NextCommand = new Command(Next);
         }
-        private void HideAll()
+
+        private void ActivateFirst()
         {
-            foreach (var mark in MainVM.CoachMarks)
-                mark.IsVisible = false;
-        }
-        private void TryActivate()
-        {
-            if (MainVM.CoachMarks.Any(x => x.IsVisible))
+            HideAll();
+
+            var first = _vm!.CoachMarks.FirstOrDefault(x => x.IsAvailable);
+            if (first == null)
                 return;
 
-            var firstAvailable = MainVM.CoachMarks.FirstOrDefault(x => x.IsAvailable);
-            if (firstAvailable == null)
+            Index = _vm.CoachMarks.IndexOf(first);
+            _vm.Current = first;
+            first.IsVisible = true;
+
+            //_vm.OnPropertyChanged(nameof(_vm.Current));
+        }
+
+        public void OnBoundsReported(string id, Rect bounds)
+        {
+            if (_vm == null)
+                return;
+
+            var mark = _vm.CoachMarks.FirstOrDefault(x => x.Id == id);
+            if (mark == null)
+                return;
+
+            mark.SourceBounds = bounds;
+
+            if (_vm.Current == mark && mark.TargetBounds == null)
+            {
+                mark.TargetBounds = ShiftPosition(bounds, mark.Position);
+                //_vm.OnPropertyChanged(nameof(_vm.Current));
+            }
+        }
+
+        private void HideAll()
+        {
+            foreach (var mark in _vm!.CoachMarks)
+                mark.IsVisible = false;
+        }
+
+        private bool CanNavigate(int delta)
+        {
+            if (_vm == null)
+                return false;
+
+            int next = Index + delta;
+            return next >= 0 && next < _vm.CoachMarks.Count;
+        }
+
+        [RelayCommand(CanExecute = nameof(CanNavigateNext))]
+        private void Next() => Navigate(+1);
+
+        [RelayCommand(CanExecute = nameof(CanNavigatePrevious))]
+        private void Previous() => Navigate(-1);
+
+        private bool CanNavigateNext() => CanNavigate(+1);
+        private bool CanNavigatePrevious() => CanNavigate(-1);
+
+        private void Navigate(int delta)
+        {
+            if (_vm == null)
+                return;
+
+            int next = Index + delta;
+
+            while (next >= 0 && next < _vm.CoachMarks.Count)
+            {
+                var candidate = _vm.CoachMarks[next];
+                if (candidate.IsAvailable)
+                    break;
+
+                next += delta;
+            }
+
+            if (next < 0 || next >= _vm.CoachMarks.Count)
                 return;
 
             HideAll();
-            firstAvailable.IsVisible = true;
 
-            //if (Current == null &&
-            //    CoachMarks.All(x => x.SourceBounds.HasValue))
-            //{
-            //    Current = CoachMarks[0];
-            //    OnPropertyChanged(nameof(Current));
-            //}
+            Index = next;
+            _vm.Current = _vm.CoachMarks[Index];
+            _vm.Current.IsVisible = true;
+
+            if (_vm.Current.SourceBounds != null && _vm.Current.TargetBounds == null)
+            {
+                _vm.Current.TargetBounds =
+                    ShiftPosition(_vm.Current.SourceBounds.Value, _vm.Current.Position);
+            }
+
+            //_vm.OnPropertyChanged(nameof(_vm.Current));
         }
 
-        public void Navigate(CoachMarkNavigation direction)
-        {
-            int delta = (int)direction;
-            if (MainVM.Index + delta < MainVM.CoachMarks.Count && MainVM.Index + delta >= 0)
-            {
-                MainVM.Index += delta;
+        //private static Rect ShiftPosition(Rect source, RelativePosition position)
+        //{
+        //    const int w = 200;
+        //    const int h = 100;
 
-                if (MainVM.CoachMarks[MainVM.Index].IsAvailable == false)
-                {
-                    Navigate(direction);
-                    return;
-                }
-                else
-                {
-                    MainVM.Current = MainVM.CoachMarks[MainVM.Index];
-                }
-            }
-            else
-            {
-                //Current = CoachMarks[0];
-                //_index = 0;
+        //    return position switch
+        //    {
+        //        RelativePosition.Top =>
+        //            new Rect(source.Center.X - w / 2, source.Y - h, w, h),
 
-                //Current = null;
-                return;
-            }
+        //        RelativePosition.Bottom =>
+        //            new Rect(source.Center.X - w / 2, source.Bottom, w, h),
 
-            if (MainVM.Current != null && MainVM.Current.TargetBounds == null && MainVM.Current.SourceBounds is not null)
-            {
-                MainVM.Current.TargetBounds = ShiftPosition((Rect)MainVM.Current.SourceBounds, MainVM.Current.Position);
-            }
+        //        RelativePosition.TopLeft =>
+        //            new Rect(source.Right - w, source.Y - h, w, h),
 
-            //OnPropertyChanged(nameof(MainVM.Current));
-            CurrentCoachMarkChanged?.Invoke(this, EventArgs.Empty);
-        }
+        //        RelativePosition.BottomLeft =>
+        //            new Rect(source.Right - w, source.Bottom, w, h),
+
+        //        RelativePosition.TopRight =>
+        //            new Rect(source.X, source.Y - h, w, h),
+
+        //        RelativePosition.BottomRight =>
+        //            new Rect(source.X, source.Bottom, w, h),
+
+        //        _ => new Rect(source.X, source.Y, w, h)
+        //    };
+        //}
         private static Rect ShiftPosition(Rect source, RelativePosition position)
         {
             const int markWidth = 200;

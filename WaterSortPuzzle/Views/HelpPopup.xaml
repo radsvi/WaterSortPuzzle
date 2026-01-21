@@ -64,19 +64,19 @@
                 AbsoluteLayout.LayoutFlags="All" />
 
             <Border
-                IsVisible="{Binding MainVM.Current}"
-                AbsoluteLayout.LayoutBounds="{Binding MainVM.Current.TargetBounds}"
+                IsVisible="{Binding Current}"
+                AbsoluteLayout.LayoutBounds="{Binding Current.TargetBounds}"
                 AbsoluteLayout.LayoutFlags="None"
                 Padding="5"
                 StrokeThickness="1"
                 BackgroundColor="{StaticResource HelpPopupBackground}">
-                <Label Text="{Binding MainVM.Current.Text}" HorizontalOptions="Start" />
+                <Label Text="{Binding Current.Text}" HorizontalOptions="Start" />
             </Border>
             <Grid
-                AbsoluteLayout.LayoutBounds="{Binding MainVM.Current.SourceBounds}"
+                AbsoluteLayout.LayoutBounds="{Binding Current.SourceBounds}"
                 AbsoluteLayout.LayoutFlags="None">
                 <Border
-                    IsVisible="{Binding MainVM.Current}"
+                    IsVisible="{Binding Current, Converter={StaticResource NullToBoolConverter}}"
                     Padding="5"
                     StrokeThickness="0"
                     BackgroundColor="{StaticResource HelpPopupBackground}"/>
@@ -102,8 +102,8 @@
                 </Border>
 
                 <HorizontalStackLayout Spacing="4" Grid.Row="1" VerticalOptions="Start">
-                    <Button Text="Previous" Command="{Binding MainVM.PreviousCommand}" Style="{StaticResource NavigationButton}" />
-                    <Button Text="Next" Command="{Binding MainVM.NextCommand}" Style="{StaticResource NavigationButton}" />
+                    <Button Text="Previous" Command="{Binding CoachMarkManager.PreviousCommand}" Style="{StaticResource NavigationButton}" />
+                    <Button Text="Next" Command="{Binding CoachMarkManager.NextCommand}" Style="{StaticResource NavigationButton}" />
                     <Button Text="Close" Command="{Binding CancelCommand}" BackgroundColor="OrangeRed" Margin="10,0,0,0" Style="{StaticResource NavigationButton}" />
                 </HorizontalStackLayout>
             </Grid>
@@ -111,6 +111,14 @@
             <!--<AbsoluteLayout.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding CoachMarkManager.NavigateCommand}" CommandParameter="{x:Int32 1}" />
             </AbsoluteLayout.GestureRecognizers>-->
+            <HorizontalStackLayout
+                AbsoluteLayout.LayoutBounds="0.5,0.35,1,0.49" AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                BackgroundColor="Green">
+                <Label Text="{Binding Current.Text}" TextColor="White" />
+                <Label Text="{Binding Current.SourceBounds}" />
+            </HorizontalStackLayout>
         </AbsoluteLayout>
 
         <!--<Button

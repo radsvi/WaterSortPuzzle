@@ -2,20 +2,17 @@ namespace WaterSortPuzzle.Views;
 
 public partial class HelpPopup : ContentView
 {
-	public HelpPopup(HelpPopupVM popupViewModel)
+    public HelpPopup(HelpPopupVM vm)
     {
         InitializeComponent();
-        BindingContext = popupViewModel;
+        BindingContext = vm;
 
-        //this.Loaded += OnLoaded;
+        Loaded += OnLoaded;
     }
-    //private void OnLoaded(object? sender, EventArgs e)
-    //{
-    //    if (BindingContext is HelpPopupVM vm)
-    //    {
-    //        vm.CoachMarkManager.Start();
-    //    }
 
-    //    this.Loaded -= OnLoaded; // only fire once
-    //}
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        ((HelpPopupVM)BindingContext).CoachMarkManager.Start();
+        Loaded -= OnLoaded;
+    }
 }
