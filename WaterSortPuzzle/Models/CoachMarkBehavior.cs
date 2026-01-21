@@ -8,6 +8,9 @@ namespace WaterSortPuzzle.Models
 {
     public partial class CoachMarkBehavior : Behavior<VisualElement>
     {
+        private VisualElement? _associatedObject;
+        public VisualElement? AssociatedObject => _associatedObject;
+
         public static readonly BindableProperty IdProperty =
             BindableProperty.Create(nameof(Id), typeof(string), typeof(CoachMarkBehavior));
 
@@ -29,6 +32,7 @@ namespace WaterSortPuzzle.Models
         protected override void OnAttachedTo(VisualElement bindable)
         {
             base.OnAttachedTo(bindable);
+            _associatedObject = bindable;
             bindable.SizeChanged += OnSizeChanged;
 
             OnSizeChanged(bindable, EventArgs.Empty);
@@ -37,12 +41,20 @@ namespace WaterSortPuzzle.Models
         protected override void OnDetachingFrom(VisualElement bindable)
         {
             bindable.SizeChanged -= OnSizeChanged;
+            _associatedObject = null;
             base.OnDetachingFrom(bindable);
+        }
+        public void TriggerInitialBounds()
+        {
+            if (AssociatedObject != null)
+                OnSizeChanged(AssociatedObject, EventArgs.Empty);
         }
 
         private void OnSizeChanged(object? sender, EventArgs e)
         {
-            if (sender is not VisualElement element || ReportBounds == null)
+            if (sender is not VisualElement element)
+                return;
+            if (ReportBounds == null)
                 return;
 
             var bounds = GetAbsoluteBounds(element);

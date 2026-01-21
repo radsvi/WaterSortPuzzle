@@ -77,7 +77,7 @@
                             CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
                             Grid.Column="2">
                             <ImageButton.Behaviors>
-                                <models:CoachMarkBehavior Id="RestartButton" ReportBounds="{Binding CoachMarkManager.OnBoundsReported}" />
+                                <models:CoachMarkBehavior Id="RestartButton" ReportBounds="{Binding Source={x:Reference HelpPopupRoot}, Path=BindingContext.CoachMarkManager.OnBoundsReported}" />
                             </ImageButton.Behaviors>
                         </ImageButton>
                     </Grid>
@@ -96,7 +96,7 @@
                             CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
                             Grid.Column="2">
                             <ImageButton.Behaviors>
-                                <models:CoachMarkBehavior Id="RestartButton2" ReportBounds="{Binding CoachMarkManager.OnBoundsReported}" />
+                                <models:CoachMarkBehavior Id="RestartButton2" ReportBounds="{Binding Source={x:Reference HelpPopupRoot}, Path=BindingContext.CoachMarkManager.OnBoundsReported}" />
                             </ImageButton.Behaviors>
                         </ImageButton>
                         <ImageButton
@@ -106,7 +106,7 @@
                             CommandParameter="{x:Static enums:PopupParams.NewLevel}"
                             Grid.Column="1">
                             <ImageButton.Behaviors>
-                                <models:CoachMarkBehavior Id="NextLevelButton" ReportBounds="{Binding CoachMarkManager.OnBoundsReported}" />
+                                <models:CoachMarkBehavior Id="NextLevelButton" ReportBounds="{Binding Source={x:Reference HelpPopupRoot}, Path=BindingContext.CoachMarkManager.OnBoundsReported}" />
                             </ImageButton.Behaviors>
                         </ImageButton>
                     </Grid>
@@ -394,7 +394,7 @@
                                 <TapGestureRecognizer Command="{Binding StepThroughCommand}" />
                             </Border.GestureRecognizers>
                             <Border.Behaviors>
-                                <models:CoachMarkBehavior Id="AutoSolveNextStepButton" ReportBounds="{Binding CoachMarkManager.OnBoundsReported}" />
+                                <models:CoachMarkBehavior Id="AutoSolveNextStepButton" ReportBounds="{Binding Source={x:Reference HelpPopupRoot}, Path=BindingContext.CoachMarkManager.OnBoundsReported}" />
                             </Border.Behaviors>
                             <Grid Style="{StaticResource NavigationTapEnabledLayout_Grid}">
                                 <Border Style="{StaticResource NavigationTapEnabledLayout_Border}">
@@ -418,7 +418,7 @@
                             Text=" "
                             Grid.Column="1">
                             <Button.Behaviors>
-                                <models:CoachMarkBehavior Id="AddExtraTubeButton" ReportBounds="{Binding CoachMarkManager.OnBoundsReported}" />
+                                <models:CoachMarkBehavior Id="AddExtraTubeButton" ReportBounds="{Binding Source={x:Reference HelpPopupRoot}, Path=BindingContext.CoachMarkManager.OnBoundsReported}" />
                             </Button.Behaviors>
                         </Button>
                         <!--<Button
@@ -428,15 +428,15 @@
                             Text="{Binding StepBackButtonText}"
                             Grid.Column="2">
                             <Button.Behaviors>
-                                <models:CoachMarkBehavior Id="StepBackButton" ReportBounds="{Binding CoachMarkManager.OnBoundsReported}" />
+                                <models:CoachMarkBehavior Id="StepBackButton" ReportBounds="{Binding Source={x:Reference HelpPopupRoot}, Path=BindingContext.CoachMarkManager.OnBoundsReported}" />
                             </Button.Behaviors>
                         </Button>-->
-                        <Border Style="{StaticResource NavigationTapEnabledLayout}" Grid.Column="2">
+                        <Border Style="{StaticResource NavigationTapEnabledLayout}" Grid.Column="2" x:Name="StepBackButton">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding StepBackCommand}" />
                             </Border.GestureRecognizers>
                             <Border.Behaviors>
-                                <models:CoachMarkBehavior Id="StepBackButton" ReportBounds="{Binding CoachMarkManager.OnBoundsReported}" />
+                                <models:CoachMarkBehavior Id="StepBackButton" ReportBounds="{Binding Source={x:Reference HelpPopupRoot}, Path=BindingContext.CoachMarkManager.OnBoundsReported}" />
                             </Border.Behaviors>
 
                             <Grid Style="{StaticResource NavigationTapEnabledLayout_Grid}">
