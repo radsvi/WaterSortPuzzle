@@ -7,15 +7,15 @@ public partial class HelpPopup : ContentView
         InitializeComponent();
         BindingContext = popupViewModel;
 
-        this.Loaded += OnLoaded;
+        //this.Loaded += OnLoaded;
     }
-    private void OnLoaded(object? sender, EventArgs e)
-    {
-        if (BindingContext is HelpPopupVM vm)
-        {
-            vm.CoachMarkManager.Start();
-        }
+    //private void OnLoaded(object? sender, EventArgs e)
+    //{
+    //    if (BindingContext is HelpPopupVM vm)
+    //    {
+    //        vm.CoachMarkManager.Start();
+    //    }
 
-        this.Loaded -= OnLoaded; // only fire once
-    }
+    //    this.Loaded -= OnLoaded; // only fire once
+    //}
 }
