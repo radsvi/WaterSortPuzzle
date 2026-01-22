@@ -24,7 +24,9 @@
         AbsoluteLayout.LayoutFlags="None">
         <Label
             x:Name="HintLabel"
-            TextColor="Black" />
+            TextColor="Black"
+            LineBreakMode="WordWrap"
+            MaximumWidthRequest="150" />
     </Border>
 
 </AbsoluteLayout>

@@ -35,6 +35,7 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
     }
     public void Show(VisualElement target, string text)
     {
+        HintLabel.WidthRequest = -1;
         HintLabel.Text = text;
         Dispatcher.Dispatch(() =>
         {
@@ -47,12 +48,16 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
                 (float)targetBounds.Width,
                 (float)targetBounds.Height);
 
+            //HintFrame.Measure(double.PositiveInfinity, double.PositiveInfinity);
+            //var hintSize = new Size(HintFrame.Width, HintFrame.Height);
+            Size hintSize = HintFrame.Measure(double.PositiveInfinity, double.PositiveInfinity);
+
             Rect hintBounds = CalculateNewHintPosition(targetBounds);
 
             // Position hint below target
             AbsoluteLayout.SetLayoutBounds(
                 HintFrame,
-                hintBounds);
+                new Rect(hintBounds.X, hintBounds.Y, hintSize.Width, hintSize.Height));
 
             OverlayGraphics.Invalidate();
         });
@@ -99,7 +104,9 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
         }
 
 
+        //Rect newBounds = new Rect(xPos, yPos, HintFrame.Width, HintFrame.Height);
         Rect newBounds = new Rect(xPos, yPos, HintFrame.Width, HintFrame.Height);
+        //Rect newBounds = new Rect(xPos, yPos, this.Width * 0.4, 100);
         // nemusim updatovat i _targetRect?
         return newBounds;
     }
