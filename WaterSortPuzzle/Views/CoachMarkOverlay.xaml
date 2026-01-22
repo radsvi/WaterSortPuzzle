@@ -19,7 +19,7 @@
         BackgroundColor="White"
         StrokeShape="RoundRectangle 15"
         Padding="12"
-        AbsoluteLayout.LayoutBounds="150,150"
+        
         AbsoluteLayout.LayoutFlags="None">
         <Label
             x:Name="HintLabel"

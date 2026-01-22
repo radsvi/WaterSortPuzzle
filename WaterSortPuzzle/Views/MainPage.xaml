@@ -437,7 +437,7 @@
                             </Border.GestureRecognizers>
                             <Border.Behaviors>
                                 <behaviors:CoachMarkBehavior
-                                    Text="Tap here to start"
+                                    Text="Step Back button"
                                     Overlay="{x:Reference CoachOverlay}" />
                             </Border.Behaviors>
 
