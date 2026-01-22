@@ -78,9 +78,7 @@
                             CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
                             Grid.Column="2">
                             <ImageButton.Behaviors>
-                                <behaviors:CoachMarkBehavior
-                                    Text="Restart button"
-                                    Overlay="{x:Reference CoachOverlay}" />
+                                <behaviors:CoachMarkBehavior Overlay="{x:Reference CoachOverlay}" />
                             </ImageButton.Behaviors>
                         </ImageButton>
                     </Grid>
@@ -93,23 +91,25 @@
                             CommandParameter="{x:Static enums:PopupParams.QuickOptions}"
                             Grid.Column="0"/>
                         <ImageButton
+                            x:Name="RestartButton2"
                             Source="button_restart.png"
                             Style="{StaticResource NavigationImageButton}"
                             Command="{Binding NavigationMenuPopupCommand}"
                             CommandParameter="{x:Static enums:PopupParams.RestartLevel}"
                             Grid.Column="2">
                             <ImageButton.Behaviors>
-                                
+                                <behaviors:CoachMarkBehavior Overlay="{x:Reference CoachOverlay}" />
                             </ImageButton.Behaviors>
                         </ImageButton>
                         <ImageButton
+                            x:Name="NextLevelButton"
                             Source="button_next_level.png"
                             Style="{StaticResource NavigationImageButton}"
                             Command="{Binding NavigationMenuPopupCommand}"
                             CommandParameter="{x:Static enums:PopupParams.NewLevel}"
                             Grid.Column="1">
                             <ImageButton.Behaviors>
-                                
+                                <behaviors:CoachMarkBehavior Overlay="{x:Reference CoachOverlay}" />
                             </ImageButton.Behaviors>
                         </ImageButton>
                     </Grid>
@@ -392,12 +392,12 @@
                                 <models:CoachMarkBehavior Id="AutoSolveNextStepButton" />
                             </Button.Behaviors>
                         </Button>-->
-                        <Border Style="{StaticResource NavigationTapEnabledLayout}" IsVisible="{Binding AutoSolve.Solved}">
+                        <Border Style="{StaticResource NavigationTapEnabledLayout}" IsVisible="{Binding AutoSolve.Solved}" x:Name="NextStepButton">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding StepThroughCommand}" />
                             </Border.GestureRecognizers>
                             <Border.Behaviors>
-                                
+                                <behaviors:CoachMarkBehavior Overlay="{x:Reference CoachOverlay}" />
                             </Border.Behaviors>
                             <Grid Style="{StaticResource NavigationTapEnabledLayout_Grid}">
                                 <Border Style="{StaticResource NavigationTapEnabledLayout_Border}">
@@ -415,13 +415,14 @@
                             </Grid>
                         </Border>
                         <Button
+                            x:Name="AddExtraTubeButton"
                             ImageSource="{Binding AddExtraTubeImage}"
                             Style="{StaticResource NavigationButton}"
                             Command="{Binding AddExtraTubeCommand}"
                             Text=" "
                             Grid.Column="1">
                             <Button.Behaviors>
-                                
+                                <behaviors:CoachMarkBehavior Overlay="{x:Reference CoachOverlay}" />
                             </Button.Behaviors>
                         </Button>
                         <!--<Button
@@ -439,9 +440,7 @@
                                 <TapGestureRecognizer Command="{Binding StepBackCommand}" />
                             </Border.GestureRecognizers>
                             <Border.Behaviors>
-                                <behaviors:CoachMarkBehavior
-                                    Text="Step Back button"
-                                    Overlay="{x:Reference CoachOverlay}" />
+                                <behaviors:CoachMarkBehavior Overlay="{x:Reference CoachOverlay}" />
                             </Border.Behaviors>
 
                             <Grid Style="{StaticResource NavigationTapEnabledLayout_Grid}">

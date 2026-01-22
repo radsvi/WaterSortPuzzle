@@ -45,9 +45,19 @@ namespace WaterSortPuzzle.ViewModels
         }
         public ObservableCollection<CoachMarkItem> CoachSteps { get; } =
         [
+            new() { TargetKey = "NextLevel", Text = "Next level" },
             new() { TargetKey = "Restart", Text = "Restart the game" },
-            new() { TargetKey = "StepBack", Text = "Undo last moveXX" }
+            new() { TargetKey = "Restart2", Text = "Restart the game" },
+            new() { TargetKey = "NextLevel", Text = "Next step in calculated solution" },
+            new() { TargetKey = "AddExtraTube", Text = "Adds extra empty tube (using this lowers the overall score for the level)" },
+            new() { TargetKey = "StepBack", Text = "Undo last move" },
         ];
+        //_coachTargets["NextLevel"] = NextLevelButton;
+        //_coachTargets["Restart"] = RestartButton;
+        //_coachTargets["Restart2"] = RestartButton2;
+        //_coachTargets["NextStep"] = NextStepButton;
+        //_coachTargets["AddExtraTube"] = AddExtraTubeButton;
+        //_coachTargets["StepBack"] = StepBackButton;
         public int CurrentStepIndex { get; private set; }
         public CoachMarkItem? CurrentStep =>
             CurrentStepIndex < CoachSteps.Count

@@ -29,7 +29,11 @@ namespace WaterSortPuzzle.Views
 
             mainVM.InitializeOnce();
 
+            _coachTargets["NextLevel"] = NextLevelButton;
             _coachTargets["Restart"] = RestartButton;
+            _coachTargets["Restart2"] = RestartButton2;
+            _coachTargets["NextStep"] = NextStepButton;
+            _coachTargets["AddExtraTube"] = AddExtraTubeButton;
             _coachTargets["StepBack"] = StepBackButton;
 
             mainVM.PropertyChanged += OnViewModelPropertyChanged;
