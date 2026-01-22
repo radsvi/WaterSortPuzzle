@@ -3,6 +3,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="WaterSortPuzzle.Views.CoachMarkOverlay"
+    HorizontalOptions="Fill"
+    VerticalOptions="Fill"
     InputTransparent="False">
 
     <!-- Dimmed background + hole -->
@@ -17,6 +19,7 @@
         BackgroundColor="White"
         StrokeShape="RoundRectangle 15"
         Padding="12"
+        AbsoluteLayout.LayoutBounds="150,150"
         AbsoluteLayout.LayoutFlags="None">
         <Label
             x:Name="HintLabel"

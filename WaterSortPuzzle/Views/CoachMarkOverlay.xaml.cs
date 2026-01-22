@@ -18,6 +18,7 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
 
     public void Show(VisualElement target, string text)
     {
+        int hintWidth = 250;
         HintLabel.Text = text;
 
         // Get target position on screen
@@ -31,7 +32,7 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
         // Position hint below target
         AbsoluteLayout.SetLayoutBounds(
             HintFrame,
-            new Rect(bounds.X, bounds.Bottom + 12, 250, AbsoluteLayout.AutoSize));
+            new Rect(bounds.X, bounds.Y, hintWidth, AbsoluteLayout.AutoSize));
 
         OverlayGraphics.Invalidate();
     }
