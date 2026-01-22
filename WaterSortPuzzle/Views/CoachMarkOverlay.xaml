@@ -11,6 +11,7 @@
     <GraphicsView
         x:Name="OverlayGraphics"
         AbsoluteLayout.LayoutBounds="0,0,1,1"
+        InputTransparent="True"
         AbsoluteLayout.LayoutFlags="All" />
 
     <!-- Hint text -->

@@ -71,6 +71,7 @@
                             Grid.Column="0"/>
 
                         <ImageButton
+                            x:Name="RestartButton"
                             Source="button_restart.png"
                             Style="{StaticResource NavigationImageButton}"
                             Command="{Binding NavigationMenuPopupCommand}"
@@ -467,8 +468,9 @@
         </Grid>
         <!--#region CoachMarks-->
         <views:CoachMarkOverlay
-                x:Name="CoachOverlay"
-                IsVisible="False" />
+            x:Name="CoachOverlay"
+            TappedCommand="{Binding NextStepCommand}"
+            IsVisible="True" />
         <!--#endregion CoachMarks-->
     </Grid>
 </ContentPage>

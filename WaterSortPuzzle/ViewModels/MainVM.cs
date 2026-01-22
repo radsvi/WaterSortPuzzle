@@ -34,14 +34,33 @@ namespace WaterSortPuzzle.ViewModels
             AppPreferences.PropertyChanged += PropertyChangedHandler;
             GameState.PropertyChanged += PropertyChangedHandler;
             AutoSolve.PropertyChanged += PropertyChangedHandler;
-            
+
 
             //if (appPreferences.LastLevelBeforeClosing is null || appPreferences.LastLevelBeforeClosing.GameGrid.Length == 0)
             //{
             //    OnStart();
             //}
 
-            
+            NextStepCommand = new Command(NextStep);
+        }
+        public ObservableCollection<CoachMarkItem> CoachSteps { get; } =
+        [
+            new() { TargetKey = "Restart", Text = "Restart the game" },
+            new() { TargetKey = "StepBack", Text = "Undo last moveXX" }
+        ];
+        public int CurrentStepIndex { get; private set; }
+        public CoachMarkItem? CurrentStep =>
+            CurrentStepIndex < CoachSteps.Count
+                ? CoachSteps[CurrentStepIndex]
+                : null;
+
+        public System.Windows.Input.ICommand NextStepCommand { get; }
+
+
+        void NextStep()
+        {
+            CurrentStepIndex++;
+            OnPropertyChanged(nameof(CurrentStep));
         }
 
 

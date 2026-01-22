@@ -1,4 +1,5 @@
 using Microsoft.Maui.Graphics;
+using System.Windows.Input;
 
 namespace WaterSortPuzzle.Views;
 
@@ -6,16 +7,32 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
 {
     RectF _targetRect;
 
+    public static readonly BindableProperty TappedCommandProperty =
+    BindableProperty.Create(
+        nameof(TappedCommand),
+        typeof(ICommand),
+        typeof(CoachMarkOverlay));
+
+    public ICommand? TappedCommand
+    {
+        get => (ICommand?)GetValue(TappedCommandProperty);
+        set => SetValue(TappedCommandProperty, value);
+    }
+
     public CoachMarkOverlay()
     {
         InitializeComponent();
         OverlayGraphics.Drawable = this;
 
         var tap = new TapGestureRecognizer();
-        tap.Tapped += (_, _) => RemoveFromParent();
+        tap.Tapped += OnTapped;
         GestureRecognizers.Add(tap);
-    }
 
+    }
+    void OnTapped(object? sender, TappedEventArgs e)
+    {
+        TappedCommand?.Execute(null);
+    }
     public void Show(VisualElement target, string text)
     {
         HintLabel.Text = text;
@@ -87,8 +104,8 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
         canvas.BlendMode = BlendMode.Normal;
     }
 
-    void RemoveFromParent()
-    {
-        (Parent as Layout)?.Children.Remove(this);
-    }
+    //void RemoveFromParent()
+    //{
+    //    (Parent as Layout)?.Children.Remove(this);
+    //}
 }
