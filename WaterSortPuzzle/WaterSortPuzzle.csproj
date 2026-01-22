@@ -123,6 +123,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\CoachMarkOverlay.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Controls\CustomPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

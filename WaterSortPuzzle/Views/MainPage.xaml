@@ -19,7 +19,7 @@
         <converters:MultiValueConverter x:Key="MultiValueConv"/>
     </ContentPage.Resources>
 
-    <Grid>
+    <Grid x:Name="RootLayout">
         <Image
             Source="blue_blobs_lowerres.jpg"
             Aspect="AspectFill"
@@ -436,7 +436,9 @@
                                 <TapGestureRecognizer Command="{Binding StepBackCommand}" />
                             </Border.GestureRecognizers>
                             <Border.Behaviors>
-                                
+                                <behaviors:CoachMarkBehavior
+                                    Text="Tap here to start"
+                                    Overlay="{x:Reference CoachOverlay}" />
                             </Border.Behaviors>
 
                             <Grid Style="{StaticResource NavigationTapEnabledLayout_Grid}">
@@ -461,5 +463,10 @@
             <!--#endregion-->
 
         </Grid>
+        <!--#region CoachMarks-->
+        <views:CoachMarkOverlay
+                x:Name="CoachOverlay"
+                IsVisible="False" />
+        <!--#endregion CoachMarks-->
     </Grid>
 </ContentPage>

@@ -16,6 +16,11 @@ namespace WaterSortPuzzle.Views
             //var mainVM = new MainVM(this);
             BindingContext = mainVM;
             this.mainVM = mainVM;
+
+            //var overlay = new CoachMarkOverlay();
+            //overlay.Show(StepBackButton, "Tap here to start");
+
+            //(MainLayout as Layout).Children.Add(overlay);
         }
         protected override void OnAppearing()
         {
