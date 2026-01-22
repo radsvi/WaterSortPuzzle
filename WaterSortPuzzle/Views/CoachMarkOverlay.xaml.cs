@@ -75,8 +75,20 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
 
         Rect hintBounds = HintFrame.GetBoundsOnScreen();
 
-        double xPos = this.Width / 2 - hintBounds.Width / 2;
+        double xPos;// = this.Width / 2 - hintBounds.Width / 2;
         double yPos;
+        if (targetBounds.X + targetBounds.Width > this.Width * 3 / 5) // zarovnat doprava
+        {
+            xPos = this.Width - halfPadding * 3 - hintBounds.Width;
+        }
+        else if (targetBounds.X < this.Width * 2 / 5) // zarovnat doleva
+        {
+            xPos = halfPadding * 3;
+        }
+        else // zarovnat na stred
+        {
+            xPos = this.Width / 2 - hintBounds.Width / 2;
+        }
         if (targetBounds.Y + targetBounds.Height + (halfPadding * 2) + hintBounds.Height <= this.Height)
         {
             yPos = targetBounds.Y + targetBounds.Height + halfPadding;
