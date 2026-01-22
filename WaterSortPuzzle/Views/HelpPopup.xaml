@@ -58,7 +58,7 @@
 
     <Grid Margin="0">
 
-        <AbsoluteLayout IsVisible="{Binding Current}">
+        <!--<AbsoluteLayout IsVisible="{Binding Current}">
             <BoxView
                 BackgroundColor="#80000000"
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
@@ -109,9 +109,7 @@
                 </HorizontalStackLayout>
             </Grid>
 
-            <!--<AbsoluteLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding CoachMarkManager.NavigateCommand}" CommandParameter="{x:Int32 1}" />
-            </AbsoluteLayout.GestureRecognizers>-->
+
             <HorizontalStackLayout
                 AbsoluteLayout.LayoutBounds="0.5,0.35,1,0.49" AbsoluteLayout.LayoutFlags="All"
                 HorizontalOptions="Center"
@@ -120,9 +118,9 @@
                 <Label Text="{Binding Current.Text}" TextColor="White" />
                 <Label Text="{Binding Current.XToText}" />
             </HorizontalStackLayout>
-        </AbsoluteLayout>
+        </AbsoluteLayout>-->
 
-        <!--<Button
+        <Button
             Text="×"
             FontSize="55"
             Padding="0,-7,0,0"
@@ -132,7 +130,7 @@
             HorizontalOptions="End"
             WidthRequest="70"
             HeightRequest="70"
-            Margin="0,50,10,0"/>-->
+            Margin="0,50,10,0"/>
     </Grid>
 
 </ContentView>

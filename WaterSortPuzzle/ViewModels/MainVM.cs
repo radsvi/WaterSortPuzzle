@@ -10,7 +10,6 @@ namespace WaterSortPuzzle.ViewModels
         public Notification Notification { get; }
         public AutoSolve AutoSolve { get; }
         public Leveling Leveling { get; }
-        public CoachMarkManager CoachMarkManager { get; }
 
         #region Constructor
         public MainVM(
@@ -20,8 +19,7 @@ namespace WaterSortPuzzle.ViewModels
             AutoSolve autoSolve,
             Leveling leveling,
             IConfirmationPopupService popupService,
-            IServiceProvider serviceProvider,
-            CoachMarkManager coachMarkManager)
+            IServiceProvider serviceProvider)
         {
             AppPreferences = appPreferences;
             GameState = gameState;
@@ -30,7 +28,6 @@ namespace WaterSortPuzzle.ViewModels
             Leveling = leveling;
             this.popupService = popupService;
             this.serviceProvider = serviceProvider;
-            CoachMarkManager = coachMarkManager;
             App.Current!.UserAppTheme = AppPreferences.ThemeUserSetting;
 
             GameState.SavedGameStates.CollectionChanged += CollectionChangedHandler;
