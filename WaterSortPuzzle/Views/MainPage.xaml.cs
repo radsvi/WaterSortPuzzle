@@ -24,7 +24,7 @@ namespace WaterSortPuzzle.Views
             //(MainLayout as Layout).Children.Add(overlay);
             mainVM.PropertyChanged += OnViewModelPropertyChanged;
         }
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
 
@@ -37,16 +37,26 @@ namespace WaterSortPuzzle.Views
             _coachTargets["AddExtraTube"] = AddExtraTubeButton;
             _coachTargets["StepBack"] = StepBackButton;
 
-            await Task.Yield(); // let MAUI finish appearing
-            await Task.Delay(16); // wait one frame
-            ShowCurrentStep();
+            StartCoachMarks();
         }
         void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(mainVM.CurrentCoachMark))
                 ShowCurrentStep();
         }
-        async void ShowCurrentStep()
+
+        private async void StartCoachMarks()
+        {
+            if (mainVM.AppPreferences.ShowHelpScreenAtStart)
+            {
+                await Task.Yield(); // let MAUI finish appearing
+                await Task.Delay(16); // wait one frame
+                ShowCurrentStep();
+
+                //mainVM.AppPreferences.ShowHelpScreenAtStart = false;
+            }
+        }
+        private async void ShowCurrentStep()
         {
             var step = mainVM.CurrentCoachMark;
 
@@ -64,7 +74,7 @@ namespace WaterSortPuzzle.Views
             //CoachOverlay.Show(target, step.Text);
             await ShowStepAsync(step);
         }
-        async Task ShowStepAsync(CoachMarkItem step)
+        private async Task ShowStepAsync(CoachMarkItem step)
         {
             System.Diagnostics.Debug.WriteLine($"## CoachMark: {mainVM.CurrentCoachMarkIndex}");
             if (!_coachTargets.TryGetValue(step.TargetKey, out var target))

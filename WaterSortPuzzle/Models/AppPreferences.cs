@@ -75,11 +75,11 @@
                 }
             }
         }
-        public bool DontShowHelpScreenAtStart
+        public bool ShowHelpScreenAtStart
         {
-            get => Preferences.Default.Get(nameof(DontShowHelpScreenAtStart), false);
+            get => Preferences.Default.Get(nameof(ShowHelpScreenAtStart), true);
             set {
-                Preferences.Set(nameof(DontShowHelpScreenAtStart), value);
+                Preferences.Set(nameof(ShowHelpScreenAtStart), value);
                 OnPropertyChanged();
             }
         }
