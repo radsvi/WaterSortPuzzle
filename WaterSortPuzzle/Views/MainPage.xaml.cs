@@ -67,36 +67,46 @@ namespace WaterSortPuzzle.Views
             System.Diagnostics.Debug.WriteLine($"## CoachMark: {mainVM.CurrentCoachMarkIndex}");
             if (!_coachTargets.TryGetValue(step.TargetKey, out var target))
             {
-                mainVM.NextStep();
+                mainVM.NextCoachMark();
                 return;
             }
             if (!target.IsVisible)
             {
                 // Skip this step entirely
-                mainVM.NextStep();
+                mainVM.NextCoachMark();
                 return;
             }
+
+            // Yield to allow layout to complete
+            await Task.Yield();
+
+            // If still not laid out, retry once on next frame
+            if (target.Width <= 0 || target.Height <= 0)
+            {
+                await Task.Delay(16); // ~1 frame
+            }
+
+            //if (target.Width <= 0 || target.Height <= 0)
+            //{
+            //    void OnSizeChanged(object? s, EventArgs e)
+            //    {
+            //        target.SizeChanged -= OnSizeChanged;
+            //        System.Diagnostics.Debug.WriteLine($"#### OnSizeChanged called");
+            //        ShowCurrentStep();
+            //    }
+
+            //    target.SizeChanged += OnSizeChanged;
+            //    return;
+            //}
 
             if (target.Width <= 0 || target.Height <= 0)
             {
-                void OnSizeChanged(object? s, EventArgs e)
-                {
-                    target.SizeChanged -= OnSizeChanged;
-                    ShowCurrentStep();
-                }
-
-                target.SizeChanged += OnSizeChanged;
+                Debug.WriteLine("Target never received size, skipping");
+                mainVM.NextCoachMark();
                 return;
             }
 
-            // Ensure layout is complete
-            await target.Dispatcher.DispatchAsync(async () =>
-            {
-                await Task.Yield();
-
-                CoachOverlay.Show(target, step.Text);
-            });
-
+            CoachOverlay.Show(target, step.Text);
         }
         //private static bool IsTargetVisible(VisualElement target)
         //{

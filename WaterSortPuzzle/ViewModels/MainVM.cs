@@ -41,7 +41,7 @@ namespace WaterSortPuzzle.ViewModels
             //    OnStart();
             //}
 
-            NextStepCommand = new Command(NextStep);
+            NextStepCommand = new Command(NextCoachMark);
         }
         public ObservableCollection<CoachMarkItem> CoachSteps { get; } =
         [
@@ -65,7 +65,7 @@ namespace WaterSortPuzzle.ViewModels
             CurrentCoachMarkIndex = 0;
             OnPropertyChanged(nameof(CurrentCoachMark));
         }
-        public void NextStep()
+        public void NextCoachMark()
         {
             CurrentCoachMarkIndex++;
             OnPropertyChanged(nameof(CurrentCoachMark));
