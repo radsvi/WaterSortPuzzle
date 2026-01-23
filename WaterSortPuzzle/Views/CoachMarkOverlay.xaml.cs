@@ -53,7 +53,7 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
             //var hintSize = new Size(HintFrame.Width, HintFrame.Height);
             Size hintSize = HintFrame.Measure(double.PositiveInfinity, double.PositiveInfinity);
 
-            Rect hintBounds = CalculateNewHintPosition(targetBounds);
+            Rect hintBounds = CalculateNewHintPosition(targetBounds, hintSize);
 
             // Position hint below target
             AbsoluteLayout.SetLayoutBounds(
@@ -69,7 +69,7 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
     /// <param name="targetBounds"></param>
     /// <returns></returns>
     /// <exception cref="NullReferenceException"></exception>
-    private Rect CalculateNewHintPosition(Rect targetBounds)
+    private Rect CalculateNewHintPosition(Rect targetBounds, Size hintSize)
     {
         int halfPadding = 6;
 
@@ -79,13 +79,13 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
         //double screenWidth = displayInfo.Width / displayInfo.Density;
         //double screenHeight = displayInfo.Height / displayInfo.Density;
 
-        Rect hintBounds = HintFrame.GetBoundsOnScreen();
+        //Rect hintBounds = HintFrame.GetBoundsOnScreen();
 
         double xPos;// = this.Width / 2 - hintBounds.Width / 2;
         double yPos;
         if (targetBounds.X + targetBounds.Width > this.Width * 3 / 5) // zarovnat doprava
         {
-            xPos = this.Width - halfPadding * 3 - hintBounds.Width;
+            xPos = this.Width - halfPadding * 3 - hintSize.Width;
         }
         else if (targetBounds.X < this.Width * 2 / 5) // zarovnat doleva
         {
@@ -93,20 +93,20 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
         }
         else // zarovnat na stred
         {
-            xPos = this.Width / 2 - hintBounds.Width / 2;
+            xPos = this.Width / 2 - hintSize.Width / 2;
         }
-        if (targetBounds.Y + targetBounds.Height + (halfPadding * 2) + hintBounds.Height <= this.Height)
+        if (targetBounds.Y + targetBounds.Height + (halfPadding * 2) + hintSize.Height <= this.Height)
         {
             yPos = targetBounds.Y + targetBounds.Height + halfPadding;
         }
         else
         {
-            yPos = targetBounds.Y - hintBounds.Height - halfPadding;
+            yPos = targetBounds.Y - hintSize.Height - halfPadding;
         }
 
 
         //Rect newBounds = new Rect(xPos, yPos, HintFrame.Width, HintFrame.Height);
-        Rect newBounds = new Rect(xPos, yPos, HintFrame.Width, HintFrame.Height);
+        Rect newBounds = new Rect(xPos, yPos, hintSize.Width, hintSize.Height);
         //Rect newBounds = new Rect(xPos, yPos, this.Width * 0.4, 100);
         // nemusim updatovat i _targetRect?
         return newBounds;
