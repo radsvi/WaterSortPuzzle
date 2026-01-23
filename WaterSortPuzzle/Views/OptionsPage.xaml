@@ -39,6 +39,10 @@
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Difficulty">
                 <StackLayout Orientation="Vertical">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RevealDeveloperMenuCommand}" />
+                    </StackLayout.GestureRecognizers>
+
                     <Label Text="{Binding Leveling.Level, StringFormat='Level: {0}'}" />
                     <Label Text="{Binding Leveling.Score, StringFormat='Score: {0}'}" />
                     <controls:SwitchControl
@@ -104,7 +108,7 @@
 
                 </StackLayout>
             </controls:GroupBoxControl>
-            <controls:GroupBoxControl Header="Developer options" IsClippedToBounds="True">
+            <controls:GroupBoxControl Header="Developer options" IsClippedToBounds="True" IsVisible="{Binding AppPreferences.RevealDeveloperOptions}">
                 <StackLayout Orientation="Vertical">
                     <controls:SwitchControl
                         IsToggled="{Binding AppPreferences.DeveloperOptions, Mode=TwoWay}"

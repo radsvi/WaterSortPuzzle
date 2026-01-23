@@ -199,7 +199,18 @@
                 Preferences.Set(nameof(DeveloperOptions), value);
                 OnPropertyChanged();
                 if (value == false)
+                {
                     SingleLevelMode = false;
+                    RevealDeveloperOptions = false;
+                }
+            }
+        }
+        public bool RevealDeveloperOptions
+        {
+            get => Preferences.Default.Get(nameof(RevealDeveloperOptions), false);
+            set {
+                Preferences.Set(nameof(RevealDeveloperOptions), value);
+                OnPropertyChanged();
             }
         }
         public bool SingleLevelMode

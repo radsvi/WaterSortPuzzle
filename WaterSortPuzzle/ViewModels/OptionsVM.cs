@@ -6,12 +6,40 @@
         public AppPreferences AppPreferences { get; }
         public Leveling Leveling { get; }
         public GameState GameState { get; }
+
+        DateTime firstTapTime;
+        int tapCount;
+        readonly TimeSpan tapWindow = TimeSpan.FromSeconds(2);
+
         public OptionsVM(MainVM mainVM, AppPreferences appPreferences, GameState gameState, Leveling leveling)
         {
             MainVM = mainVM;
             AppPreferences = appPreferences;
             GameState = gameState;
             Leveling = leveling;
+        }
+        [RelayCommand]
+        private void RevealDeveloperMenu()
+        {
+            if (AppPreferences.RevealDeveloperOptions == true)
+                return;
+
+            if (tapCount == 0)
+                firstTapTime = DateTime.UtcNow;
+
+            tapCount++;
+
+            if (DateTime.UtcNow - firstTapTime > tapWindow)
+            {
+                tapCount = 1;
+                firstTapTime = DateTime.UtcNow;
+            }
+
+            if (tapCount >= 7)
+            {
+                //tapCount = 0;
+                AppPreferences.RevealDeveloperOptions = true;
+            }
         }
         //[RelayCommand]
         //public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
