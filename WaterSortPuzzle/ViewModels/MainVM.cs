@@ -52,23 +52,23 @@ namespace WaterSortPuzzle.ViewModels
             new() { TargetKey = "AddExtraTube", Text = "Adds extra empty tube (but lowers the score for the level)" },
             new() { TargetKey = "StepBack", Text = "Undo last move" },
         ];
-        public int CurrentStepIndex { get; private set; }
-        public CoachMarkItem? CurrentStep =>
-            CurrentStepIndex < CoachSteps.Count
-                ? CoachSteps[CurrentStepIndex]
+        public int CurrentCoachMarkIndex { get; private set; }
+        public CoachMarkItem? CurrentCoachMark =>
+            CurrentCoachMarkIndex < CoachSteps.Count
+                ? CoachSteps[CurrentCoachMarkIndex]
                 : null;
 
         public System.Windows.Input.ICommand NextStepCommand { get; }
 
         public void RestartTutorial()
         {
-            CurrentStepIndex = 0;
-            OnPropertyChanged(nameof(CurrentStep));
+            CurrentCoachMarkIndex = 0;
+            OnPropertyChanged(nameof(CurrentCoachMark));
         }
         public void NextStep()
         {
-            CurrentStepIndex++;
-            OnPropertyChanged(nameof(CurrentStep));
+            CurrentCoachMarkIndex++;
+            OnPropertyChanged(nameof(CurrentCoachMark));
         }
 
 

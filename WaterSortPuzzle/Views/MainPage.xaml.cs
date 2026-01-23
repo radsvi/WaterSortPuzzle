@@ -22,6 +22,7 @@ namespace WaterSortPuzzle.Views
             //overlay.Show(StepBackButton, "Tap here to start");
 
             //(MainLayout as Layout).Children.Add(overlay);
+            mainVM.PropertyChanged += OnViewModelPropertyChanged;
         }
         protected override void OnAppearing()
         {
@@ -35,18 +36,17 @@ namespace WaterSortPuzzle.Views
             _coachTargets["NextStep"] = NextStepButton;
             _coachTargets["AddExtraTube"] = AddExtraTubeButton;
             _coachTargets["StepBack"] = StepBackButton;
-
-            mainVM.PropertyChanged += OnViewModelPropertyChanged;
+            
             ShowCurrentStep();
         }
         void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(mainVM.CurrentStep))
+            if (e.PropertyName == nameof(mainVM.CurrentCoachMark))
                 ShowCurrentStep();
         }
         async void ShowCurrentStep()
         {
-            var step = mainVM.CurrentStep;
+            var step = mainVM.CurrentCoachMark;
 
             if (step == null)
             {
@@ -64,6 +64,7 @@ namespace WaterSortPuzzle.Views
         }
         async Task ShowStepAsync(CoachMarkItem step)
         {
+            System.Diagnostics.Debug.WriteLine($"## CoachMark: {mainVM.CurrentCoachMarkIndex}");
             if (!_coachTargets.TryGetValue(step.TargetKey, out var target))
             {
                 mainVM.NextStep();
