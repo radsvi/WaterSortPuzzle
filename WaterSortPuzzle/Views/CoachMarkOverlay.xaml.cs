@@ -114,7 +114,9 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
-        var holeRect = _targetRect.Inflate(new SizeF(8, 8));
+        float borderSize = 2;
+
+        var holeRect = _targetRect.Inflate(new SizeF(borderSize, borderSize));
         float cornerRadius = 8f;
 
         // Overlay with hole
@@ -126,12 +128,11 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
         canvas.FillPath(path, WindingMode.EvenOdd);
 
         // add border
-        float borderSize = 2;
         canvas.StrokeColor = Colors.White;
         canvas.StrokeSize = borderSize;
 
         canvas.DrawRoundedRectangle(
-            holeRect.Inflate(new SizeF(-borderSize - 8, -borderSize - 8)),
+            holeRect.Inflate(new SizeF(-borderSize, -borderSize)),
             cornerRadius - borderSize);
     }
 
