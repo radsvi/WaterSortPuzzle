@@ -61,21 +61,50 @@ namespace WaterSortPuzzle.Views
         async Task ShowStepAsync(CoachMarkItem step)
         {
             if (!_coachTargets.TryGetValue(step.TargetKey, out var target))
+            {
+                mainVM.NextStep();
                 return;
+            }
+            if (!target.IsVisible)
+            {
+                // Skip this step entirely
+                mainVM.NextStep();
+                return;
+            }
+
+            if (target.Width <= 0 || target.Height <= 0)
+            {
+                void OnSizeChanged(object? s, EventArgs e)
+                {
+                    target.SizeChanged -= OnSizeChanged;
+                    ShowCurrentStep();
+                }
+
+                target.SizeChanged += OnSizeChanged;
+                return;
+            }
 
             // Ensure layout is complete
             await target.Dispatcher.DispatchAsync(async () =>
             {
-                //target.InvalidateMeasure(); // <- vratit?
                 await Task.Yield();
 
                 CoachOverlay.Show(target, step.Text);
             });
 
-            // One-frame delay — critical
-            await Task.Yield();
-
-            CoachOverlay.Show(target, step.Text);
         }
+        //private static bool IsTargetVisible(VisualElement target)
+        //{
+        //    if (!target.IsVisible)
+        //        return false;
+
+        //    if (!target.IsLoaded)
+        //        return false;
+
+        //    if (target.Width <= 0 || target.Height <= 0)
+        //        return false;
+
+        //    return true;
+        //}
     }
 }
