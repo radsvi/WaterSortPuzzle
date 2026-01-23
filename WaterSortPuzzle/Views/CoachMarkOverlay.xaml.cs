@@ -1,3 +1,4 @@
+using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Graphics;
 using System.Windows.Input;
 
@@ -113,14 +114,25 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
-        // Dim background
-        canvas.FillColor = new Color(0, 0, 0, 0.6f);
-        canvas.FillRectangle(dirtyRect);
+        var holeRect = _targetRect.Inflate(new SizeF(8, 8));
+        float cornerRadius = 8f;
 
-        // Cut hole
-        canvas.BlendMode = BlendMode.Clear;
-        canvas.FillRoundedRectangle(_targetRect.Inflate(new SizeF(8, 8)), 8);
-        canvas.BlendMode = BlendMode.Normal;
+        // Overlay with hole
+        var path = new PathF();
+        path.AppendRectangle(dirtyRect);
+        path.AppendRoundedRectangle(holeRect, cornerRadius);
+
+        canvas.FillColor = new Color(0, 0, 0, 0.6f);
+        canvas.FillPath(path, WindingMode.EvenOdd);
+
+        // add border
+        float borderSize = 2;
+        canvas.StrokeColor = Colors.White;
+        canvas.StrokeSize = borderSize;
+
+        canvas.DrawRoundedRectangle(
+            holeRect.Inflate(new SizeF(-borderSize - 8, -borderSize - 8)),
+            cornerRadius - borderSize);
     }
 
     //void RemoveFromParent()
