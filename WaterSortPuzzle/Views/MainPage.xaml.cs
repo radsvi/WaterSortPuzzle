@@ -24,7 +24,7 @@ namespace WaterSortPuzzle.Views
             //(MainLayout as Layout).Children.Add(overlay);
             mainVM.PropertyChanged += OnViewModelPropertyChanged;
         }
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
@@ -36,7 +36,9 @@ namespace WaterSortPuzzle.Views
             _coachTargets["NextStep"] = NextStepButton;
             _coachTargets["AddExtraTube"] = AddExtraTubeButton;
             _coachTargets["StepBack"] = StepBackButton;
-            
+
+            await Task.Yield(); // let MAUI finish appearing
+            await Task.Delay(16); // wait one frame
             ShowCurrentStep();
         }
         void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
