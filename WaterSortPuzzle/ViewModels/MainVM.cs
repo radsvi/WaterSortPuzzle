@@ -48,7 +48,7 @@ namespace WaterSortPuzzle.ViewModels
             new() { TargetKey = "NextLevel", Text = "Next level" },
             new() { TargetKey = "Restart", Text = "Restart the game" },
             new() { TargetKey = "Restart2", Text = "Restart the game" },
-            new() { TargetKey = "NextLevel", Text = "Next step in calculated solution" },
+            new() { TargetKey = "NextStep", Text = "Next step in calculated solution" },
             new() { TargetKey = "AddExtraTube", Text = $"Adds extra empty tube,{Environment.NewLine}but lowers the score for the level" },
             new() { TargetKey = "StepBack", Text = "Undo last move" },
         ];
