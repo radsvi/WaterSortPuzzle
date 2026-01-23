@@ -92,8 +92,12 @@
                 <Button
                     Text="Show help"
                     Style="{StaticResource MenuButton}"
+                    Command="{Binding ShowHelpCommand}" />
+                <!--<Button
+                    Text="Show help"
+                    Style="{StaticResource MenuButton}"
                     Command="{Binding NavigationMenuPopupCommand}"
-                    CommandParameter="{x:Static enums:PopupParams.Help}" />
+                    CommandParameter="{x:Static enums:PopupParams.Help}" />-->
                 <Button
                     Text="Calculate solution >>"
                     Style="{StaticResource MenuButton}"

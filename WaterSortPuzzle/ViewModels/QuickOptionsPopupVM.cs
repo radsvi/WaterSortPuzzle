@@ -18,6 +18,12 @@ namespace WaterSortPuzzle.ViewModels
             mainVM.StartAutoSolve();
         }
         private bool CanStart() => mainVM.AutoSolve.CanStart();
+        [RelayCommand]
+        private async Task ShowHelp()
+        {
+            await popupService.ClosePopupAsync(Shell.Current, false);
+            mainVM.RestartTutorial();
+        }
         //[RelayCommand]
         //private async Task TestMethod()
         //{

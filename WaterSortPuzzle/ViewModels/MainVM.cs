@@ -60,7 +60,11 @@ namespace WaterSortPuzzle.ViewModels
 
         public System.Windows.Input.ICommand NextStepCommand { get; }
 
-
+        public void RestartTutorial()
+        {
+            CurrentStepIndex = 0;
+            OnPropertyChanged(nameof(CurrentStep));
+        }
         public void NextStep()
         {
             CurrentStepIndex++;

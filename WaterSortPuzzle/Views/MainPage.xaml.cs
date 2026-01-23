@@ -53,6 +53,10 @@ namespace WaterSortPuzzle.Views
                 CoachOverlay.IsVisible = false;
                 return;
             }
+            else if(CoachOverlay.IsVisible == false)
+            {
+                CoachOverlay.IsVisible = true;
+            }
 
             //var target = _coachTargets[step.TargetKey];
             //CoachOverlay.Show(target, step.Text);
