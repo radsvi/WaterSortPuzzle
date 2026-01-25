@@ -47,14 +47,12 @@ namespace WaterSortPuzzle.Views
 
         private async void StartCoachMarks()
         {
-            if (mainVM.AppPreferences.ShowHelpScreenAtStart)
-            {
-                await Task.Yield(); // let MAUI finish appearing
-                await Task.Delay(16); // wait one frame
-                ShowCurrentStep();
-
-                //mainVM.AppPreferences.ShowHelpScreenAtStart = false;
-            }
+            if (mainVM.AppPreferences.ShowHelpScreenAtStart == false)
+                return;
+            
+            await Task.Yield(); // let MAUI finish appearing
+            await Task.Delay(Constants.OneFrame);
+            ShowCurrentStep();
         }
         private async void ShowCurrentStep()
         {
@@ -95,7 +93,7 @@ namespace WaterSortPuzzle.Views
             // If still not laid out, retry once on next frame
             if (target.Width <= 0 || target.Height <= 0)
             {
-                await Task.Delay(16); // ~1 frame
+                await Task.Delay(Constants.OneFrame);
             }
 
             //if (target.Width <= 0 || target.Height <= 0)

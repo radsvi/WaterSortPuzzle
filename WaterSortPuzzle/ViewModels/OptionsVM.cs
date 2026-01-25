@@ -41,6 +41,12 @@
                 AppPreferences.RevealDeveloperOptions = true;
             }
         }
+        [RelayCommand]
+        private async Task ShowHelpOverlay()
+        {
+            await Shell.Current.GoToAsync($"..", true);
+            MainVM.RestartTutorial();
+        }
         //[RelayCommand]
         //public async Task NavigateBack() => await Shell.Current.GoToAsync($"..", true);
 

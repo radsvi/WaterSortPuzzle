@@ -61,6 +61,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             CurrentCoachMarkIndex = 0;
             OnPropertyChanged(nameof(CurrentCoachMark));
+            AppPreferences.ShowHelpScreenAtStart = true;
         }
         [RelayCommand]
         public void NextCoachMark()

@@ -205,11 +205,11 @@
             </controls:GroupBoxControl>
             <controls:GroupBoxControl Header="Help" IsVisible="{Binding AppPreferences.DeveloperOptions}">
                 <StackLayout Orientation="Vertical">
-                    <controls:SwitchControl
+                    <!--<controls:SwitchControl
                         IsToggled="{Binding AppPreferences.ShowHelpScreenAtStart, Mode=TwoWay}"
-                        Text="Show help at startup" />  
+                        Text="Show help at startup" />-->
 
-                    <!--<Button Text="Open Help" Style="{StaticResource OptionsButton}" Command="{Binding MainVM.DisplayHelpPopupCommand}" />-->
+                    <Button Text="Show Help" Style="{StaticResource OptionsButton}" Command="{Binding ShowHelpOverlayCommand}" />
                 </StackLayout>
             </controls:GroupBoxControl>
 

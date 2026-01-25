@@ -18,6 +18,7 @@ namespace WaterSortPuzzle.Models
         public const int MaxStepBack = 5;
         public const int DefaultScoreMultiplier = 25;
         public const int EmptyTubesAtTheStart = 2;
+        public const int OneFrame = 16;
 
         #region Visual constants
         public const int TubeImageOffset = 30;
