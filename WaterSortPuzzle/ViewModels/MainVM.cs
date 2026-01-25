@@ -40,8 +40,6 @@ namespace WaterSortPuzzle.ViewModels
             //{
             //    OnStart();
             //}
-
-            NextStepCommand = new Command(NextCoachMark);
         }
         public ObservableCollection<CoachMarkItem> CoachSteps { get; } =
         [
@@ -58,13 +56,13 @@ namespace WaterSortPuzzle.ViewModels
                 ? CoachSteps[CurrentCoachMarkIndex]
                 : null;
 
-        public System.Windows.Input.ICommand NextStepCommand { get; }
 
         public void RestartTutorial()
         {
             CurrentCoachMarkIndex = 0;
             OnPropertyChanged(nameof(CurrentCoachMark));
         }
+        [RelayCommand]
         public void NextCoachMark()
         {
             CurrentCoachMarkIndex++;

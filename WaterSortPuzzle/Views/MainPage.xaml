@@ -468,7 +468,7 @@
         <!--#region CoachMarks-->
         <views:CoachMarkOverlay
             x:Name="CoachOverlay"
-            TappedCommand="{Binding NextStepCommand}"
+            TappedCommand="{Binding NextCoachMarkCommand}"
             ForceVisibilityTo="{Binding AppPreferences.ShowHelpScreenAtStart}"
             IsVisible="False" />
         <!--#endregion CoachMarks-->
