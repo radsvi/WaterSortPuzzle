@@ -67,6 +67,8 @@ namespace WaterSortPuzzle.ViewModels
         {
             CurrentCoachMarkIndex++;
             OnPropertyChanged(nameof(CurrentCoachMark));
+            if (CurrentCoachMark is null) // if all Coach Marks were visited, disable the whole overlay for next time
+                AppPreferences.ShowHelpScreenAtStart = false;
         }
 
 
