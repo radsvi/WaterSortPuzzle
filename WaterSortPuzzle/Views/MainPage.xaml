@@ -469,7 +469,8 @@
         <views:CoachMarkOverlay
             x:Name="CoachOverlay"
             TappedCommand="{Binding NextStepCommand}"
-            IsVisible="True" />
+            ForceVisibilityTo="{Binding AppPreferences.ShowHelpScreenAtStart}"
+            IsVisible="False" />
         <!--#endregion CoachMarks-->
     </Grid>
 </ContentPage>

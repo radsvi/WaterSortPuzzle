@@ -8,17 +8,28 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
 {
     RectF _targetRect;
 
-    public static readonly BindableProperty TappedCommandProperty =
-    BindableProperty.Create(
-        nameof(TappedCommand),
-        typeof(ICommand),
-        typeof(CoachMarkOverlay));
-
     public ICommand? TappedCommand
     {
         get => (ICommand?)GetValue(TappedCommandProperty);
         set => SetValue(TappedCommandProperty, value);
     }
+    public static readonly BindableProperty TappedCommandProperty =
+        BindableProperty.Create(
+            nameof(TappedCommand),
+            typeof(ICommand),
+            typeof(CoachMarkOverlay));
+
+
+    public bool ForceVisibilityTo
+    {
+        get { return (bool)GetValue(ForceVisibilityToProperty); }
+        set { SetValue(ForceVisibilityToProperty, value); }
+    }
+
+    public static readonly BindableProperty ForceVisibilityToProperty =
+        BindableProperty.Create(nameof(ForceVisibilityTo), typeof(bool), typeof(CoachMarkOverlay), false);
+
+
 
     public CoachMarkOverlay()
     {
@@ -60,6 +71,7 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
                 HintFrame,
                 new Rect(hintBounds.X, hintBounds.Y, hintSize.Width, hintSize.Height));
 
+            IsVisible = ForceVisibilityTo;
             OverlayGraphics.Invalidate();
         });
     }
