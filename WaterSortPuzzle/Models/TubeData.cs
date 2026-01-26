@@ -205,7 +205,7 @@
                     this.Layers[y]?.CopyFrom(gameGrid[tubeId, y].Name);
                     //this.Layers[y] = gameGrid[tubeId, y].Clone();
             }
-            System.Diagnostics.Debug.WriteLine("debugging");
+            //System.Diagnostics.Debug.WriteLine("debugging");
         }
         private static void RecalculateTubesPerLine(LiquidColor[,] gameGrid)
         {

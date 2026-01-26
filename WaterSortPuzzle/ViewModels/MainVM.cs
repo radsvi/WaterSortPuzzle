@@ -41,36 +41,7 @@ namespace WaterSortPuzzle.ViewModels
             //    OnStart();
             //}
         }
-        public ObservableCollection<CoachMarkItem> CoachSteps { get; } =
-        [
-            new() { TargetKey = "NextLevel", Text = "Next level" },
-            new() { TargetKey = "Restart", Text = "Restart the game" },
-            new() { TargetKey = "Restart2", Text = "Restart the game" },
-            new() { TargetKey = "NextStep", Text = "Next step in calculated solution" },
-            new() { TargetKey = "AddExtraTube", Text = $"Adds extra empty tube,{Environment.NewLine}but lowers the score for the level" },
-            new() { TargetKey = "StepBack", Text = "Undo last move" },
-        ];
-        public int CurrentCoachMarkIndex { get; private set; }
-        public CoachMarkItem? CurrentCoachMark =>
-            CurrentCoachMarkIndex < CoachSteps.Count
-                ? CoachSteps[CurrentCoachMarkIndex]
-                : null;
 
-
-        public void RestartTutorial()
-        {
-            CurrentCoachMarkIndex = 0;
-            OnPropertyChanged(nameof(CurrentCoachMark));
-            AppPreferences.ShowHelpScreenAtStart = true;
-        }
-        [RelayCommand]
-        public void NextCoachMark()
-        {
-            CurrentCoachMarkIndex++;
-            OnPropertyChanged(nameof(CurrentCoachMark));
-            if (CurrentCoachMark is null) // if all Coach Marks were visited, disable the whole overlay for next time
-                AppPreferences.ShowHelpScreenAtStart = false;
-        }
 
 
 
@@ -1113,86 +1084,37 @@ namespace WaterSortPuzzle.ViewModels
         //}
         #endregion
         #region CoachMarks
-        //public ObservableCollection<CoachMarkItem> CoachMarks { get; } = new();
-        ////private int Index;
-        //[ObservableProperty]
-        //[NotifyCanExecuteChangedFor(nameof(PreviousCommand))]
-        //[NotifyCanExecuteChangedFor(nameof(NextCommand))]
-        //private int index;
-        ////public int Index
-        ////{
-        ////    get => index;
-        ////    private set { if (value == index) return; index = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanNavigatePrevious)); OnPropertyChanged(nameof(CanNavigateNext)); }
-        ////}
-        //public void ResetIndex()
-        //{
-        //    Index = -1;
-        //    CoachMarkManager.Navigate(CoachMarkNavigation.Next);
-        //    OnPropertyChanged(nameof(MainVM.Current));
-        //}
 
-        //public CoachMarkItem? Current { get; set; }
+        public ObservableCollection<CoachMarkItem> CoachSteps { get; } =
+        [
+            new() { TargetKey = "NextLevel", Text = "Next level" },
+            new() { TargetKey = "Restart", Text = "Restart the game" },
+            new() { TargetKey = "Restart2", Text = "Restart the game" },
+            new() { TargetKey = "NextStep", Text = "Next step in calculated solution" },
+            new() { TargetKey = "AddExtraTube", Text = $"Adds extra empty tube,{Environment.NewLine}but lowers the score for the level" },
+            new() { TargetKey = "StepBack", Text = "Undo last move" },
+        ];
+        public int CurrentCoachMarkIndex { get; private set; }
+        public CoachMarkItem? CurrentCoachMark =>
+            CurrentCoachMarkIndex < CoachSteps.Count
+                ? CoachSteps[CurrentCoachMarkIndex]
+                : null;
 
-        ////public ICommand NextCommand { get; }
 
-        
-        
-
-        //partial void OnIndexChanged(int value) // hooked automatically by MVVM toolkit
-        //{
-        //    NextCommand.NotifyCanExecuteChanged();
-        //    PreviousCommand.NotifyCanExecuteChanged();
-        //}
-        ////private bool CanNavigate(CoachMarkNavigation direction)
-        ////{
-        ////    int newIndex = Index + (int)direction;
-        ////    var length = CoachMarks.Where(n => n.IsAvailable).Count();
-        ////    return newIndex >= 0 && newIndex <= length;
-        ////}
-        //private bool CanNavigatePrevious => Index + (int)CoachMarkNavigation.Previous >= 0;
-
-        //[RelayCommand(CanExecute = nameof(CanNavigatePrevious))]
-        //private void Previous() => CoachMarkManager.Navigate(CoachMarkNavigation.Previous);
-        ////private void Previous()
-        ////{
-        ////    CoachMarkManager.Navigate(CoachMarkNavigation.Previous);
-        ////    OnPropertyChanged(nameof(Current));
-        ////}
-
-        //private bool CanNavigateNext
-        //{
-        //    get
-        //    {
-        //        int newIndex = Index + (int)CoachMarkNavigation.Next;
-        //        var length = CoachMarks.Where(n => n.IsAvailable).Count();
-        //        return newIndex < length;
-        //    }
-        //}
-
-        //[RelayCommand(CanExecute = nameof(CanNavigateNext))]
-        //private void Next() => CoachMarkManager.Navigate(CoachMarkNavigation.Next);
-        ////private void Next()
-        ////{
-        ////    CoachMarkManager.Navigate(CoachMarkNavigation.Next);
-        ////    OnPropertyChanged(nameof(Current));
-        ////}
-
-        ////[RelayCommand]
-        ////void Next()
-        ////{
-        ////    var ordered = CoachMarks
-        ////        .Where(x => x.IsAvailable)
-        ////        .ToList();
-
-        ////    var index = ordered.FindIndex(x => x.IsVisible);
-        ////    if (index == -1)
-        ////        return;
-
-        ////    ordered[index].IsVisible = false;
-
-        ////    if (index + 1 < ordered.Count)
-        ////        ordered[index + 1].IsVisible = true;
-        ////}
+        public void RestartTutorial()
+        {
+            CurrentCoachMarkIndex = 0;
+            OnPropertyChanged(nameof(CurrentCoachMark));
+            AppPreferences.ShowHelpScreenAtStart = true;
+        }
+        [RelayCommand]
+        public void NextCoachMark()
+        {
+            CurrentCoachMarkIndex++;
+            OnPropertyChanged(nameof(CurrentCoachMark));
+            if (CurrentCoachMark is null) // if all Coach Marks were visited, disable the whole overlay for next time
+                AppPreferences.ShowHelpScreenAtStart = false;
+        }
 
         #endregion
     }

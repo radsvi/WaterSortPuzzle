@@ -74,7 +74,6 @@ namespace WaterSortPuzzle.Views
         }
         private async Task ShowStepAsync(CoachMarkItem step)
         {
-            System.Diagnostics.Debug.WriteLine($"## CoachMark: {mainVM.CurrentCoachMarkIndex}");
             if (!_coachTargets.TryGetValue(step.TargetKey, out var target))
             {
                 mainVM.NextCoachMark();
