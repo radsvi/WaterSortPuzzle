@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:WaterSortPuzzle.Views.Controls"
              xmlns:enums="clr-namespace:WaterSortPuzzle.Enums"
              xmlns:views="clr-namespace:WaterSortPuzzle.Views"
+             xmlns:models="clr-namespace:WaterSortPuzzle.Models"
              xmlns:viewModels="clr-namespace:WaterSortPuzzle.ViewModels"
+             xmlns:bl="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
              x:Class="WaterSortPuzzle.Views.HelpPopup"
              HorizontalOptions="Fill"
              VerticalOptions="Fill"
@@ -57,6 +60,16 @@
     </ContentView.Resources>
 
     <Grid Margin="0">
+        <AbsoluteLayout bl:BindableLayout.ItemsSource="{Binding TubesItemsSource}"
+                VerticalOptions="Center" HorizontalOptions="Center">
+            <bl:BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="models:TubeData">
+                    <!--AbsoluteLayout.LayoutBounds="0, 10, 46, 194"-->
+                    <controls:FlaskControl AbsoluteLayout.LayoutBounds="{Binding Coordinates}" />
+                </DataTemplate>
+            </bl:BindableLayout.ItemTemplate>
+        </AbsoluteLayout>
+
 
         <!--<AbsoluteLayout IsVisible="{Binding Current}">
             <BoxView

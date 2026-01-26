@@ -103,6 +103,11 @@
                     Style="{StaticResource MenuButton}"
                     Command="{Binding StartAutoSolveCommand}" />
                 <!--<Button
+                    Text="Testing FlaskControl"
+                    Style="{StaticResource MenuButton}"
+                    Command="{Binding NavigationMenuPopupCommand}"
+                    CommandParameter="{x:Static enums:PopupParams.Help}" />-->
+                <!--<Button
                     Text="DEBUG"
                     Style="{StaticResource MenuButton}"
                     Command="{Binding TestMethodCommand}" />-->
