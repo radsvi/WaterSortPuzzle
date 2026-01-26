@@ -23,7 +23,10 @@ namespace WaterSortPuzzle.Converters
 
             //    return obj;
             //}
-            if (values[0] is null)
+            if (values[0] is null || values.Length < 3)
+                return null;
+
+            if (values[0] is not TubeData a)
                 return null;
 
             
