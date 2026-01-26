@@ -30,6 +30,7 @@ namespace WaterSortPuzzle.Views
 
             mainVM.InitializeOnce();
 
+            _coachTargets["Options"] = OptionsButton;
             _coachTargets["NextLevel"] = NextLevelButton;
             _coachTargets["Restart"] = RestartButton;
             _coachTargets["Restart2"] = RestartButton2;
@@ -44,7 +45,7 @@ namespace WaterSortPuzzle.Views
             if (e.PropertyName == nameof(mainVM.CurrentCoachMark))
                 ShowCurrentStep();
         }
-
+        #region CoachMarks
         private async void StartCoachMarks()
         {
             if (mainVM.AppPreferences.ShowHelpScreenAtStart == false)
@@ -110,7 +111,7 @@ namespace WaterSortPuzzle.Views
 
             if (target.Width <= 0 || target.Height <= 0)
             {
-                Debug.WriteLine("Target never received size, skipping");
+                System.Diagnostics.Debug.WriteLine("Target never received size, skipping");
                 mainVM.NextCoachMark();
                 return;
             }
@@ -130,5 +131,6 @@ namespace WaterSortPuzzle.Views
 
         //    return true;
         //}
+        #endregion CoachMarks
     }
 }
