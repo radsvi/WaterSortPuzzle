@@ -99,7 +99,7 @@
                     Command="{Binding NavigationMenuPopupCommand}"
                     CommandParameter="{x:Static enums:PopupParams.Help}" />-->
                 <Button
-                    Text="Calculate solution >>"
+                    Text="Calculate solution"
                     Style="{StaticResource MenuButton}"
                     Command="{Binding StartAutoSolveCommand}" />
                 <!--<Button
