@@ -45,7 +45,7 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
     {
         TappedCommand?.Execute(null);
     }
-    public void Show(VisualElement target, string text)
+    public void Show(VisualElement target, string text, bool centered)
     {
         HintLabel.WidthRequest = -1;
         HintLabel.Text = text;
@@ -53,18 +53,19 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
         {
 
             // Get target position on screen
+            int padding = (centered) ? 20 : 0; // x:Name="RootGrid" top padding
             Rect targetBounds = target.GetBoundsOnScreen();
             _targetRect = new RectF(
-                (float)targetBounds.X,
+                (float)targetBounds.X - padding,
                 (float)targetBounds.Y,
-                (float)targetBounds.Width,
-                (float)targetBounds.Height);
+                (float)targetBounds.Width + padding * 2,
+                (float)targetBounds.Height + padding);
 
             //HintFrame.Measure(double.PositiveInfinity, double.PositiveInfinity);
             //var hintSize = new Size(HintFrame.Width, HintFrame.Height);
             Size hintSize = HintFrame.Measure(double.PositiveInfinity, double.PositiveInfinity);
 
-            Rect hintBounds = CalculateNewHintPosition(targetBounds, hintSize);
+            Rect hintBounds = CalculateNewHintPosition(targetBounds, hintSize, centered);
 
             // Position hint below target
             AbsoluteLayout.SetLayoutBounds(
@@ -75,13 +76,44 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
             OverlayGraphics.Invalidate();
         });
     }
+    //public void ShowStaticHint(string text)
+    //{
+    //    HintLabel.WidthRequest = -1;
+    //    HintLabel.Text = text;
+    //    Dispatcher.Dispatch(() =>
+    //    {
+    //        var displayInfo = DeviceDisplay.Current.MainDisplayInfo;
+    //        double screenWidth = displayInfo.Width / displayInfo.Density;
+    //        //double screenHeight = displayInfo.Height / displayInfo.Density;
+
+    //        // tady bych mel najit kde se zobrazila prvni flaska a kde posledni a vypocitat podle toho Rect()
+    //        Rect targetBounds = target.GetBoundsOnScreen();
+
+
+    //        _targetRect = new RectF(150, 150, (float)(screenWidth * 0.8f), 200);
+
+    //        //HintFrame.Measure(double.PositiveInfinity, double.PositiveInfinity);
+    //        //var hintSize = new Size(HintFrame.Width, HintFrame.Height);
+    //        Size hintSize = HintFrame.Measure(double.PositiveInfinity, double.PositiveInfinity);
+
+    //        Rect hintBounds = CalculateNewHintPosition(targetBounds, hintSize);
+
+    //        // Position hint below target
+    //        AbsoluteLayout.SetLayoutBounds(
+    //            HintFrame,
+    //            new Rect(hintBounds.X, hintBounds.Y, hintSize.Width, hintSize.Height));
+
+    //        IsVisible = ForceVisibilityTo;
+    //        OverlayGraphics.Invalidate();
+    //    });
+    //}
     /// <summary>
     ///  Calculate new position for hint. Based on screen size and position of the target element
     /// </summary>
     /// <param name="targetBounds"></param>
     /// <returns></returns>
     /// <exception cref="NullReferenceException"></exception>
-    private Rect CalculateNewHintPosition(Rect targetBounds, Size hintSize)
+    private Rect CalculateNewHintPosition(Rect targetBounds, Size hintSize, bool centered)
     {
         int halfPadding = 6;
 
@@ -95,11 +127,12 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
 
         double xPos;// = this.Width / 2 - hintBounds.Width / 2;
         double yPos;
-        if (targetBounds.X + targetBounds.Width > this.Width * 3 / 5) // zarovnat doprava
+        
+        if (!centered && targetBounds.X + targetBounds.Width > this.Width * 3 / 5) // zarovnat doprava
         {
             xPos = this.Width - halfPadding * 3 - hintSize.Width;
         }
-        else if (targetBounds.X < this.Width * 2 / 5) // zarovnat doleva
+        else if (!centered && targetBounds.X < this.Width * 2 / 5) // zarovnat doleva
         {
             xPos = halfPadding * 3;
         }
@@ -118,8 +151,9 @@ public partial class CoachMarkOverlay : AbsoluteLayout, IDrawable
 
 
         //Rect newBounds = new Rect(xPos, yPos, HintFrame.Width, HintFrame.Height);
-        Rect newBounds = new Rect(xPos, yPos, hintSize.Width, hintSize.Height);
         //Rect newBounds = new Rect(xPos, yPos, this.Width * 0.4, 100);
+        Rect newBounds = new Rect(xPos, yPos, hintSize.Width, hintSize.Height);
+
         // nemusim updatovat i _targetRect?
         return newBounds;
     }

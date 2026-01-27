@@ -8,6 +8,7 @@ namespace WaterSortPuzzle.Enums
 {
     public enum CoachMarkTarget
     {
+        GeneralHint,
         Options,
         NextLevel,
         Restart,

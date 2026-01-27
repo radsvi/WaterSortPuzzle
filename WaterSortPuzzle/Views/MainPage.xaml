@@ -132,7 +132,7 @@
 
             <Grid Grid.Row="1" Margin="{Binding MarginForFlasksGrid}">
                 <AbsoluteLayout bl:BindableLayout.ItemsSource="{Binding TubesItemsSource}"
-                                VerticalOptions="Center" HorizontalOptions="Center">
+                                VerticalOptions="Center" HorizontalOptions="Center" x:Name="AbsoluteLayoutRoot">
                     <bl:BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="models:TubeData">
                             <!--AbsoluteLayout.LayoutBounds="0, 10, 46, 194"-->

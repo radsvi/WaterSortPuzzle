@@ -8,7 +8,7 @@ namespace WaterSortPuzzle.Models
 {
     public class CoachMarkItem
     {
-        public CoachMarkTarget TargetKey{ get; set; }
+        public CoachMarkTarget TargetKey { get; set; }
         public string Text { get; set; } = string.Empty;
     }
 }

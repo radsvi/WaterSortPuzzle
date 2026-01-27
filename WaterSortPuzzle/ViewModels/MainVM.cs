@@ -1087,6 +1087,7 @@ namespace WaterSortPuzzle.ViewModels
 
         public ObservableCollection<CoachMarkItem> CoachSteps { get; } =
         [
+            new() { TargetKey = CoachMarkTarget.GeneralHint, Text = $"Take liquid from a flask and pour it into either an empty flask or one whose top color matches" },
             new() { TargetKey = CoachMarkTarget.Options, Text = "Open Options" },
             new() { TargetKey = CoachMarkTarget.NextLevel, Text = "Next level" },
             new() { TargetKey = CoachMarkTarget.Restart, Text = "Restart level" },

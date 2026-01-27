@@ -61,7 +61,7 @@ namespace WaterSortPuzzle.Behaviors
             // Ensure we run after layout pass
             _associatedObject.Dispatcher.Dispatch(() =>
             {
-                Overlay.Show(_associatedObject, Text);
+                Overlay.Show(_associatedObject, Text, true);
                 Overlay.IsVisible = true;
             });
         }

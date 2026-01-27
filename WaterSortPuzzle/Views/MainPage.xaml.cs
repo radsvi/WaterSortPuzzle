@@ -41,6 +41,7 @@ namespace WaterSortPuzzle.Views
         #region CoachMarks
         private void LoadCoachMarks()
         {
+            _coachTargets[CoachMarkTarget.GeneralHint] = AbsoluteLayoutRoot;
             _coachTargets[CoachMarkTarget.Options] = OptionsButton;
             _coachTargets[CoachMarkTarget.NextLevel] = NextLevelButton;
             _coachTargets[CoachMarkTarget.Restart] = RestartButton;
@@ -85,6 +86,13 @@ namespace WaterSortPuzzle.Views
                 mainVM.NextCoachMark();
                 return;
             }
+//            if (target is null)
+//            {
+//                CoachOverlay.ShowStaticHint(step.Text);
+//                return;
+//#warning tady by asi nemel byt return, dole jeste mam tu funkci CoachOverlay.Show(). i kdyz uz jsem to mozna osetril tim ze jsem vytvoril CoachOverlay.ShowStaticHint()
+//            }
+
             if (!target.IsVisible)
             {
                 // Skip this step entirely
@@ -121,7 +129,14 @@ namespace WaterSortPuzzle.Views
                 return;
             }
 
-            CoachOverlay.Show(target, step.Text);
+            if (step.TargetKey == CoachMarkTarget.GeneralHint)
+            {
+                CoachOverlay.Show(target, step.Text, true);
+            }
+            else
+            {
+                CoachOverlay.Show(target, step.Text, false);
+            }
         }
         //private static bool IsTargetVisible(VisualElement target)
         //{
