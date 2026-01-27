@@ -1087,13 +1087,13 @@ namespace WaterSortPuzzle.ViewModels
 
         public ObservableCollection<CoachMarkItem> CoachSteps { get; } =
         [
-            new() { TargetKey = "Options", Text = "Open Options" },
-            new() { TargetKey = "NextLevel", Text = "Next level" },
-            new() { TargetKey = "Restart", Text = "Restart level" },
-            new() { TargetKey = "Restart2", Text = "Restart level " },
-            new() { TargetKey = "NextStep", Text = "Next step in calculated solution" },
-            new() { TargetKey = "AddExtraTube", Text = $"Adds extra empty tube,{Environment.NewLine}but lowers the score for the level" },
-            new() { TargetKey = "StepBack", Text = $"Undo last move.{Environment.NewLine}Max {Constants.MaxStepBack} uses per level" },
+            new() { TargetKey = CoachMarkTarget.Options, Text = "Open Options" },
+            new() { TargetKey = CoachMarkTarget.NextLevel, Text = "Next level" },
+            new() { TargetKey = CoachMarkTarget.Restart, Text = "Restart level" },
+            new() { TargetKey = CoachMarkTarget.Restart2, Text = "Restart level " },
+            new() { TargetKey = CoachMarkTarget.NextStep, Text = "Next step in calculated solution" },
+            new() { TargetKey = CoachMarkTarget.AddExtraTube, Text = $"Adds extra empty tube,{Environment.NewLine}but lowers the score for the level" },
+            new() { TargetKey = CoachMarkTarget.StepBack, Text = $"Undo last move.{Environment.NewLine}Max {Constants.MaxStepBack} uses per level" },
         ];
         public int CurrentCoachMarkIndex { get; private set; }
         public CoachMarkItem? CurrentCoachMark =>

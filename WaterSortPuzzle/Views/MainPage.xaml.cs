@@ -6,7 +6,7 @@ namespace WaterSortPuzzle.Views
     public partial class MainPage : ContentPage
     {
         private readonly MainVM mainVM;
-        readonly Dictionary<string, VisualElement> _coachTargets = new();
+        readonly Dictionary<CoachMarkTarget, VisualElement> _coachTargets = new();
 
         public MainPage(MainVM mainVM)
         {
@@ -30,22 +30,27 @@ namespace WaterSortPuzzle.Views
 
             mainVM.InitializeOnce();
 
-            _coachTargets["Options"] = OptionsButton;
-            _coachTargets["NextLevel"] = NextLevelButton;
-            _coachTargets["Restart"] = RestartButton;
-            _coachTargets["Restart2"] = RestartButton2;
-            _coachTargets["NextStep"] = NextStepButton;
-            _coachTargets["AddExtraTube"] = AddExtraTubeButton;
-            _coachTargets["StepBack"] = StepBackButton;
-
-            StartCoachMarks();
+            LoadCoachMarks();
         }
+
         void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(mainVM.CurrentCoachMark))
                 ShowCurrentStep();
         }
         #region CoachMarks
+        private void LoadCoachMarks()
+        {
+            _coachTargets[CoachMarkTarget.Options] = OptionsButton;
+            _coachTargets[CoachMarkTarget.NextLevel] = NextLevelButton;
+            _coachTargets[CoachMarkTarget.Restart] = RestartButton;
+            _coachTargets[CoachMarkTarget.Restart2] = RestartButton2;
+            _coachTargets[CoachMarkTarget.NextStep] = NextStepButton;
+            _coachTargets[CoachMarkTarget.AddExtraTube] = AddExtraTubeButton;
+            _coachTargets[CoachMarkTarget.StepBack] = StepBackButton;
+
+            StartCoachMarks();
+        }
         private async void StartCoachMarks()
         {
             if (mainVM.AppPreferences.ShowHelpScreenAtStart == false)
