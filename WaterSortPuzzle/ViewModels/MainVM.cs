@@ -106,7 +106,7 @@ namespace WaterSortPuzzle.ViewModels
             Start();
             IsLevelCompleted();
         }
-        #endregion
+        #endregion Constructor
         #region Properties
         [ObservableProperty]
         private ObservableCollection<TubeData> tubesItemsSource = new ObservableCollection<TubeData>();
@@ -245,7 +245,7 @@ namespace WaterSortPuzzle.ViewModels
         public bool AutoSolveUsed { get; private set; } = false;
         public ObservableCollection<PopupScreenActions>? PopupActions { get; set; }
 
-        #endregion
+        #endregion Properties
         #region Navigation
         public string StepBackButtonText { get => $"{GameState.StepBackDisplay}"; }
         public string NextStepButtonText { get => $"{AutoSolve?.CurrentSolutionStep}"; }
@@ -556,7 +556,7 @@ namespace WaterSortPuzzle.ViewModels
         {
             Shell.Current.FlyoutIsPresented = true;
         }
-        #endregion
+        #endregion Navigation
         #region Moving Liquids
         //internal void OnTubeButtonClick(object obj)
         [RelayCommand]
@@ -740,7 +740,7 @@ namespace WaterSortPuzzle.ViewModels
             }
         }
 
-        #endregion
+        #endregion Moving Liquids
         #region Draw tubes from code
         public void DrawTubes(int source = -1, int target = -1)
         {
@@ -858,7 +858,7 @@ namespace WaterSortPuzzle.ViewModels
         //    }
         //    return foundElement;
         //}
-        #endregion
+        #endregion Draw tubes from code
         #region Animation
         [RelayCommand]
         private void TriggerAnimation()
@@ -1038,7 +1038,7 @@ namespace WaterSortPuzzle.ViewModels
 
         //    return (innerGrid, image);
         //}
-        #endregion
+        #endregion Animation
         #region Other Methods
         //private void Tubes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         //{
@@ -1082,7 +1082,7 @@ namespace WaterSortPuzzle.ViewModels
         //{
         //    TubesItemsSource[1].XPos += 10;
         //}
-        #endregion
+        #endregion Other Methods
         #region CoachMarks
 
         public ObservableCollection<CoachMarkItem> CoachSteps { get; } =
@@ -1119,5 +1119,12 @@ namespace WaterSortPuzzle.ViewModels
         }
 
         #endregion
+        #region Debugging
+        [RelayCommand]
+        private void OpenLevelFinishedPopup()
+        {
+            _ = NavigationMenuPopup(PopupParams.LevelComplete);
+        }
+        #endregion Debugging
     }
 }

@@ -171,4 +171,10 @@
 	</MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="Features\Fireworks\FireworksContent.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+	</ItemGroup>
+
 </Project>
