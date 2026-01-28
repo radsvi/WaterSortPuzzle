@@ -209,11 +209,11 @@
                         </LinearGradientBrush>
                     </Grid.Background>
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
-                        <Button
+                        <!--<Button
                             Command="{Binding OpenLevelCompletedPopupCommand}"
                             Text="DEBUG"
                             Grid.Column="0">
-                        </Button>
+                        </Button>-->
                         <!--<Button
                             IsVisible="{Binding AutoSolve.Solved}"
                             ImageSource="button_next.png"

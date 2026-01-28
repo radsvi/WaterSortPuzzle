@@ -5,14 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WaterSortPuzzle.Features.Popups;
 
 namespace WaterSortPuzzle.Features.Fireworks
 {
     public class FireworksView : SKCanvasView
     {
-        private readonly FireworksViewModel _vm = new();
+        private readonly LevelCompletedPopupVM _vm;
         IDispatcherTimer? _timer;
-        public FireworksView(FireworksViewModel vm)
+        public FireworksView(LevelCompletedPopupVM vm)
         {
             _vm = vm;
 
@@ -35,9 +36,9 @@ namespace WaterSortPuzzle.Features.Fireworks
             _timer.Start();
         }
 
-        private void OnAppearing(object? sender, EventArgs e)
+        private async void OnAppearing(object? sender, EventArgs e)
         {
-            _vm.StartAnimation();
+            await _vm.StartAnimation();
         }
 
         private void OnPaintSurface(object? sender, SKPaintSurfaceEventArgs e)

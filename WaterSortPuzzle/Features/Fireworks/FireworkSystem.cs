@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WaterSortPuzzle.Features.Fireworks.Enums;
 using WaterSortPuzzle.Features.Fireworks.Models;
+using WaterSortPuzzle.Features.Popups;
 
 namespace WaterSortPuzzle.Features.Fireworks
 {
@@ -15,12 +16,12 @@ namespace WaterSortPuzzle.Features.Fireworks
         private readonly List<Rocket> _rockets = new();
         private readonly List<Particle> _particles = new();
         private readonly Random _rand = new();
-        private readonly FireworksViewModel _vm;
+        private readonly LevelCompletedPopupVM _vm;
 
         public IReadOnlyList<Rocket> Rockets => _rockets;
         public IReadOnlyList<Particle> Particles => _particles;
 
-        public FireworkSystem(FireworksViewModel vm)
+        public FireworkSystem(LevelCompletedPopupVM vm)
         {
             this._vm = vm;
         }
