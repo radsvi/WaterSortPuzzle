@@ -167,7 +167,7 @@ namespace WaterSortPuzzle.Features.Fireworks
 
         internal void Render(SKCanvas canvas, int width, int height)
         {
-            canvas.Clear(SKColors.Black);
+            canvas.Clear(SKColors.Transparent);
 
             using var paint = new SKPaint
             {

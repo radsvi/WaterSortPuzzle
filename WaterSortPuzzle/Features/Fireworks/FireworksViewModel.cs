@@ -39,7 +39,7 @@ namespace WaterSortPuzzle.Features.Fireworks
         }
 
         [RelayCommand]
-        private async Task Go()
+        public async Task StartAnimation()
         {
             ////System.Launch(new SKPoint(150, 150));
             ////System.LaunchRocket(new SKPoint(250, 250));

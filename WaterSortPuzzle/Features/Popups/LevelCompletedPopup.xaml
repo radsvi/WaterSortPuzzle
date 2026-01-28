@@ -61,8 +61,6 @@
             </Grid>
         </Grid>
 
-        <skia:SKCanvasView
-            x:Name="Canvas"
-            Grid.Row="1" />
+        <fireworks:FireworksContent />
     </Grid>
 </ContentView>

@@ -16,9 +16,13 @@ namespace WaterSortPuzzle.Features.Fireworks
         {
             _vm = vm;
 
-            EnableTouchEvents = true;
-            PaintSurface += OnPaintSurface;
+            //
+            //EnableTouchEvents = true;
+            //
+
             Touch += OnTouch;
+            PaintSurface += OnPaintSurface;
+            Loaded += OnAppearing;
 
 
             _timer = Dispatcher.CreateTimer();
@@ -30,6 +34,12 @@ namespace WaterSortPuzzle.Features.Fireworks
             };
             _timer.Start();
         }
+
+        private void OnAppearing(object? sender, EventArgs e)
+        {
+            _vm.StartAnimation();
+        }
+
         private void OnPaintSurface(object? sender, SKPaintSurfaceEventArgs e)
         {
             _vm.System.Render(e.Surface.Canvas, e.Info.Width, e.Info.Height);
