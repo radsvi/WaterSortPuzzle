@@ -210,7 +210,7 @@
                     </Grid.Background>
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="25">
                         <Button
-                            Command="{Binding OpenLevelFinishedPopupCommand}"
+                            Command="{Binding OpenLevelCompletedPopupCommand}"
                             Text="DEBUG"
                             Grid.Column="0">
                         </Button>

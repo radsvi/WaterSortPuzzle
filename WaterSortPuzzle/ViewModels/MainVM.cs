@@ -1,5 +1,6 @@
 ﻿//using CommunityToolkit.Maui;
 using System.Collections.Specialized;
+using WaterSortPuzzle.Features.Popups;
 
 namespace WaterSortPuzzle.ViewModels
 {
@@ -407,9 +408,9 @@ namespace WaterSortPuzzle.ViewModels
                     break;
                 case PopupParams.LevelComplete:
                     if (AutoSolveUsed)
-                        answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("YOU WIN", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
+                        answer = await popupService.ShowPopupAsync<LevelCompletedPopupVM>("YOU WIN", "Level completed automatically. Would you like to try for yourself?", "Next level", "Restart level");
                     else
-                        answer = await popupService.ShowPopupAsync<FullscreenPopupVM>("YOU WIN", "Congratulation! You won!", "Next level", "Restart level");
+                        answer = await popupService.ShowPopupAsync<LevelCompletedPopupVM>("YOU WIN", "Congratulation! You won!", "Next level", "Restart level");
 
                     if (answer)
                         GenerateNewLevel();
@@ -544,13 +545,6 @@ namespace WaterSortPuzzle.ViewModels
         //{
         //    Notification.Show(displayText);
         //}
-        [RelayCommand]
-        public void TestMethod()
-        {
-#if DEBUG
-            var qwer = GameState.BoardState.Grid;
-#endif
-        }
         [RelayCommand]
         void OpenFlyout()
         {
@@ -1121,7 +1115,14 @@ namespace WaterSortPuzzle.ViewModels
         #endregion
         #region Debugging
         [RelayCommand]
-        private void OpenLevelFinishedPopup()
+        public void TestMethod()
+        {
+#if DEBUG
+            var qwer = GameState.BoardState.Grid;
+#endif
+        }
+        [RelayCommand]
+        private void OpenLevelCompletedPopup()
         {
             _ = NavigationMenuPopup(PopupParams.LevelComplete);
         }

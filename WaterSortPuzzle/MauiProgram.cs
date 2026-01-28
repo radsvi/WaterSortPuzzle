@@ -2,6 +2,7 @@
 using Microsoft.Maui.Controls.Handlers.Items;
 using CommunityToolkit.Maui;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using WaterSortPuzzle.Features.Popups;
 #if ANDROID
 using Android.Views;
 using AndroidX.RecyclerView.Widget;
@@ -90,9 +91,10 @@ namespace WaterSortPuzzle
 
             //builder.Services.AddTransientPopup<StyledPopup, StyledPopupViewModel>();
             builder.Services.AddTransientPopup<CustomPopup, CustomPopupVM>();
-            builder.Services.AddTransientPopup<FullscreenPopup, FullscreenPopupVM>();
+            //builder.Services.AddTransientPopup<FullscreenPopup, FullscreenPopupVM>();
             builder.Services.AddTransientPopup<QuickOptionsPopup, QuickOptionsPopupVM>();
             builder.Services.AddTransientPopup<HelpPopup, HelpPopupVM>();
+            builder.Services.AddTransientPopup<LevelCompletedPopup, LevelCompletedPopupVM>();
 
 #if DEBUG
             builder.Logging.AddDebug();
